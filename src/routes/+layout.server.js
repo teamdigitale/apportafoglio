@@ -1,5 +1,4 @@
 import jsforce from 'jsforce';
-import { run } from 'node:test';
 import { caricaMisure } from '../logic/misure';
 
 export async function load({locals, cookies}) {
