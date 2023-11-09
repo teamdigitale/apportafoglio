@@ -1,4 +1,3 @@
-import { tipireq } from '../../stores/globaldata';
 import { get } from 'svelte/store';
 import { getUserBySessionid } from '../../logic/userdb';
 import jsforce from 'jsforce';
