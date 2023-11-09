@@ -49,7 +49,7 @@ export async function load({ cookies }) {
                 let datafinanziamento = new Date(d_s[0], d_s[1] - 1, d_s[2]).getTime();
                 let data = (datafinanziamento - dataf.mindataf) / (dataf.maxdataf - dataf.mindataf);
                 let input = mis.concat(reg.concat(province.concat(tipente.concat([data]))));
-                //console.log("INPUT: (" + misura + ", " + e.Data_Finanziamento__c +", "+e.Regione__c+", "+e.outfunds__Applying_Organization__r.Tipologia_Ente__c+", "+e.outfunds__Applying_Organization__r.ShippingState+ ") -- " + input);
+                ////console.log("INPUT: (" + misura + ", " + e.Data_Finanziamento__c +", "+e.Regione__c+", "+e.outfunds__Applying_Organization__r.Tipologia_Ente__c+", "+e.outfunds__Applying_Organization__r.ShippingState+ ") -- " + input);
                 const prediction = network.run(input);
                 let gg = Math.round(prediction[0] * (ggcontr.max - ggcontr.min) + ggcontr.min);
                 datecontr.push({id: e.Id,gg: gg});

@@ -257,6 +257,7 @@
       {/if}
     </div>
 
+    <!--
     <div class="navbar-end">
       <div class="field">
         <div class="control has-icons-left">
@@ -277,6 +278,7 @@
         </div>
       </div>
     </div>
+  -->
   </div>
 </nav>
 {#if visible}

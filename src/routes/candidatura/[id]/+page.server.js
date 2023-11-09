@@ -20,7 +20,7 @@ export async function load({ cookies, params }) {
     let idc = params.id;
     let u = ustd;
     let ass = params.id.split("°");
-    console.log(ass);
+    //console.log(ass);
     if(ass&&ass.length==2){
         idc = ass[0];
         u = uass;
@@ -50,10 +50,10 @@ export async function load({ cookies, params }) {
             )
                 .map((x) => x.Contract__c);
 
-        console.log("cc" + cc.length);
+        //console.log("cc" + cc.length);
 
         if (cc.length > 0) {
-            console.log(cc.length);
+            //console.log(cc.length);
             let instr = "";
 
             /*
@@ -76,7 +76,7 @@ export async function load({ cookies, params }) {
             }*/
 
             instr = "('" + cc.join("','")+ "')";
-            console.log("Caricamento contratti " + instr);
+            //console.log("Caricamento contratti " + instr);
             if (instr !== '()') {
                 contratti = contratti.concat(await loadFileCorrelati(conn, instr));
             }

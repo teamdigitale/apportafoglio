@@ -12,7 +12,7 @@ export async function load({ cookies, params }) {
     let fpaas = [];
     let fiaas = [];
 
-    console.log(params.idc);
+    //console.log(params.idc);
     const uass = getUtenteAsseveratore(cookies);
 
     if (uass) {

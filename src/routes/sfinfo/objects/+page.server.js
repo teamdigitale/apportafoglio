@@ -19,7 +19,7 @@ export async function load() {
     //versions
     let res = await fetch(conn.instanceUrl + '/services/data/', options);
     const versions = await res.json();
-    console.log("Available versions: " + versions.length + " - Using last version: " + versions[versions.length - 1].version);
+    //console.log("Available versions: " + versions.length + " - Using last version: " + versions[versions.length - 1].version);
     const version = versions[versions.length - 1].url;
     const baseurl = conn.instanceUrl + version;
     res = await fetch(baseurl + '/sobjects', options);

@@ -4,22 +4,22 @@ const fieldsEventi = `select Account.Name,Id, WhoId, WhatId, WhoCount, WhatCount
 export async function loadContatti(conn, u) {
     const contatti = [];
     if (u) {
-        console.log('-Caricamento contatti');
+        //console.log('-Caricamento contatti');
         let soqlcontatti = fieldsContatti + ` where TaskSubtype ='Call' and WhatId in (select Id from Account where (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')) and CreatedById ='`+u.idutentesf+`' order by CreatedDate desc`;
         let result_ = await conn.query(soqlcontatti);
         contatti.push(...result_.records);
-        console.log("-numero di occorrenze da caricare: " + result_.totalSize);
-        console.log("-occorrenze caricate : " + result_.records.length);
+        //console.log("-numero di occorrenze da caricare: " + result_.totalSize);
+        //console.log("-occorrenze caricate : " + result_.records.length);
         let more = !result_.done;
         while (more) {
             if (result_.nextRecordsUrl) {
                 result_ = await conn.queryMore(result_.nextRecordsUrl);
-                console.log("-caricati altri : " + result_.records.length);
+                //console.log("-caricati altri : " + result_.records.length);
                 contatti.push(...result_.records);
                 more = !result_.done;
             }
         }
-        console.log('-...contatti caricati: ' + contatti.length);
+        //console.log('-...contatti caricati: ' + contatti.length);
     }
     return contatti;
 }
@@ -28,22 +28,22 @@ export async function loadContatti(conn, u) {
 export async function loadEventi(conn, u) {
     const contatti = [];
     if (u) {
-        console.log('-Caricamento eventi');
+        //console.log('-Caricamento eventi');
         let soqlcontatti = fieldsEventi + ` where WhatId in (select Id from Account where (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')) and CreatedById ='`+u.idutentesf+`' order by CreatedDate desc`;
         let result_ = await conn.query(soqlcontatti);
         contatti.push(...result_.records);
-        console.log("-numero di occorrenze da caricare: " + result_.totalSize);
-        console.log("-occorrenze caricate : " + result_.records.length);
+        //console.log("-numero di occorrenze da caricare: " + result_.totalSize);
+        //console.log("-occorrenze caricate : " + result_.records.length);
         let more = !result_.done;
         while (more) {
             if (result_.nextRecordsUrl) {
                 result_ = await conn.queryMore(result_.nextRecordsUrl);
-                console.log("-caricati altri : " + result_.records.length);
+                //console.log("-caricati altri : " + result_.records.length);
                 contatti.push(...result_.records);
                 more = !result_.done;
             }
         }
-        console.log('-...eventi caricati: ' + contatti.length);
+        //console.log('-...eventi caricati: ' + contatti.length);
     }
     return contatti;
 }

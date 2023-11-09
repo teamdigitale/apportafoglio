@@ -81,7 +81,7 @@ export const getIdAsseveratore = (cookies) => {
 }
 
 export const getUserBySessionid = (session_id, tipoUtente) => {
-    console.log('Looking for user in database: ' + session_id);
+    //console.log('Looking for user in database: ' + session_id);
     let existingUser;
     if (tipoUtente === 'standard') {
         standardusers.subscribe((value) => {
@@ -103,7 +103,7 @@ export const getUserBySessionid = (session_id, tipoUtente) => {
 };
 
 export const createUser = (session_id, email, password, token, tipoUtente, idutentesf, sfuser) => {
-    console.log('Creating new user with id: ' + session_id);
+    //console.log('Creating new user with id: ' + session_id);
 
     if (!getUserBySessionid(session_id, tipoUtente)) {
         if (tipoUtente === 'standard') {
@@ -116,7 +116,7 @@ export const createUser = (session_id, email, password, token, tipoUtente, idute
 };
 
 export const deleteUser = (session_id, tipoUtente) => {
-    console.log('Deleting user with id: ' + session_id);
+    //console.log('Deleting user with id: ' + session_id);
     if (getUserBySessionid(session_id, tipoUtente)) {
         if (tipoUtente === 'standard') {
             standardusers.update((u) => u.filter((u) => u.session_id !== session_id));

@@ -102,7 +102,7 @@
 
     
 
-    onMount(async () => {console.log(data.rdm.filter( (r) => advf.filter((a) => r.Progetto_da_modificare__c === a.Id ) && r.outfunds__Status__c==='In valutazione' ))});
+    //onMount(async () => {//console.log(data.rdm.filter( (r) => advf.filter((a) => r.Progetto_da_modificare__c === a.Id ) && r.outfunds__Status__c==='In valutazione' ))});
 </script>
 
 <section class="hero is-small is-info is-12">

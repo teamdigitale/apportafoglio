@@ -79,6 +79,14 @@ export const actions = {
             if (sfuser.Title == 'Asseveratore') {
                 tipoUtente = 'asseveratore';
             }
+
+            /******ABILITAZIONE PILOTI */
+
+            if(["0057Q00000729pMQAQ","0057Q0000072YrZQAU","0057Q000005UXtlQAG","0057Q0000070qelQAA","0057Q0000072NWoQAM",
+        "0057Q0000072hbnQAA","0057Q0000072hcgQAA","0057Q0000072hdZQAQ","0057Q0000072hcCQAQ"].indexOf(idutentesf)<0){
+                throw redirect(303, '/io');
+            }
+
             const sessionId = uuidv4();
             createUser(sessionId, email, password, token, tipoUtente, idutentesf, sfuser);
             cookies.set(tipoUtente === 'standard' ? 'session_id_std' : 'session_id_ass', sessionId, {

@@ -57,10 +57,10 @@ export async function load({ cookies }) {
         
         /* Elaborazione */
         misure.forEach((m) => {
-            console.log("MISURA: " + m.Name);
-            console.log("Avvisi per misura: " + avvisi.filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
-            console.log("Avvisi aperti per misura: " + avvisi.filter((a) => a.outfunds__Status__c === 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
-            console.log("Avvisi chiusi per misura: " + avvisi.filter((a) => a.outfunds__Status__c !== 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
+            //console.log("MISURA: " + m.Name);
+            //console.log("Avvisi per misura: " + avvisi.filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
+            //console.log("Avvisi aperti per misura: " + avvisi.filter((a) => a.outfunds__Status__c === 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
+            //console.log("Avvisi chiusi per misura: " + avvisi.filter((a) => a.outfunds__Status__c !== 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id).length);
             m.avvisiAperti = avvisi.filter((a) => a.outfunds__Status__c === 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id);
             m.avvisiChiusi = avvisi.filter((a) => a.outfunds__Status__c !== 'PUBBLICATO').filter((a) => a.outfunds__Parent_Funding_Program__c === m.Id);
         })
