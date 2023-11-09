@@ -224,6 +224,7 @@
             
           </div>
         </div>
+        <!--
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="javascript:void(0)"> intelligenza artificiale </a>
 
@@ -241,7 +242,7 @@
             
           </div>
         </div>
-        
+        -->
       {/if}
       {#if loggedasseveratore}
         <a
