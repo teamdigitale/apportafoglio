@@ -1,39 +1,40 @@
 {
-	"name": "fmpa2026",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"css-build": "node-sass  ./src/sass -o ./static/",
-		"css-watch": "npm run css-build -- --watch",
-		"start": "npm run css-watch",
-		"dev": "vite dev && wget http://localhost:5173",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-node": "^1.3.1",
-		"@sveltejs/kit": "^1.20.4",
-		"bulma": "^0.9.4",
-		"node-sass": "^9.0.0",
-		"svelte": "^4.0.5",
-		"svelte-check": "^3.4.3",
-		"typescript": "^5.0.0",
-		"vite": "^4.4.2"
-	},
-	"type": "module",
-	"dependencies": {
-		"@creativebulma/bulma-tooltip": "^1.2.0",
-		"bulma-steps-component": "^0.5.3",
-		"bulma-switch": "^2.0.4",
-		"bulma-timeline": "^3.0.5",
-		"d3": "^7.8.5",
-		"jsforce": "^1.11.1",
-		"moment": "^2.29.4",
-		"numeral": "^2.0.6",
-		"simple-svelte-autocomplete": "^2.5.2",
-		"uuidv4": "^6.2.13"
-	}
+  "name": "fmpa2026",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "css-build": "node-sass  ./src/sass -o ./static/",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch",
+    "dev": "vite dev && wget http://localhost:5173",
+    "build": "node-sass ./src/sass -o ./static/ && vite build",
+    "preview": "node-sass ./src/sass -o ./static/ && vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/adapter-node": "^1.3.1",
+    "@sveltejs/kit": "^1.20.4",
+    "bulma": "^0.9.4",
+    "node-sass": "^9.0.0",
+    "sass": "^1.63.6",
+    "svelte": "^4.0.5",
+    "svelte-check": "^3.4.3",
+    "typescript": "^5.0.0",
+    "vite": "^4.4.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "@creativebulma/bulma-tooltip": "^1.2.0",
+    "bulma-steps-component": "^0.5.3",
+    "bulma-switch": "^2.0.4",
+    "bulma-timeline": "^3.0.5",
+    "d3": "^7.8.5",
+    "jsforce": "^1.11.1",
+    "moment": "^2.29.4",
+    "numeral": "^2.0.6",
+    "simple-svelte-autocomplete": "^2.5.2",
+    "uuidv4": "^6.2.13"
+  }
 }
