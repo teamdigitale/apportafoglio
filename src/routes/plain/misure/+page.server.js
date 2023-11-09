@@ -10,6 +10,7 @@ export async function load({ cookies }) {
         let conn = new jsforce.Connection({
             loginUrl: "https://login.salesforce.com"
         });
+        console.log(JSON.stringify(ustd));
         await conn.login(ustd.email, ustd.password + ustd.token);
         misure = misure.concat(await caricaMisure(conn));
         await conn.logout();
