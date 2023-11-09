@@ -7,7 +7,7 @@
 
     let email = "";
     let password = "";
-    let token = tipoutente==="standard"?"Ei3SVa6MQiC2fnTQMNuW0QAo":"wBm8xLwsbTg9NMvxDyTwowfD8";
+    let token = "";
 
     $: emailValid = email && email.trim().length > 0;
     $: passwordValid = password && password.trim().length > 3;
