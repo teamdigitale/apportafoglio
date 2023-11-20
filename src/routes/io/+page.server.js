@@ -107,6 +107,7 @@ export const actions = {
             }
 
             await conn.logout();
+            
         } catch (err) {
             if (tipoUtente == 'standard') { loginerrorstandard = err.message; }
             else {
@@ -118,6 +119,7 @@ export const actions = {
                 loggedasseveratore = false;
             }
         }
+        throw redirect(303, '/io');
         return {
 
             loggedstandard: loggedstandard,

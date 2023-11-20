@@ -5,11 +5,12 @@
   export let data;
   let menuActive = false;
   import { page } from "$app/stores";
-  export let loggedstandard = data.loggedstandard;
-  export let loggedasseveratore = data.loggedasseveratore;
+  $: loggedstandard = data.loggedstandard;
+  $: loggedasseveratore = data.loggedasseveratore;
 
   let runas = data.runas;
   let visible = true;
+  //invalidateAll();
   async function ra() {
     const response = await fetch("/api/runas", {
       method: "POST",

@@ -3,7 +3,6 @@
   import Auth2026 from "../../c/auth2026.svelte";
   export let data;
 
-  
 </script>
 
 <Header title="io" quote="Chi conosce gli altri è sapiente; chi conosce sé stesso è illuminato." author="Lao Tzu" />
