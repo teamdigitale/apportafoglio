@@ -4,7 +4,7 @@ import { loadEntiAPortafoglio } from '../../../logic/enti.js';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure.js';
 import { caricaRequirement } from '../../../logic/requirements.js';
 import { caricaTasks } from '../../../logic/task.js';
-import { getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteStandard } from '../../../lib/userdb';
 
 
 

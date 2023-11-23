@@ -1,5 +1,5 @@
 import jsforce from 'jsforce';
-import { getUserBySessionid } from './userdb'
+import { getUserBySessionid } from '../lib/userdb'
 
 export async function loadUtente(conn,idutentesf){
 
@@ -8,7 +8,7 @@ export async function loadUtente(conn,idutentesf){
         //console.log(idutentesf);
         const records = [];
         //console.log('-Caricamento utente...'+idutentesf);
-        let soqlUtente = `select Username, Name, Title, Email from User where Id = '` + idutentesf + `'`;
+        let soqlUtente = `select Username, Name, Title, Email, FullPhotoUrl   from User where Id = '` + idutentesf + `'`;
         let result_ = await conn.query(soqlUtente);
         records.push(...result_.records);
         //console.log("-numero di occorrenze da caricare: " + result_.totalSize);

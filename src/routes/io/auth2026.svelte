@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     export let tipoutente = "";
     export let logged = false;
     export let errorMessageStandard = "";
@@ -18,6 +19,7 @@
         errorMessageStandard = "";
         errorMessageAsseveratore = "";
     };
+
 </script>
 
 <form method="POST" action={logged ? "?/logout" : "?/login"}>
@@ -29,41 +31,25 @@
             </h1>
         </header>
         <div class="card-content">
+            {#if logged && utenteSF}
+            <div class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <!-- svelte-ignore a11y-img-redundant-alt -->
+                    <img class="is-rounded" src="{"/api/img/" + encodeURIComponent(utenteSF.FullPhotoUrl)}" alt="profile photo" />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p class="title is-4">{utenteSF.Name}</p>
+                  <p class="subtitle is-6 my-2">{utenteSF.Username}</p>
+                  <p class="subtitle is-6 my-2">{utenteSF.Email}</p>
+                  <p class="subtitle is-6 my-2">{utenteSF.Title}</p>
+                </div>
+              </div>
+              {/if}
             <div class="content">
-                {#if logged && utenteSF}
-                    <div class="columns">
-                        <div
-                            class="column is-one-third has-text-weight-bold"
-                        >
-                            username:
-                        </div>
-                        <div class="column">{utenteSF.Username}</div>
-                    </div>
-                    <div class="columns">
-                        <div
-                            class="column is-one-third has-text-weight-bold"
-                        >
-                            nome:
-                        </div>
-                        <div class="column">{utenteSF.Name}</div>
-                    </div>
-                    <div class="columns">
-                        <div
-                            class="column is-one-third has-text-weight-bold"
-                        >
-                            email:
-                        </div>
-                        <div class="column">{utenteSF.Email}</div>
-                    </div>
-                    <div class="columns">
-                        <div
-                            class="column is-one-third has-text-weight-bold"
-                        >
-                            qualifica:
-                        </div>
-                        <div class="column">{utenteSF.Title}</div>
-                    </div>
-                {:else}
+                {#if !(logged && utenteSF)}
+
                     <div class="field">
                         <label class="label" for={"email" + tipoutente}
                             >email</label
@@ -149,7 +135,9 @@
             <div class="field">
                 <div class="control">
                     <button class="button is-link" disabled={!submitValid}
-                        >{logged && utenteSF ? "disconnettiti" : "connettiti"}</button
+                        >{logged && utenteSF
+                            ? "disconnettiti"
+                            : "connettiti"}</button
                     >
                 </div>
             </div>
@@ -188,6 +176,5 @@
                 </article>
             </div>
         {/if}
-
     </div>
 </form>

@@ -3,7 +3,7 @@ import moment from "moment/min/moment-with-locales";
 moment.locale("it");
 import { loadCandidatura, loadComunicazioni, loadFileCorrelati, loadRichiesteVariazione, loadServiziRichiesta, loadSoggettoRealizzatore, loadStoriaCandidatura } from '../../../logic/candidaturadetail';
 
-import { getUtenteAsseveratore, getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteAsseveratore, getUtenteStandard } from '../../../lib/userdb';
 
 export async function load({ cookies, params }) {
     let cs = [];

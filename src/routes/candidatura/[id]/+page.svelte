@@ -889,4 +889,41 @@
     .timeline .timeline-item .timeline-marker.is-icon > * {
         font-size: 2rem !important;
     }
+
+
+
+    
+
+    .timeline-item.left .timeline-marker {
+    transform: translateX(50%);
+}
+
+.timeline.is-centered .timeline-item.left {
+    align-self: flex-start;
+    flex-direction: row-reverse;
+    margin-left: 0;
+    margin-right: 2em;
+}
+
+    .timeline .timeline-item.left .timeline .timeline-item.left{
+    padding: 1em 2em 0 0;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-basis: 100%;
+    }
+
+    .timeline .timeline-item.right::before {
+    content: "";
+    background-color: #dbdbdb;
+    display: block;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: -0.5px;
+    top: 0;
+}
+
+
 </style>

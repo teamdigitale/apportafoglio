@@ -1,6 +1,6 @@
 import jsforce from 'jsforce';
 import { caricaTask, caricaTipiTask } from '$lib/sfquery/asseverazioni';
-import { getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteStandard } from '../../../lib/userdb';
 import { caricaCandidature } from '../../../logic/candidature';
 import { caricaAvvisi } from '../../../logic/misure';
 import { loadEntiAPortafoglio } from '../../../logic/enti';

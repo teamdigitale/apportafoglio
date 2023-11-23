@@ -1,7 +1,7 @@
 
 import jsforce from 'jsforce';
 import { getFile } from '../../../../logic/files';
-import { getUtenteStandard } from '../../../../logic/userdb';
+import { getUtenteStandard } from '../../../../lib/userdb';
 
 
 /** @type {import('../$types').RequestHandler} */

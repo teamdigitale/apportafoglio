@@ -3,7 +3,7 @@ import jsforce from 'jsforce';
 import { caricaCandidature } from '../../../logic/candidature.js';
 import { loadEntiAPortafoglio } from '../../../logic/enti.js';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure.js';
-import { getUtenteStandard } from '../../../logic/userdb.js';
+import { getUtenteStandard } from '../../../lib/userdb.js';
 
 const stativalidi = ['ACCETTATA', 'FINANZIATA', 'IN VERIFICA'];
 const statiinlavorazione = ['PREBOZZA', 'BOZZA', 'CONCLUSA'];

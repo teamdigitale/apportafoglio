@@ -1,7 +1,7 @@
 import jsforce from 'jsforce';
 import { loadEntiAPortafoglio } from '../../../logic/enti';
 import { loadReferentiAPortafoglio } from '../../../logic/referenti';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../../logic/userdb';
+import { getUtenteStandard, getUtenteAsseveratore } from '../../../lib/userdb';
 
 
 

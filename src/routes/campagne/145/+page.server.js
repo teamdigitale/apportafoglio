@@ -1,6 +1,6 @@
 // @ts-nocheck
 import jsforce from 'jsforce';
-import { getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteStandard } from '../../../lib/userdb';
 import { caricaCandidature145, caricaFornitori145, caricaPlatea145 } from './db';
 
 export async function load({ cookies }) {

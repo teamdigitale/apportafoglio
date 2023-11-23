@@ -3,7 +3,7 @@ import jsforce from 'jsforce';
 import { caricaCandidature } from '../../../logic/candidature';
 import { loadEntiAPortafoglio } from '../../../logic/enti';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure';
-import { getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteStandard } from '../../../lib/userdb';
 
 export async function load({ cookies }) {
     // @ts-ignore

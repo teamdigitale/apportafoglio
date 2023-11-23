@@ -1,6 +1,6 @@
 import jsforce from 'jsforce';
 import { loadEntiAPortafoglio } from '../../../logic/enti';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../../logic/userdb';
+import { getUtenteStandard, getUtenteAsseveratore } from '../../../lib/userdb';
 
 export async function load({ cookies }) {
     let entistd = [];

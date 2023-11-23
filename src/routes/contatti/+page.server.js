@@ -1,5 +1,5 @@
 import jsforce from 'jsforce';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../logic/userdb';
+import { getUtenteStandard, getUtenteAsseveratore } from '../../lib/userdb';
 import { loadContatti, loadEventi } from './logic';
 
 export async function load({ cookies }) {

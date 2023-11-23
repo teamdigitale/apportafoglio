@@ -2,7 +2,7 @@
 import jsforce from 'jsforce';
 import { loadEntiAPortafoglio } from '../../../logic/enti';
 import { caricaAvvisi } from '../../../logic/misure';
-import { getUtenteStandard } from '../../../logic/userdb';
+import { getUtenteStandard } from '../../../lib/userdb';
 import { caricaAdesioniPerAvviso, caricaDatiGrafico, caricaRichiesteDiModifica } from './db';
 
 /*

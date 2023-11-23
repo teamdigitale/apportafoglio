@@ -1,5 +1,5 @@
 import { caricaTaskAsseverazione, caricaCandidatureAsseverazione } from '../../../logic/asseverazioni'
-import { getUtenteAsseveratore } from '../../../logic/userdb';
+import { getUtenteAsseveratore } from '../../../lib/userdb';
 import jsforce from 'jsforce';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure';
 import { loadEntiAPortafoglio } from '../../../logic/enti';

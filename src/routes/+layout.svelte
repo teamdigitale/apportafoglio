@@ -24,7 +24,7 @@
   }
 </script>
 
-<nav class="navbar" aria-label="main navigation">
+<nav class="navbar  is-fixed-top" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item is-link" href="/">
       <figure class="image is-28x28 mx-2">

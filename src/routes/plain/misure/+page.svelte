@@ -12,7 +12,7 @@
 <section class="section is-12 px-0">
     <div class="columns is-multiline">
         {#each data.misure as misura}
-            <div class="column is-half">
+            <div class="column is-one-third">
                 <Misuracard misura={misura}/>
             </div>
         {/each}

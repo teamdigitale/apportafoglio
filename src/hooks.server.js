@@ -1,9 +1,9 @@
-import { getUserBySessionid } from './logic/userdb';
+import { getUserBySessionid } from './lib/userdb';
 import { redirect } from '@sveltejs/kit';
 
 
 const unProtectedRoutes = ['/', '/io', '/opendata', '/io/cookies'];
-export const handle = async ({ event, request, resolve }) => {
+export const handle = async ({ event,  resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
     let utentestandard;
@@ -23,6 +23,7 @@ export const handle = async ({ event, request, resolve }) => {
                 loggedstandard = false;
             } else {
                 loggedstandard = true;
+
             }
         }
 
@@ -75,3 +76,21 @@ export const handle = async ({ event, request, resolve }) => {
     };
     return resolve(event);
 };
+
+/*
+export async function handleFetch({ event, request, fetch }) {
+    console.log("Aaaa");
+    const cookiesfuidstd = event.cookies.get('session_id_std');
+    if (cookiesfuidstd) {
+        let u = getUserBySessionid(cookiesfuidstd, 'standard');
+        if (u) {
+            console.log("b");
+                request.headers.set('Authorization', 'Bearer ' + u.token);
+            
+        }
+    }
+
+    
+    return fetch(request);
+}
+*/

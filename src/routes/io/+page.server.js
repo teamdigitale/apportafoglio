@@ -1,4 +1,4 @@
-import { getUserBySessionid, createUser, deleteUser } from '../../logic/userdb';
+import { getUserBySessionid, createUser, deleteUser } from '../../lib/userdb';
 import { v4 as uuidv4 } from 'uuid';
 import { dev } from '$app/environment';
 import jsforce from 'jsforce';
@@ -13,12 +13,10 @@ let utentestandard;
 let utenteasseveratore;
 
 export function load({ cookies }) {
-
     const cookiesfuidstd = cookies.get('session_id_std');
     const cookiesfuidass = cookies.get('session_id_ass');
     loggedstandard = false;
     loggedasseveratore = false;
-
     loginerrorstandard = '';
     loginerrorasseveratore = '';
 
@@ -73,6 +71,7 @@ export const actions = {
         try {
             await conn.login(email, password + token);
             await conn.identity(function (err, res) {
+                console.log(res);
                 idutentesf = res.user_id;
             });
             const sfuser = await loadUtente(conn, idutentesf);
@@ -82,8 +81,8 @@ export const actions = {
 
             /******ABILITAZIONE PILOTI */
 
-            if(["0057Q00000729pMQAQ","0057Q0000072YrZQAU","0057Q000005UXtlQAG","0057Q0000070qelQAA","0057Q0000072NWoQAM",
-        "0057Q0000072hbnQAA","0057Q0000072hcgQAA","0057Q0000072hdZQAQ","0057Q0000072hcCQAQ"].indexOf(idutentesf)<0){
+            if (["0057Q00000729pMQAQ", "0057Q0000072YrZQAU", "0057Q000005UXtlQAG", "0057Q0000070qelQAA", "0057Q0000072NWoQAM",
+                "0057Q0000072hbnQAA", "0057Q0000072hcgQAA", "0057Q0000072hdZQAQ", "0057Q0000072hcCQAQ"].indexOf(idutentesf) < 0) {
                 throw redirect(303, '/io');
             }
 
@@ -98,8 +97,8 @@ export const actions = {
             });
             cookies.delete('runas');
             cookies.delete('origrunas');
-            
-            
+
+
             if (tipoUtente === 'standard') {
                 loggedstandard = true;
             } else {
@@ -107,8 +106,9 @@ export const actions = {
             }
 
             await conn.logout();
-            
+            throw redirect(303, '/io');
         } catch (err) {
+            console.log(err.message);
             if (tipoUtente == 'standard') { loginerrorstandard = err.message; }
             else {
                 loginerrorasseveratore = err.message;
@@ -119,7 +119,7 @@ export const actions = {
                 loggedasseveratore = false;
             }
         }
-        throw redirect(303, '/io');
+
         return {
 
             loggedstandard: loggedstandard,

@@ -1,6 +1,6 @@
 import jsforce from 'jsforce';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../../logic/userdb';
+import { getUtenteStandard, getUtenteAsseveratore } from '../../../lib/userdb';
 
 
 export async function load({ cookies }) {

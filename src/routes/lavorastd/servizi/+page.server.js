@@ -1,5 +1,5 @@
 import jsforce from 'jsforce';
-import { getUtenteAsseveratore, getUtenteStandard } from '../../../logic/userdb.js';
+import { getUtenteAsseveratore, getUtenteStandard } from '../../../lib/userdb.js';
 
 const MAX_FETCH = 1000000;
 

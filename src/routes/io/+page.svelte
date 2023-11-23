@@ -1,14 +1,18 @@
 <script>
   import Header from "$lib/c/ui/header.svelte";
-  import Auth2026 from "../../c/auth2026.svelte";
+  import Auth2026 from "./auth2026.svelte";
   export let data;
-
+  export let form;
 </script>
 
-<Header title="io" quote="Chi conosce gli altri è sapiente; chi conosce sé stesso è illuminato." author="Lao Tzu" />
+<Header
+  title="io"
+  quote="Chi conosce gli altri è sapiente; chi conosce sé stesso è illuminato."
+  author="Lao Tzu"
+/>
 
 <section class="section is-12">
-  <div class="columns is-multiline is-mobile">
+  <div class="columns is-multiline">
     <div class="column is-half">
       <Auth2026
         tipoutente="standard"
@@ -16,9 +20,9 @@
           ? data.utentestandard.sfuser
           : null}
         logged={data.loggedstandard}
-        errorMessageStandard={data.loginerrorstandard &&
-        data.loginerrorstandard.length > 0
-          ? data.loginerrorstandard
+        errorMessageStandard={form?.loginerrorstandard &&
+        form?.loginerrorstandard.length > 0
+          ? form?.loginerrorstandard
           : ""}
       />
     </div>
@@ -29,9 +33,9 @@
           ? data.utenteasseveratore.sfuser
           : null}
         logged={data.loggedasseveratore}
-        errorMessageAsseveratore={data.loginerrorasseveratore &&
-        data.loginerrorasseveratore.length > 0
-          ? data.loginerrorasseveratore
+        errorMessageAsseveratore={form?.loginerrorasseveratore &&
+        form?.loginerrorasseveratore.length > 0
+          ? form?.loginerrorasseveratore
           : ""}
       />
     </div>

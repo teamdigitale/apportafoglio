@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { getUserBySessionid } from '../../logic/userdb';
+import { getUserBySessionid } from '../../lib/userdb';
 import jsforce from 'jsforce';
 import { caricaScadenze } from '../../logic/requirements';
 
