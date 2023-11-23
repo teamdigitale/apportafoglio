@@ -93,7 +93,7 @@
         {#if referente.MobilePhone}
         <p class="card-footer-item is-size-6 ">
             <span>
-                <a href="https://wa.me/{referente.MobilePhone}"><img src="/WhatsAppButtonGreenSmall.svg" alt="Contatta su Whatsapp" /></a>
+                <a href="https://wa.me/{referente.MobilePhone}"><span><img style="height: 2rem;" src="/WhatsAppButtonGreenSmall.svg" alt="Contatta su Whatsapp" /></span></a>
             </span>
         </p>  
         <p class="card-footer-item is-size-6 ">
