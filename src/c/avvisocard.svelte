@@ -6,9 +6,9 @@
 
 <div class="card bm--card-equal-height has-background-grey-lighter">
     <header
-        class={avviso.outfunds__Status__c === "PUBBLICATO"
+        class="card-header {avviso.outfunds__Status__c === "PUBBLICATO"
             ? "has-background-info"
-            : "has-background-danger"}
+            : "has-background-danger"}"
     >
         <p class="card-header-title">
             {avviso.Name}

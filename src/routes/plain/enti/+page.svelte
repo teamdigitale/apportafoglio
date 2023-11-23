@@ -200,7 +200,7 @@
 <section class="section is-12 px-0">
     <div class="columns is-multiline">
         {#each filteredEnti as ente}
-            <div class="column is-half">
+            <div class="column is-one-third">
                 <Entecard {ente} />
             </div>
         {/each}

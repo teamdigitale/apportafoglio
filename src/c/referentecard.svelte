@@ -6,9 +6,9 @@
 
 <div class="card bm--card-equal-height has-background-grey-lighter">
     <header
-        class={referente.Stato__c && referente.Stato__c === "Attivo"
+        class="card-header {referente.Stato__c && referente.Stato__c === "Attivo"
             ? "has-background-info"
-            : "has-background-danger"}
+            : "has-background-danger"}"
     >
         <nav class="level">
             <!-- Left side -->
@@ -89,17 +89,32 @@
             >
         </p>
     </div>
-    <!--
-                    <footer class="card-footer">
-                        <p class="card-footer-item is-size-6">
-                            <span>
-                                <a href="/plain/avvisi/{misura.Id}"
-                                    >Avvisi relativi</a
-                                >
-                            </span>
-                        </p>
-                    </footer>
-                    -->
+    <footer class="card-footer">
+        {#if referente.MobilePhone}
+        <p class="card-footer-item is-size-6 ">
+            <span>
+                <a href="https://wa.me/{referente.MobilePhone}"><img src="/WhatsAppButtonGreenSmall.svg" alt="Contatta su Whatsapp" /></a>
+            </span>
+        </p>  
+        <p class="card-footer-item is-size-6 ">
+            <span>
+                <a href="tel:{referente.MobilePhone}"><span class="icon">
+                    <i class="fas fa-phone-volume"></i>
+                  </span><span>Chiama</span></a>
+            </span>
+        </p>    
+        {/if}
+        {#if referente.Email}
+        <p class="card-footer-item is-size-6 ">
+            <span>
+                <a href="mailto:{referente.Email}"><span class="icon">
+                    <i class="fas fa-envelope"></i>
+                  </span><span>Scrivi</span></a>
+            </span>
+        </p>  
+        {/if}
+
+    </footer>
 </div>
 
 <style>

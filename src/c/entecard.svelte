@@ -4,9 +4,9 @@
 
 <div class="card bm--card-equal-height has-background-grey-lighter">
     <header
-        class={ente.Active__c && ente.Active__c == 1
+        class="card-header {ente.Active__c && ente.Active__c == 1
             ? "has-background-info"
-            : "has-background-danger"}
+            : "has-background-danger"}"
     >
         <nav class="level">
             <!-- Left side -->

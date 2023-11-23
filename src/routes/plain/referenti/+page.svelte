@@ -213,7 +213,7 @@
 <section class="section is-12 px-0">
     <div class="columns is-multiline">
         {#each filteredReferenti as referente}
-            <div class="column is-half">
+            <div class="column is-one-third">
                 <Referentecard {referente} />
             </div>
         {/each}

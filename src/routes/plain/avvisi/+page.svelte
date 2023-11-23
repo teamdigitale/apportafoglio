@@ -162,7 +162,7 @@
 <section class="section is-12 px-0">
     <div class="columns is-multiline">
         {#each filteredAvvisi as avviso}
-            <div class="column is-half">
+            <div class="column is-one-third">
                 <Avvisocard {avviso} />
             </div>
         {/each}

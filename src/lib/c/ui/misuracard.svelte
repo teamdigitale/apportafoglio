@@ -5,7 +5,7 @@
 </script>
 
 <div class="card bm--card-equal-height has-background-grey-lighter">
-    <header class="has-background-info">
+    <header class="card-header has-background-info">
         <p class="card-header-title">
             {misura.Name}
         </p>
