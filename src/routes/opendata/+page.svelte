@@ -1,11 +1,12 @@
 <script>
     import Header from "$lib/c/ui/header.svelte";
     import Scorecard from "$lib/c/ui/scorecard.svelte";
+    import MediaQuery from "$lib/c/ui/MediaQuery.svelte";
     import Pagination from "../campagne/145/pagination.svelte";
     import Recorddetail from "./recorddetail.svelte";
     export let data;
 
-    import { fade } from 'svelte/transition';
+    import { fade } from "svelte/transition";
 
     let candidature = data.finanziate;
 
@@ -13,7 +14,7 @@
 
     const dettagli = (c) => {
         selectedRecord = c;
-    }
+    };
 
     let cperpage;
 
@@ -301,16 +302,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="level-left mx-1">
-                <div class="level-item">
-                    <p class="is-size-7">
-                        dati relativi a <b>{cc.length}</b> candidature su un
-                        totale di <b>{data.finanziate.length}</b> candidature finanziate
-                    </p>
-                </div>
-            </div>
-            
         </nav>
     </div>
 </section>
@@ -351,76 +342,88 @@
 </section>
 
 {#if selectedRecord}
-<section class="section is-12 px-0 py-0" transition:fade>
-    <div class="hero-body py-0" >
-        <Recorddetail bind:record={selectedRecord} />
-
-    </div>
-</section>
-{:else}
-<section class="section is-12 px-0 py-0" transition:fade>
-    <div class="hero-body py-0">
-        <div class="table-container">
-            <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th />
-                        <th>Tipologia ente</th>
-                        <th>Ente</th>
-                        <th>Regione</th>
-                        <th>Provincia</th>
-                        <th>Misura</th>
-                        <th>Stato</th>
-                        <th>Importo</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th colspan="8"
-                            ><Pagination
-                                rows={cc}
-                                perPage={10}
-                                bind:trimmedRows={cperpage}
-                            /></th
-                        >
-                    </tr>
-                </tfoot>
-                <tbody>
-                    {#if cperpage}
-                        {#each cperpage as c}
-                            <tr 
-                                class="has-text-{stilePerStato(
-                                    c.stato_candidatura
-                                )} {c.stato_candidatura === 'E'
-                                    ? 'has-text-weight-bold'
-                                    : ''}"
-                            >
-                                <td
-                                    ><button class="button is-small is-outlined is-info" on:click={dettagli(c)}
-                                        ><span class="icon is-small"
-                                            ><i class="fas fa-glasses" /></span
-                                        ></button
-                                    ></td
-                                >
-                                <td>{c.tipologia_ente}</td>
-                                <td>{c.ente}</td>
-                                <td>{c.regione}</td>
-                                <td>{c.provincia}</td>
-                                <td>{c.avviso.misura}</td>
-                                <td
-                                    >{c.stato_candidatura === "A"
-                                        ? "ASSEGNATO"
-                                        : c.stato_candidatura === "E"
-                                        ? "EROGATO"
-                                        : "RINUNCIATO"}</td
-                                >
-                                <td>{euro(c.importo_finanziamento)}</td>
-                            </tr>
-                        {/each}
-                    {/if}
-                </tbody>
-            </table>
+    <section class="section is-12 px-0 py-0" transition:fade>
+        <div class="hero-body py-0">
+            <Recorddetail bind:record={selectedRecord} />
         </div>
-    </div>
-</section>
+    </section>
+{:else}
+    <MediaQuery query="(max-width: 768px)" let:matches>
+        <section class="section is-12 px-0 py-0" transition:fade>
+            <div class="hero-body py-0">
+                <div class="table-container">
+                    <table
+                        class="table is-striped is-narrow is-hoverable is-fullwidth"
+                    >
+                        <thead>
+                            <tr>
+                                <th />
+                                <th>Tipologia ente</th>
+                                <th>Ente</th>
+                                {#if !matches}
+                                    <th>Regione</th>
+                                    <th>Provincia</th>
+                                    <th>Misura</th>
+                                    <th>Stato</th>
+                                {/if}
+                                <th>Importo</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="8"
+                                    ><Pagination
+                                        rows={cc}
+                                        perPage={10}
+                                        bind:trimmedRows={cperpage}
+                                    /></th
+                                >
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {#if cperpage}
+                                {#each cperpage as c}
+                                    <tr
+                                        class="has-text-{stilePerStato(
+                                            c.stato_candidatura
+                                        )} {c.stato_candidatura === 'E'
+                                            ? 'has-text-weight-bold'
+                                            : ''}"
+                                    >
+                                        <td
+                                            ><button
+                                                class="button is-small is-outlined is-info"
+                                                on:click={dettagli(c)}
+                                                ><span class="icon is-small"
+                                                    ><i
+                                                        class="fas fa-glasses"
+                                                    /></span
+                                                ></button
+                                            ></td
+                                        >
+                                        <td>{c.tipologia_ente}</td>
+                                        <td>{c.ente}</td>
+                                        {#if !matches}
+                                            <td>{c.regione}</td>
+                                            <td>{c.provincia}</td>
+                                            <td>{c.avviso.misura}</td>
+                                            <td
+                                                >{c.stato_candidatura === "A"
+                                                    ? "ASSEGNATO"
+                                                    : c.stato_candidatura ===
+                                                      "E"
+                                                    ? "EROGATO"
+                                                    : "RINUNCIATO"}</td
+                                            >
+                                        {/if}
+                                        <td>{euro(c.importo_finanziamento)}</td>
+                                    </tr>
+                                {/each}
+                            {/if}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </MediaQuery>
 {/if}

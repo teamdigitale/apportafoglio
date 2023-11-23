@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte";
     export let tipoutente = "";
     export let logged = false;
     export let errorMessageStandard = "";

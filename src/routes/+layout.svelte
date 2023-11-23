@@ -5,6 +5,7 @@
   export let data;
   let menuActive = false;
   import { page } from "$app/stores";
+    import BackToTop from "$lib/c/ui/BackToTop.svelte";
   $: loggedstandard = data.loggedstandard;
   $: loggedasseveratore = data.loggedasseveratore;
 
@@ -248,6 +249,8 @@
   </div>
 </footer>
 -->
+
+<BackToTop></BackToTop>
 <style>
 
 .content.is-vcentered {
