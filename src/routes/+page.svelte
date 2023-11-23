@@ -30,8 +30,8 @@
     <div class="column is-half is-offset-one-quarter">
       <h2 class="title">Accesso con autenticazione</h2>
       <h2 class="subtitle">Consulta i tuoi dati con le tue credenziali</h2>
-      <p class="has-text-weight-bold">Per accedere avrai bisogno, oltre che di username e password, del token ti protezione. Il token può essere generato/recuperato con l'apposita funzione nelle impostazioni utente. Qui di seguito le istruzioni per ottenerlo</p>
-      <ol>
+      <p class="has-text-weight-bold">Per accedere avrai bisogno, oltre che di username e password, del token ti protezione. Il token può essere generato/recuperato con l'apposita funzione nelle impostazioni utente. Qui di seguito le istruzioni per ottenerlo:</p>
+      <ol class="my-5">
         <li>Accedi a Salesforce</li>
         <li>Accedi alle impostazioni del tuo profilo</li>
         <li>Verifica, nella sezione "Informazioni personali", che il campo "Email" contenga un indirizzo email da te accessibile; in caso contrario aggiornalo</li>
