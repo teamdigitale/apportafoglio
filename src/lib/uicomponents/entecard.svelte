@@ -14,7 +14,7 @@
 		<p class="card-header-title">Codice IPA: {ente.Codice_IPA}</p>
 	</header>
 	<div class="card-content">
-		<div class="tabs is-small is-full-width">
+		<div class="tabs is-medium is-full-width">
 			<ul>
 				<li class={activetab === 'info' ? 'is-active' : ''}>
 					<a href="#nan" on:click={() => setActiveTab('info')} role="button">Info</a>

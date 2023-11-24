@@ -42,6 +42,7 @@
       aria-expanded="false"
       data-target="navbar"
       on:click={() => (menuActive = !menuActive)}
+
     >
       <span aria-hidden="true" />
       <span aria-hidden="true" />
@@ -57,6 +58,7 @@
           : 'has-text-grey'}"
         href="/io"
         aria-current={$page.url.pathname === "/io"}
+        on:click={() => (menuActive = !menuActive)}
       >
         <span class="icon">
           <i class="fas fa-user" aria-hidden="true" />
@@ -68,6 +70,7 @@
           : 'has-text-grey'}"
         href="/opendata"
         aria-current={$page.url.pathname === "/opendata"}
+        on:click={() => (menuActive = !menuActive)}
       >
         <span class="icon">
           <i class="fas fa-database" aria-hidden="true" />
@@ -79,6 +82,7 @@
         : 'has-text-grey'}"
       href="/entiipa"
       aria-current={$page.url.pathname === "/entiipa"}
+      on:click={() => (menuActive = !menuActive)}
     >
       <span class="icon">
         <i class="fas fa-building" aria-hidden="true" />
@@ -96,6 +100,7 @@
                 : 'has-text-grey'}"
               href="/plain/misure"
               aria-current={$page.url.pathname === "/plain/misure"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-euro-sign" aria-hidden="true" />
               </span>&nbsp;misure
@@ -106,6 +111,7 @@
                 : 'has-text-grey'}"
               href="/plain/avvisi"
               aria-current={$page.url.pathname === "/plain/avvisi"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-bullhorn" aria-hidden="true" />
               </span>&nbsp;avvisi
@@ -116,6 +122,7 @@
                 : 'has-text-grey'}"
               href="/plain/enti"
               aria-current={$page.url.pathname === "/plain/enti"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-building" aria-hidden="true" />
               </span>&nbsp;enti
@@ -126,6 +133,7 @@
                 : 'has-text-grey'}"
               href="/plain/referenti"
               aria-current={$page.url.pathname === "/plain/referenti"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-address-book" aria-hidden="true" />
               </span>&nbsp;referenti
@@ -136,6 +144,7 @@
                 : 'has-text-grey'}"
               href="/contatti"
               aria-current={$page.url.pathname === "/contatti"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-phone" aria-hidden="true" />
               </span>&nbsp;contatti
@@ -155,6 +164,7 @@
                 : 'has-text-grey'}"
               href="/lavorastd/misura"
               aria-current={$page.url.pathname === "/lavorastd/misura"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;dall'alto (per misura)
@@ -165,6 +175,7 @@
                 : 'has-text-grey'}"
               href="/lavorastd/ente"
               aria-current={$page.url.pathname === "/lavorastd/ente"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;a media quota (per ente)
@@ -175,6 +186,7 @@
                 : 'has-text-grey'}"
               href="/lavorastd/fornitori"
               aria-current={$page.url.pathname === "/lavorastd/fornitori"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;dal basso (per fornitore)
@@ -186,6 +198,7 @@
                 : 'has-text-grey'}"
               href="/lavorastd/servizi"
               aria-current={$page.url.pathname === "/lavorastd/servizi"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;nel dettaglio (per servizio)
@@ -204,6 +217,7 @@
                 : 'has-text-grey'}"
               href="/lavorastd/asseverazioni"
               aria-current={$page.url.pathname === "/lavorastd/asseverazioni"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-certificate" aria-hidden="true" />
               </span>&nbsp;asseverazioni
@@ -221,6 +235,7 @@
                 : 'has-text-grey'}"
               href="/campagne/appio"
               aria-current={$page.url.pathname === "/campagne/appio"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;qualità app IO
@@ -231,6 +246,7 @@
                 : 'has-text-grey'}"
               href="/campagne/145"
               aria-current={$page.url.pathname === "/campagne/145"}
+              on:click={() => (menuActive = !menuActive)}
               ><span class="icon">
                 <i class="fas fa-angle-down" aria-hidden="true" />
               </span>&nbsp;target 1.4.5 dic 2023
@@ -264,6 +280,7 @@
             : 'has-text-grey'}"
           href="/asseveratore/quadro"
           aria-current={$page.url.pathname === "/asseveratore/quadro"}
+          on:click={() => (menuActive = !menuActive)}
           ><span class="icon">
             <i class="fas fa-stamp" aria-hidden="true" />
           </span>&nbsp;quadro asseverazioni
