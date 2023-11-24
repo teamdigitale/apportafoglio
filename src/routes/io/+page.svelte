@@ -3,6 +3,16 @@
   import Auth2026 from "./auth2026.svelte";
   export let data;
   export let form;
+
+  import { onMount } from 'svelte';
+  import { invalidateAll } from '$app/navigation';
+
+	onMount(async () => {
+		invalidateAll();
+	});
+
+  
+
 </script>
 
 <Header

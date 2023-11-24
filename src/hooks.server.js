@@ -10,7 +10,7 @@ export const handle = async ({ event,  resolve }) => {
     let utenteasseveratore;
     const cookiesfuidstd = event.cookies.get('session_id_std');
     const cookiesfuidass = event.cookies.get('session_id_ass');
-    console.log(event.url.pathname);
+
 
         if (!(cookiesfuidstd || cookiesfuidass) && !(
             event.url.pathname==='/'|| 
@@ -19,7 +19,6 @@ export const handle = async ({ event,  resolve }) => {
             event.url.pathname.includes('/opendata') 
         //!unProtectedRoutes.includes(event.url.pathname)
         ) ) {
-            console.log("RED");
             throw redirect(303, '/io');
         }
 
