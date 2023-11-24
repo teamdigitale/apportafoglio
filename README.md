@@ -18,5 +18,5 @@ In quest'area è possibile consultare il proprio portafoglio, secondo diverse vi
 ---
 
 ### Note
-L'applicazione è stata creata con [sveltekit]((https://kit.svelte.dev/)) e funziona in sola consultazione, non è possibile scrivere/modificare dati.
+L'applicazione è stata creata con [sveltekit](https://kit.svelte.dev/) e funziona in sola consultazione, non è possibile scrivere/modificare dati.
 
