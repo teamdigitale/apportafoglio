@@ -71,7 +71,7 @@ export const actions = {
         try {
             await conn.login(email, password + token);
             await conn.identity(function (err, res) {
-                console.log(res);
+
                 idutentesf = res.user_id;
             });
             const sfuser = await loadUtente(conn, idutentesf);
@@ -90,9 +90,9 @@ export const actions = {
             createUser(sessionId, email, password, token, tipoUtente, idutentesf, sfuser);
             cookies.set(tipoUtente === 'standard' ? 'session_id_std' : 'session_id_ass', sessionId, {
                 path: '/',
-                httpOnly: true,
+                //httpOnly: true,
                 sameSite: 'strict',
-                secure: !dev,
+                secure: true,
                 maxAge: 60 * 60 * 24 * 1
             });
             cookies.delete('runas');

@@ -7,7 +7,6 @@
 		activetab = name;
 	};
 
-	console.log(comune);
 </script>
 
 <div class="card has-background-grey-lighter bm--card-equal-height" id={'card-' + ente.Codice_IPA}>

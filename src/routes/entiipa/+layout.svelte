@@ -37,7 +37,7 @@
 							<input
 								class="input is-primary"
 								type="text"
-								placeholder="nparola chiave"
+								placeholder="parola chiave"
 								bind:value={keyword}
 							/>
 						</div>
