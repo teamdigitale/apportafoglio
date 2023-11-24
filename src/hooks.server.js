@@ -2,7 +2,7 @@ import { getUserBySessionid } from './lib/userdb';
 import { redirect } from '@sveltejs/kit';
 
 
-const unProtectedRoutes = ['/', '/io', '/opendata', '/io/cookies'];
+const unProtectedRoutes = ['/', '/io', '/opendata', '/entiipa','/io/cookies'];
 export const handle = async ({ event,  resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
@@ -10,8 +10,16 @@ export const handle = async ({ event,  resolve }) => {
     let utenteasseveratore;
     const cookiesfuidstd = event.cookies.get('session_id_std');
     const cookiesfuidass = event.cookies.get('session_id_ass');
-    if (!event.url.pathname.startsWith('/sfinfo')) {
-        if (!(cookiesfuidstd || cookiesfuidass) && !unProtectedRoutes.includes(event.url.pathname)) {
+    console.log(event.url.pathname);
+
+        if (!(cookiesfuidstd || cookiesfuidass) && !(
+            event.url.pathname==='/'|| 
+            event.url.pathname.startsWith('/entiipa')|| 
+            event.url.pathname.includes('/io')|| 
+            event.url.pathname.includes('/opendata') 
+        //!unProtectedRoutes.includes(event.url.pathname)
+        ) ) {
+            console.log("RED");
             throw redirect(303, '/io');
         }
 
@@ -41,13 +49,19 @@ export const handle = async ({ event,  resolve }) => {
             //DO SOMETHING
         } else {
 
-            if (!unProtectedRoutes.includes(event.url.pathname)) {
+            if (!(
+                event.url.pathname==='/'|| 
+                event.url.pathname.startsWith('/entiipa')|| 
+                event.url.pathname.includes('/io')|| 
+                event.url.pathname.includes('/opendata') 
+            //!unProtectedRoutes.includes(event.url.pathname)
+            )) {
                 throw redirect(303, '/io');
             }
 
         }
 
-    }
+
 
     /*
     let us = utentestandard;

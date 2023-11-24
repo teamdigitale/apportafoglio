@@ -73,6 +73,17 @@
           <i class="fas fa-database" aria-hidden="true" />
         </span>&nbsp;open data
       </a>
+      <a
+      class="navbar-item {$page.url.pathname === '/entiipa'
+        ? 'has-text-link'
+        : 'has-text-grey'}"
+      href="/entiipa"
+      aria-current={$page.url.pathname === "/entiipa"}
+    >
+      <span class="icon">
+        <i class="fas fa-building" aria-hidden="true" />
+      </span>&nbsp;IPA
+    </a>
       {#if loggedasseveratore || loggedstandard}
         <div class="navbar-item has-dropdown is-hoverable">
           <!-- svelte-ignore a11y-invalid-attribute -->
