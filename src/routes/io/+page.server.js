@@ -106,7 +106,7 @@ export const actions = {
             }
 
             await conn.logout();
-            throw redirect(303, '/io?/login');
+            //throw redirect(303, '/io?/login');
         } catch (err) {
             console.log(err.message);
             if (tipoUtente == 'standard') { loginerrorstandard = err.message; }

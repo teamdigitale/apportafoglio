@@ -5,11 +5,13 @@
   export let form;
 
   import { onMount } from 'svelte';
-  import { invalidateAll } from '$app/navigation';
+  
+  /*import { invalidateAll } from '$app/navigation';
 
 	onMount(async () => {
 		invalidateAll();
 	});
+  */
 
   
 
