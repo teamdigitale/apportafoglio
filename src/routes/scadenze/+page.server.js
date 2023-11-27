@@ -36,9 +36,14 @@ export async function load({ cookies }) {
         order by outfunds__Due_Date__c 
         `, MAX_FETCH);
         
-        const all = Promise.all([qscadenze]);
+        const qvariazioni = promiseQuery(conn, `select Id, WhatId, Subject, IsClosed, CreatedDate, LastModifiedDate, Approvazione_Automatica__c,  Data_richiesta__c, Data_scadenza_iniziale__c, Giorni_richiesti__c, Motivazione_Rifiuto__c  from Task where RecordType.Name = 'Variazione Cronoprogramma' and RecordType.SobjectType = 'Task' and status!='Completed' order by CreatedDate desc`, MAX_FETCH);
+        const all = Promise.all([qscadenze,qvariazioni]);
         const values = await all;
         await conn.logout();
+        for(let z = 0; z<values[0].length; z++){
+            values[0][z].rv=values[1].filter(r => r.WhatId===values[0][z].outfunds__Funding_Request__r.Id);
+            
+        }
         return {
             scadenze: values[0]
         };

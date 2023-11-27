@@ -6,6 +6,7 @@
     import Scores from "./scores.svelte";
     import moment from "moment/min/moment-with-locales";
     import Pagination from "../campagne/145/pagination.svelte";
+    import { sineIn } from "svelte/easing";
     moment.locale("it");
     export let records;
     let cperpage;
@@ -188,6 +189,7 @@
                             <th>Avviso</th>
                             <th>Tipologia</th>
                             <th>Scadenza</th>
+                            <th>Richiesta Variazione</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -236,6 +238,13 @@
                                             "YYYY-MM-DD",
                                         ).format("DD/MM/YYYY")}</td
                                     >
+                                    <td>
+                                        {#if c.rv && c.rv.length>0}
+                                        SI - {c.rv[0].Giorni_richiesti__c} giorni
+                                        {:else}
+                                        NO
+                                        {/if}
+                                    </td>
                                 </tr>
                             {/each}
                         {/if}
