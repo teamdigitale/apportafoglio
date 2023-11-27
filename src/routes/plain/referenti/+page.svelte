@@ -1,5 +1,6 @@
 <script>
     export let data;
+    import Filters from "$lib/c/ui/Filters.svelte";
     import Referentecard from "../../../c/referentecard.svelte";
     import moment from "moment/min/moment-with-locales";
     moment.locale("it");
@@ -14,10 +15,10 @@
                 };
                 a[Stato__c].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.Stato__c)
-            .sort()
+            .sort(),
     );
     let filterStatoReferente = "Attivo";
 
@@ -30,10 +31,10 @@
                 };
                 a[portafoglio].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.portafoglio)
-            .sort()
+            .sort(),
     );
     let filterPortafoglio = "Tutti i portafogli";
 
@@ -45,32 +46,33 @@
         .filter((x) =>
             filterStatoReferente === "Tutti"
                 ? true
-                : x.Stato__c === filterStatoReferente
+                : x.Stato__c === filterStatoReferente,
         )
         .filter((x) =>
             filterPortafoglio == "Tutti i portafogli"
                 ? true
-                : x.portafoglio === filterPortafoglio
+                : x.portafoglio === filterPortafoglio,
         )
         .filter((x) =>
             filterNominativoEnte == ""
                 ? true
                 : x.ente.Name.toLowerCase().includes(
-                      filterNominativoEnte.toLowerCase()
-                  )
+                      filterNominativoEnte.toLowerCase(),
+                  ),
         )
         .filter((x) =>
             filterNominativoReferente == ""
                 ? true
                 : x.Name.toLowerCase().includes(
-                      filterNominativoReferente.toLowerCase()
-                  )
-        ).filter((x) =>
+                      filterNominativoReferente.toLowerCase(),
+                  ),
+        )
+        .filter((x) =>
             filterTelefonoReferente == ""
                 ? true
-                : x.MobilePhone? x.MobilePhone.includes(
-                      filterTelefonoReferente
-                  ):false
+                : x.MobilePhone
+                  ? x.MobilePhone.includes(filterTelefonoReferente)
+                  : false,
         )
         .slice(0, max);
 </script>
@@ -82,9 +84,14 @@
             <div class="level-left">
                 <div class="level-item">
                     <div>
-                    <p class="title my-0">Referenti</p>
-                    <p class="my-1 mx-5 is-size-6"><i>"Le persone cambiano e si dimenticano di avvisare gli altri."</i>&nbsp;&nbsp;[Lillian Hellman]</p>
-                </div>
+                        <p class="title my-0">Referenti</p>
+                        <p class="my-1 mx-5 is-size-6">
+                            <i
+                                >"Le persone cambiano e si dimenticano di
+                                avvisare gli altri."</i
+                            >&nbsp;&nbsp;[Lillian Hellman]
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="level-right">
@@ -98,17 +105,6 @@
                             visualizzati {filteredReferenti.length} su {data
                                 .referenti.length}
                         </p>
-                        <button class="button is-size-7 is-info my-0 py-0">
-                            <span class="icon">
-                                <i class="fas fa-retweet" />
-                            </span>
-                            <span>Ultimo aggiornamento:&nbsp;</span><span
-                                class="has-text-weight-bold"
-                                >{moment(data.lastUpdated).format(
-                                    "DD/MM/YYYY - HH:mm:ss"
-                                )}
-                            </span>
-                        </button>
                     </form>
                 </div>
             </div>
@@ -116,99 +112,79 @@
     </div>
 </section>
 
-<section class="hero is-small is-primary is-12">
-    <div class="hero-body m-1 p-1">
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-filter" />
-                    </span>
-                    <span>filtri</span>
-                    <span class="icon is-small is-left mx-3">
-                        <i class="fas fa-arrow-right" />
-                    </span>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfiltermisure">
-                            <select bind:value={filterStatoReferente}>
-                                {#each statoReferenteOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilterstatoavviso">
-                            <select bind:value={filterPortafoglio}>
-                                {#each portafoglioOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="level-item">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <input
-                                class="input is-primary"
-                                type="text"
-                                placeholder="nome dell'ente"
-                                bind:value={filterNominativoEnte}
-                            />
-                            <div class="icon is-small is-left">
-                                <i class="fas fa-building" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="level-item">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <input
-                                class="input is-primary"
-                                type="text"
-                                placeholder="nome del referente"
-                                bind:value={filterNominativoReferente}
-                            />
-                            <div class="icon is-small is-left">
-                                <i class="fas fa-user" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="level-item">
-                    <div class="field">
-                        <div class="control has-icons-left">
-                            <input
-                                class="input is-primary"
-                                type="text"
-                                placeholder="telefono del referente"
-                                bind:value={filterTelefonoReferente}
-                            />
-                            <div class="icon is-small is-left">
-                                <i class="fas fa-phone" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
+<Filters>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfiltermisure">
+                <select bind:value={filterStatoReferente}>
+                    {#each statoReferenteOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
             </div>
-        </nav>
+        </div>
     </div>
-</section>
+
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilterstatoavviso">
+                <select bind:value={filterPortafoglio}>
+                    {#each portafoglioOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-item">
+        <div class="field">
+            <div class="control has-icons-left">
+                <input
+                    class="input is-primary"
+                    type="text"
+                    placeholder="nome dell'ente"
+                    bind:value={filterNominativoEnte}
+                />
+                <div class="icon is-small is-left">
+                    <i class="fas fa-building" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-item">
+        <div class="field">
+            <div class="control has-icons-left">
+                <input
+                    class="input is-primary"
+                    type="text"
+                    placeholder="nome del referente"
+                    bind:value={filterNominativoReferente}
+                />
+                <div class="icon is-small is-left">
+                    <i class="fas fa-user" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-item">
+        <div class="field">
+            <div class="control has-icons-left">
+                <input
+                    class="input is-primary"
+                    type="text"
+                    placeholder="telefono del referente"
+                    bind:value={filterTelefonoReferente}
+                />
+                <div class="icon is-small is-left">
+                    <i class="fas fa-phone" />
+                </div>
+            </div>
+        </div>
+    </div>
+</Filters>
 
 <section class="section is-12 px-0">
     <div class="columns is-multiline">

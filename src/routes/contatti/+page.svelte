@@ -5,6 +5,7 @@
     import moment from "moment/min/moment-with-locales";
     import Stackedbar from "../../c/charts/stackedbar.svelte";
     import { onMount } from "svelte";
+    import Filters from "$lib/c/ui/Filters.svelte";
     moment.locale("it");
     /**
      * @param {Date} startDate
@@ -147,48 +148,32 @@
     author="Federico Bini"
 />
 
-<section class="hero is-small is-primary is-12">
-    <div class="hero-body m-1 p-1">
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-filter" />
-                    </span>
-                    <span>filtri</span>
-                    <span class="icon is-small is-left mx-3">
-                        <i class="fas fa-arrow-right" />
-                    </span>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilterstatoavviso">
-                            <select
-                                bind:value={range}
-                                on:change={cdataforchart}
-                            >
-                                {#each rangeOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div>
-                        <span class="has-text-weight-bold">
-                            {moment(rangeMin).format("DD/MM/YYYY")} - {moment(
-                                rangeMax
-                            ).format("DD/MM/YYYY")}</span
-                        >
-                    </div>
-                </div>
+<Filters>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilterstatoavviso">
+                <select
+                    bind:value={range}
+                    on:change={cdataforchart}
+                >
+                    {#each rangeOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
             </div>
-        </nav>
+        </div>
     </div>
-</section>
+    <div class="level-item">
+        <div>
+            <span class="has-text-weight-bold">
+                {moment(rangeMin).format("DD/MM/YYYY")} - {moment(
+                    rangeMax
+                ).format("DD/MM/YYYY")}</span
+            >
+        </div>
+    </div>
+</Filters>
+
 
 <section class="hero is-small is-warning is-12">
     <div class="hero-body m-1 p-1">
@@ -251,8 +236,8 @@
 {/if}
 
 {#if showtop10}
-    <section class="section is-12 p-2 is-full">
-        <div class="hero-body m-1 p-1">
+    <section class="section is-12 p-2 is-full my">
+        <div class="hero-body m-1 p-1 py-3">
             <p class="title has-text-info">i 10 più contattati di sempre</p>
             <Stackedbar
                 values={getTopTen()}

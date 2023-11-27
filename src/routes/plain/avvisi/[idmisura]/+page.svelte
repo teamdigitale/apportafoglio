@@ -1,5 +1,6 @@
 <script>
-    import Header from "$lib/c/ui/header.svelte";
+    import Filters from "$lib/c/ui/Filters.svelte";
+import Header from "$lib/c/ui/header.svelte";
     import Avvisi from "../../../../c/avvisi.svelte";
     import Avvisocard from "../../../../c/avvisocard.svelte";
     export let data;
@@ -71,60 +72,45 @@
 
 <Header title="avvisi della misura: {data.misure[0].Name}" quote="Ente avvisato, mezzo salvato." author="Anonimo" />
 
-<section class="hero is-small is-primary is-12">
-    <div class="hero-body m-1 p-1">
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-filter" />
-                    </span>
-                    <span>filtri</span>
-                    <span class="icon is-small is-left mx-3">
-                        <i class="fas fa-arrow-right" />
-                    </span>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilterstatoavviso">
-                            <select bind:value={filterStatoAvviso}>
-                                {#each statoAvvisoOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilterpacchetto">
-                            <select bind:value={filterPacchetto}>
-                                {#each pacchettoOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilterpacchetto">
-                            <select bind:value={filterBeneficiari}>
-                                {#each beneficiariOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
+<Filters>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilterstatoavviso">
+                <select bind:value={filterStatoAvviso}>
+                    {#each statoAvvisoOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
             </div>
-        </nav>
+        </div>
     </div>
-</section>
+
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilterpacchetto">
+                <select bind:value={filterPacchetto}>
+                    {#each pacchettoOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilterpacchetto">
+                <select bind:value={filterBeneficiari}>
+                    {#each beneficiariOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+</Filters>
+
+
 
 <section class="section is-12 px-0">
     <div class="columns is-multiline">

@@ -6,9 +6,10 @@
 
 <div class="card bm--card-equal-height has-background-grey-lighter">
     <header
-        class="card-header {referente.Stato__c && referente.Stato__c === "Attivo"
-            ? "has-background-info"
-            : "has-background-danger"}"
+        class="card-header {referente.Stato__c &&
+        referente.Stato__c === 'Attivo'
+            ? 'has-background-info'
+            : 'has-background-danger'}"
     >
         <nav class="level">
             <!-- Left side -->
@@ -91,29 +92,36 @@
     </div>
     <footer class="card-footer">
         {#if referente.MobilePhone}
-        <p class="card-footer-item is-size-6 ">
-            <span>
-                <a href="https://wa.me/{referente.MobilePhone}"><span><img style="height: 2rem;" src="/WhatsAppButtonGreenSmall.svg" alt="Contatta su Whatsapp" /></span></a>
-            </span>
-        </p>  
-        <p class="card-footer-item is-size-6 ">
-            <span>
-                <a href="tel:{referente.MobilePhone}"><span class="icon">
-                    <i class="fas fa-phone-volume"></i>
-                  </span><span>Chiama</span></a>
-            </span>
-        </p>    
+            <p class="card-footer-item is-size-6">
+                <span>
+                    <a href="https://wa.me/{referente.MobilePhone}"
+                        ><span class="icon">
+                            <i class="fas fa-comment-dots has-text-success"></i>
+                        </span><span>Whatsapp</span></a
+                    >
+                </span>
+            </p>
+            <p class="card-footer-item is-size-6">
+                <span>
+                    <a href="tel:{referente.MobilePhone}"
+                        ><span class="icon">
+                            <i class="fas fa-phone-volume"></i>
+                        </span><span>Chiama</span></a
+                    >
+                </span>
+            </p>
         {/if}
         {#if referente.Email}
-        <p class="card-footer-item is-size-6 ">
-            <span>
-                <a href="mailto:{referente.Email}"><span class="icon">
-                    <i class="fas fa-envelope"></i>
-                  </span><span>Scrivi</span></a>
-            </span>
-        </p>  
+            <p class="card-footer-item is-size-6">
+                <span>
+                    <a href="mailto:{referente.Email}"
+                        ><span class="icon">
+                            <i class="fas fa-envelope"></i>
+                        </span><span>Scrivi</span></a
+                    >
+                </span>
+            </p>
         {/if}
-
     </footer>
 </div>
 

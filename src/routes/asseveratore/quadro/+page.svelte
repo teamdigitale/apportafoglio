@@ -1,9 +1,8 @@
 <script>
+    import Filters from "$lib/c/ui/Filters.svelte";
     import Scorecardasseverazioni from "../../../c/scorecardasseverazioni.svelte";
     import moment from "moment/min/moment-with-locales";
     moment.locale("it");
-
-    
 
     /** @type {import('./$types').PageData} */
     export let data;
@@ -21,10 +20,10 @@
                 };
                 a[Name].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.Name)
-            .sort()
+            .sort(),
     );
     let filterMisura = "Tutte le misure";
 
@@ -37,10 +36,10 @@
                 };
                 a[Esito__c].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.Esito__c)
-            .sort()
+            .sort(),
     );
     let filterEsito = "Tutti gli esiti";
 
@@ -53,11 +52,11 @@
                 };
                 a[pacchetto].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.pacchetto)
             .filter((v) => (v ? true : false))
-            .sort()
+            .sort(),
     );
     let filterPacchetto = "Tutti i pacchetti";
 
@@ -68,7 +67,7 @@
                 const found = total.find(
                     (el) =>
                         el.EnteLookup__c === e.EnteLookup__c &&
-                        el.misura === e.misura
+                        el.misura === e.misura,
                 );
                 if (!found) {
                     total.push(e);
@@ -87,8 +86,6 @@
                 }
                 return total;
             }, []);
-
-
         } else {
             filtered.push(...data.taskasseverazione);
         }
@@ -103,12 +100,12 @@
             .filter((x) =>
                 filterMisura == "Tutte le misure"
                     ? true
-                    : x.misura === filterMisura
+                    : x.misura === filterMisura,
             )
             .filter((x) =>
                 filterEsito == "Tutti gli esiti"
                     ? true
-                    : x.Esito__c === filterEsito
+                    : x.Esito__c === filterEsito,
             )
             .filter((x) =>
                 filterMisura.startsWith("1.4.3") ||
@@ -116,7 +113,7 @@
                     ? filterPacchetto == "Tutti i pacchetti"
                         ? true
                         : x.pacchetto === filterPacchetto
-                    : true
+                    : true,
             )
             .sort((a, b) => b.CreatedDate - a.CreatedDate);
     };
@@ -131,7 +128,7 @@
             };
             a[misura].count++;
             return a;
-        }, Object.create(null))
+        }, Object.create(null)),
     ).filter((x) => x.misura);
 </script>
 
@@ -141,83 +138,67 @@
     </div>
 </section>
 
-<section class="hero is-small is-primary is-12">
-    <div class="hero-body m-1 p-1">
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-filter" />
-                    </span>
-                    <span>filtri</span>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfiltermisura">
-                            <select bind:value={filterMisura}>
-                                {#each misuraOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                {#if filterMisura.startsWith("1.4.3") || filterMisura === "Tutte le misure"}
-                    <div class="level-item">
-                        <div class="control">
-                            <div
-                                class="select is-primary"
-                                id="idfilterpacchetto"
-                            >
-                                <select bind:value={filterPacchetto}>
-                                    {#each pacchettoOptions as item}
-                                        <option>{item}</option>
-                                    {/each}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                {/if}
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary" id="idfilteresito">
-                            <select bind:value={filterEsito}>
-                                {#each esitoOptions as item}
-                                    <option>{item}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="field">
-                            <input
-                                id="switchSoloUnTaskPerEnte"
-                                type="checkbox"
-                                name="switchSoloUnTaskPerEnte"
-                                class="switch is-info"
-                                bind:checked={untaskperente}
-                            />
-                            <label for="switchSoloUnTaskPerEnte"
-                                >Mostra solo un task per ente</label
-                            >
-                        </div>
-                    </div>
+<Filters>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfiltermisura">
+                <select bind:value={filterMisura}>
+                    {#each misuraOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+    {#if filterMisura.startsWith("1.4.3") || filterMisura === "Tutte le misure"}
+        <div class="level-item">
+            <div class="control">
+                <div class="select is-primary" id="idfilterpacchetto">
+                    <select bind:value={filterPacchetto}>
+                        {#each pacchettoOptions as item}
+                            <option>{item}</option>
+                        {/each}
+                    </select>
                 </div>
             </div>
-        </nav>
+        </div>
+    {/if}
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary" id="idfilteresito">
+                <select bind:value={filterEsito}>
+                    {#each esitoOptions as item}
+                        <option>{item}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
     </div>
-</section>
+    <div class="level-item">
+        <div class="control">
+            <div class="field">
+                <input
+                    id="switchSoloUnTaskPerEnte"
+                    type="checkbox"
+                    name="switchSoloUnTaskPerEnte"
+                    class="switch is-info"
+                    bind:checked={untaskperente}
+                />
+                <label for="switchSoloUnTaskPerEnte"
+                    >Mostra solo un task per ente</label
+                >
+            </div>
+        </div>
+    </div>
+</Filters>
 
 <section class="section is-12 py-2 px-0">
-    <div class="columns is-multiline  m-1">
+    <div class="columns is-multiline m-1">
         {#each aggregatoCandidatureMisure as scorecard}
             <Scorecardasseverazioni
                 misura={scorecard.misura}
                 tasks={filteredTasks.filter(
-                    (x) => x.misura === scorecard.misura
+                    (x) => x.misura === scorecard.misura,
                 )}
             />
         {/each}
@@ -244,39 +225,49 @@
                         >Gg rimanenti</abbr
                     ></th
                 >
-                <th>
-
-                </th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
-            {#each filteredTasks as task,index}
-                <tr class="{data.candidatureAsseverazione.filter(c=> c.Id===task.WhatId)[0].outfunds__Status__c!=='FINANZIATA'?'has-background-danger':''}">
-                    <td>{index+1}</td>
+            {#each filteredTasks as task, index}
+                <tr
+                    class={data.candidatureAsseverazione.filter(
+                        (c) => c.Id === task.WhatId,
+                    )[0].outfunds__Status__c !== "FINANZIATA"
+                        ? "has-background-danger"
+                        : ""}
+                >
+                    <td>{index + 1}</td>
                     <td>{task.misura}</td>
                     <td
                         >{task.misuraAll.Pacchetto__c
                             ? task.misuraAll.Pacchetto__c
                             : "n.a."}</td
                     >
-                    <td>{data.candidatureAsseverazione.filter(c=> c.Id===task.WhatId)[0].outfunds__Status__c}</td>
-                    <td>{task.Esito__c}</td>
-                    <td class="{data.enti.filter(
-                        (x) => x.Id === task.EnteLookup__c
-                    )[0]?'':'has-text-danger'}"
-                        >
-                        {data.enti.filter(
-                            (x) => x.Id === task.EnteLookup__c
-                        )[0]?data.enti.filter(
-                            (x) => x.Id === task.EnteLookup__c
-                        )[0].Name:'Non disponibile. Probabile ri-assegnazione ente ad altro asseveratore'}
-                        </td
+                    <td
+                        >{data.candidatureAsseverazione.filter(
+                            (c) => c.Id === task.WhatId,
+                        )[0].outfunds__Status__c}</td
                     >
+                    <td>{task.Esito__c}</td>
+                    <td
+                        class={data.enti.filter(
+                            (x) => x.Id === task.EnteLookup__c,
+                        )[0]
+                            ? ""
+                            : "has-text-danger"}
+                    >
+                        {data.enti.filter((x) => x.Id === task.EnteLookup__c)[0]
+                            ? data.enti.filter(
+                                  (x) => x.Id === task.EnteLookup__c,
+                              )[0].Name
+                            : "Non disponibile. Probabile ri-assegnazione ente ad altro asseveratore"}
+                    </td>
                     <td>{moment(task.CreatedDate).format("DD/MM/YYYY")}</td>
                     <td
                         >{task.Esito__c === "Positivo"
                             ? moment(task.Data_fine_Asseverazione__c).format(
-                                  "DD/MM/YYYY"
+                                  "DD/MM/YYYY",
                               )
                             : "n.a."}</td
                     >
@@ -284,19 +275,20 @@
                         >{task.Esito__c === "Positivo"
                             ? "n.a."
                             : task.Esito__c === "Parziale"
-                            ? moment(task.candidatura.Data_conclusione__c).diff(
-                                  moment(),
-                                  "day"
-                              )
-                            : task.GiorniRimanentiCronoprogramma__c}</td
+                              ? moment(
+                                    task.candidatura.Data_conclusione__c,
+                                ).diff(moment(), "day")
+                              : task.GiorniRimanentiCronoprogramma__c}</td
                     >
                     <td
-                    ><a href="/candidatura/{task.WhatId+'°ass'}" target="_blank"
-                        ><span class="icon"
-                            ><i class="fas fa-glasses">&nbsp</i></span
-                        ></a
-                    ></td
-                >
+                        ><a
+                            href="/candidatura/{task.WhatId + '°ass'}"
+                            target="_blank"
+                            ><span class="icon"
+                                ><i class="fas fa-glasses">&nbsp</i></span
+                            ></a
+                        ></td
+                    >
                 </tr>
             {/each}
         </tbody>

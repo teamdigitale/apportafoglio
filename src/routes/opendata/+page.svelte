@@ -7,6 +7,7 @@
     export let data;
 
     import { fade } from "svelte/transition";
+    import Filters from "$lib/c/ui/Filters.svelte";
 
     let candidature = data.finanziate;
 
@@ -29,7 +30,7 @@
     }
 
     let misureOptions = ["Tutte le misure"].concat(
-        calcolaMisureOptions().sort()
+        calcolaMisureOptions().sort(),
     );
     let filterMisura = misureOptions[0];
 
@@ -42,10 +43,10 @@
                 };
                 a[tipologia_ente].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.tipologia_ente)
-            .sort()
+            .sort(),
     );
     let filterTipologiaEnte = tipologiaEnteOptions[0];
 
@@ -58,10 +59,10 @@
                 };
                 a[stato_candidatura].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.stato_candidatura)
-            .sort()
+            .sort(),
     );
     let filterStatoCandidatura = statiOptions[0];
 
@@ -74,10 +75,10 @@
                 };
                 a[regione].count++;
                 return a;
-            }, Object.create(null))
+            }, Object.create(null)),
         )
             .map((x) => x.regione)
-            .sort()
+            .sort(),
     );
     let filterRegione = regioneOptions[0];
 
@@ -87,7 +88,7 @@
                 .filter((c) =>
                     filterRegione !== regioneOptions[0]
                         ? c.regione === filterRegione
-                        : true
+                        : true,
                 )
                 .reduce((a, { provincia }) => {
                     a[provincia] = a[provincia] || {
@@ -96,10 +97,10 @@
                     };
                     a[provincia].count++;
                     return a;
-                }, Object.create(null))
+                }, Object.create(null)),
         )
             .map((x) => x.provincia)
-            .sort()
+            .sort(),
     );
     let filterProvincia = provinceOptions[0];
 
@@ -109,32 +110,32 @@
         .filter((c) =>
             filterStatoCandidatura !== statiOptions[0]
                 ? c.stato_candidatura === filterStatoCandidatura
-                : true
+                : true,
         )
         .filter((c) =>
             filterEnte !== ""
                 ? c.ente.toUpperCase().includes(filterEnte.toUpperCase())
-                : true
+                : true,
         )
         .filter((c) =>
             filterMisura !== misureOptions[0]
                 ? c.avviso.misura === filterMisura
-                : true
+                : true,
         )
         .filter((c) =>
             filterTipologiaEnte !== tipologiaEnteOptions[0]
                 ? c.tipologia_ente === filterTipologiaEnte
-                : true
+                : true,
         )
         .filter((c) =>
             filterRegione !== regioneOptions[0]
                 ? c.regione === filterRegione
-                : true
+                : true,
         )
         .filter((c) =>
             filterProvincia !== provinceOptions[0]
                 ? c.provincia === filterProvincia
-                : true
+                : true,
         );
 
     $: fonditotali = cc.reduce(function (a, b) {
@@ -189,6 +190,11 @@
             return "Tutti gli stati";
         }
     }
+
+    let showFilters = false;
+    const toggleShowFilters = () => {
+        showFilters = !showFilters;
+    };
 </script>
 
 <Header
@@ -197,114 +203,101 @@
     author="Gregg Easterbrook"
 />
 
-<section class="hero is-small is-primary is-12">
-    <div class="hero-body m-1 p-1">
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-filter" />
-                    </span>
-                    <span>filtri</span>
-                    <span class="icon is-small is-left mx-3">
-                        <i class="fas fa-arrow-right" />
-                    </span>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary">
-                            <select
-                                name="filterMisura"
-                                bind:value={filterStatoCandidatura}
-                            >
-                                {#each statiOptions as s}
-                                    <option
-                                        value={s}
-                                        class="has-text-{stilePerStato(
-                                            s
-                                        )} {s === 'E'
-                                            ? 'has-text-weight-bold'
-                                            : ''}">{labelPerStato(s)}</option
-                                    >
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary">
-                            <select
-                                name="filterMisura"
-                                bind:value={filterMisura}
-                            >
-                                {#each misureOptions as m}
-                                    <option>{m}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary">
-                            <select
-                                name="filterTipologiaEnte"
-                                bind:value={filterTipologiaEnte}
-                            >
-                                {#each tipologiaEnteOptions as te}
-                                    <option>{te}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary">
-                            <select
-                                name="filterRegione"
-                                bind:value={filterRegione}
-                            >
-                                {#each regioneOptions as r}
-                                    <option>{r}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-primary">
-                            <select
-                                name="filterProvincia"
-                                bind:value={filterProvincia}
-                            >
-                                {#each provinceOptions as p}
-                                    <option>{p}</option>
-                                {/each}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="level-item">
-                    <div class="control">
-                        <div>
-                            <input
-                                class="input"
-                                type="text"
-                                placeholder="Nome ente"
-                                name="filterEnte"
-                                bind:value={filterEnte}
-                            />
-                        </div>
-                    </div>
-                </div>
+<Filters>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary">
+                <select
+                    name="filterMisura"
+                    bind:value={filterStatoCandidatura}
+                >
+                    {#each statiOptions as s}
+                        <option
+                            value={s}
+                            class="has-text-{stilePerStato(
+                                s,
+                            )} {s === 'E'
+                                ? 'has-text-weight-bold'
+                                : ''}"
+                            >{labelPerStato(s)}</option
+                        >
+                    {/each}
+                </select>
             </div>
-        </nav>
+        </div>
     </div>
-</section>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary">
+                <select
+                    name="filterMisura"
+                    bind:value={filterMisura}
+                >
+                    {#each misureOptions as m}
+                        <option>{m}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary">
+                <select
+                    name="filterTipologiaEnte"
+                    bind:value={filterTipologiaEnte}
+                >
+                    {#each tipologiaEnteOptions as te}
+                        <option>{te}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary">
+                <select
+                    name="filterRegione"
+                    bind:value={filterRegione}
+                >
+                    {#each regioneOptions as r}
+                        <option>{r}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="level-item">
+        <div class="control">
+            <div class="select is-primary">
+                <select
+                    name="filterProvincia"
+                    bind:value={filterProvincia}
+                >
+                    {#each provinceOptions as p}
+                        <option>{p}</option>
+                    {/each}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="level-item">
+        <div class="control">
+            <div>
+                <input
+                    class="input"
+                    type="text"
+                    placeholder="Nome ente"
+                    name="filterEnte"
+                    bind:value={filterEnte}
+                />
+            </div>
+        </div>
+    </div>
+</Filters>
+
+
 
 <section class="section is-12 px-0 py-0">
     <div class="hero-body py-0">
@@ -385,7 +378,7 @@
                                 {#each cperpage as c}
                                     <tr
                                         class="has-text-{stilePerStato(
-                                            c.stato_candidatura
+                                            c.stato_candidatura,
                                         )} {c.stato_candidatura === 'E'
                                             ? 'has-text-weight-bold'
                                             : ''}"
@@ -411,9 +404,9 @@
                                                 >{c.stato_candidatura === "A"
                                                     ? "ASSEGNATO"
                                                     : c.stato_candidatura ===
-                                                      "E"
-                                                    ? "EROGATO"
-                                                    : "RINUNCIATO"}</td
+                                                        "E"
+                                                      ? "EROGATO"
+                                                      : "RINUNCIATO"}</td
                                             >
                                         {/if}
                                         <td>{euro(c.importo_finanziamento)}</td>
