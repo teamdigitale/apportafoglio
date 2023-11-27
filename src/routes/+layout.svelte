@@ -51,7 +51,7 @@
   </div>
 
   <div id="navbar" class="navbar-menu {menuActive ? 'is-active' : ''}">
-    <div class="navbar-start">
+    <div class="navbar-start"  data-sveltekit-preload-data="off">
       <a
         class="navbar-item {$page.url.pathname === '/io'
           ? 'has-text-link'
@@ -89,11 +89,11 @@
       </span>&nbsp;IPA
     </a>
       {#if loggedasseveratore || loggedstandard}
-        <div class="navbar-item has-dropdown is-hoverable">
+        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
           <!-- svelte-ignore a11y-invalid-attribute -->
           <a class="navbar-link" href="javascript:void(0)"> consulta </a>
 
-          <div class="navbar-dropdown">
+          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
             <a
               class="navbar-item {$page.url.pathname === '/plain/misure'
                 ? 'has-text-info'
@@ -164,11 +164,11 @@
         </div>
       {/if}
       {#if loggedstandard}
-        <div class="navbar-item has-dropdown is-hoverable">
+        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
           <!-- svelte-ignore a11y-invalid-attribute -->
           <a class="navbar-link" href="javascript:void(0)"> opera </a>
 
-          <div class="navbar-dropdown">
+          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
             <a
               class="navbar-item {$page.url.pathname === '/lavorastd/misura'
                 ? 'has-text-info'
@@ -216,11 +216,11 @@
             </a>
           </div>
         </div>
-        <div class="navbar-item has-dropdown is-hoverable">
+        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
           <!-- svelte-ignore a11y-invalid-attribute -->
           <a class="navbar-link" href="javascript:void(0)"> qualità </a>
 
-          <div class="navbar-dropdown">
+          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
             <a
               class="navbar-item {$page.url.pathname ===
               '/lavorastd/asseverazioni'
