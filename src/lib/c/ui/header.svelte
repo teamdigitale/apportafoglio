@@ -1,25 +1,29 @@
 <script>
+    import MediaQuery from "$lib/c/ui/MediaQuery.svelte";
     export let title = "";
     export let quote = "";
     export let author = "";
 </script>
 
 <section class="hero is-small is-info is-12">
-    <div class="hero-body">
-        <p class="title my-0">{title}</p>
-        {#if quote&&quote!==''}
-        <p class="my-1 mx-5 is-size-6">
-            <span class="icon is-size-5">
-                <i class="fas fa-quote-left" />
-            </span><i class="mx-1">{quote}</i><span class="icon is-size-5">
-                <i class="fas fa-quote-right" />
-            </span><span class="icon is-small mx-3">
-                <i class="fas fa-minus" />
-            </span><span>[{author}]</span>
-        </p>
-        {/if}
+    <div class="hero-body py-0">
+        <MediaQuery query="(max-width: 768px)" let:matches>
+            <p
+                class="has-text-centered is-size-{matches
+                    ? '3'
+                    : '2'} my-0 py-0 has-text-weight-bold"
+            >
+                {title}
+            </p>
+            {#if quote && quote !== ""}
+                <p>
+                    <i class="mx-1 is-size-{matches ? '6' : '5'}">"{quote}"</i
+                    ><span class="mx-1"> - </span><span
+                        class="mx-1 is-size-{matches ? '7' : '6'}"
+                        >[{author}]</span
+                    >
+                </p>
+            {/if}
+        </MediaQuery>
     </div>
 </section>
-
-<style>
-</style>

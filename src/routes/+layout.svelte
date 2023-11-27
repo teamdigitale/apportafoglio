@@ -149,6 +149,17 @@
                 <i class="fas fa-phone" aria-hidden="true" />
               </span>&nbsp;contatti
             </a>
+            <a
+              class="navbar-item {$page.url.pathname === '/scadenze'
+                ? 'has-text-info'
+                : 'has-text-grey'}"
+              href="/scadenze"
+              aria-current={$page.url.pathname === "/scadenze"}
+              on:click={() => (menuActive = !menuActive)}
+              ><span class="icon">
+                <i class="fas fa-calendar-days" aria-hidden="true" />
+              </span>&nbsp;scadenze
+            </a>
           </div>
         </div>
       {/if}

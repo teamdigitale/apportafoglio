@@ -1,7 +1,6 @@
 <script>
 
     export let score = '';
-    export let label = '';
     export let color = '';
 
 </script>
@@ -9,12 +8,11 @@
 
 <div class="card has-background-{color!==''?color:'grey-light'} mx-1 my-1 bm--card-equal-height">
     <div class="card-content has-text-centered">
-        <p class="title">
+        <p class="title my-0">
             {score}
         </p>
-        <p class="subtitle">
-            {label}
-        </p>
+
+        <slot></slot>
     </div>
 </div>
 
