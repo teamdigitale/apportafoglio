@@ -235,8 +235,8 @@
             </a>
           </div>
         </div>
+        <!--
         <div class="navbar-item has-dropdown is-hoverable">
-          <!-- svelte-ignore a11y-invalid-attribute -->
           <a class="navbar-link" href="javascript:void(0)"> campagne </a>
 
           <div class="navbar-dropdown">
@@ -264,6 +264,7 @@
             </a>
           </div>
         </div>
+      -->
         <!--
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="javascript:void(0)"> intelligenza artificiale </a>
@@ -299,7 +300,7 @@
       {/if}
     </div>
 
-    <!--
+  <!-- RUNAS-->  
     <div class="navbar-end">
       <div class="field">
         <div class="control has-icons-left">
@@ -308,7 +309,7 @@
               <select name="runas" bind:value={runas} on:change={() => ra()}>
                 <option value="">Utente loggato</option>
                 <option value="0057Q00000729pMQAQ">Cludio Scarpa</option>
-                <option value="0057Q0000072YrZQAU">Angelo Capodieci</option>
+                <option value="0057Q0000070qj8QAA">Raffaele Santo</option>
                 <option value="0057Q000005UXtlQAG">Giovanni Pergola</option>
                 <option value="0057Q0000070qelQAA">Marco Virno</option>
               </select>
@@ -320,7 +321,7 @@
         </div>
       </div>
     </div>
-  -->
+  
   </div>
 </nav>
 {#if visible}
@@ -328,9 +329,7 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">
-          caricamento in corso di <span class="has-text-weight-light is-italic"
-            >{$navigating.to.url.pathname}</span
-          >
+          caricamento in corso, attendi 
         </p>
         <p class="subtitle">
           <progress class="progress is-large is-info" max="100">60%</progress>

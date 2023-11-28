@@ -55,9 +55,6 @@
     <td>
         {#if c.rv && c.rv.length > 0}
             SI - {c.rv[0].Giorni_richiesti__c} giorni
-            {#if Number(c.rv[0].Giorni_richiesti__c) >= 90}
-                --{c.rv[0].comm.length}
-            {/if}
         {:else}
             NO
         {/if}

@@ -5,7 +5,7 @@
     import moment from "moment/min/moment-with-locales";
     moment.locale("it");
 
-    const max = 500;
+    const max = 100;
     let statoReferenteOptions = ["Tutti"].concat(
         Object.values(
             data.referenti.reduce((a, { Stato__c }) => {
@@ -195,3 +195,5 @@
         {/each}
     </div>
 </section>
+
+

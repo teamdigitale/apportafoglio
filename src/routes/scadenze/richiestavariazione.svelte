@@ -5,7 +5,6 @@
     export let idu;
     import moment from "moment/min/moment-with-locales";
     moment.locale("it");
-    console.log(scadenza);
 </script>
 
 <div class="card bm--card-equal-height has-background-grey-lighter">

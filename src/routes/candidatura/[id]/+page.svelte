@@ -41,7 +41,6 @@
         const date2 = new Date(b);
         return Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
     }
-
 </script>
 
 <section class="hero is-small is-info is-12">
@@ -75,9 +74,17 @@
                                                     <p
                                                         class="card-header-title"
                                                     >
-                                                        ENTE: {data.c.outfunds__Applying_Organization__r.Name} - 
-                                                        Stato attuale candidatura: {data.c.outfunds__Status__c} - 
-                                                        Stato attuale del progetto: {data.c.Stato_Progetto__c?data.c.Stato_Progetto__c:'n.a.'}
+                                                        ENTE: {data.c
+                                                            .outfunds__Applying_Organization__r
+                                                            .Name} - Stato attuale
+                                                        candidatura: {data.c
+                                                            .outfunds__Status__c}
+                                                        - Stato attuale del progetto:
+                                                        {data.c
+                                                            .Stato_Progetto__c
+                                                            ? data.c
+                                                                  .Stato_Progetto__c
+                                                            : "n.a."}
                                                     </p>
                                                 </div>
                                             </div>
@@ -114,7 +121,7 @@
                                             {#if !viewCompact}
                                                 {#each data.ch as h}
                                                     <div
-                                                        class="timeline-item is-info {h.Actor ===
+                                                        class="timeline-item {h.Actor ===
                                                         'D'
                                                             ? 'right'
                                                             : 'left'}"
@@ -143,14 +150,15 @@
                                                                     alt="logo D"
                                                                 />
                                                             </div>
-                                                        {:else}
-                                                            <div
-                                                                class="timeline-marker is-icon"
-                                                            >
-                                                                <i
-                                                                    class="fa fa-building"
-                                                                />
-                                                            </div>
+                                                        {:else}building-tower-svgrepo-com
+                                                        <div
+                                                        class="timeline-marker is-info is-image is-48x48"
+                                                    >
+                                                        <img
+                                                            src="/building-tower-svgrepo-com.svg"
+                                                            alt="ente"
+                                                        />
+                                                    </div>
                                                         {/if}
                                                         <div
                                                             class="timeline-content"
@@ -160,18 +168,17 @@
                                                                     class="title is-4"
                                                                 >
                                                                     {moment(
-                                                                        h.CreatedDate
+                                                                        h.CreatedDate,
                                                                     ).format(
-                                                                        "DD/MM/YYYY"
+                                                                        "DD/MM/YYYY",
                                                                     )}
                                                                 </p>
 
                                                                 <p
                                                                     class="title is-6 has-text-info"
                                                                 >
-                                                                
                                                                     {h.title}
-                                                                
+
                                                                     <Accordion>
                                                                         <div
                                                                             slot="details"
@@ -187,17 +194,15 @@
                                                                     class="title is-4"
                                                                 >
                                                                     {moment(
-                                                                        h.CreatedDate
+                                                                        h.CreatedDate,
                                                                     ).format(
-                                                                        "DD/MM/YYYY"
+                                                                        "DD/MM/YYYY",
                                                                     )}
                                                                 </p>
                                                                 <p
                                                                     class="title is-6"
                                                                 >
-
                                                                     {h.title}
-
                                                                 </p>
 
                                                                 <p
@@ -231,7 +236,7 @@
                                                                             class="button is-primary"
                                                                             on:click={() =>
                                                                                 flip(
-                                                                                    "Servizi"
+                                                                                    "Servizi",
                                                                                 )}
                                                                         >
                                                                             Servizi
@@ -252,7 +257,7 @@
                                                                             class="button is-primary"
                                                                             on:click={() =>
                                                                                 flip(
-                                                                                    "Fornitori"
+                                                                                    "Fornitori",
                                                                                 )}
                                                                         >
                                                                             Fornitori
@@ -278,11 +283,11 @@
                                                                                 style: "currency",
                                                                                 currency:
                                                                                     "EUR",
-                                                                            }
+                                                                            },
                                                                         ).format(
                                                                             data
                                                                                 .c
-                                                                                .outfunds__Awarded_Amount__c
+                                                                                .outfunds__Awarded_Amount__c,
                                                                         )}
                                                                     </h1>
                                                                 {/if}
@@ -294,7 +299,7 @@
                                                 {#each Object.entries(data.chgrouped) as [key, value], index}
                                                     <div
                                                         class="timeline-item is-info {key.split(
-                                                            ':'
+                                                            ':',
                                                         )[1] === 'D'
                                                             ? 'right'
                                                             : 'left'}"
@@ -309,13 +314,14 @@
                                                                 />
                                                             </div>
                                                         {:else}
-                                                            <div
-                                                                class="timeline-marker is-icon"
-                                                            >
-                                                                <i
-                                                                    class="fa fa-building"
-                                                                />
-                                                            </div>
+                                                        <div
+                                                        class="timeline-marker is-info is-image is-48x48"
+                                                    >
+                                                        <img
+                                                            src="/building-tower-svgrepo-com.svg"
+                                                            alt="ente"
+                                                        />
+                                                    </div>
                                                         {/if}
                                                         <div
                                                             class="timeline-content"
@@ -325,7 +331,7 @@
                                                                     class="title is-4"
                                                                 >
                                                                     {key.split(
-                                                                        ":"
+                                                                        ":",
                                                                     )[0]}
                                                                 </span>
 
@@ -334,30 +340,29 @@
                                                                 >
                                                                     ({index !=
                                                                     Object.entries(
-                                                                        data.chgrouped
+                                                                        data.chgrouped,
                                                                     ).length -
                                                                         1
                                                                         ? moment(
                                                                               key.split(
-                                                                                  ":"
+                                                                                  ":",
                                                                               )[0],
-                                                                              "DD/MM/YYYY"
+                                                                              "DD/MM/YYYY",
                                                                           )
                                                                               .startOf(
-                                                                                  "day"
+                                                                                  "day",
                                                                               )
                                                                               .fromNow()
                                                                         : moment(
                                                                               key.split(
-                                                                                  ":"
+                                                                                  ":",
                                                                               )[0],
-                                                                              "DD/MM/YYYY"
+                                                                              "DD/MM/YYYY",
                                                                           )
                                                                               .startOf(
-                                                                                  "day"
+                                                                                  "day",
                                                                               )
                                                                               .fromNow()})
-                                                                   
                                                                 </span>
                                                             </p>
 
@@ -379,18 +384,24 @@
                                                                             <span
                                                                                 class="title is-6"
                                                                             >
-                                                                            <span class="{h.title==='Il progetto ha superato la verifica'?'has-text-success':''}">
-                                                                                {h.title}
-                                                                            </span>
-                                                                            {#if h.Actor === "E"}
                                                                                 <span
-                                                                                    class="icon"
+                                                                                    class={h.title ===
+                                                                                    "Il progetto ha superato la verifica"
+                                                                                        ? "has-text-success"
+                                                                                        : ""}
                                                                                 >
-                                                                                    <i
-                                                                                        class="fas fa-{h.icon}"
-                                                                                    />
+                                                                                    {h.title}
                                                                                 </span>
-                                                                            {/if}
+                                                                                {#if h.Actor === "E"}
+                                                                                    <span
+                                                                                        class="icon has-text-info"
+                                                                                    >
+                                                                                        <i
+                                                                                            class="fas fa-{h.icon}"
+                                                                                        />
+                                                                                    </span>
+                                                                                {/if}
+                                                                            </span>
                                                                         </p>
                                                                         <p
                                                                             class="subtitle is-7"
@@ -440,7 +451,7 @@
                                                                             class="button is-primary"
                                                                             on:click={() =>
                                                                                 flip(
-                                                                                    "Servizi"
+                                                                                    "Servizi",
                                                                                 )}
                                                                         >
                                                                             Servizi
@@ -455,7 +466,7 @@
                                                                             class="button is-primary"
                                                                             on:click={() =>
                                                                                 flip(
-                                                                                    "Fornitori"
+                                                                                    "Fornitori",
                                                                                 )}
                                                                         >
                                                                             Fornitori
@@ -471,7 +482,7 @@
                                                                             .Codice_CUP__c}
                                                                     </h1>
                                                                 {/if}
-<!--
+                                                                <!--
                                                                 {#if h.Field === "Data_Contrattualizzazione__c" && !h.OldValue }
                                                                 <h1
                                                                     class="subtitle is-3 has-text-weight-bold has-text-primary"
@@ -490,11 +501,11 @@
                                                                                 style: "currency",
                                                                                 currency:
                                                                                     "EUR",
-                                                                            }
+                                                                            },
                                                                         ).format(
                                                                             data
                                                                                 .c
-                                                                                .outfunds__Awarded_Amount__c
+                                                                                .outfunds__Awarded_Amount__c,
                                                                         )}
                                                                     </h1>
                                                                 {/if}
@@ -552,6 +563,7 @@
                                             </nav>
                                         </header>
                                         <div class="card-content">
+                                            <div class="table-container">
                                             <table
                                                 class="table is-striped is-narrow is-hoverable is-fullwidth"
                                             >
@@ -583,26 +595,33 @@
                                                                 >{s.Stato_Attivit__c}</td
                                                             >
                                                             <td
-                                                                >{s.Data_di_completamento__c?moment(
-                                                                    s.Data_di_completamento__c
-                                                                ).format(
-                                                                    "DD/MM/YYYY"
-                                                                ):'n.d.'}</td
+                                                                >{s.Data_di_completamento__c
+                                                                    ? moment(
+                                                                          s.Data_di_completamento__c,
+                                                                      ).format(
+                                                                          "DD/MM/YYYY",
+                                                                      )
+                                                                    : "n.d."}</td
                                                             >
                                                             <td
-                                                                >{s.Data_attivazione_servizio__c?moment(
-                                                                    s.Data_attivazione_servizio__c
-                                                                ).format(
-                                                                    "DD/MM/YYYY"
-                                                                ):'n.d.'}</td
+                                                                >{s.Data_attivazione_servizio__c
+                                                                    ? moment(
+                                                                          s.Data_attivazione_servizio__c,
+                                                                      ).format(
+                                                                          "DD/MM/YYYY",
+                                                                      )
+                                                                    : "n.d."}</td
                                                             >
                                                             <td
-                                                                >{s.Esito_controlli__c?s.Esito_controlli__c:'n.d.'}</td
+                                                                >{s.Esito_controlli__c
+                                                                    ? s.Esito_controlli__c
+                                                                    : "n.d."}</td
                                                             >
                                                         </tr>
                                                     {/each}
                                                 </tbody>
                                             </table>
+                                            </div>
                                         </div>
                                     </div>
                                 {/if}
@@ -643,6 +662,7 @@
                                             </nav>
                                         </header>
                                         <div class="card-content">
+                                            <div class="table-container">
                                             <table
                                                 class="table is-striped is-narrow is-hoverable is-fullwidth"
                                             >
@@ -670,24 +690,25 @@
                                                                     >{data.sr.filter(
                                                                         (x) =>
                                                                             s.Servizio__c ===
-                                                                            x.Id
+                                                                            x.Id,
                                                                     )[0]
                                                                         .Name}</td
                                                                 >
                                                                 <td
-                                                                    >{s.Denominazione_Soggetto_Realizzatore__c?s.Denominazione_Soggetto_Realizzatore__c:'n.d.'}</td
+                                                                    >{s.Denominazione_Soggetto_Realizzatore__c
+                                                                        ? s.Denominazione_Soggetto_Realizzatore__c
+                                                                        : "n.d."}</td
                                                                 >
                                                                 <td
                                                                     >{moment(
-                                                                        s.Data_Contrattualizzazione__c
+                                                                        s.Data_Contrattualizzazione__c,
                                                                     ).format(
-                                                                        "DD/MM/YYYY"
+                                                                        "DD/MM/YYYY",
                                                                     )}</td
                                                                 >
                                                                 <td>
                                                                     {#if s.contratti && s.contratti.length > 0}
                                                                         {#each s.contratti as fc, i}
-                                                                            
                                                                             <a
                                                                                 href="/api/file/{fc.ContentDocumentId}"
                                                                                 target="_blank"
@@ -708,6 +729,7 @@
                                                     {/each}
                                                 </tbody>
                                             </table>
+                                            </div>
                                         </div>
                                     </div>
                                 {/if}
@@ -748,6 +770,7 @@
                                             </nav>
                                         </header>
                                         <div class="card-content">
+                                            <div class="table-container">
                                             <table
                                                 class="table is-striped is-narrow is-hoverable is-fullwidth"
                                             >
@@ -774,9 +797,9 @@
                                                                 >{moment(
                                                                     file
                                                                         .ContentDocument
-                                                                        .LastModifiedDate
+                                                                        .LastModifiedDate,
                                                                 ).format(
-                                                                    "DD/MM/YYYY - HH:mm:ss"
+                                                                    "DD/MM/YYYY - HH:mm:ss",
                                                                 )}</td
                                                             >
                                                             <td
@@ -807,6 +830,7 @@
                                                     {/each}
                                                 </tbody>
                                             </table>
+                                        </div>
                                         </div>
                                     </div>
                                 {/if}
@@ -850,7 +874,7 @@
         transition: 1s;
         */
         transform-style: preserve-3d;
-        
+
         position: relative;
     }
 
@@ -890,40 +914,53 @@
         font-size: 2rem !important;
     }
 
-
-
-    
-
     .timeline-item.left .timeline-marker {
-    transform: translateX(50%);
-}
-
-.timeline.is-centered .timeline-item.left {
-    align-self: flex-start;
-    flex-direction: row-reverse;
-    margin-left: 0;
-    margin-right: 2em;
-}
-
-    .timeline .timeline-item.left .timeline .timeline-item.left{
-    padding: 1em 2em 0 0;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    flex-basis: 100%;
+        transform: translateX(50%);
+        padding-right: 0;
+        right: 0;
     }
 
+    .timeline.is-centered .timeline-item.left {
+        align-self: flex-start;
+        flex-direction: row-reverse;
+        margin-left: 0;
+        margin-right: 2em;
+    }
+
+    .timeline .timeline-item.left {
+        padding: 1em 2em 0 0;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        flex-basis: 100%;
+    }
+
+    
+  
     .timeline .timeline-item.right::before {
-    content: "";
-    background-color: #dbdbdb;
-    display: block;
-    width: 1px;
-    height: 100%;
-    position: absolute;
-    right: -0.5px;
-    top: 0;
-}
+        content: "";
+        background-color: blue;
+        display: block;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        right: -0.5px;
+        top: 0;
+    }
 
+    .timeline .timeline-item.left::after {
+        content: "";
+        background-color: blue;
+        display: block;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        right: 0px;
+        top: 0;
+    }
 
+    .timeline .timeline-item .timeline-marker.is-image {
+    z-index: 10;
+    }
 </style>

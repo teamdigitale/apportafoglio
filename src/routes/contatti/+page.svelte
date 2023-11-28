@@ -263,6 +263,7 @@
 {/if}
 
 <section class="section is-12 p-2">
+    <div class="table-container">
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
             <tr>
@@ -291,4 +292,5 @@
             {/each}
         </tbody>
     </table>
+</div>
 </section>
