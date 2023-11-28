@@ -36,16 +36,29 @@ export async function load({ cookies }) {
         order by outfunds__Due_Date__c 
         `, MAX_FETCH);
         
-        const qvariazioni = promiseQuery(conn, `select Id, WhatId, Subject, IsClosed, CreatedDate, LastModifiedDate, Approvazione_Automatica__c,  Data_richiesta__c, Data_scadenza_iniziale__c, Giorni_richiesti__c, Motivazione_Rifiuto__c  from Task where RecordType.Name = 'Variazione Cronoprogramma' and RecordType.SobjectType = 'Task' and status!='Completed' order by CreatedDate desc`, MAX_FETCH);
-        const all = Promise.all([qscadenze,qvariazioni]);
+        const qvariazioni = promiseQuery(conn, `select Id, WhatId, Subject, IsClosed, CreatedDate, LastModifiedDate, Approvazione_Automatica__c,  Data_richiesta__c, Data_scadenza_iniziale__c, Giorni_richiesti__c, Motivazione_Rifiuto__c, Description  from Task where RecordType.Name = 'Variazione Cronoprogramma' and RecordType.SobjectType = 'Task' and status!='Completed' and status!='Rigettato' order by CreatedDate desc`, MAX_FETCH);
+        
+        const qcommentirv = promiseQuery(conn,`select 
+        Parent.Id,
+        Id, Type, CreatedById, CreatedDate, IsDeleted, LastModifiedDate, SystemModstamp, CommentCount, LikeCount, Title, Body, LinkUrl, IsRichText, RelatedRecordId, InsertedById, NetworkScope, Visibility 
+        from TaskFeed 
+        where Type = 'TextPost' and Parent.Subject = 'Richiesta Variazione Cronoprogramma' and Parent.Giorni_richiesti__c >= 90
+        and Parent.RecordType.SobjectType = 'Task' and Parent.status!='Completed' and Parent.status!='Rigettato'`);
+        
+        const all = Promise.all([qscadenze,qvariazioni,qcommentirv]);
         const values = await all;
         await conn.logout();
+        for(let z = 0; z<values[1].length; z++){
+            values[1][z].comm=values[2].filter(r => r.Parent.Id===values[1][z].Id);
+        }
+
         for(let z = 0; z<values[0].length; z++){
             values[0][z].rv=values[1].filter(r => r.WhatId===values[0][z].outfunds__Funding_Request__r.Id);
             
         }
         return {
-            scadenze: values[0]
+            scadenze: values[0],
+            idusf: ustd.idutentesf
         };
     } else {
         throw redirect(303, '/io');

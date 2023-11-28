@@ -87,9 +87,13 @@ export const actions = {
             }
 
             const sessionId = uuidv4();
-            /**  RUNASVIURNO 
-            if(tipoUtente==='standard')            idutentesf = '0057Q0000070qelQAA';
-            */
+            // RUNASVIURNO 
+            //if(tipoUtente==='standard')            idutentesf = '0057Q0000070qelQAA';
+            
+            
+            
+            //if(tipoUtente==='standard')            idutentesf = '0057Q0000070paFQAQ';
+            
 
             createUser(sessionId, email, password, token, tipoUtente, idutentesf, sfuser);
             cookies.set(tipoUtente === 'standard' ? 'session_id_std' : 'session_id_ass', sessionId, {

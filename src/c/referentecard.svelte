@@ -84,9 +84,11 @@
                     : "Non disponibile"}</span
             >
             <span class="has-text-weight-bold has-text-info"
-                >({moment(referente.LastActivityDate)
-                    .startOf("day")
-                    .fromNow()})</span
+                >({referente.LastActivityDate
+                    ? moment(referente.LastActivityDate)
+                          .startOf("day")
+                          .fromNow()
+                    : ""})</span
             >
         </p>
     </div>
@@ -94,7 +96,9 @@
         {#if referente.MobilePhone}
             <p class="card-footer-item is-size-6">
                 <span>
-                    <a href="https://wa.me/{referente.MobilePhone}"
+                    <a
+                        target="_blank"
+                        href="https://wa.me/{referente.MobilePhone}"
                         ><span class="icon">
                             <i class="fas fa-comment-dots has-text-success"></i>
                         </span><span>Whatsapp</span></a
@@ -103,7 +107,7 @@
             </p>
             <p class="card-footer-item is-size-6">
                 <span>
-                    <a href="tel:{referente.MobilePhone}"
+                    <a target="_blank" href="tel:{referente.MobilePhone}"
                         ><span class="icon">
                             <i class="fas fa-phone-volume"></i>
                         </span><span>Chiama</span></a
@@ -114,7 +118,7 @@
         {#if referente.Email}
             <p class="card-footer-item is-size-6">
                 <span>
-                    <a href="mailto:{referente.Email}"
+                    <a target="_blank" href="mailto:{referente.Email}"
                         ><span class="icon">
                             <i class="fas fa-envelope"></i>
                         </span><span>Scrivi</span></a
