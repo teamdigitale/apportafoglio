@@ -1,27 +1,28 @@
 import jsforce from 'jsforce';
+import { redirect } from '@sveltejs/kit';
 import { caricaAvvisi, caricaMisure } from '../../../logic/misure';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../../lib/userdb';
 
+export async function load({ locals }) {
+    const connstandard = locals.user.connectionStandard;
+    const connasseveratore = locals.user.connectionAsseveratore;
+    const connection = connstandard ? connstandard : connasseveratore;
 
-export async function load({ cookies }) {
-    let avvisi = [];
-    let misure = [];
-    const ustd = getUtenteStandard(cookies);
-    const uass = getUtenteAsseveratore(cookies);
-    const u = ustd?ustd:uass;
-    if (u) {
-        let conn = new jsforce.Connection({
-            loginUrl: "https://login.salesforce.com"
+    if (connection) {
+        const conn = new jsforce.Connection({
+            instanceUrl: "https://padigitale2026.my.salesforce.com",
+            accessToken: connection
         });
-        await conn.login(u.email, u.password + u.token);
-        avvisi = avvisi.concat(await caricaAvvisi(conn));
-        misure = misure.concat(await caricaMisure(conn));
-        await conn.logout();
+        const pavvisi = caricaAvvisi(conn);
+        const pmisure = caricaMisure(conn);
+        const all = Promise.all([pavvisi, pmisure]);
+        const values = await all;
+        return {
+            avvisi: values[0],
+            misure: values[1]
+        };
+    } else {
+        throw redirect(303, '/io');
     }
-    return {
-        avvisi: avvisi,
-        misure: misure
-    };
 }
 
 

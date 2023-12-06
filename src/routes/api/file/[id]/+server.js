@@ -33,7 +33,7 @@ export async function GET({ params,cookies }) {
               
         }
     
-        await conn.logout();
+        //await conn.logout();
         
     }
     return new Response(

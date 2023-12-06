@@ -6,44 +6,9 @@ export const asseveratoreusers = writable([]);
 export const runas = writable('');
 
 
-export const getUtenteStandard = (cookies) => {
-    const cookiesfuidstd = cookies.get('session_id_std');
-    const cookiesrunas = cookies.get('runas');
-    const cookiesorigrunas = cookies.get('origrunas');
-    if (cookiesfuidstd) {
-        const utentestandard = getUserBySessionid(cookiesfuidstd, 'standard');
-        if (utentestandard == null) {
-            cookies.delete('session_id_std');
-            return null;
-        } else {
-            if(cookiesrunas&&cookiesrunas!=''&&cookiesrunas.value!=''){
-                utentestandard.idutentesf = cookiesrunas;
-            }else{
-                if(cookiesorigrunas&&cookiesorigrunas!=''&&cookiesorigrunas.value!=''){
-                    utentestandard.idutentesf = cookiesorigrunas;
-                }
-            }
-            return utentestandard;
-        }
-    } else {
-        return null;
-    }
-}
 
-export const getUtenteAsseveratore = (cookies) => {
-    const cookiesfuidass = cookies.get('session_id_ass');
-    if (cookiesfuidass) {
-        const utenteasseveratore = getUserBySessionid(cookiesfuidass, 'asseveratore');
-        if (utenteasseveratore == null) {
-            cookies.delete('session_id_ass');
-            return null;
-        } else {
-            return utenteasseveratore;
-        }
-    } else {
-        return null;
-    }
-}
+
+
 
 export const getIdStandard = (cookies) => {
     const cookiesfuidstd = cookies.get('session_id_std');

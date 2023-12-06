@@ -1,27 +1,30 @@
 import jsforce from 'jsforce';
+import { redirect } from '@sveltejs/kit';
 import { caricaAvvisi, caricaMisure } from '../../../../logic/misure';
-import { getUtenteStandard, getUtenteAsseveratore } from '../../../../lib/userdb';
 
-
-export async function load({ cookies, params }) {
-    let avvisi = [];
-    let misure = [];
-    const ustd = getUtenteStandard(cookies);
-    const uass = getUtenteAsseveratore(cookies);
-    const u = ustd ? ustd : uass;
-    if (params.idmisura) {
-        if (u) {
-            let conn = new jsforce.Connection({
-                loginUrl: "https://login.salesforce.com"
+export async function load({ params,locals }) {
+    const connstandard = locals.user.connectionStandard;
+    const connasseveratore = locals.user.connectionAsseveratore;
+    const connection = connstandard ? connstandard : connasseveratore;
+    if (connection) {
+        if (params.idmisura) {
+            const conn = new jsforce.Connection({
+                instanceUrl: "https://padigitale2026.my.salesforce.com",
+                accessToken: connection
             });
-            await conn.login(u.email, u.password + u.token);
-            avvisi = avvisi.concat(await caricaAvvisi(conn)).filter(a=> a.outfunds__Parent_Funding_Program__c===params.idmisura);
-            misure = misure.concat(await caricaMisure(conn)).filter(m=> m.Id === params.idmisura);
-            await conn.logout();
+            const pavvisi = caricaAvvisi(conn);
+            const pmisure = caricaMisure(conn);
+            const all = Promise.all([pavvisi, pmisure]);
+            const values = await all;
+            return {
+                avvisi: values[0].filter(a => a.outfunds__Parent_Funding_Program__c === params.idmisura),
+                misure: values[1].filter(m => m.Id === params.idmisura)
+            };
+        } else {
+            throw redirect(303, '/');
         }
     }
-    return {
-        avvisi: avvisi,
-        misure: misure
-    };
+    else {
+        throw redirect(303, '/io');
+    }
 }

@@ -3,7 +3,7 @@
 export async function caricaAdesioniPerAvviso(conn,u) {
     const records = [];
     //console.log('-Caricamento adesioni per avviso...');
-    let soqladesioniperavviso = `select outfunds__Awarded_Amount__c,outfunds__Applying_Organization__r.Name,outfunds__Status__c,Codice_CUP__c,Data_invio_candidatura__c,Regione__c,Esito_campagna_duplicato_143_appIO__c,Risposta_PEC_143_appIO__c,outfunds__FundingProgram__c,outfunds__Applying_Organization__r.Tipologia_Ente__c, Id from outfunds__Funding_Request__c where (outfunds__Status__c='FINANZIATA' or outfunds__Status__c='IN VERIFICA') and outfunds__FundingProgram__c in (select id from outfunds__Funding_Program__c where Pacchetto__c ='AppIO') and outfunds__Applying_Organization__c in (select Id from Account where IsDeleted =false and (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`'))`;
+    let soqladesioniperavviso = `select outfunds__Awarded_Amount__c,outfunds__Applying_Organization__r.Name,outfunds__Status__c,Codice_CUP__c,Data_invio_candidatura__c,Regione__c,Esito_campagna_duplicato_143_appIO__c,Risposta_PEC_143_appIO__c,outfunds__FundingProgram__c,outfunds__Applying_Organization__r.Tipologia_Ente__c, Id from outfunds__Funding_Request__c where (outfunds__Status__c='FINANZIATA' or outfunds__Status__c='IN VERIFICA') and outfunds__FundingProgram__c in (select id from outfunds__Funding_Program__c where Pacchetto__c ='AppIO') and outfunds__Applying_Organization__c in (select Id from Account where IsDeleted =false and (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`'))`;
     let result_ = await conn.query(soqladesioniperavviso);
     records.push(...result_.records);
     //console.log("-numero di occorrenze da caricare: " + result_.totalSize);
@@ -25,7 +25,7 @@ export async function caricaAdesioniPerAvviso(conn,u) {
 export async function caricaDatiGrafico(conn,u){
     const records = [];
     //console.log('-Caricamento dati grafico...');
-    let soqldatigrafico = `select id, LastModifiedDate, outfunds__Status__c, outfunds__FundingProgram__c, outfunds__Applying_Organization__r.Tipologia_Ente__c  from outfunds__Funding_Request__c where outfunds__FundingProgram__c in (select id from outfunds__Funding_Program__c where Pacchetto__c ='AppIO') and outfunds__Applying_Organization__c in (select Id from Account where IsDeleted =false and (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`'))`;
+    let soqldatigrafico = `select id, LastModifiedDate, outfunds__Status__c, outfunds__FundingProgram__c, outfunds__Applying_Organization__r.Tipologia_Ente__c  from outfunds__Funding_Request__c where outfunds__FundingProgram__c in (select id from outfunds__Funding_Program__c where Pacchetto__c ='AppIO') and outfunds__Applying_Organization__c in (select Id from Account where IsDeleted =false and (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`'))`;
     let result_ = await conn.query(soqldatigrafico);
     records.push(...result_.records);
     //console.log("-numero di occorrenze da caricare: " + result_.totalSize);

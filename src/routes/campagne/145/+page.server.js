@@ -1,25 +1,25 @@
 // @ts-nocheck
+import { redirect } from '@sveltejs/kit';
 import jsforce from 'jsforce';
-import { getUtenteStandard } from '../../../lib/userdb';
 import { caricaCandidature145, caricaFornitori145, caricaPlatea145 } from './db';
 
-export async function load({ cookies }) {
+export async function load({ locals }) {
     let platea = [];
     let candidature = [];
     let fornitori = [];
-
-    const ustd = getUtenteStandard(cookies);
-    if (ustd) {
+    const connstandard = locals.user.connectionStandard;
+    const connection = connstandard;
+    if (connection) {
         let conn = new jsforce.Connection({
-            loginUrl: "https://login.salesforce.com"
+            instanceUrl: "https://padigitale2026.my.salesforce.com",
+            accessToken: connection
         });
-        await conn.login(ustd.email, ustd.password + ustd.token);
         platea = await caricaPlatea145(conn);
         candidature = await caricaCandidature145(conn);
         fornitori = await caricaFornitori145(conn);
-        await conn.logout();
+    }else {
+        throw redirect(303, '/io');
     }
-
     return {
         platea: platea,
         candidature: candidature,

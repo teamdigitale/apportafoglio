@@ -35,7 +35,7 @@ export async function load({ cookies, params }) {
         fsaas = values[3];
         fpaas = values[4];
         fiaas = values[5];
-        await conn.logout();
+        //await conn.logout();
 
     } else {
         throw redirect(303, '/io');

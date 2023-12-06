@@ -4,16 +4,10 @@
   export let data;
   export let form;
 
-  import { onMount } from 'svelte';
-  
-  /*import { invalidateAll } from '$app/navigation';
+  console.log(data);
 
-	onMount(async () => {
-		invalidateAll();
-	});
-  */
-
-  
+  $: ustd = data.utentestandard;
+  $: uass = data.utenteasseveratore;
 
 </script>
 
@@ -28,9 +22,7 @@
     <div class="column is-half">
       <Auth2026
         tipoutente="standard"
-        utenteSF={data.utentestandard && data.utentestandard.sfuser
-          ? data.utentestandard.sfuser
-          : null}
+        utenteSF={ustd}
         logged={data.loggedstandard}
         errorMessageStandard={form?.loginerrorstandard &&
         form?.loginerrorstandard.length > 0
@@ -41,9 +33,7 @@
     <div class="column is-half">
       <Auth2026
         tipoutente="asseveratore"
-        utenteSF={data.utenteasseveratore && data.utenteasseveratore.sfuser
-          ? data.utenteasseveratore.sfuser
-          : null}
+        utenteSF={uass}
         logged={data.loggedasseveratore}
         errorMessageAsseveratore={form?.loginerrorasseveratore &&
         form?.loginerrorasseveratore.length > 0

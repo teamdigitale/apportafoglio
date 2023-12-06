@@ -39,7 +39,7 @@ export async function asyncCaricaAvvisi(ustd) {
         }
     );
     //console.log('-...avvisi caricati: '+records.length);
-    await conn.logout();
+    //await conn.logout();
     return records;
 }
 
@@ -70,7 +70,7 @@ export async function asyncCaricaMisure(ustd) {
         }
     }
     //console.log('-...misure caricate: '+records.length);
-    await conn.logout();
+    //await conn.logout();
     return records;
 }
 

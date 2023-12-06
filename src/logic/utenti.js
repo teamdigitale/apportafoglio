@@ -1,6 +1,3 @@
-import jsforce from 'jsforce';
-import { getUserBySessionid } from '../lib/userdb'
-
 export async function loadUtente(conn,idutentesf){
 
     try {

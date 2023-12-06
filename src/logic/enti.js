@@ -32,7 +32,7 @@ export async function asyncLoadEntiAPortafoglio(u, tipo) {
         enti.forEach((ente) => ente.portafoglio = tipo);
         //console.log('-...enti caricati: ' + enti.length);
     }
-    await conn.logout();
+    //await conn.logout();
     return enti;
 }
 
@@ -45,9 +45,9 @@ export async function loadEntiAPortafoglio(conn, u, tipo) {
         //console.log('-Caricamento enti a portafoglio');
         let soqlentiaportafoglio = fields + ` where IsDeleted = false`;
         if(tipo==='Standard'){
-            soqlentiaportafoglio = soqlentiaportafoglio+ ` and (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')`;
+            soqlentiaportafoglio = soqlentiaportafoglio+ ` and (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`')`;
         }else{
-            soqlentiaportafoglio = soqlentiaportafoglio+ ` and (Asseveratore__c = '`+u.idutentesf+`')`;
+            soqlentiaportafoglio = soqlentiaportafoglio+ ` and (Asseveratore__c = '`+u+`')`;
         }
         let result_ = await conn.query(soqlentiaportafoglio);
         enti.push(...result_.records);

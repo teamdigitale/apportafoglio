@@ -27,7 +27,7 @@ export async function asyncCaricaCandidature(u) {
         }
     }
     //console.log('-...candidature caricate: '+records.length);
-    await conn.logout();
+    //await conn.logout();
     return records;
 }
 

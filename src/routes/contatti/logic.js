@@ -5,7 +5,7 @@ export async function loadContatti(conn, u) {
     const contatti = [];
     if (u) {
         //console.log('-Caricamento contatti');
-        let soqlcontatti = fieldsContatti + ` where TaskSubtype ='Call' and WhatId in (select Id from Account where (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')) and CreatedById ='`+u.idutentesf+`' order by CreatedDate desc`;
+        let soqlcontatti = fieldsContatti + ` where TaskSubtype ='Call' and WhatId in (select Id from Account where (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`')) and CreatedById ='`+u+`' order by CreatedDate desc`;
         let result_ = await conn.query(soqlcontatti);
         contatti.push(...result_.records);
         //console.log("-numero di occorrenze da caricare: " + result_.totalSize);
@@ -29,7 +29,7 @@ export async function loadEventi(conn, u) {
     const contatti = [];
     if (u) {
         //console.log('-Caricamento eventi');
-        let soqlcontatti = fieldsEventi + ` where WhatId in (select Id from Account where (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')) and CreatedById ='`+u.idutentesf+`' order by CreatedDate desc`;
+        let soqlcontatti = fieldsEventi + ` where WhatId in (select Id from Account where (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`')) and CreatedById ='`+u+`' order by CreatedDate desc`;
         let result_ = await conn.query(soqlcontatti);
         contatti.push(...result_.records);
         //console.log("-numero di occorrenze da caricare: " + result_.totalSize);

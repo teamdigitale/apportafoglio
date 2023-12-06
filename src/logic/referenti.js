@@ -8,9 +8,9 @@ export async function loadReferentiAPortafoglio(conn, u, tipo) {
         //console.log('-Caricamento referenti a portafoglio');
         let soqlreferentiaportafoglio = fields + ` where IsDeleted = false`;
         if(tipo==='Standard'){
-            soqlreferentiaportafoglio = soqlreferentiaportafoglio+ ` and (Account_Manager__c = '`+u.idutentesf+`' or Tech_Implementation_User__c = '`+u.idutentesf+`')`;
+            soqlreferentiaportafoglio = soqlreferentiaportafoglio+ ` and (Account_Manager__c = '`+u+`' or Tech_Implementation_User__c = '`+u+`')`;
         }else{
-            soqlreferentiaportafoglio = soqlreferentiaportafoglio+ ` and (Asseveratore__c = '`+u.idutentesf+`')`;
+            soqlreferentiaportafoglio = soqlreferentiaportafoglio+ ` and (Asseveratore__c = '`+u+`')`;
         }
         soqlreferentiaportafoglio = soqlreferentiaportafoglio+`)`;
         let result_ = await conn.query(soqlreferentiaportafoglio);

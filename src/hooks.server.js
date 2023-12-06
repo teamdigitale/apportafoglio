@@ -1,109 +1,73 @@
-import { getUserBySessionid } from './lib/userdb';
+import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
+import { loadUtente } from './logic/utenti';
 
-
-const unProtectedRoutes = ['/', '/io', '/opendata', '/entiipa','/io/cookies'];
-export const handle = async ({ event,  resolve }) => {
+export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
-    let utentestandard;
-    let utenteasseveratore;
     const cookiesfuidstd = event.cookies.get('session_id_std');
     const cookiesfuidass = event.cookies.get('session_id_ass');
 
+    if (!(cookiesfuidstd || cookiesfuidass) && !(
+        event.url.pathname === '/' ||
+        event.url.pathname.startsWith('/entiipa') ||
+        event.url.pathname.includes('/io') ||
+        event.url.pathname.includes('/opendata')
+    )) {
+        throw redirect(303, '/io');
+    }
 
-        if (!(cookiesfuidstd || cookiesfuidass) && !(
-            event.url.pathname==='/'|| 
-            event.url.pathname.startsWith('/entiipa')|| 
-            event.url.pathname.includes('/io')|| 
-            event.url.pathname.includes('/opendata') 
-        //!unProtectedRoutes.includes(event.url.pathname)
-        ) ) {
+    if (cookiesfuidstd) loggedstandard = true;
+    if (cookiesfuidass) loggedasseveratore = true;
+
+    if (!(loggedasseveratore || loggedstandard)) {
+        if (!(
+            event.url.pathname === '/' ||
+            event.url.pathname.startsWith('/entiipa') ||
+            event.url.pathname.includes('/io') ||
+            event.url.pathname.includes('/opendata')
+        )) {
             throw redirect(303, '/io');
         }
-
-
-        if (cookiesfuidstd) {
-            utentestandard = getUserBySessionid(cookiesfuidstd, 'standard');
-            if (utentestandard == null) {
-                event.cookies.delete('session_id_std');
-                loggedstandard = false;
-            } else {
-                loggedstandard = true;
-
-            }
-        }
-
-        if (cookiesfuidass) {
-            utenteasseveratore = getUserBySessionid(cookiesfuidass, 'asseveratore');
-            if (utenteasseveratore == null) {
-                event.cookies.delete('session_id_ass');
-                loggedasseveratore = false;
-
-            } else {
-                loggedasseveratore = true;
-            }
-        }
-        if (loggedasseveratore || loggedstandard) {
-            //DO SOMETHING
-        } else {
-
-            if (!(
-                event.url.pathname==='/'|| 
-                event.url.pathname.startsWith('/entiipa')|| 
-                event.url.pathname.includes('/io')|| 
-                event.url.pathname.includes('/opendata') 
-            //!unProtectedRoutes.includes(event.url.pathname)
-            )) {
-                throw redirect(303, '/io');
-            }
-
-        }
-
-
-
-    /*
-    let us = utentestandard;
-
-    if (utentestandard) {
-        delete us.token;
-        delete us.password;
-        delete us.idutentesf;
     }
 
-    let ua = utenteasseveratore;
-    if (utenteasseveratore) {
-        delete ua.token;
-        delete ua.password;
-        delete ua.idutentesf;
-    }
-    */
+    let utentestandard = event.locals.utentestandard;
+    let utenteasseveratore = event.locals.utenteasseveratore;
 
+    if (loggedstandard && !utentestandard) {
+        const conn = new jsforce.Connection({
+            instanceUrl: "https://padigitale2026.my.salesforce.com",
+            accessToken: cookiesfuidstd
+        });
+        let idutentesf;
+        await conn.identity(function (err, res) {
+            idutentesf = res.user_id;
+        });
+        utentestandard = await loadUtente(conn, idutentesf);
+    }
+
+    if (loggedasseveratore && !utenteasseveratore) {
+        const conn = new jsforce.Connection({
+            instanceUrl: "https://padigitale2026.my.salesforce.com",
+            accessToken: cookiesfuidass
+        });
+        let idutentesf;
+        await conn.identity(function (err, res) {
+            idutentesf = res.user_id;
+        });
+        utenteasseveratore = await loadUtente(conn, idutentesf);
+    }
 
     event.locals.user = {
         loggedstandard: loggedstandard,
         loggedasseveratore: loggedasseveratore,
-        //userstandard: utentestandard,
-        //userasseveratore: utenteasseveratore,
-        originaluserstandard: utentestandard
+        connectionStandard: cookiesfuidstd,
+        connectionAsseveratore: cookiesfuidass,
+        utentestandard: utentestandard,
+        utenteasseveratore: utenteasseveratore
+
     };
+    console.log(event.locals.user);
     return resolve(event);
 };
 
-/*
-export async function handleFetch({ event, request, fetch }) {
-    console.log("Aaaa");
-    const cookiesfuidstd = event.cookies.get('session_id_std');
-    if (cookiesfuidstd) {
-        let u = getUserBySessionid(cookiesfuidstd, 'standard');
-        if (u) {
-            console.log("b");
-                request.headers.set('Authorization', 'Bearer ' + u.token);
-            
-        }
-    }
-
-    
-    return fetch(request);
-}
-*/

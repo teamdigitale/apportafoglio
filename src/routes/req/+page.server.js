@@ -15,7 +15,7 @@ export async function load({ cookies }) {
             });
             await conn.login(utentestandard.email, utentestandard.password + utentestandard.token);
             result = await caricaScadenze(conn);
-            await conn.logout();
+            //await conn.logout();
         } 
     } 
 

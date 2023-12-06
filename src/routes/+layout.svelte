@@ -8,19 +8,7 @@
   $: loggedstandard = data.loggedstandard;
   $: loggedasseveratore = data.loggedasseveratore;
 
-  let runas = data.runas;
-  let visible = true;
-  async function ra() {
-    const response = await fetch("/api/runas", {
-      method: "POST",
-      body: JSON.stringify({ runas }),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    visible = false;
-    await invalidateAll().then((a) => (visible = true));
-  }
+  
 </script>
 
 <nav class="navbar is-fixed-top" aria-label="main navigation">
@@ -265,25 +253,7 @@
           </div>
         </div>
       -->
-        <!--
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="javascript:void(0)"> intelligenza artificiale </a>
-
-          <div class="navbar-dropdown">
-            <a
-              class="navbar-item {$page.url.pathname === '/ia/bohr'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/ia/bohr"
-              aria-current={$page.url.pathname === "/ia/bohr"}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;Bohr consiglia
-            </a>
-            
-          </div>
-        </div>
-        -->
+       
       {/if}
       {#if loggedasseveratore}
         <a
@@ -300,32 +270,10 @@
       {/if}
     </div>
 
-  <!-- RUNAS-->  
-  <!--
-    <div class="navbar-end">
-      <div class="field">
-        <div class="control has-icons-left">
-          <div class="select is-primary" id="idfiltermisure">
-            <form method="POST" action="/api/runas">
-              <select name="runas" bind:value={runas} on:change={() => ra()}>
-                <option value="">Utente loggato</option>
-                <option value="0057Q00000729pMQAQ">Cludio Scarpa</option>
-                <option value="0057Q0000070qj8QAA">Raffaele Santo</option>
-                <option value="0057Q000005UXtlQAG">Giovanni Pergola</option>
-                <option value="0057Q0000070qelQAA">Marco Virno</option>
-              </select>
-            </form>
-          </div>
-          <div class="icon is-small is-left">
-            <i class="fas fa-user" />
-          </div>
-        </div>
-      </div>
-    </div>
-  -->
+ 
   </div>
 </nav>
-{#if visible}
+
   {#if $navigating}
     <section class="hero is-primary">
       <div class="hero-body">
@@ -340,12 +288,7 @@
   {:else}
     <slot />
   {/if}
-{:else}
-  <div class="content is-vcentered has-text-centered">
-    <p class="title is-vcentered has-text-centered">Refreshing data...</p>
-    <progress class="progress is-large is-warning" max="100">60%</progress>
-  </div>
-{/if}
+
 
 <BackToTop />
 
