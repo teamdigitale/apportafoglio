@@ -1,16 +1,14 @@
 import jsforce from 'jsforce';
-import { getUtenteAsseveratore, getUtenteStandard } from '../../../lib/userdb.js';
 import { redirect } from '@sveltejs/kit';
 
 const MAX_FETCH = 1000000;
-export async function load({ cookies}) {
+export async function load({ locals}) {
 
     let tasks = [];
     let candidature = [];
 
-    const ustd = getUtenteStandard(cookies);
 
-    const u = ustd;
+
     const connstandard = locals.user.connectionStandard;
     const connasseveratore = locals.user.connectionAsseveratore;
     const connection = connstandard?connstandard:connasseveratore;

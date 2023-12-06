@@ -58,7 +58,7 @@ export const actions = {
             }
             /******ABILITAZIONE PILOTI */
             if (["0057Q00000729pMQAQ", "0057Q0000072YrZQAU", "0057Q000005UXtlQAG", "0057Q0000070qelQAA", "0057Q0000072NWoQAM",
-                "0057Q0000072hbnQAA", "0057Q0000072hcgQAA", "0057Q0000072hdZQAQ", "0057Q0000072hcCQAQ", "0057Q00000BBBNwQAP"].indexOf(idutentesf) < 0) {
+                "0057Q0000072hbnQAA", "0057Q0000072hcgQAA", "0057Q0000072hdZQAQ", "0057Q0000072hcCQAQ", "0057Q00000BBBNwQAP","0057Q0000072hdUQAQ"].indexOf(idutentesf) < 0) {
                 throw redirect(303, '/io');
             }
             cookies.set(tipoUtente === 'standard' ? 'session_id_std' : 'session_id_ass', connectionToken, {

@@ -9,7 +9,8 @@ export async function load({locals, cookies}) {
         userstandard: locals.user.userstandard, 
         userasseveratore: locals.user.userasseveratore,
         utentestandard: locals.user.utentestandard,
-        utenteasseveratore: locals.user.utenteasseveratore
+        utenteasseveratore: locals.user.utenteasseveratore,
+        boardauth: locals.user.boardauth
     }
 }
 

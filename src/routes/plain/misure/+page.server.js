@@ -11,7 +11,7 @@ export async function load({ locals }) {
     const connection = connstandard?connstandard:connasseveratore;
 
     if (connection) {
-        let conn = new jsforce.Connection({
+        const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: connection
         });

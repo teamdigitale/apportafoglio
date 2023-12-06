@@ -56,7 +56,7 @@
         .filter((x) =>
             filterNominativoEnte == ""
                 ? true
-                : x.ente.Name.toLowerCase().includes(
+                : x.Account.Name.toLowerCase().includes(
                       filterNominativoEnte.toLowerCase(),
                   ),
         )

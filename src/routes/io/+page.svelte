@@ -4,8 +4,6 @@
   export let data;
   export let form;
 
-  console.log(data);
-
   $: ustd = data.utentestandard;
   $: uass = data.utenteasseveratore;
 

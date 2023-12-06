@@ -25,7 +25,7 @@
     <div class="card-content">
         <p>
             <span class="has-text-weight-bold mx-2">Ente:</span><span
-                >{referente.ente.Name}</span
+                >{referente.Account.Name}</span
             >
         </p>
         <p>

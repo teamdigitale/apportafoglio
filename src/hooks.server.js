@@ -19,7 +19,6 @@ export const handle = async ({ event, resolve }) => {
 
     if (cookiesfuidstd) loggedstandard = true;
     if (cookiesfuidass) loggedasseveratore = true;
-
     if (!(loggedasseveratore || loggedstandard)) {
         if (!(
             event.url.pathname === '/' ||
@@ -34,6 +33,7 @@ export const handle = async ({ event, resolve }) => {
     let utentestandard = event.locals.utentestandard;
     let utenteasseveratore = event.locals.utenteasseveratore;
 
+    let boardauth = false;
     if (loggedstandard && !utentestandard) {
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
@@ -43,6 +43,7 @@ export const handle = async ({ event, resolve }) => {
         await conn.identity(function (err, res) {
             idutentesf = res.user_id;
         });
+        boardauth = ["0057Q0000072NWoQAM","0057Q000005UXjoQAG","0057Q00000375UHQAY"].indexOf(idutentesf) > -1;
         utentestandard = await loadUtente(conn, idutentesf);
     }
 
@@ -58,16 +59,18 @@ export const handle = async ({ event, resolve }) => {
         utenteasseveratore = await loadUtente(conn, idutentesf);
     }
 
+    
+
     event.locals.user = {
         loggedstandard: loggedstandard,
         loggedasseveratore: loggedasseveratore,
         connectionStandard: cookiesfuidstd,
         connectionAsseveratore: cookiesfuidass,
         utentestandard: utentestandard,
-        utenteasseveratore: utenteasseveratore
+        utenteasseveratore: utenteasseveratore,
+        boardauth: boardauth
 
     };
-    console.log(event.locals.user);
     return resolve(event);
 };
 

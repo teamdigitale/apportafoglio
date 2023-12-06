@@ -1,5 +1,4 @@
 <script>
-  import { invalidateAll } from "$app/navigation";
   import { navigating } from "$app/stores";
   export let data;
   let menuActive = false;
@@ -126,6 +125,7 @@
                 <i class="fas fa-address-book" aria-hidden="true" />
               </span>&nbsp;referenti
             </a>
+            {#if !data.boardauth}
             <a
               class="navbar-item {$page.url.pathname === '/contatti'
                 ? 'has-text-info'
@@ -148,10 +148,11 @@
                 <i class="fas fa-calendar-days" aria-hidden="true" />
               </span>&nbsp;scadenze
             </a>
+            {/if}
           </div>
         </div>
       {/if}
-      {#if loggedstandard}
+      {#if loggedstandard  && ! data.boardauth}
         <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
           <!-- svelte-ignore a11y-invalid-attribute -->
           <a class="navbar-link" href="javascript:void(0)"> opera </a>
@@ -267,6 +268,26 @@
             <i class="fas fa-stamp" aria-hidden="true" />
           </span>&nbsp;quadro asseverazioni
         </a>
+      {/if}
+      {#if data.boardauth}
+      <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
+        <!-- svelte-ignore a11y-invalid-attribute -->
+        <a class="navbar-link" href="javascript:void(0)"> boards </a>
+
+        <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
+          <a
+            class="navbar-item {$page.url.pathname === '/boardrisorse'
+              ? 'has-text-info'
+              : 'has-text-grey'}"
+            href="/boardrisorse"
+            aria-current={$page.url.pathname === "/boardrisorse"}
+            on:click={() => (menuActive = !menuActive)}
+            ><span class="icon">
+              <i class="fas fa-chart-simple" aria-hidden="true" />
+            </span>&nbsp;board risorse
+          </a>
+        </div>
+      </div>
       {/if}
     </div>
 
