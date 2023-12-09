@@ -276,15 +276,26 @@
 
         <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
           <a
-            class="navbar-item {$page.url.pathname === '/boardrisorse'
+            class="navbar-item {$page.url.pathname === '/boards/boardrisorse'
               ? 'has-text-info'
               : 'has-text-grey'}"
-            href="/boardrisorse"
-            aria-current={$page.url.pathname === "/boardrisorse"}
+            href="/boards/boardrisorse"
+            aria-current={$page.url.pathname === "/boards/boardrisorse"}
             on:click={() => (menuActive = !menuActive)}
             ><span class="icon">
               <i class="fas fa-chart-simple" aria-hidden="true" />
             </span>&nbsp;board risorse
+          </a>
+          <a
+            class="navbar-item {$page.url.pathname === '/boards/boardasseverazioni'
+              ? 'has-text-info'
+              : 'has-text-grey'}"
+            href="/boards/boardasseverazioni"
+            aria-current={$page.url.pathname === "/boards/boardasseverazioni"}
+            on:click={() => (menuActive = !menuActive)}
+            ><span class="icon">
+              <i class="fas fa-medal" aria-hidden="true" />
+            </span>&nbsp;board asseverazioni
           </a>
         </div>
       </div>

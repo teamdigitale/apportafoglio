@@ -40,4 +40,13 @@
       />
     </div>
   </div>
+  <div class="columns is-full">
+    {#if data.sessionerror && data.sessionerror!==''}
+    <article class="message is-danger">
+      <div class="message-body">
+        {data.sessionerror}
+      </div>
+    </article>
+    {/if}
+  </div>
 </section>

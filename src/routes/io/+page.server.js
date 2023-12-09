@@ -7,7 +7,7 @@ let loggedasseveratore = false;
 let loginerrorstandard = '';
 let loginerrorasseveratore = '';
 
-export function load({ cookies }) {
+export function load({ cookies,locals }) {
     const cookiesfuidstd = cookies.get('session_id_std');
     const cookiesfuidass = cookies.get('session_id_ass');
     loggedstandard = false;
@@ -25,7 +25,8 @@ export function load({ cookies }) {
         loggedstandard: loggedstandard,
         loggedasseveratore: loggedasseveratore,
         loginerrorstandard: loginerrorstandard,
-        loginerrorasseveratore: loginerrorasseveratore
+        loginerrorasseveratore: loginerrorasseveratore,
+        sessionerror: locals.sessionerror
     }
 
 }

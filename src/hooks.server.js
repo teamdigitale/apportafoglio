@@ -5,8 +5,8 @@ import { loadUtente } from './logic/utenti';
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
-    const cookiesfuidstd = event.cookies.get('session_id_std');
-    const cookiesfuidass = event.cookies.get('session_id_ass');
+    let cookiesfuidstd = event.cookies.get('session_id_std');
+    let cookiesfuidass = event.cookies.get('session_id_ass');
 
     if (!(cookiesfuidstd || cookiesfuidass) && !(
         event.url.pathname === '/' ||
@@ -33,44 +33,83 @@ export const handle = async ({ event, resolve }) => {
     let utentestandard = event.locals.utentestandard;
     let utenteasseveratore = event.locals.utenteasseveratore;
 
+    let sessionerror = '';
+
     let boardauth = false;
     if (loggedstandard && !utentestandard) {
+
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: cookiesfuidstd
         });
         let idutentesf;
-        await conn.identity(function (err, res) {
-            idutentesf = res.user_id;
-        });
+
+        try {
+            await conn.identity(function (err, res) {
+                if (err) {
+                    sessionerror = err.message;
+                    event.cookies.delete('session_id_std');
+                    loggedstandard = false;
+                    cookiesfuidstd = null;
+                } else {
+                    idutentesf = res.user_id;
+                    utentestandard = loadUtente(conn, idutentesf);
+                }
+
+            });
+        } catch (error) {
+            sessionerror = error.message;
+            event.cookies.delete('session_id_std');
+            loggedstandard = false;
+            cookiesfuidstd = null;
+        }
         boardauth = ["0057Q0000072NWoQAM","0057Q000005UXjoQAG","0057Q00000375UHQAY"].indexOf(idutentesf) > -1;
-        utentestandard = await loadUtente(conn, idutentesf);
+
+
     }
 
     if (loggedasseveratore && !utenteasseveratore) {
+
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: cookiesfuidass
         });
         let idutentesf;
-        await conn.identity(function (err, res) {
-            idutentesf = res.user_id;
-        });
-        utenteasseveratore = await loadUtente(conn, idutentesf);
-    }
+        try {
+            await conn.identity(function (err, res) {
+                if (err) {
+                    sessionerror = err.message;
+                    event.cookies.delete('session_id_ass');
+                    loggedasseveratore = false;
+                    cookiesfuidass = null;
+                } else {
+                    idutentesf = res.user_id;
+                    utenteasseveratore = loadUtente(conn, idutentesf);
+                }
 
-    
+            });
+        }catch (error) {
+                sessionerror = error.message;
+                event.cookies.delete('session_id_ass');
+                loggedasseveratore = false;
+                cookiesfuidass = null;
+            }
+
+
+        }
+
+
 
     event.locals.user = {
-        loggedstandard: loggedstandard,
-        loggedasseveratore: loggedasseveratore,
-        connectionStandard: cookiesfuidstd,
-        connectionAsseveratore: cookiesfuidass,
-        utentestandard: utentestandard,
-        utenteasseveratore: utenteasseveratore,
-        boardauth: boardauth
-
+            loggedstandard: loggedstandard,
+            loggedasseveratore: loggedasseveratore,
+            connectionStandard: cookiesfuidstd,
+            connectionAsseveratore: cookiesfuidass,
+            utentestandard: utentestandard,
+            utenteasseveratore: utenteasseveratore,
+            boardauth: boardauth,
+            sessionerror: sessionerror
+        };
+        return resolve(event);
     };
-    return resolve(event);
-};
 

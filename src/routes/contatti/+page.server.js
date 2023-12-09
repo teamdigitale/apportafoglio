@@ -18,6 +18,8 @@ export async function load({ locals }) {
         await conn.identity(function (err, res) {
             idutentesf = res.user_id;
         });
+
+        idutentesf='0057Q0000070qelQAA';
         contatti = contatti.concat(await loadContatti(conn, idutentesf));
         eventi = eventi.concat(await loadEventi(conn, idutentesf));
         let r = [];
