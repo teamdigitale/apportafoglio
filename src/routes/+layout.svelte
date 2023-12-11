@@ -287,11 +287,11 @@
             </span>&nbsp;board risorse
           </a>
           <a
-            class="navbar-item {$page.url.pathname === '/boards/boardasseverazioni'
+            class="navbar-item {$page.url.pathname === '/boards/boardasseverazioniconcluse'
               ? 'has-text-info'
               : 'has-text-grey'}"
-            href="/boards/boardasseverazioni"
-            aria-current={$page.url.pathname === "/boards/boardasseverazioni"}
+            href="/boards/boardasseverazioniconcluse"
+            aria-current={$page.url.pathname === "/boards/boardasseverazioniconcluse"}
             on:click={() => (menuActive = !menuActive)}
             ><span class="icon">
               <i class="fas fa-medal" aria-hidden="true" />
