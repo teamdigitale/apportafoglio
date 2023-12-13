@@ -51,9 +51,9 @@
 <section class="section is-12 px-0">
     <div class="columns is-multiline">
 
-        <div class="column is-half">
+        <div class="column is-12">
             <div class="box is-centered">
-                <table class="table is-bordered is-narrow">
+                <table class="table is-bordered is-fullwidth">
                     <thead>
                         <tr>
                             <th rowspan="2" class="is-vcentered has-text-black is-info has-text-centered"
@@ -206,9 +206,9 @@
             </div>
         </div>
 
-        <div class="column is-half">
+        <div class="column is-12">
             <div class="box is-centered">
-                <table class="table is-bordered is-narrow">
+                <table class="table is-bordered is-fullwidth">
                     <thead>
                         <tr>
                             <th rowspan="2" class="is-vcentered has-text-black is-info has-text-centered"

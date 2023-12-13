@@ -15,7 +15,18 @@
             <!-- Left side -->
             <div class="level-left">
                 <div class="level-item">
-                    <p class="card-header-title is-uppercase">
+                    <p class="card-header-title is-uppercase"><a class="mx-4"
+                        href="/api/vcard/{referente.Id}"
+                        target="_blank"
+                    >
+                        <span
+                            class="icon is-7  is-white"
+                        >
+                            <i
+                                class="fas fa-user-plus  has-text-white"
+                            />
+                        </span>
+                    </a>
                         {referente.Name} ({referente.Stato__c})
                     </p>
                 </div>
