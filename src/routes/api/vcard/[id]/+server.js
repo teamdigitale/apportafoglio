@@ -36,7 +36,7 @@ END:VCARD`;
         {
             status: 200,
             headers: {
-                'Content-Type': 'application/octet-stream',
+                'Content-Type': 'text/vcard',
                 'Content-Disposition':
                     `attachment; filename*=UTF-8''`+contact.Name+`.vcf`,
             },
