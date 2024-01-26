@@ -1,7 +1,0 @@
-{
-	"runtime": "nodejs18.x",
-	"maxDuration": 120,
-	"handler": "..\\..\\..\\..\\dev\\final\\fmpa2026\\.svelte-kit\\vercel-tmp\\index.js",
-	"launcherType": "Nodejs",
-	"experimentalResponseStreaming": true
-}
