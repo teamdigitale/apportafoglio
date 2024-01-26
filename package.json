@@ -30,8 +30,8 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-node": "^4.0.1",
-		"bootstrap-italia": "^2.8.1",
 		"jsforce": "^1.11.1",
-		"moment": "^2.30.1"
+		"moment": "^2.30.1",
+		"bootstrap-italia": "^2.8.2"
 	}
 }
