@@ -6,11 +6,11 @@ let vcard;
 let contact;
 
 /** @type {import('../$types').RequestHandler} */
-export async function GET({ params,locals }) {
+export async function GET({ params, locals }) {
     const id = params.id;
     const connstandard = locals.user.connectionStandard;
     const connasseveratore = locals.user.connectionAsseveratore;
-    const connection = connstandard?connstandard:connasseveratore;
+    const connection = connstandard ? connstandard : connasseveratore;
 
     if (connection) {
         let conn = new jsforce.Connection({
@@ -18,18 +18,18 @@ export async function GET({ params,locals }) {
             accessToken: connection
         });
 
-        const c = await promiseQuery(conn, `select FirstName, LastName, MobilePhone, Phone,  Account.Name, Email, PEC__c, Title, Salutation, Name from contact where id = '`+id+`'`);
+        const c = await promiseQuery(conn, `select FirstName, LastName, MobilePhone, Phone,  Account.Name, Email, PEC__c, Title, Salutation, Name from contact where id = '` + id + `'`);
         contact = c[0];
-    
+
         vcard = `BEGIN:VCARD
 VERSION:4.0
-FN:`+contact.Name+`
-N:`+contact.FirstName+`;`+contact.las+`;;;ing. jr,M.Sc.
-ORG:`+contact.Account.Name+`
-TEL;TYPE=cell:`+(contact.MobilePhone?contact.MobilePhone:'')+`
-EMAIL;TYPE=work:`+(contact.Email?contact.Email:'')+`
+FN:`+ contact.Name + `
+N:`+ contact.FirstName + `;` + contact.las + `;;;ing. jr,M.Sc.
+ORG:`+ contact.Account.Name + `
+TEL;TYPE=cell:`+ (contact.MobilePhone ? contact.MobilePhone : '') + `
+EMAIL;TYPE=work:`+ (contact.Email ? contact.Email : '') + `
 END:VCARD`;
-        
+
     }
     return new Response(
         vcard,
@@ -38,10 +38,10 @@ END:VCARD`;
             headers: {
                 'Content-Type': 'text/vcard',
                 'Content-Disposition':
-                    `attachment; filename*=UTF-8''`+contact.Name+`.vcf`,
+                    `attachment; filename*=UTF-8''` + contact.Name + `.vcf`,
             },
         }
     );
-    
-    
+
+
 }

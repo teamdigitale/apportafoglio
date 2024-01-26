@@ -7,7 +7,7 @@ export async function GET({ params, locals }) {
     let res;
     const connstandard = locals.user.connectionStandard;
     const connasseveratore = locals.user.connectionAsseveratore;
-    const connection = connstandard ? connstandard : connasseveratore;
+    const connection = connstandard?connstandard:connasseveratore;
 
     if (connection) {
         let conn = new jsforce.Connection({

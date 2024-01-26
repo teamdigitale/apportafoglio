@@ -1,335 +1,446 @@
 <script>
-  import { navigating } from "$app/stores";
-  export let data;
-  let menuActive = false;
-  import { page } from "$app/stores";
-  import BackToTop from "$lib/c/ui/BackToTop.svelte";
-  $: loggedstandard = data.loggedstandard;
-  $: loggedasseveratore = data.loggedasseveratore;
+	import { navigating } from '$app/stores';
+	import { page } from '$app/stores';
+	import { checkAbilitazione } from '$lib/js/shared.js';
+	export let data;
+	$: loggedstandard = data.loggedstandard;
+	$: loggedasseveratore = data.loggedasseveratore;
 
-  
+	function getRandomArbitrary(min, max) {
+		min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 </script>
 
-<nav class="navbar is-fixed-top" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item is-link" href="/">
-      <figure class="image is-28x28 mx-2">
-        <img src="/site-logo.svg" alt="logo" />
-      </figure>
-      <h1 class="title has-text-info">APPortafoglio</h1>
-    </a>
+<div class="it-header-wrapper ">
+	<div class="it-header-slim-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="it-header-slim-wrapper-content">
+						<a
+							class="d-none d-lg-block navbar-brand"
+							target="_blank"
+							href="https://innovazione.gov.it/"
+						>
+							Dipartimento per la Trasformazione Digitale
+						</a>
+						<div class="nav-mobile">
+							<nav aria-label="Navigazione accessoria">
+								<a
+									class="it-opener d-lg-none"
+									data-bs-toggle="collapse"
+									href="#menu1a"
+									role="button"
+									aria-expanded="false"
+									aria-controls="menu4"
+								>
+									<span>Dipartimento per la Trasformazione Digitale</span>
+									<svg class="icon" aria-hidden="true">
+										<use href="/svg/sprites.svg#it-expand"></use>
+									</svg>
+								</a>
+								<!--
+                  <div class="link-list-wrapper collapse" id="menu1a">
+                    <ul class="link-list">
+                      <li><a class="dropdown-item list-item" href="#">Link 1</a></li>
+                      <li><a class="list-item active" href="#" aria-current="page">Link 2 (Attivo)</a></li>
+                    </ul>
+                  </div>
+                  -->
+							</nav>
+						</div>
+						<div class="it-header-slim-right-zone">
+							<div class="it-access-top-wrapper">
+								{#if loggedstandard || loggedasseveratore}
+									<div
+										class="d-flex align-items-center justify-content-around flex-wrap flex-sm-nowrap"
+									>
+										<ul class="avatar-group-stacked">
+											{#if loggedstandard}
+												<li>
+													<a class="avatar size-md" href="/accesso">
+														<img
+															src={'/api/img/' +
+																encodeURIComponent(data.utentestandard.FullPhotoUrl)}
+															alt={data.utentestandard.Name}
+														/>
+													</a>
+												</li>
+											{/if}
+											{#if loggedasseveratore}
+												<li>
+													<a class="avatar size-md" href="/accesso">
+														<img
+															src={'/api/img/' +
+																encodeURIComponent(data.utenteasseveratore.FullPhotoUrl)}
+															alt={data.utenteasseveratore.Name}
+														/>
+													</a>
+												</li>
+											{/if}
+										</ul>
+									</div>
+								{:else}
+									<a class="btn btn-primary btn-sm" href="/accesso">Accedi</a>
+								{/if}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="it-nav-wrapper">
+		<div class="it-header-center-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="it-header-center-content-wrapper">
+							<div class="it-brand-wrapper">
+								<a href="/">
+									<svg class="icon" aria-hidden="true">
+										<use href="/svg/sprites.svg#it-team-digitale"></use>
+									</svg>
+									<div class="it-brand-text">
+										<div class="it-brand-title">APPortafoglio</div>
+										<div class="it-brand-tagline d-none d-md-block">PA2026 in tasca</div>
+									</div>
+								</a>
+							</div>
+							<div class="it-right-zone">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="it-header-navbar-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<!--start nav-->
+						<nav class="navbar navbar-expand-lg" aria-label="Navigazione principale">
+							<button
+								class="custom-navbar-toggler"
+								type="button"
+								aria-controls="nav0"
+								aria-expanded="false"
+								aria-label="Mostra/Nascondi la navigazione"
+								data-bs-toggle="navbarcollapsible"
+								data-bs-target="#nav0"
+							>
+								<svg class="icon bg-override"><use href="/svg/sprites.svg#it-burger"></use></svg>
+							</button>
+							<div class="navbar-collapsable" id="nav0" style="display: none;">
+								<div class="overlay" style="display: none;"></div>
+								<div class="close-div">
+									<button class="btn close-menu" type="button">
+										<span class="visually-hidden">Nascondi la navigazione</span>
+										<svg class="icon"><use href="/svg/sprites.svg#it-close-big"></use></svg>
+									</button>
+								</div>
+								<div class="menu-wrapper">
+									<ul class="navbar-nav">
+										<li class="nav-item active">
+											<a class="nav-link {$page.url.pathname === '/' ? 'active' : ''}" href="/"
+												><span>home</span></a
+											>
+										</li>
+										<li class="nav-item active">
+											<a
+												class="nav-link {$page.url.pathname === '/opendata' ? 'active' : ''}"
+												href="/opendata"><span>open data</span></a
+											>
+										</li>
 
-    <!-- svelte-ignore a11y-interactive-supports-focus -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <a
-      role="button"
-      class="navbar-burger"
-      aria-label="menu"
-      aria-expanded="false"
-      data-target="navbar"
-      on:click={() => (menuActive = !menuActive)}
+										<!-- consulta -->
+										{#if loggedstandard }
+										<li class="nav-item dropdown">
+											<a
+												class="nav-link dropdown-toggle"
+												href="#"
+												role="button"
+												data-bs-toggle="dropdown"
+												aria-expanded="false"
+												id="ddconsulta"
+											>
+												<span>consulta</span>
+												<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-expand"></use></svg
+												>
+											</a>
+											<div
+												class="dropdown-menu"
+												role="region"
+												aria-labelledby="ddconsulta"
+												data-sveltekit-preload-data="off"
+											>
+												<div class="link-list-wrapper">
+													<ul class="link-list">
+														<li>
+															<a class="dropdown-item list-item" href="/op/avvisi"
+																><span>avvisi</span></a
+															>
+														</li>
+														<li>
+															<a class="dropdown-item list-item" href="/op/enti"
+																><span>enti</span></a
+															>
+														</li>
+                                                        <li>
+															<a class="dropdown-item list-item" href="/op/referenti"
+																><span>referenti</span></a
+															>
+														</li>
+														<li><span class="divider"></span></li>
+														<li>
+															<a class="dropdown-item list-item" href="/op/contatti"
+																><span>report accounting</span></a
+															>
+														</li>
+														<li>
+															<a class="dropdown-item list-item" href="/op/scadenze"
+																><span>scadenze</span></a
+															>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</li>
+										{/if}
 
-    >
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
-    </a>
-  </div>
+										<!-- cruscotti -->
+										{#if loggedstandard }
+										<li class="nav-item dropdown">
+											<a
+												class="nav-link dropdown-toggle"
+												href="#"
+												role="button"
+												data-bs-toggle="dropdown"
+												aria-expanded="false"
+												id="ddcruscotti"
+											>
+												<span>cruscotti</span>
+												<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-expand"></use></svg
+												>
+											</a>
+											<div
+												class="dropdown-menu"
+												role="region"
+												aria-labelledby="ddcruscotti"
+												data-sveltekit-preload-data="off"
+											>
+												<div class="link-list-wrapper">
+													<ul class="link-list">
+														<li>
+															<a class="dropdown-item list-item" href="/cruscotti/generale"
+																><span>generale</span></a
+															>
+														</li>
+														<li>
+															<a class="dropdown-item list-item" href="/cruscotti/fornitori"
+																><span>fornitori</span></a
+															>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</li>
+										{/if}
 
-  <div id="navbar" class="navbar-menu {menuActive ? 'is-active' : ''}">
-    <div class="navbar-start"  data-sveltekit-preload-data="off">
-      <a
-        class="navbar-item {$page.url.pathname === '/io'
-          ? 'has-text-link'
-          : 'has-text-grey'}"
-        href="/io"
-        aria-current={$page.url.pathname === "/io"}
-        on:click={() => (menuActive = !menuActive)}
-      >
-        <span class="icon">
-          <i class="fas fa-user" aria-hidden="true" />
-        </span>&nbsp;io
-      </a>
-      <a
-        class="navbar-item {$page.url.pathname === '/opendata'
-          ? 'has-text-link'
-          : 'has-text-grey'}"
-        href="/opendata"
-        aria-current={$page.url.pathname === "/opendata"}
-        on:click={() => (menuActive = !menuActive)}
-      >
-        <span class="icon">
-          <i class="fas fa-database" aria-hidden="true" />
-        </span>&nbsp;open data
-      </a>
-      <a
-      class="navbar-item {$page.url.pathname === '/entiipa'
-        ? 'has-text-link'
-        : 'has-text-grey'}"
-      href="/entiipa"
-      aria-current={$page.url.pathname === "/entiipa"}
-      on:click={() => (menuActive = !menuActive)}
-    >
-      <span class="icon">
-        <i class="fas fa-building" aria-hidden="true" />
-      </span>&nbsp;IPA
-    </a>
-      {#if loggedasseveratore || loggedstandard}
-        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
-          <!-- svelte-ignore a11y-invalid-attribute -->
-          <a class="navbar-link" href="javascript:void(0)"> consulta </a>
+										{#if loggedstandard || loggedasseveratore}
+											{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+												<!-- monitoraggio -->
+												<li class="nav-item dropdown">
+													<a
+														class="nav-link dropdown-toggle"
+														href="#"
+														role="button"
+														data-bs-toggle="dropdown"
+														aria-expanded="false"
+														id="ddmonitoraggio"
+													>
+														<span>monitoraggio</span>
+														<svg class="icon icon-xs"
+															><use href="/svg/sprites.svg#it-expand"></use></svg
+														>
+													</a>
+													<div
+														class="dropdown-menu"
+														role="region"
+														aria-labelledby="ddmonitoraggio"
+														data-sveltekit-preload-data="off"
+													>
+														<div class="link-list-wrapper">
+															<ul class="link-list">
+																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/risorse"
+																		><span>board risorse</span></a
+																	>
+																</li>
+																<li data-sveltekit-preload-data="off">
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/asseverazioni"
+																		><span>board asseverazioni</span></a
+																	>
+																</li>
+																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
+																		><span>board avvisi</span></a
+																	>
+																</li>
+																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/crono"
+																		><span>crono</span></a
+																	>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</li>
+											{/if}
+										{/if}
+									</ul>
+								</div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
-            <a
-              class="navbar-item {$page.url.pathname === '/plain/misure'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/plain/misure"
-              aria-current={$page.url.pathname === "/plain/misure"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-euro-sign" aria-hidden="true" />
-              </span>&nbsp;misure
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/plain/avvisi'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/plain/avvisi"
-              aria-current={$page.url.pathname === "/plain/avvisi"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-bullhorn" aria-hidden="true" />
-              </span>&nbsp;avvisi
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/plain/enti'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/plain/enti"
-              aria-current={$page.url.pathname === "/plain/enti"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-building" aria-hidden="true" />
-              </span>&nbsp;enti
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/plain/referenti'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/plain/referenti"
-              aria-current={$page.url.pathname === "/plain/referenti"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-address-book" aria-hidden="true" />
-              </span>&nbsp;referenti
-            </a>
-            {#if !data.boardauth}
-            <a
-              class="navbar-item {$page.url.pathname === '/contatti'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/contatti"
-              aria-current={$page.url.pathname === "/contatti"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-phone" aria-hidden="true" />
-              </span>&nbsp;contatti
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/scadenze'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/scadenze"
-              aria-current={$page.url.pathname === "/scadenze"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-calendar-days" aria-hidden="true" />
-              </span>&nbsp;scadenze
-            </a>
-            {/if}
-          </div>
-        </div>
-      {/if}
-      {#if loggedstandard  && ! data.boardauth}
-        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
-          <!-- svelte-ignore a11y-invalid-attribute -->
-          <a class="navbar-link" href="javascript:void(0)"> opera </a>
+<div class="container my-4">
+	{#if $navigating}
+		<section class="it-hero-wrapper it-primary it-overlay">
+			<!-- - img-->
+			<div class="img-responsive-wrapper">
+				<div class="img-responsive">
+					<div class="img-wrapper">
+						<video autoplay muted loop id="myVideo">
+							<source src="/vids/wait{getRandomArbitrary(0,5)}.mp4" type="video/mp4" />
+						</video>
+					</div>
+				</div>
+			</div>
+			<!-- - texts-->
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-12">
+						<div class="it-hero-text-wrapper bg-dark">
+							<h1 class="h1"><strong>Caricamento in corso, attendere per favore...</strong></h1>
+							<div class="progress progress-indeterminate">
+								<span class="visually-hidden">In elaborazione...</span>
+								<div class="progress-bar" role="progressbar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{:else}
+		<slot />
+	{/if}
+</div>
 
-          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
-            <a
-              class="navbar-item {$page.url.pathname === '/lavorastd/misura'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/lavorastd/misura"
-              aria-current={$page.url.pathname === "/lavorastd/misura"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;dall'alto (per misura)
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/lavorastd/ente'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/lavorastd/ente"
-              aria-current={$page.url.pathname === "/lavorastd/ente"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;a media quota (per ente)
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/lavorastd/fornitori'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/lavorastd/fornitori"
-              aria-current={$page.url.pathname === "/lavorastd/fornitori"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;dal basso (per fornitore)
-            </a>
+<footer class="it-footer">
+	<div class="it-footer-main">
+		<div class="container py-4">
+			<section>
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-6 pb-2">
+						<h6>ISTITUZIONALI</h6>
+						<div class="link-list-wrapper">
+							<ul class="footer-list link-list clearfix">
+								<li>
+									<a
+										class="list-item"
+										href="https://innovazione.gov.it/"
+										target="_blank"
+										title="Vai al sito del Dipartimento"
+										>Il Dipartimento<svg class="icon icon-white icon-sm ms-1"
+											><use href="/svg/sprites.svg#it-external-link"></use></svg
+										></a
+									>
+								</li>
+								<li>
+									<a class="list-item" href="https://www.agid.gov.it/" title="Vai al sito dell'AGID"
+										>AGID<svg class="icon icon-white icon-sm ms-1"
+											><use href="/svg/sprites.svg#it-external-link"></use></svg
+										></a
+									>
+								</li>
+								<li>
+									<a class="list-item" href="https://www.pagopa.it/it/" title="Vai al sito pagoPA"
+										>PagoPA S.p.A.<svg class="icon icon-white icon-sm ms-1"
+											><use href="/svg/sprites.svg#it-external-link"></use></svg
+										></a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-6 pb-2">
+						<h6>PA Digitale 2026</h6>
+						<div class="link-list-wrapper">
+							<ul class="footer-list link-list clearfix">
+								<li>
+									<a
+										class="list-item"
+										href="https://padigitale2026.gov.it/"
+										target="_blank"
+										title="Vai al sito pubblico"
+										>Sito pubblico<svg class="icon icon-white icon-sm ms-1"
+											><use href="/svg/sprites.svg#it-external-link"></use></svg
+										></a
+									>
+								</li>
+								<li>
+									<a
+										class="list-item"
+										href="https://padigitale2026.my.salesforce.com/"
+										title="Vai al CRM"
+										>CRM
+										<svg class="icon icon-white icon-sm ms-1"
+											><use href="/svg/sprites.svg#it-external-link"></use></svg
+										>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 
-            <a
-              class="navbar-item {$page.url.pathname === '/lavorastd/servizi'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/lavorastd/servizi"
-              aria-current={$page.url.pathname === "/lavorastd/servizi"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;nel dettaglio (per servizio)
-            </a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
-          <!-- svelte-ignore a11y-invalid-attribute -->
-          <a class="navbar-link" href="javascript:void(0)"> qualità </a>
-
-          <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
-            <a
-              class="navbar-item {$page.url.pathname ===
-              '/lavorastd/asseverazioni'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/lavorastd/asseverazioni"
-              aria-current={$page.url.pathname === "/lavorastd/asseverazioni"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-certificate" aria-hidden="true" />
-              </span>&nbsp;asseverazioni
-            </a>
-          </div>
-        </div>
-        <!--
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="javascript:void(0)"> campagne </a>
-
-          <div class="navbar-dropdown">
-            <a
-              class="navbar-item {$page.url.pathname === '/campagne/appio'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/campagne/appio"
-              aria-current={$page.url.pathname === "/campagne/appio"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;qualità app IO
-            </a>
-            <a
-              class="navbar-item {$page.url.pathname === '/campagne/145'
-                ? 'has-text-info'
-                : 'has-text-grey'}"
-              href="/campagne/145"
-              aria-current={$page.url.pathname === "/campagne/145"}
-              on:click={() => (menuActive = !menuActive)}
-              ><span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true" />
-              </span>&nbsp;target 1.4.5 dic 2023
-            </a>
-          </div>
-        </div>
-      -->
-       
-      {/if}
-      {#if loggedasseveratore}
-        <a
-          class="navbar-item {$page.url.pathname === '/asseveratore/quadro'
-            ? 'has-text-info'
-            : 'has-text-grey'}"
-          href="/asseveratore/quadro"
-          aria-current={$page.url.pathname === "/asseveratore/quadro"}
-          on:click={() => (menuActive = !menuActive)}
-          ><span class="icon">
-            <i class="fas fa-stamp" aria-hidden="true" />
-          </span>&nbsp;quadro asseverazioni
-        </a>
-      {/if}
-      {#if data.boardauth}
-      <div class="navbar-item has-dropdown is-hoverable"  data-sveltekit-preload-data="off">
-        <!-- svelte-ignore a11y-invalid-attribute -->
-        <a class="navbar-link" href="javascript:void(0)"> boards </a>
-
-        <div class="navbar-dropdown"  data-sveltekit-preload-data="off">
-          <a
-            class="navbar-item {$page.url.pathname === '/boards/boardrisorse'
-              ? 'has-text-info'
-              : 'has-text-grey'}"
-            href="/boards/boardrisorse"
-            aria-current={$page.url.pathname === "/boards/boardrisorse"}
-            on:click={() => (menuActive = !menuActive)}
-            ><span class="icon">
-              <i class="fas fa-chart-simple" aria-hidden="true" />
-            </span>&nbsp;board risorse
-          </a>
-          <a
-            class="navbar-item {$page.url.pathname === '/boards/boardasseverazioniconcluse'
-              ? 'has-text-info'
-              : 'has-text-grey'}"
-            href="/boards/boardasseverazioniconcluse"
-            aria-current={$page.url.pathname === "/boards/boardasseverazioniconcluse"}
-            on:click={() => (menuActive = !menuActive)}
-            ><span class="icon">
-              <i class="fas fa-medal" aria-hidden="true" />
-            </span>&nbsp;board asseverazioni
-          </a>
-        </div>
-      </div>
-      {/if}
-    </div>
-
- 
-  </div>
-</nav>
-
-  {#if $navigating}
-    <section class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          caricamento in corso, attendi 
-        </p>
-        <p class="subtitle">
-          <progress class="progress is-large is-info" max="100">60%</progress>
-        </p>
-      </div>
-    </section>
-  {:else}
-    <slot />
-  {/if}
-
-
-<BackToTop />
+	<a
+		href="#"
+		aria-hidden="true"
+		tabindex="-1"
+		data-bs-toggle="backtotop"
+		class="back-to-top"
+		id="btt"
+	>
+		<svg class="icon icon-light"><use href="/svg/sprites.svg#it-arrow-up"></use></svg>
+	</a>
+</footer>
 
 <style>
-  .content.is-vcentered {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center; /* used this for multiple child */
-    align-items: center; /* if an only child */
-    height: 100vh;
-  }
+	#myVideo {
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 </style>

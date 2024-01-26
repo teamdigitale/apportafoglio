@@ -1,0 +1,23 @@
+{
+    "users": [
+        {
+            "id": "0057Q0000072NWoQAM",
+            "roles": [
+                "primario",
+                "monitor"
+            ]
+        },
+        {
+            "id": "0057Q0000072hdUQAQ",
+            "roles": [
+                "asseveratore"
+            ]
+        },
+        {
+            "id": "0057Q00000375UHQAY",
+            "roles": [
+                "monitor"
+            ]
+        }
+    ]
+}

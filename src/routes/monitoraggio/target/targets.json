@@ -1,0 +1,279 @@
+{
+    "targets": [
+      {
+        "id": "targetM1C1_139",
+         "misura": "1.2 Abilitazione e facilitazione migrazione al Cloud",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "ASL"
+          },
+          {
+            "tipo": "AO"
+          }
+        ],
+        "valore_obiettivo": 4083,
+        "um_obiettivo": "numero",
+        "trimestre": "2024-Q3",
+        "data": "2024-09-30",
+        "descrizione": "Conteggio delle candidature 1.2 asseverate positivamente."
+      },
+      {
+        "id": "targetM1C1_147",
+         "misura": "1.2 Abilitazione e facilitazione migrazione al Cloud",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "ASL"
+          },
+          {
+            "tipo": "AO"
+          }
+        ],
+        "valore_obiettivo": 12464,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q2",
+        "data": "2026-06-30",
+        "descrizione": "Conteggio delle candidature 1.2 asseverate positivamente."
+      },
+      {
+        "id": "targetM1C1_140",
+         "misura": "1.4.1",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          }
+        ],
+        "valore_obiettivo": 40,
+        "um_obiettivo": "percentuale",
+        "trimestre": "2024-Q4",
+        "data": "2024-12-31",
+        "descrizione": "Conteggio delle candidature 1.4.1 asseverate positivamente rispetto alla platea."
+      },
+      {
+        "id": "targetM1C1_148",
+         "misura": "1.4.1",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          }
+        ],
+        "valore_obiettivo": 80,
+        "um_obiettivo": "percentuale",
+        "trimestre": "2026-Q2",
+        "data": "2026-06-30",
+        "descrizione": "Conteggio delle candidature 1.4.1 asseverate positivamente rispetto alla platea."
+      },
+      {
+         "misura": "1.4.3 - AppIO",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 7000,
+        "um_obiettivo": "numero",
+        "trimestre": "2023-Q4",
+        "data": "2023-12-31",
+        "descrizione": "ConteggiodegliEntichehannoattivatotuttiiloroserviziAppIOdopoil31/3/2021.Sediversidascuole,        sonodaconteggiaresolosehannoalmenounacandidaturaAppIOinstato'FINANZIATA'.Obiettivodaraggiungere: 4300.Corrispondealtargettotale(7000)menolabaseline(2700)costituitadagliEntichehannoanchesolounservizioattivatoprimadel1/4/2021.ConteggiodeiserviziattivatidagliEntiinbaselineedainuoviEnticonsideratisecondoicriterideltargetprecedente.Obiettivodaraggiungere: 10438.Corrispondeaiserviziattivatial1/4/21(8698)maggioratodel20%."
+      },
+      {
+         "misura": "1.4.3 - AppIO",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 14100,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q2",
+        "data": "2026-06-30",
+        "descrizione": "ConteggiodegliEntichehannoattivatotuttiiloroserviziAppIOdopoil31/3/2021.Sediversidascuole,        sonodaconteggiaresolosehannoalmenounacandidaturaAppIOinstato FINANZIATA.Obiettivodaraggiungere: 11400.Corrispondealtargettotale(14100)menolabaseline(2700)costituitadagliEntichehannoanchesolounservizioattivatoprimadel1/4/2021.ConteggiodeiserviziattivatidagliEntiinbaselineedainuoviEnticonsideratisecondoicriterideltargetprecedente.Obiettivodaraggiungere: 349360.Corrispondeallasommadeicalcoliprevistiperlemediecategoriali: 35serviziper7904Comuni+15serviziper21Entiregionali+15serviziper211ASL+8serviziper8365Scuole+8serviziper71Università+8serviziper219IstitutidiricercaeAFAM."
+      },
+      {
+         "misura": "1.4.3 - pagoPA",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 11450,
+        "um_obiettivo": "numero",
+        "trimestre": "2023-Q4",
+        "data": "2023-12-31",
+        "descrizione": "ConteggiodegliEntichehannoattivatotuttiiloroserviziPagoPAdopoil31/3/2021.Sediversidascuole,        sonodaconteggiaresolosehannoalmenounacandidaturaAppIOinstatoFINANZIATA.Obiettivodaraggiungere: 2450.Corrispondealtargettotale(11450)menolabaseline(9000)costituitadagliEntichehannoanchesolounservizioattivatoprimadel1/4/2021.ConteggiodeiserviziattivatidagliEntiinbaselineedainuoviEnticonsideratisecondoicriterideltargetprecedente.Obiettivodaraggiungere: 30658.Corrispondeaiserviziattivatial1/4/21(25548)maggioratodel20%."
+      },
+      {
+         "misura": "1.4.3 - pagoPA",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 14100,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q3",
+        "data": "2026-06-30",
+        "descrizione": "ConteggiodegliEntichehannoattivatotuttiiloroserviziPagoPAdopoil31/3/2021.Sediversidascuole,        sonodaconteggiaresolosehannoalmenounacandidaturaAppIOinstatoFINANZIATA.Obiettivodaraggiungere: 5100.Corrispondealtargettotale(14100)menolabaseline(9000)costituitadagliEntichehannoanchesolounservizioattivatoprimadel1/4/2021.ConteggiodeiserviziattivatidagliEntiinbaselineedainuoviEnticonsideratisecondoicriterideltargetprecedente.Obiettivodaraggiungere: 349360.Corrispondeallasommadeicalcoliprevistiperlemediecategoriali: 35serviziper7904Comuni+15serviziper21Entiregionali+15serviziper211ASL+8serviziper8365Scuole+8serviziper71Università+8serviziper219IstitutidiricercaeAFAM."
+      },
+      {
+         "misura": "1.4.4",
+        "tipologia_enti": [
+          {
+            "tipo": "Tutti"
+          }
+        ],
+        "valore_obiettivo": 16500,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q1",
+        "data": "2026-03-31",
+        "descrizione": "ConteggiodegliEnticonattivazioneavvenutadiSPIDe/oCIE.Obiettivodaraggiungere: 16500."
+      },
+      {
+         "misura": "1.4.5",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "PA Centrali"
+          }
+        ],
+        "valore_obiettivo": 800,
+        "um_obiettivo": "numero",
+        "trimestre": "2023-Q4",
+        "data": "2023-12-31",
+        "descrizione": "ConteggiodegliEntichehannoattivatoalmenounservizio1.4.5echehannocandidatura1.4.5instatoFINANZIATA."
+      },
+      {
+         "misura": "1.4.5",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "PA Centrali"
+          }
+        ],
+        "valore_obiettivo": 6400,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q2",
+        "data": "2026-06-30",
+        "descrizione": "ConteggiodegliEntichehannoattivatoalmenounservizio1.4.5echehannocandidatura1.4.5instatoFINANZIATA."
+      },
+      {
+         "misura": "1.3.1",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 400,
+        "um_obiettivo": "numero",
+        "trimestre": "2024-Q4",
+        "data": "2024-12-31",
+        "descrizione": "Conteggiodeiservizi1.3.1(ovveroAPI)inseritiincandidatureasseveratepositivamente."
+      },
+      {
+         "misura": "1.3.1",
+        "tipologia_enti": [
+          {
+            "tipo": "Comuni"
+          },
+          {
+            "tipo": "Scuole"
+          },
+          {
+            "tipo": "Enti regionali"
+          },
+          {
+            "tipo": "Università"
+          },
+          {
+            "tipo": "Istituti di ricerca e AFAM"
+          }
+        ],
+        "valore_obiettivo": 1000,
+        "um_obiettivo": "numero",
+        "trimestre": "2026-Q2",
+        "data": "2026-06-30",
+        "descrizione": "Conteggiodeiservizi1.3.1(ovveroAPI)inseritiincandidatureasseveratepositivamente."
+      }
+    ]
+  }

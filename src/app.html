@@ -1,30 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" class="has-navbar-fixed-top">
+<!doctype html>
+<html lang="it">
 
 <head>
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>APPortafoglio</title>
-	<style>
-		.html {
-			background: url(/3.png) repeat center center fixed;
-			min-height: 100%;
-			background-size: cover;
-			height: 100%;
-			overflow: hidden;
-			background-repeat: repeat;
-			scroll-behavior: smooth;
-		}
-	</style>
-	<link rel="stylesheet" href="/style.css">
-	<script defer src="https://use.fontawesome.com/releases/v6.4.2/js/all.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet" href="/node_modules/bootstrap-italia/dist/css/bootstrap-italia.min.css" />
 	<script defer src="https://www.gstatic.com/charts/loader.js"></script>
 	%sveltekit.head%
 </head>
 
 <body data-sveltekit-preload-data="hover">
 	<div style="display: contents">%sveltekit.body%</div>
+	<script src="/node_modules/bootstrap-italia/dist/js/bootstrap-italia.bundle.min.js"></script>
+	<script>
+		bootstrap.loadFonts('/node_modules//bootstrap-italia/dist/fonts');
+	</script>
 </body>
 
 </html>
