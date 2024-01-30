@@ -1,5 +1,6 @@
 <script>
 	import Linkcard from '$lib/c/linkcard.svelte';
+	import CityMap from '$lib/c/map/CityMap.svelte';
 </script>
 
 <div class="container">
