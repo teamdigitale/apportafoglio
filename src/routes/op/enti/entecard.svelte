@@ -83,8 +83,15 @@
 				</dd>
             </dl>
 			</div>
-		</div>
+			<a class="read-more" href="/op/ente/{ente.Id}" target="_blank">
+				<span class="text">Dettaglio</span>
+				<svg class="icon"><use href="/svg/sprites.svg#it-external-link"></use></svg>
+			  </a>
 
+		</div>
+		
+
+        
 		<!--end card-->
 	</div>
 </div>

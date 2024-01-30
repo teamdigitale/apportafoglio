@@ -6,8 +6,10 @@ const regionBaseColor = "#007700";
 const regionBaseTransparency = 0.5;
 
 export let selectedRegions = [];
+export let readOnly = false;
 
 const selectRegion = (id) => {
+    if(readOnly)return;
     if(selectedRegions.indexOf(id)===-1){
         selectedRegions.push(id);
         selectedRegions = selectedRegions;
@@ -48,7 +50,6 @@ const selectRegion = (id) => {
   </g>
 </svg>
 </figure>
-<p>sss</p>
 </div>
 
 <style>

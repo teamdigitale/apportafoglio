@@ -6,6 +6,7 @@
 	moment.locale('it');
 
 	let isHovered = false;
+	
 </script>
 
 <div class="row fullheight">
