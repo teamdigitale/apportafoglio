@@ -26,6 +26,7 @@ export async function load({ cookies, url }) {
             secure: true,
             maxAge: 60 * 60 * 24 * 1
         });
+        throw redirect(303, '/accesso');
 
         /*
         conn.authorize(code, function (err, userInfo) {
