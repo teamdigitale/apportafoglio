@@ -16,6 +16,16 @@ export function load({ cookies, url }) {
     console.log("CODE: "+code);
     if (code && code !== '') {
         console.log("OAUTH code: " + code);
+        await conn.authorize(code);
+        const connectionToken = conn.accessToken;
+        cookies.set('session_id_std', connectionToken, {
+            path: '/',
+            sameSite: 'strict',
+            secure: true,
+            maxAge: 60 * 60 * 24 * 1
+        });
+
+        /*
         conn.authorize(code, function (err, userInfo) {
             if (err) { return console.error(err); }
             const connectionToken = conn.accessToken;
@@ -26,6 +36,7 @@ export function load({ cookies, url }) {
                 maxAge: 60 * 60 * 24 * 1
             });       
         });
+        */
     }
     return {
     };
