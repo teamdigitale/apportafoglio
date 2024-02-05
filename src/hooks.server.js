@@ -7,7 +7,7 @@ import { CBURI } from '$env/static/private';
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
-    /*
+    
     const code = event.url.searchParams.get('code');
     if (code && code !== '') {
         const oa = new jsforce.OAuth2({
@@ -27,7 +27,7 @@ export const handle = async ({ event, resolve }) => {
             }); 
             loggedstandard=true;      
         });
-    }*/
+    }
 
 
     let cookiesfuidstd = event.cookies.get('session_id_std');
