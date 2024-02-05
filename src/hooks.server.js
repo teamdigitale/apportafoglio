@@ -1,9 +1,34 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
+import { CID } from '$env/static/private';
+import { CS } from '$env/static/private';
+import { CBURI } from '$env/static/private';
 
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
+    const code = event.url.searchParams.get('code');
+    if (code && code !== '') {
+        const oa = new jsforce.OAuth2({
+            clientId : CID,
+            clientSecret : CS,
+            redirectUri : CBURI
+        });
+        const conn = new jsforce.Connection({ oauth2: oa });
+        conn.authorize(code, function (err, userInfo) {
+            if (err) { return console.error(err); }
+            const connectionToken = conn.accessToken;
+            event.cookies.set('session_id_std', connectionToken, {
+                path: '/',
+                sameSite: 'strict',
+                secure: true,
+                maxAge: 60 * 60 * 24 * 1
+            }); 
+            loggedstandard=true;      
+        });
+    }
+
+
     let cookiesfuidstd = event.cookies.get('session_id_std');
     let cookiesfuidass = event.cookies.get('session_id_ass');
     if (cookiesfuidstd) loggedstandard = true;

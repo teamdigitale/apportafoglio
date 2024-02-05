@@ -6,15 +6,17 @@ import { CBURI } from '$env/static/private';
 
 
 export async function load({ cookies, url }) {
+    const code = url.searchParams.get('code');
+    if (code && code !== '') {
     const oa = new jsforce.OAuth2({
         clientId : CID,
         clientSecret : CS,
         redirectUri : CBURI
       });
     const conn = new jsforce.Connection({ oauth2: oa });
-    const code = url.searchParams.get('code');
+
     console.log("CODE: "+code);
-    if (code && code !== '') {
+    
         console.log("OAUTH code: " + code);
         await conn.authorize(code);
         const connectionToken = conn.accessToken;
