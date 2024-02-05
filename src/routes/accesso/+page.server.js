@@ -1,10 +1,30 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
+import { CID } from '$env/static/private';
+import { CS } from '$env/static/private';
+import { CBURI } from '$env/static/private';
 
 
-export function load({ cookies, locals }) {
-    return {
-
+export function load({ cookies, url }) {
+    const oa = new jsforce.OAuth2({
+        clientId : CID,
+        clientSecret : CS,
+        redirectUri : CBURI
+      });
+    const conn = new jsforce.Connection({ oauth2: oa });
+    const code = url.searchParams.get('code');
+    if (code && code !== '') {
+        console.log("OAUTH code: " + code);
+        conn.authorize(code, function (err, userInfo) {
+            if (err) { return console.error(err); }
+            const connectionToken = conn.accessToken;
+            cookies.set('session_id_std', connectionToken, {
+                path: '/',
+                sameSite: 'strict',
+                secure: true,
+                maxAge: 60 * 60 * 24 * 1
+            });       
+        });
     }
 }
 
@@ -36,7 +56,7 @@ export const actions = {
         throw redirect(303, '/accesso');
     },
     logoutstandard: async ({ cookies }) => {
-        cookies.delete('session_id_std',{path: '/'});
+        cookies.delete('session_id_std', { path: '/' });
         throw redirect(303, '/accesso');
     },
     loginasseveratore: async ({ request, cookies }) => {
@@ -65,7 +85,7 @@ export const actions = {
         throw redirect(303, '/accesso');
     },
     logoutasseveratore: async ({ cookies }) => {
-        cookies.delete('session_id_ass',{path: '/'});
+        cookies.delete('session_id_ass', { path: '/' });
         throw redirect(303, '/accesso');
     }
 };

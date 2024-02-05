@@ -12,7 +12,8 @@ export const handle = async ({ event, resolve }) => {
     if (!(loggedstandard || loggedasseveratore) && !(
         event.url.pathname === '/' ||
         //event.url.pathname.startsWith('/entiipa') ||
-        event.url.pathname.startsWith('/accesso')
+        event.url.pathname.startsWith('/accesso') ||
+        event.url.pathname.startsWith('/auth')
     )) {
         throw redirect(303, '/accesso');
     }

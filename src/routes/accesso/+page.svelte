@@ -1,11 +1,12 @@
 <script>
-	import Usercard from "$lib/c/usercard.svelte";
+	import Usercard from '$lib/c/usercard.svelte';
 
 	export let data;
 </script>
-<div class="container my-4">
 
-{#if !data.loggedstandard}
+<div class="container my-4 text-center">
+	{#if !data.loggedstandard}
+		<!--
 	<form method="POST" action="?/loginstandard">
 		<h2>Utente principale</h2>
 		<div class="my-5">
@@ -71,12 +72,35 @@
 			</div>
 		</div>
 	</form>
-{:else}
-	<form method="POST" action="?/logoutstandard">
-        <Usercard utente={data.utentestandard} tipo="primario" />
-	</form>
-{/if}
+	-->
+		
 
+
+		<p>
+			<a href="/accesso/oauth/" class="text-decoration-none fw-bold">
+				<figure class="figure">
+					<img
+						src="/salesforce.com_logo.svg"
+						class="figure-img img-fluid rounded"
+						alt="Logo di salesforce"
+					/>
+					<figcaption class="figure-caption text-end">
+						Accedi con le tue credenziali SalesForce
+					</figcaption>
+				</figure>
+				<br/>Accedi <span class="mx-3"><svg class="icon icon-primary icon-sm align-middle"
+				><use href="/svg/sprites.svg#it-external-link"></use></svg
+			></span></a>
+			
+		</p>
+
+	{:else}
+		<form method="POST" action="?/logoutstandard">
+			<Usercard utente={data.utentestandard} tipo="primario" />
+		</form>
+	{/if}
+
+	<!--
 {#if !data.loggedasseveratore}
 	<form method="POST" action="?/loginasseveratore">
 		<h2>Utente asseveratore</h2>
@@ -148,4 +172,5 @@
         <Usercard utente={data.utenteasseveratore} tipo="asseveratore" />
 	</form>
 {/if}
+-->
 </div>

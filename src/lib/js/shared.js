@@ -1,4 +1,19 @@
 import u from './abilitazioni.json';
+import jsforce from 'jsforce';
+
+export function oauth(){
+    return new jsforce.OAuth2({
+        // you can change loginUrl to connect to sandbox or prerelease env.
+        // loginUrl : 'https://test.salesforce.com',
+        clientId : '3MVG9t0sl2P.pByoiApgQeo61aw3IH4Wkc_O4BBFB5Amqa1gR.lUMSJrFVmNaappIOmFzHa6y_DO7swKu451j',
+        clientSecret : '82F3117A2A132A066FC91BAA885DAFDFC66BB858C27B83630504821B80900FE5',
+        redirectUri : 'https://apportafoglio.vercel.app/accesso'
+      });
+      //
+      // Get authorization url and redirect to it.
+      //
+
+}
 
 export function checkAbilitazione(id, role) {
     const authuser = u.users.filter(x => x.id === id);
