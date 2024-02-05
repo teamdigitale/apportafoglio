@@ -13,6 +13,7 @@ export function load({ cookies, url }) {
       });
     const conn = new jsforce.Connection({ oauth2: oa });
     const code = url.searchParams.get('code');
+    console.log("CODE: "+code);
     if (code && code !== '') {
         console.log("OAUTH code: " + code);
         conn.authorize(code, function (err, userInfo) {
@@ -26,6 +27,8 @@ export function load({ cookies, url }) {
             });       
         });
     }
+    return {
+    };
 }
 
 
