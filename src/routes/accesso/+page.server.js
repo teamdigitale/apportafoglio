@@ -40,7 +40,7 @@ export async function load({ cookies, url, locals }) {
     }
     else{
         return {
-        };
+        }
     }
 
 }
