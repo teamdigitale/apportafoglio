@@ -7,6 +7,7 @@ import { CBURI } from '$env/static/private';
 export async function load({ cookies, url, locals }) {
     
     const code = url.searchParams.get('code');
+    let lstd = false;
     if (code && code !== '') {
     const oa = new jsforce.OAuth2({
         clientId : CID,
@@ -20,18 +21,27 @@ export async function load({ cookies, url, locals }) {
         console.log("OAUTH code: " + code);
         await conn.authorize(code);
         const connectionToken = conn.accessToken;
+        if(connectionToken){
         cookies.set('session_id_std', connectionToken, {
             path: '/',
             sameSite: 'strict',
             secure: true,
             maxAge: 60 * 60 * 24 * 1
         });
-        locals.user.loggedstandard = true;
-        throw redirect(303, '/accesso');
+        lstd = true;
+    }
+        //throw redirect(303, '/accesso');
 
     }
-    return {
-    };
+    if(lstd){
+        return {
+            loggedstandard: true;    
+        }
+    }
+    else{
+        return {
+        };
+    }
 
 }
 
