@@ -8,36 +8,7 @@ export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
 
-    let callback = false;
-    let connectionTokenCallBack;
-    
-    if(event.url.pathname.startsWith('/accesso')){
-    const code = event.url.searchParams.get('code');
-    if (code && code !== '') {
-        const oa = new jsforce.OAuth2({
-            clientId : CID,
-            clientSecret : CS,
-            redirectUri : CBURI
-        });
-        const conn = new jsforce.Connection({ oauth2: oa });
-        conn.authorize(code, function (err, userInfo) {
-            if (err) { return console.error(err); }
-            connectionTokenCallBack = conn.accessToken;
-/*
-            event.cookies.set('session_id_std', connectionToken, {
-                path: '/',
-                sameSite: 'strict',
-                secure: true,
-                maxAge: 60 * 60 * 24 * 1
-            }); 
-            */
-            loggedstandard=true;      
-            callback = true;
-        });
-    }
-    
 
-}
 
 
     let cookiesfuidstd = event.cookies.get('session_id_std');
@@ -143,21 +114,7 @@ export const handle = async ({ event, resolve }) => {
         sessionerror: sessionerror
     };
 
-    if(callback){
-        const response = await resolve(event);
-        if (loggedstandard) {
-            response.headers.append(
-                'set-cookie',
-                cookie.serialize('session_id_std', connectionTokenCallBack, {
-                    path: '/',
-                    sameSite: 'strict',
-                    secure: true,
-                    maxAge: 60 * 60 * 24 * 1
-                })
-            );
-        }
-        return response;
-    }
+
     return resolve(event);
 
 

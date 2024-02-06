@@ -6,7 +6,7 @@ import { CBURI } from '$env/static/private';
 
 
 export function load({ cookies, url }) {
-    /*
+    
     const code = url.searchParams.get('code');
     if (code && code !== '') {
     const oa = new jsforce.OAuth2({
@@ -29,7 +29,7 @@ export function load({ cookies, url }) {
         });
         throw redirect(303, '/accesso');
 
-    }*/
+    }
     return {
     };
 
