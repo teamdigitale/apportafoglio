@@ -5,7 +5,8 @@ import { CS } from '$env/static/private';
 import { CBURI } from '$env/static/private';
 
 
-export async function load({ cookies, url }) {
+export function load({ cookies, url }) {
+    /*
     const code = url.searchParams.get('code');
     if (code && code !== '') {
     const oa = new jsforce.OAuth2({
@@ -28,21 +29,10 @@ export async function load({ cookies, url }) {
         });
         throw redirect(303, '/accesso');
 
-        /*
-        conn.authorize(code, function (err, userInfo) {
-            if (err) { return console.error(err); }
-            const connectionToken = conn.accessToken;
-            cookies.set('session_id_std', connectionToken, {
-                path: '/',
-                sameSite: 'strict',
-                secure: true,
-                maxAge: 60 * 60 * 24 * 1
-            });       
-        });
-        */
-    }
+    }*/
     return {
     };
+
 }
 
 
