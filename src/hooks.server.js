@@ -7,6 +7,9 @@ import { CBURI } from '$env/static/private';
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
+
+    let callback = false;
+    let connectionTokenCallBack;
     
     if(event.url.pathname.startsWith('/accesso')){
     const code = event.url.searchParams.get('code');
@@ -19,16 +22,21 @@ export const handle = async ({ event, resolve }) => {
         const conn = new jsforce.Connection({ oauth2: oa });
         conn.authorize(code, function (err, userInfo) {
             if (err) { return console.error(err); }
-            const connectionToken = conn.accessToken;
+            connectionTokenCallBack = conn.accessToken;
+/*
             event.cookies.set('session_id_std', connectionToken, {
                 path: '/',
                 sameSite: 'strict',
                 secure: true,
                 maxAge: 60 * 60 * 24 * 1
             }); 
+            */
             loggedstandard=true;      
+            callback = true;
         });
     }
+    
+
 }
 
 
@@ -134,6 +142,24 @@ export const handle = async ({ event, resolve }) => {
         utenteasseveratore: utenteasseveratore,
         sessionerror: sessionerror
     };
+
+    if(callback){
+        const response = await resolve(event);
+        if (loggedstandard) {
+            response.headers.append(
+                'set-cookie',
+                cookie.serialize('session_id_std', connectionTokenCallBack, {
+                    path: '/',
+                    sameSite: 'strict',
+                    secure: true,
+                    maxAge: 60 * 60 * 24 * 1
+                })
+            );
+        }
+        return response;
+    }
     return resolve(event);
+
+
 };
 
