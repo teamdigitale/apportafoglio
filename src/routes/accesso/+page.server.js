@@ -31,6 +31,7 @@ export async function load({ cookies, url, locals }) {
     let cookiesfuidstd = null;
     let loggedstandard = false;
     let sessionerror = '';
+    let idutentesf = '';
         try {
             await conn.identity(function (err, res) {
                 if (err) {

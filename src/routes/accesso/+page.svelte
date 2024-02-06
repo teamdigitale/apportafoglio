@@ -2,9 +2,14 @@
 	import Usercard from '$lib/c/usercard.svelte';
 
 	export let data;
+	console.log(data);
 </script>
 
 <div class="container my-4 text-center">
+{#if data.sessionerror}
+{data.sessionerror}
+{/if}
+
 	{#if !data.loggedstandard}
 		<!--
 	<form method="POST" action="?/loginstandard">
