@@ -59,6 +59,9 @@ export async function load({ cookies, url, locals }) {
             cookiesfuidstd = null;
             utentestandard = null;
         }
+
+        locals.user.loggedstandard= true;
+        locals.user.utentestandard= utentestandard;
         throw redirect(301, '/');
         /*
         return {
