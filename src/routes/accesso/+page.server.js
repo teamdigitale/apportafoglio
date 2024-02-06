@@ -16,9 +16,7 @@ export async function load({ cookies, url, locals }) {
       });
     const conn = new jsforce.Connection({ oauth2: oa });
 
-    console.log("CODE: "+code);
-    
-        console.log("OAUTH code: " + code);
+
         await conn.authorize(code);
         const connectionToken = conn.accessToken;
         if(connectionToken){
@@ -35,7 +33,7 @@ export async function load({ cookies, url, locals }) {
     }
     if(lstd){
         return {
-            loggedstandard: true;    
+            loggedstandard: true    
         }
     }
     else{
