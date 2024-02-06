@@ -59,7 +59,7 @@ export async function load({ cookies, url, locals }) {
             cookiesfuidstd = null;
             utentestandard = null;
         }
-        throw redirect(303, '/');
+        
         
         return {
             loggedstandard: true ,
