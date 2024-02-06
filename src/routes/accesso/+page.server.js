@@ -1,13 +1,11 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
-
 import { CID } from '$env/static/private';
 import { CS } from '$env/static/private';
 import { CBURI } from '$env/static/private';
 
-
-export async function load({ cookies, url }) {
-
+export async function load({ cookies, url, locals }) {
+    
     const code = url.searchParams.get('code');
     if (code && code !== '') {
     const oa = new jsforce.OAuth2({
@@ -28,6 +26,7 @@ export async function load({ cookies, url }) {
             secure: true,
             maxAge: 60 * 60 * 24 * 1
         });
+        locals.user.loggedstandard = true;
         throw redirect(303, '/accesso');
 
     }
@@ -57,6 +56,9 @@ export const actions = {
                 secure: true,
                 maxAge: 60 * 60 * 24 * 1
             });
+             
+             
+            
 
         } catch (err) {
             console.log(err.message);
