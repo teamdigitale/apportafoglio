@@ -65,7 +65,8 @@ export async function load({ cookies, url, locals }) {
             loggedstandard: true ,
             utentestandard: utentestandard,
             cookiesfuidstd: connectionToken,
-            sessionerror: sessionerror   
+            sessionerror: sessionerror,
+            refresh: true   
         }
     }
     else{

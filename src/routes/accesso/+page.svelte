@@ -1,14 +1,21 @@
 <script>
 	import Usercard from '$lib/c/usercard.svelte';
+	import { invalidateAll } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	export let data;
-	console.log(data);
+
+	onMount(async () => {
+		if (data.refresh) {
+			await invalidateAll();
+		}
+	});
 </script>
 
 <div class="container my-4 text-center">
-{#if data.sessionerror}
-{data.sessionerror}
-{/if}
+	{#if data.sessionerror}
+		{data.sessionerror}
+	{/if}
 
 	{#if !data.loggedstandard}
 		<!--
@@ -78,8 +85,6 @@
 		</div>
 	</form>
 	-->
-		
-
 
 		<p>
 			<a href="/api/oauth/" class="text-decoration-none fw-bold" data-sveltekit-preload-data="off">
@@ -93,12 +98,14 @@
 						Accedi con le tue credenziali SalesForce
 					</figcaption>
 				</figure>
-				<br/>Accedi <span class="mx-3"><svg class="icon icon-primary icon-sm align-middle"
-				><use href="/svg/sprites.svg#it-external-link"></use></svg
-			></span></a>
-			
+				<br />Accedi
+				<span class="mx-3"
+					><svg class="icon icon-primary icon-sm align-middle"
+						><use href="/svg/sprites.svg#it-external-link"></use></svg
+					></span
+				></a
+			>
 		</p>
-
 	{:else}
 		<form method="POST" action="?/logoutstandard">
 			<Usercard utente={data.utentestandard} tipo="primario" />
