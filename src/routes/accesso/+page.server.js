@@ -5,7 +5,7 @@ import { CS } from '$env/static/private';
 import { CBURI } from '$env/static/private';
 
 
-export function load({ cookies, url }) {
+export async function load({ cookies, url }) {
     
     const code = url.searchParams.get('code');
     if (code && code !== '') {
