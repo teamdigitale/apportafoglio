@@ -59,15 +59,15 @@ export async function load({ cookies, url, locals }) {
             cookiesfuidstd = null;
             utentestandard = null;
         }
-        
-        
+        throw redirect(301, '/');
+        /*
         return {
             loggedstandard: true ,
             utentestandard: utentestandard,
             cookiesfuidstd: connectionToken,
             sessionerror: sessionerror,
             refresh: true   
-        }
+        }*/
     }
     else{
         return {
