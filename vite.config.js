@@ -13,9 +13,11 @@ export default defineConfig({
 		  }
 		}
 	  }
-	/*
+	
+	/*  ,
 	ssr: {
-		noExternal: ["bootstrap-italia"], // add all tsparticles libraries here, they're not made for SSR, they're client only
+		noExternal: ["jsforce"], // add all tsparticles libraries here, they're not made for SSR, they're client only
 	  }
 	  */
+	
 });

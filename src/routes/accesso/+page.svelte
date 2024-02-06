@@ -77,7 +77,7 @@
 
 
 		<p>
-			<a href="/accesso/oauth/" class="text-decoration-none fw-bold" data-sveltekit-preload-data="off">
+			<a href="/api/oauth/" class="text-decoration-none fw-bold" data-sveltekit-preload-data="off">
 				<figure class="figure">
 					<img
 						src="/salesforce.com_logo.svg"

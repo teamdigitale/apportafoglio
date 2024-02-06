@@ -1,15 +1,10 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
-import { CID } from '$env/static/private';
-import { CS } from '$env/static/private';
-import { CBURI } from '$env/static/private';
+
 
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
-
-
-
 
     let cookiesfuidstd = event.cookies.get('session_id_std');
     let cookiesfuidass = event.cookies.get('session_id_ass');
@@ -18,9 +13,9 @@ export const handle = async ({ event, resolve }) => {
 
     if (!(loggedstandard || loggedasseveratore) && !(
         event.url.pathname === '/' ||
-        //event.url.pathname.startsWith('/entiipa') ||
+        event.url.pathname.startsWith('/api/oauth') ||
         event.url.pathname.startsWith('/accesso') ||
-        event.url.pathname.startsWith('/auth')
+        event.url.pathname.startsWith('/opendata')
     )) {
         throw redirect(303, '/accesso');
     }
