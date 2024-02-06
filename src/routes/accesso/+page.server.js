@@ -29,6 +29,8 @@ export async function load({ cookies, url, locals }) {
         //throw redirect(303, '/accesso');
     let utentestandard = null;
     let cookiesfuidstd = null;
+    let loggedstandard = false;
+    let sessionerror = '';
         try {
             await conn.identity(function (err, res) {
                 if (err) {
@@ -60,7 +62,8 @@ export async function load({ cookies, url, locals }) {
         return {
             loggedstandard: true ,
             utentestandard: utentestandard,
-            cookiesfuidstd: connectionToken   
+            cookiesfuidstd: connectionToken,
+            sessionerror: sessionerror   
         }
     }
     else{
