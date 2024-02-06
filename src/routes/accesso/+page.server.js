@@ -62,18 +62,20 @@ export async function load({ cookies, url, locals }) {
 
         locals.user.loggedstandard = loggedstandard;
         locals.user.utentestandard = utentestandard;
-        throw redirect(302, '/accesso');
-        /*
+        //throw redirect(302, '/accesso');
+        
         return {
             loggedstandard: true ,
             utentestandard: utentestandard,
             cookiesfuidstd: connectionToken,
             sessionerror: sessionerror,
             refresh: true   
-        }*/
+        }
     }
     else {
-        return {
+        return{
+            loggedstandard: locals.user.loggedstandard,
+            utentestandard: locals.user.utentestandard
         }
     }
 

@@ -5,11 +5,15 @@
 
 	export let data;
 
+	console.log(data);
+
+	/*
 	onMount(async () => {
 		if (data.refresh) {
 			await invalidateAll();
 		}
 	});
+	*/
 </script>
 
 <div class="container my-4 text-center">
