@@ -7,7 +7,6 @@ import { CBURI } from '$env/static/private';
 export async function load({ cookies, url, locals }) {
     
     const code = url.searchParams.get('code');
-    let lstd = false;
     if (code && code !== '') {
     const oa = new jsforce.OAuth2({
         clientId : CID,
@@ -26,14 +25,42 @@ export async function load({ cookies, url, locals }) {
             secure: true,
             maxAge: 60 * 60 * 24 * 1
         });
-        lstd = true;
     }
         //throw redirect(303, '/accesso');
+    let utentestandard = null;
+    let cookiesfuidstd = null;
+        try {
+            await conn.identity(function (err, res) {
+                if (err) {
+                    sessionerror = err.message;
+                    event.cookies.delete('session_id_std', { path: '/' });
+                    loggedstandard = false;
+                    cookiesfuidstd = null;
+                } else {
+                    idutentesf = res.user_id;
+                    //RUNAS: Marco Virno
+                    //idutentesf = '0057Q0000070qelQAA';
+                    //RUNAS: Claudio Scarpa
+                    //idutentesf = '0057Q0000072YrZQAU';
+                }
 
-    }
-    if(lstd){
+            });
+            let soqlUtente = `select Username, Name, Title, Email, FullPhotoUrl   from User where Id = '` + idutentesf + `'`;
+            let result_ = await conn.query(soqlUtente);
+            utentestandard = result_.records[0];
+            utentestandard.idsf = idutentesf;
+        } catch (error) {
+            sessionerror = error.message;
+            event.cookies.delete('session_id_std', { path: '/' });
+            loggedstandard = false;
+            cookiesfuidstd = null;
+            utentestandard = null;
+        }
+
         return {
-            loggedstandard: true    
+            loggedstandard: true ,
+            utentestandard: utentestandard,
+            cookiesfuidstd: connectionToken   
         }
     }
     else{
