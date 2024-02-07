@@ -7,13 +7,14 @@
 
 	console.log(data);
 
-	/*
+	
 	onMount(async () => {
+		console.log(data);
 		if (data.refresh) {
 			await invalidateAll();
 		}
 	});
-	*/
+	
 </script>
 
 <div class="container my-4 text-center">
