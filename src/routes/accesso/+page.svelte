@@ -1,19 +1,19 @@
 <script>
 	import Usercard from '$lib/c/usercard.svelte';
-	import { invalidateAll } from '$app/navigation';
+	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
 	export let data;
 
-	console.log(data);
-
 	
 	onMount(async () => {
-		console.log(data);
+
 		if (data.refresh) {
-			await invalidateAll();
+			setTimeout(function() {invalidate("/accesso")}, 1000);
+			
 		}
 	});
+	
 	
 </script>
 
