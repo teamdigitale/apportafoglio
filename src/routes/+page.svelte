@@ -18,7 +18,7 @@
 			<Linkcard
 				altimg="portafoglio"
 				img="/img/buildings.jpg"
-				link="/accesso"
+				link="/users"
 				linktext="Voglio accedere"
 				text="Consulta i dati con le tue credenziali"
 				title="Il tuo portafoglio"

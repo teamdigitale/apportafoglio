@@ -157,7 +157,7 @@ export async function load({ locals, params }) {
             idc: idc
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 }
 

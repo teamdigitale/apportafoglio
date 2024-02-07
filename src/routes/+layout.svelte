@@ -63,7 +63,7 @@
 										<ul class="avatar-group-stacked">
 											{#if loggedstandard}
 												<li>
-													<a class="avatar size-md" href="/accesso">
+													<a class="avatar size-md" href="/users">
 														<img
 															src={'/api/img/' +
 																encodeURIComponent(utentestandard.FullPhotoUrl)}
@@ -74,7 +74,7 @@
 											{/if}
 											{#if loggedasseveratore}
 												<li>
-													<a class="avatar size-md" href="/accesso">
+													<a class="avatar size-md" href="/users">
 														<img
 															src={'/api/img/' +
 																encodeURIComponent(utenteasseveratore.FullPhotoUrl)}
@@ -86,7 +86,7 @@
 										</ul>
 									</div>
 								{:else}
-									<a class="btn btn-primary btn-sm" href="/accesso">Accedi</a>
+									<a class="btn btn-primary btn-sm" href="/users">Accedi</a>
 								{/if}
 							</div>
 						</div>

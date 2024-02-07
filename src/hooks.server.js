@@ -15,9 +15,10 @@ export const handle = async ({ event, resolve }) => {
         event.url.pathname === '/' ||
         event.url.pathname.startsWith('/api/oauth') ||
         event.url.pathname.startsWith('/accesso') ||
+        event.url.pathname.startsWith('/users') ||
         event.url.pathname.startsWith('/opendata')
     )) {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 
     let utentestandard = event.locals.utentestandard;

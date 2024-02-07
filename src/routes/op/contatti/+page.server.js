@@ -47,7 +47,7 @@ export async function load({ locals }) {
             contatti: r
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 }
 

@@ -148,7 +148,7 @@ export async function load({ locals }) {
             candidature: candidature
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 }
 

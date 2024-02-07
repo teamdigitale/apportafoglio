@@ -61,7 +61,7 @@ export async function load({ locals }) {
             idusf: idutentesf
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 
 }

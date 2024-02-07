@@ -111,7 +111,7 @@ export async function load({ locals }) {
             avvisi: avvisi
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 
 }

@@ -37,7 +37,7 @@ export async function load({ locals }) {
             enti: enti
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 }
 

@@ -323,7 +323,7 @@ export async function load({ locals }) {
         };
 
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, 'users');
     }
 
 }

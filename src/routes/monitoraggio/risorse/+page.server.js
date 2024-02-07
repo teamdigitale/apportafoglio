@@ -151,7 +151,7 @@ export async function load({ locals }) {
             rinunciatePostCompletamento: rinunciatevalues[2]
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 
 }

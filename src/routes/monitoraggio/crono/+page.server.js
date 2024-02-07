@@ -69,7 +69,7 @@ export async function load({ locals }) {
             cronoprogrammi: cronoprogrammi
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 
 }

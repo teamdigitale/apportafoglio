@@ -20,7 +20,7 @@ export async function load({ locals }) {
             misure: values[1]
         };
     } else {
-        throw redirect(303, '/accesso');
+        throw redirect(303, '/users');
     }
 }
 
