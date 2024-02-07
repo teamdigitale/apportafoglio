@@ -5,7 +5,7 @@
 
 	export let data;
 
-	
+	/*
 	onMount(async () => {
 
 		if (data.refresh) {
@@ -13,6 +13,7 @@
 			
 		}
 	});
+	*/
 	
 	
 </script>

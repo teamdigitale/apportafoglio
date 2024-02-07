@@ -6,6 +6,9 @@
 	$: loggedstandard = data.loggedstandard;
 	$: loggedasseveratore = data.loggedasseveratore;
 
+	$: utentestandard = data.utentestandard;
+	$: utenteasseveratore = data.utenteasseveratore;
+
 	function getRandomArbitrary(min, max) {
 		min = Math.ceil(min);
     max = Math.floor(max);
@@ -63,8 +66,8 @@
 													<a class="avatar size-md" href="/accesso">
 														<img
 															src={'/api/img/' +
-																encodeURIComponent(data.utentestandard.FullPhotoUrl)}
-															alt={data.utentestandard.Name}
+																encodeURIComponent(utentestandard.FullPhotoUrl)}
+															alt={utentestandard.Name}
 														/>
 													</a>
 												</li>
@@ -74,8 +77,8 @@
 													<a class="avatar size-md" href="/accesso">
 														<img
 															src={'/api/img/' +
-																encodeURIComponent(data.utenteasseveratore.FullPhotoUrl)}
-															alt={data.utenteasseveratore.Name}
+																encodeURIComponent(utenteasseveratore.FullPhotoUrl)}
+															alt={utenteasseveratore.Name}
 														/>
 													</a>
 												</li>
