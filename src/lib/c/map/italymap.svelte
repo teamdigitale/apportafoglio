@@ -54,7 +54,7 @@ const selectRegion = (id) => {
 
 <style>
     #italymap{
-        width: 40%;
+        width: 100%;
     }
 
     .region{

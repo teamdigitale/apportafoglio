@@ -29,6 +29,34 @@ export const formatNumber = (v) => {
     )
 }
 
+export const  nFormatter = (num, digits) => {
+    const lookup = [
+      { value: 1, symbol: "" },
+      { value: 1e3, symbol: "k" },
+      { value: 1e6, symbol: "M" },
+      { value: 1e9, symbol: "G" },
+      { value: 1e12, symbol: "T" },
+      { value: 1e15, symbol: "P" },
+      { value: 1e18, symbol: "E" }
+    ];
+    const regexp = /\.0+$|(?<=\.[0-9]*[1-9])0+$/;
+    const item = lookup.findLast(item => num >= item.value);
+    return item ? (num / item.value).toFixed(digits).replace(regexp, "").concat(item.symbol) : "0";
+  }
+
+  function intlFormat(num)
+{
+  return new Intl.NumberFormat().format(Math.round(num*10)/10);
+}
+export const  makeFriendly = (num) =>
+{
+  if(num >= 1000000)
+    return intlFormat(num/1000000)+'M';
+  if(num >= 1000)
+    return intlFormat(num/1000)+'k';
+  return intlFormat(num);
+};
+
 export const percentuale = (v) => {
     const option = {
         style: 'percent',

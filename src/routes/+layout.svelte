@@ -284,6 +284,11 @@
 																	>
 																</li>
 																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/enti"
+																		><span>board enti</span></a
+																	>
+																</li>
+																<li data-sveltekit-preload-data="off">
 																	<a
 																		class="dropdown-item list-item"
 																		href="/monitoraggio/asseverazioni"
