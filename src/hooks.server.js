@@ -44,10 +44,6 @@ export const handle = async ({ event, resolve }) => {
                     cookiesfuidstd = null;
                 } else {
                     idutentesf = res.user_id;
-                    //RUNAS: Marco Virno
-                    //idutentesf = '0057Q0000070qelQAA';
-                    //RUNAS: Claudio Scarpa
-                    //idutentesf = '0057Q0000072YrZQAU';
                 }
 
             });
