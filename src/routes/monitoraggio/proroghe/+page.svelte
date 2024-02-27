@@ -11,45 +11,43 @@
 	<div class="row">
 		{#each data.misure as m}
 			{#if m.misura === '1.4.3 Adozione PagoPA e AppIO'}
-				<div class="col-12 col-lg-2 my-4 mx-4" data-sveltekit-preload-data="off" >
-					<a href="/monitoraggio/proroghe/{m.idmisura}?pacchetto=PagoPA">
-						<figure class="figure">
-							<img style="height: 100px;"
-								src="/logos/{m.misura} - PagoPA-logo.svg"
-								class="figure-img img-fluid rounded"
-								alt="Un'immagine generica segnaposto con angoli arrotondati in una figura."
-							/>
-							<figcaption class="figure-caption">{m.misura} - PagoPA</figcaption>
-						</figure>
-					</a>
+				<div class="col-12 col-lg-3 my-3" data-sveltekit-preload-data="off">
+					<div class="card card-teaser rounded shadow">
+						<a
+							class="card card-img no-after special-card"
+							href="/monitoraggio/proroghe/{m.idmisura}?pacchetto=PagoPA"
+						>
+							<div class="card-body">
+								<p class="card-text font-serif">{m.misura} - PagoPA</p>
+							</div>
+						</a>
+					</div>
 				</div>
-				<div class="col-12 col-lg-2 my-4 mx-4" data-sveltekit-preload-data="off">
-					<a href="/monitoraggio/proroghe/{m.idmisura}?pacchetto=AppIO">
-						<figure class="figure">
-							<img
-							style="height: 100px;"
-								src="/logos/{m.misura} - App IO-logo.svg"
-								class="figure-img img-fluid rounded"
-								alt="Un'immagine generica segnaposto con angoli arrotondati in una figura."
-							/>
-							<figcaption class="figure-caption">{m.misura} - App IO</figcaption>
-						</figure>
-					</a>
+				<div class="col-12 col-lg-3 my-3" data-sveltekit-preload-data="off">
+					<div class="card card-teaser rounded shadow">
+						<a
+							class="card card-img no-after special-card"
+							href="/monitoraggio/proroghe/{m.idmisura}?pacchetto=AppIO"
+						>
+							<div class="card-body">
+								<p class="card-text font-serif">{m.misura} - App IO</p>
+							</div>
+						</a>
+					</div>
+					
 				</div>
 			{:else}
-				<div class="col-12 col-lg-2 my-4" data-sveltekit-preload-data="off">
-					<a href="/monitoraggio/proroghe/{m.idmisura}">
-						<figure class="figure">
-							<img
-							style="height: 100px;"
-								src="/logos/{m.misura}-logo.svg"
-								class="figure-img img-fluid rounded"
-								alt="Un'immagine generica segnaposto con angoli arrotondati in una figura."
-							/>
-							<figcaption class="figure-caption">{m.misura}</figcaption>
-						</figure>
-					</a>
-					
+				<div class="col-12 col-lg-3 my-3" data-sveltekit-preload-data="off">
+					<div class="card card-teaser rounded shadow">
+						<a
+							class="card card-img no-after special-card"
+							href="/monitoraggio/proroghe/{m.idmisura}"
+						>
+							<div class="card-body">
+								<p class="card-text font-serif">{m.misura}</p>
+							</div>
+						</a>
+					</div>
 				</div>
 			{/if}
 		{/each}

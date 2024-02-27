@@ -36,6 +36,7 @@ export const statusIndex = {
     RITIRATA: 8
 };
 
+
 export const statusColor = {
     PREBOZZA: "#d9dadb",
     BOZZA: "#adb2b8",
@@ -52,4 +53,25 @@ export const statusColor = {
     REVOCATA: "#b32d41",
     SCADUTA: "#992637",
     RITIRATA: "#80202e"
+};
+
+
+export const statusProgettoIndex = {
+    DA_AVVIARE: 1,
+    AVVIATO: 2,
+    COMPLETATO: 3,
+    IN_VERIFICA_TECNICA: 4,
+    IN_VERIFICA_FORMALE: 5,
+    IN_LIQUIDAZIONE: 6,
+    LIQUIDATO: 7
+};
+
+export const statusProgettoColor = {
+    DA_AVVIARE: "#dce9f5",
+    AVVIATO: "#93c4f5",
+    COMPLETATO: "#06c",
+    IN_VERIFICA_TECNICA: "#f5ce93",
+    IN_VERIFICA_FORMALE: "#d68d20",
+    IN_LIQUIDAZIONE: "#12b57c",
+    LIQUIDATO: "#278262"
 };

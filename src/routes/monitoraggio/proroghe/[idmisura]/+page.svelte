@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 
-	import { statusIndex, statusColor } from '$lib';
+	import { statusIndex, statusColor, statusProgettoIndex, statusProgettoColor } from '$lib';
 	import Scorecard from '$lib/c/scorecard.svelte';
 	import {
 		addDays,
@@ -31,20 +31,35 @@
 		});
 	};
 
+	const sortTipologie = {
+		Comuni: 0,
+		Scuole: 1,
+		'Altre tipologie': 2,
+		'Tutte le tipologie': 3
+	};
+
 	const determinaTarget = (m) => {
 		console.log(m);
 		if (m === '1.1 Infrastrutture digitali') {
 			return [
 				{
+					quarter: 'Q3-2024',
+					giorno: '2024-09-30',
+					valore: 100,
+					buffer: 100,
+					quarter_prec: 'Q2-2024',
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+				},
+				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
-					valore: 500,
+					valore: 280,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
 					targetPerTipologia: { 'Tutte le tipologie': 500 }
 				}
 			];
-		}else if(m==='1.3.1 Piattaforma Digitale Nazionale Dati'){
+		} else if (m === '1.3.1 Piattaforma Digitale Nazionale Dati') {
 			return [
 				{
 					quarter: 'Q2-2026',
@@ -55,7 +70,7 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6200 }
 				}
 			];
-		}else if(m==='1.4.4 Adozione identità digitale'){
+		} else if (m === '1.4.4 Adozione identità digitale') {
 			return [
 				{
 					quarter: 'Q2-2026',
@@ -66,7 +81,7 @@
 					targetPerTipologia: { 'Tutte le tipologie': 16500 }
 				}
 			];
-		}else if(m==='1.4.5 Digitalizzazione degli avvisi pubblici'){
+		} else if (m === '1.4.5 Digitalizzazione degli avvisi pubblici') {
 			return [
 				{
 					quarter: 'Q2-2026',
@@ -77,49 +92,48 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6400 }
 				}
 			];
-		}else if (m==='1.2 Abilitazione e facilitazione migrazione al Cloud'){
+		} else if (m === '1.2 Abilitazione e facilitazione migrazione al Cloud') {
 			return [
 				{
-							quarter: 'Q3-2024',
-							giorno: '2024-09-30',
-							valore: 4083,
-							buffer: 100,
-							quarter_prec: 'Q2-2024',
-							targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
-						},
-						{
-							quarter: 'Q2-2026',
-							giorno: '2026-06-30',
-							valore: 12464,
-							buffer: 100,
-							quarter_prec: 'Q1-2026',
-							targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
-						}
-			]
-		}else{
+					quarter: 'Q3-2024',
+					giorno: '2024-09-30',
+					valore: 4083,
+					buffer: 100,
+					quarter_prec: 'Q2-2024',
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+				},
+				{
+					quarter: 'Q2-2026',
+					giorno: '2026-06-30',
+					valore: 12464,
+					buffer: 100,
+					quarter_prec: 'Q1-2026',
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+				}
+			];
+		} else {
 			return [
 				{
-							quarter: 'Q3-2024',
-							giorno: '2024-09-30',
-							valore: 6375,
-							buffer: 100,
-							quarter_prec: 'Q2-2024',
-							targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
-						},
-						{
-							quarter: 'Q2-2026',
-							giorno: '2026-06-30',
-							valore: 12750,
-							buffer: 100,
-							quarter_prec: 'Q1-2026',
-							targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
-						}
-			]
+					quarter: 'Q3-2024',
+					giorno: '2024-09-30',
+					valore: 6375,
+					buffer: 100,
+					quarter_prec: 'Q2-2024',
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+				},
+				{
+					quarter: 'Q2-2026',
+					giorno: '2026-06-30',
+					valore: 12750,
+					buffer: 100,
+					quarter_prec: 'Q1-2026',
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+				}
+			];
 		}
 	};
 
 	let targets = determinaTarget(data.misura.misura);
-		
 
 	let candidatureFinanziate = data.candidature.filter((c) => c.stato_candidatura === 'FINANZIATA');
 
@@ -132,7 +146,11 @@
 			a[tipologia_ente].count++;
 			return a;
 		}, Object.create(null))
-	).map((x) => x.tipologia_ente);
+	)
+		.map((x) => x.tipologia_ente)
+		.sort((a, b) => {
+			return sortTipologie[a] < sortTipologie[b] ? -1 : 1;
+		});
 
 	let candidatureFinanziatePositive = candidatureFinanziate.filter(
 		(c) => c.stato_candidatura === 'FINANZIATA' && c.ultimo_esito_conformita_tecnica === 'Positivo'
@@ -211,25 +229,25 @@
 
 	const calcolaRipartizioneCandidature = (c) => {
 		let cc = Object.values(
-			c.reduce((a, { stato_candidatura }) => {
-				a[stato_candidatura] = a[stato_candidatura] || {
-					stato_candidatura,
+			c.reduce((a, { stato_progetto }) => {
+				a[stato_progetto] = a[stato_progetto] || {
+					stato_progetto,
 					count: 0
 				};
-				a[stato_candidatura].count++;
+				a[stato_progetto].count++;
 				return a;
 			}, Object.create(null))
 		).sort((a, b) => {
 			return (
-				statusIndex[a.stato_candidatura.replaceAll(' ', '_')] -
-				statusIndex[b.stato_candidatura.replaceAll(' ', '_')]
+				statusProgettoIndex[a.stato_progetto.replaceAll(' ', '_')] -
+				statusProgettoIndex[b.stato_progetto.replaceAll(' ', '_')]
 			);
 		});
 		let labels = ['Stato candidatura'];
 		let values = ['Numero candidature'];
 
 		cc.forEach((e) => {
-			labels.push(e.stato_candidatura);
+			labels.push(e.stato_progetto);
 			values.push(e.count);
 		});
 		return [labels, values];
@@ -258,24 +276,24 @@
 
 	const calcolaColoriRipartizioniCandidature = (c) => {
 		let cc = Object.values(
-			c.reduce((a, { stato_candidatura }) => {
-				a[stato_candidatura] = a[stato_candidatura] || {
-					stato_candidatura,
+			c.reduce((a, { stato_progetto }) => {
+				a[stato_progetto] = a[stato_progetto] || {
+					stato_progetto,
 					count: 0
 				};
-				a[stato_candidatura].count++;
+				a[stato_progetto].count++;
 				return a;
 			}, Object.create(null))
 		).sort((a, b) => {
 			return (
-				statusIndex[a.stato_candidatura.replaceAll(' ', '_')] -
-				statusIndex[b.stato_candidatura.replaceAll(' ', '_')]
+				statusProgettoIndex[a.stato_progetto.replaceAll(' ', '_')] -
+				statusProgettoIndex[b.stato_progetto.replaceAll(' ', '_')]
 			);
 		});
 
 		let res = {};
 		cc.forEach((e, index) => {
-			res[index] = { color: statusColor[e.stato_candidatura.replaceAll(' ', '_')] };
+			res[index] = { color: statusProgettoColor[e.stato_progetto.replaceAll(' ', '_')] };
 		});
 		return res;
 	};
@@ -297,8 +315,13 @@
 			.sort((a, b) => {
 				return a < b ? -1 : 1;
 			});
-		const quarters = calcolaQuarters(new Date(2022, 0, 1), new Date(2026, 11, 31));
-		res.push(['Quarter'].concat(tipiDataCompletamento));
+		const quarters = calcolaQuarters(new Date(2022, 8, 1), new Date(2026, 11, 31));
+		let firstRow = ['Quarter'];
+		tipiDataCompletamento.forEach(e => {
+			firstRow = firstRow.concat([e]);
+		});
+
+		res.push(firstRow);
 
 		quarters.forEach((q) => {
 			let row = [q];
@@ -311,6 +334,7 @@
 			});
 			res.push(row);
 		});
+		console.log(res);
 		return res;
 	};
 
@@ -416,8 +440,6 @@
 
 	$: calcolaSlotIniziali(targets);
 
-	
-
 	let calcolaCompletamentiECapienze = (candidatureFinanziateNonPositive, targets, te) => {
 		const result = [['# Progetti', 'Completamento attuale', 'Capienza slot']];
 		calcolaQuarters(new Date(2024, 5, 1), new Date(2026, 11, 31)).forEach((q) => {
@@ -428,13 +450,16 @@
 						(c) => c.tipologia_ente === te && c.quartercompletamento === q
 					).length
 				),
-				Number(
-					Math.round(
-						(targets[targets.length - 1].targetPerTipologia[te] -
-							candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length) /
-							quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
-					)
-				)
+				getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) &&
+				getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)
+					? Number(
+							Math.round(
+								(targets[targets.length - 1].targetPerTipologia[te] -
+									candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length) /
+									quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
+							)
+						)
+					: 0
 			]);
 		});
 		return result;
@@ -494,11 +519,13 @@
 								</div>
 								<ul class="link-list">
 									<li class="nav-item">
+										<!--
 										<a class="nav-link active" href="#platea">
 											<span>1. Platea </span>
 										</a>
+										-->
 										<a class="nav-link" href="#candidature">
-											<span>2. Candidature </span>
+											<span>1. Candidature </span>
 										</a>
 										<!--
 										<a class="nav-link" href="#datawrangling">
@@ -506,13 +533,18 @@
 										</a>
 										-->
 										<a class="nav-link" href="#targets">
-											<span>3. Targets </span>
+											<span>2. Targets </span>
 										</a>
 										<a class="nav-link" href="#simulazione">
-											<span>4. Simulazione </span>
+											<span>3. Simulazione </span>
+										</a>
+										<a class="nav-link" href="#attuale">
+											<span>4. Situazione attuale </span>
 										</a>
 									</li>
 								</ul>
+								<hr/>
+								<a href="/monitoraggio/proroghe" class="go-back" ><svg class="icon icon-sm icon-primary me-2"><use href="/svg/sprites.svg#it-arrow-left"></use></svg>Torna indietro</a>
 							</div>
 						</div>
 					</div>
@@ -520,7 +552,11 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-10 it-page-sections-container">
-			<h4>Analisi proroghe - Misura {data.misura.misura} {data.pacchetto?(' - '+data.pacchetto):''}</h4>
+			<h4>
+				Analisi proroghe - Misura {data.misura.misura}
+				{data.pacchetto ? ' - ' + data.pacchetto : ''}
+			</h4>
+			<!--
 			<div class="it-page-section my-5" id="platea">
 				<h5>Platea</h5>
 				<div class="row my-4 d-flex align-items-center">
@@ -545,30 +581,132 @@
 				</div>
 			</div>
 			<hr />
+			-->
 			<div class="it-page-section my-5" id="candidature">
-				<h5>Candidature</h5>
-				<div class="row my-4 d-flex align-items-center">
-					<div class="col-12 col-lg-4">
-						<Scorecard
-							title={formatNumber(data.candidature.length)}
-							text="Numero totale candidature"
-							bgcolor="primary"
-							textcolor="white"
-						/>
+				<h5>Candidature finanziate: {formatNumber(candidatureFinanziate.length)}</h5>
+				<h6>Ripartizione degli avanzamenti progettuali per tipologia ente</h6>
+				<div class="row my-1 d-flex align-items-center">
+					{#each tipologieEnti as te}
+						<div class="col-12 col-lg-4">
+							<p><small>{te}</small></p>
+							<Columnchart
+								id="ripartizioneCandidature-{te}"
+								values={calcolaRipartizioneCandidature(
+									candidatureFinanziate.filter((c) => c.tipologia_ente === te)
+								)}
+								series={calcolaColoriRipartizioniCandidature(
+									candidatureFinanziate.filter((c) => c.tipologia_ente === te)
+								)}
+								legendPosition="top"
+								stacked={'percent'}
+								h="150"
+							/>
+						</div>
+					{/each}
+				</div>
+				<div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['DA_AVVIARE']}"
+					>
+						<span class="chip-label">Da avviare</span>
 					</div>
-					<div class="col-12 col-lg-8">
-						<Columnchart
-							id="ripartizioneCandidature"
-							values={calcolaRipartizioneCandidature(data.candidature)}
-							series={calcolaColoriRipartizioniCandidature(data.candidature)}
-							legendPosition="right"
-							stacked={'percent'}
-							h="150"
-						/>
+					<div class="chip chip-simple" style="background-color: {statusProgettoColor['AVVIATO']}">
+						<span class="chip-label">Avviato</span>
+					</div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['COMPLETATO']};"
+					>
+						<span class="chip-label" style="color: white;">Completato</span>
+					</div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['IN_VERIFICA_TECNICA']}"
+					>
+						<span class="chip-label">In verifica tecnica</span>
+					</div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['IN_VERIFICA_FORMALE']}"
+					>
+						<span class="chip-label">In verifica formale</span>
+					</div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['IN_LIQUIDAZIONE']}"
+					>
+						<span class="chip-label">In liquidazione</span>
+					</div>
+					<div
+						class="chip chip-simple"
+						style="background-color: {statusProgettoColor['LIQUIDATO']};"
+					>
+						<span class="chip-label" style="color:white">Liquidato</span>
 					</div>
 				</div>
+				<div class="my-4">
+					<h6>Calcolo delle date di completamento (reali e stimate)</h6>
+					<div class="row d-flex align-items-center">
+
+						<div class="col-12 col-lg-9">
+							<Barchart
+								id="datecomplchart"
+								values={calcolaDistribuzioneCompletamentoAttivita(candidatureFinanziate)}
+								legendPosition="top"
+								stacked={'true'}
+								series={null}
+								h="400" colors={['#278262', '#f5ce93','#d68d20','#e07b8b']}
+							/>
+						</div>
+						<div class="col-12 col-lg-3">
+							<p><small>
+								Per le candidature già in esito tecnico finale (positivo o negativo), la data di
+								completamento è quella effettiva. Per le candidature in asseverazione e quelle in
+								realizzazione, la data di completamento è il giorno ultimo previsto della fase di
+								completamento del cronoprogramma, incluse le proroghe. Per le candidature non ancora
+								contrattualizzate, la data di completamento è la data prevista da cronoprogramma per
+								la contrattualizzazione sommata ai giorni previsti di cronoprogramma per il
+								completamento.
+							</small>
+							</p>
+						</div>
+					</div>
+				</div>
+				<h6 class="my-2">Proiezione raggiungimento target</h6>
+				<p>
+					Il seguente grafico mostra la proiezione delle asseverazioni tecniche positive,
+					considerando le date stimate ti completamento attività ed un tempo medio di asseverazione
+					tecnica pari a {tempoMedioAsseverazione} giorni.
+				</p>
+				<div class="form-group my-4">
+					<label for="tempoMedioAsseverazione" class="input-number-label active"
+						>Tempo medio di asseverazione</label
+					>
+					<div class="input-group input-number">
+						<small>
+							<input
+								type="number"
+								bind:value={tempoMedioAsseverazione}
+								class="form-control text-primary"
+								data-bs-input
+								id="tempoMedioAsseverazione"
+								name="tempoMedioAsseverazione"
+								step="1"
+							/>
+						</small>
+					</div>
+				</div>
+				<div>
+					<Areachart
+						id="previsionepositivi"
+						title="Previsione esiti positivi asseverazione tecnica"
+						colors={['#009963']}
+						values={calcolaIncrementaleAttuali(candidatureFinanziate)}
+					/>
+				</div>
 			</div>
-			<hr/>
+			<hr />
 			<!--
 			<div class="it-page-section my-5" id="datawrangling">
 				<h5>Data wrangling</h5>
@@ -636,7 +774,7 @@
 			</div>
 			<hr />
 			-->
-			<div class="it-page-section my-5" id="targets">
+			<div class="it-page-section my-4" id="targets">
 				<h5>Definizione dei targets</h5>
 				<div class="row my-4 d-flex align-items-center">
 					<div class="col-12 col-lg-4">
@@ -659,16 +797,16 @@
 														<div class="input-group input-number">
 															<small>
 																<strong>
-																<input
-																	type="number"
-																	bind:value={q.valore}
-																	class="form-control text-primary"
-																	data-bs-input
-																	id="inputNumber{i}"
-																	name="inputNumber{i}"
-																	step="1"
-																/>
-															</strong>
+																	<input
+																		type="number"
+																		bind:value={q.valore}
+																		class="form-control text-primary"
+																		data-bs-input
+																		id="inputNumber{i}"
+																		name="inputNumber{i}"
+																		step="1"
+																	/>
+																</strong>
 															</small>
 														</div>
 													</div>
@@ -681,20 +819,9 @@
 						</div>
 					</div>
 				</div>
-				<p>
-					Il seguente grafico mostra la situazione attuale delle asseverazioni tecniche positive
-				</p>
-				<div>
-					<Areachart
-						id="positivi"
-						title="Asseverazioni tecniche positive"
-						colors={['#3e8ed0']}
-						values={calcolaIncrementaleEsitiPositivi(candidatureFinanziatePositive)}
-					/>
-				</div>
 			</div>
 			<hr />
-			<div class="it-page-section my-5" id="simulazione">
+			<div class="it-page-section my-4" id="simulazione">
 				<h5>Simulazione</h5>
 				<h6>Campienza ammissibilità</h6>
 				<div class="row">
@@ -709,6 +836,7 @@
 										<th><small>Necessari al target</small></th>
 										<th><small>Completamento target</small></th>
 										<th><small>Numero slots</small></th>
+										<th><small>Proroga ammissibile</small></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -724,7 +852,7 @@
 																<input
 																	type="number"
 																	bind:value={t.buffer}
-																	class="form-control  text-primary"
+																	class="form-control text-primary"
 																	data-bs-input
 																	id="inputNumberBuffer{i}"
 																	name="inputNumberBuffer{i}"
@@ -752,6 +880,19 @@
 												</small></td
 											>
 											<td><small>{quartersDiff('Q3-2024', t.quarter)}</small></td>
+											<td class="text-center"
+												><small>
+													{#if candidatureFinanziateNonPositive.filter((f) => getFirstDayOfQuarter(f.quartercompletamento).getTime() <= getFirstDayOfQuarter(t.quarter_prec).getTime()).length < Math.round(((t.valore - candidatureFinanziatePositive.length) * t.buffer) / 100)}
+														<svg class="icon icon-sm icon-danger"
+															><use href="/svg/sprites.svg#it-ban"></use></svg
+														>
+													{:else}
+														<svg class="icon icon-sm icon-success"
+															><use href="/svg/sprites.svg#it-check-circle"></use></svg
+														>
+													{/if}
+												</small></td
+											>
 										</tr>
 									{/each}
 								</tbody>
@@ -807,7 +948,7 @@
 																<input
 																	type="number"
 																	bind:value={targets[targets.length - 1].targetPerTipologia[te]}
-																	class="form-control  text-primary"
+																	class="form-control text-primary"
 																	data-bs-input
 																	id="inputNumberBuffer-{te}"
 																	name="inputNumberBuffer-{te}"
@@ -847,13 +988,14 @@
 					<strong>{te}</strong>
 
 					<div class="row">
-						<div class="col-12 col-lg-6">
+						<div class="col-12 col-lg-7">
 							<div class="table-responsive">
 								<table class="table table-hover table-sm caption-top align-middle">
 									<thead>
 										<tr>
 											<th><small>Slot</small></th>
-											<th><small># completamento {te}</small></th>
+											<th><small>Completamento attuale</small></th>
+											<th><small>Capienza slot</small></th>
 											<th><small>Ammissibile {te}</small></th>
 										</tr>
 									</thead>
@@ -872,17 +1014,30 @@
 												</td>
 												<td>
 													<small>
-														{candidatureFinanziateNonPositive.filter(
-															(c) => c.tipologia_ente === te && c.quartercompletamento === q
-														).length >
-														Math.round(
-															(targets[targets.length - 1].targetPerTipologia[te] -
-																candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te)
-																	.length) /
-																quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
-														)
-															? 'NO'
-															: 'SI'}
+														{#if getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) && getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)}
+															{Math.round(
+																(targets[targets.length - 1].targetPerTipologia[te] -
+																	candidatureFinanziatePositive.filter(
+																		(c) => c.tipologia_ente === te
+																	).length) /
+																	quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
+															)}
+														{:else}
+															n.a.
+														{/if}
+													</small>
+												</td>
+												<td class="text-center">
+													<small>
+														{#if candidatureFinanziateNonPositive.filter((c) => c.tipologia_ente === te && c.quartercompletamento === q).length > Math.round((targets[targets.length - 1].targetPerTipologia[te] - candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length) / quartersDiff('Q3-2024', targets[targets.length - 1].quarter))}
+															<svg class="icon icon-sm icon-danger"
+																><use href="/svg/sprites.svg#it-ban"></use></svg
+															>
+														{:else}
+															<svg class="icon icon-sm icon-success"
+																><use href="/svg/sprites.svg#it-check-circle"></use></svg
+															>
+														{/if}
 													</small>
 												</td>
 											</tr>
@@ -891,7 +1046,7 @@
 								</table>
 							</div>
 						</div>
-						<div class="col-12 col-lg-6">
+						<div class="col-12 col-lg-5">
 							<Barchart
 								id="datecomplchart--{te}"
 								values={calcolaCompletamentiECapienze(
@@ -903,40 +1058,25 @@
 								stacked={'false'}
 								series={null}
 								h="400"
+								colors={['#0066cc','#ed7d31']}
 							/>
 						</div>
 					</div>
 				{/each}
-				<h6>Proiezione raggiungimento target</h6>
+				
+			</div>
+			<div class="it-page-section my-4" id="attuale">
+				<h5>Situazione attuale</h5>
 				<p>
-					Il seguente grafico mostra la proiezione delle asseverazioni tecniche positive,
-					considerando le date stimate ti completamento attività ed un tempo medio di asseverazione
-					tecnica pari a {tempoMedioAsseverazione} giorni.
+					Il seguente grafico mostra la situazione <strong>attuale</strong> delle asseverazioni tecniche
+					positive
 				</p>
-				<div class="form-group my-4">
-					<label for="tempoMedioAsseverazione" class="input-number-label active"
-						>Tempo medio di asseverazione</label
-					>
-					<div class="input-group input-number">
-						<small>
-							<input
-								type="number"
-								bind:value={tempoMedioAsseverazione}
-								class="form-control  text-primary"
-								data-bs-input
-								id="tempoMedioAsseverazione"
-								name="tempoMedioAsseverazione"
-								step="1"
-							/>
-						</small>
-					</div>
-				</div>
 				<div>
 					<Areachart
-						id="previsionepositivi"
-						title="Previsione tecniche positive"
-						colors={['#ff9900']}
-						values={calcolaIncrementaleAttuali(candidatureFinanziate)}
+						id="positivi"
+						title="Asseverazioni tecniche positive"
+						colors={['#3e8ed0']}
+						values={calcolaIncrementaleEsitiPositivi(candidatureFinanziatePositive)}
 					/>
 				</div>
 			</div>

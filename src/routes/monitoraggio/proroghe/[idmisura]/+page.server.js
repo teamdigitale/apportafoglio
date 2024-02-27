@@ -26,8 +26,6 @@ export async function load({ locals, params, url }) {
         )
 
         const MISURA = qmis[0].Name;
-        console.log(MISURA);
-        console.log(PACCHETTO);
 
         //* DB QUERY *//
         const pmisure = promiseQuery(
@@ -39,6 +37,7 @@ export async function load({ locals, params, url }) {
             "select Id,outfunds__FundingProgram__r.Id,outfunds__Applying_Organization__r.Tipologia_Ente__c,outfunds__Applying_Organization__r.NumericaClusterToClusterRange__c,outfunds__Status__c,outfunds__Applying_Organization__r.Id, Stato_contrattualizzazione__c, Stato_Progetto__c, Ultimo_Esito_Conformit_Tecnica__c, Data_asseverazione_tecnica__c , Data_avanzamento_step_5__c, Data_conclusione__c, Data_Contrattualizzazione__c, Data_Finanziamento__c  from outfunds__Funding_Request__c " +
             (MISURA === '1.2 Abilitazione e facilitazione migrazione al Cloud'
                 ? " where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = false)"
+                : MISURA==='1.1 Infrastrutture digitali'?" where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = true)"
                 : " where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "'" +(PACCHETTO===null?"":(" and outfunds__FundingProgram__r.Pacchetto__c = '"+PACCHETTO+"'"))
             )
             ,MAXFETCH
@@ -64,6 +63,7 @@ export async function load({ locals, params, url }) {
             "select Id, outfunds__Status__c, outfunds__Due_Date__c, Data_apertura_fase__c, Giorni_rimanenti_counter__c, outfunds__Funding_Request__c   from outfunds__Requirement__c where outfunds__Funding_Request__c in (select id from outfunds__Funding_Request__c " +
             (MISURA === '1.2 Abilitazione e facilitazione migrazione al Cloud'
                 ? " where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = false)) and RecordType.Name = 'Completamento Attività' and outfunds__Status__c != 'Complete' and outfunds__Status__c != 'Annullato'"
+                : MISURA==='1.1 Infrastrutture digitali'?" where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = true)) and RecordType.Name = 'Completamento Attività' and outfunds__Status__c != 'Complete' and outfunds__Status__c != 'Annullato'"
                 : (" where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "'"+
                 (PACCHETTO===null?"":(" and outfunds__FundingProgram__r.Pacchetto__c = '"+PACCHETTO+"'"))+")"
                 +" and RecordType.Name = 'Completamento Attività' and outfunds__Status__c != 'Complete' and outfunds__Status__c != 'Annullato'")
@@ -74,7 +74,8 @@ export async function load({ locals, params, url }) {
             conn,
             "select Id, outfunds__Status__c, outfunds__Due_Date__c, Data_apertura_fase__c, Giorni_rimanenti_counter__c, outfunds__Funding_Request__c   from outfunds__Requirement__c where " +
             (MISURA === '1.2 Abilitazione e facilitazione migrazione al Cloud'
-                ? " outfunds__Funding_Request__c in (select id from outfunds__Funding_Request__c where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = false)) and RecordType.Name = 'Contrattualizzazione Fornitore' and outfunds__Status__c = 'Open'"
+                ? MISURA==='1.1 Infrastrutture digitali'?" outfunds__Funding_Request__c in (select id from outfunds__Funding_Request__c where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = true)) and RecordType.Name = 'Contrattualizzazione Fornitore' and outfunds__Status__c = 'Open'"
+                :" outfunds__Funding_Request__c in (select id from outfunds__Funding_Request__c where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name='1.1 e 1.2 Multimisura' and hasServizi11__c = false)) and RecordType.Name = 'Contrattualizzazione Fornitore' and outfunds__Status__c = 'Open'"
                 : (" outfunds__Funding_Request__c in (select id from outfunds__Funding_Request__c where outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Id = '" + idmisura + "'"+
                 (PACCHETTO===null?"":(" and outfunds__FundingProgram__r.Pacchetto__c = '"+PACCHETTO+"'"))+
                 ") and RecordType.Name = 'Contrattualizzazione Fornitore' and outfunds__Status__c = 'Open'")),
@@ -91,7 +92,7 @@ export async function load({ locals, params, url }) {
             stato_candidatura: e.outfunds__Status__c,
             idente: e.outfunds__Applying_Organization__r.Id,
             stato_contrattualizzazione: e.Stato_contrattualizzazione__c,
-            stato_progetto: e.Stato_Progetto__c,
+            stato_progetto: (e.Stato_Progetto__c==='IN VERIFICA'&&e.Ultimo_Esito_Conformit_Tecnica__c==='Positivo')?'IN VERIFICA FORMALE':(e.Stato_Progetto__c==='IN VERIFICA'&&e.Ultimo_Esito_Conformit_Tecnica__c!=='Positivo')?'IN VERIFICA TECNICA': e.Stato_Progetto__c,
             ultimo_esito_conformita_tecnica: e.Ultimo_Esito_Conformit_Tecnica__c,
             data_ultimo_esito_conformita_tecnica: e.Data_asseverazione_tecnica__c ? new Date(e.Data_asseverazione_tecnica__c.substring(0, 10)) : null,
             data_avanzamento_step_5: e.Data_avanzamento_step_5__c,
@@ -116,7 +117,7 @@ export async function load({ locals, params, url }) {
             "select Id,NumericaClusterToClusterRange__c,Tipologia_Ente__c from Account where Tipologia_Ente__c in ('" + soggetti_destinatari.join("','") + "') and Regione__c != null", MAXFETCH
         )
         const enti = qe.map(e => ({ idente: e.Id, cluster: e.NumericaClusterToClusterRange__c, tipologia_ente: mapTipologiaEnte(misure.find(m => m.idmisura === idmisura).misura, e.Tipologia_Ente__c) }));
-        console.log("...recuperati " + enti.length + " enti");
+
 
         const cronoprogrammi = all1values[3].map(e => ({
             idcrono: e.Id, durata: e.Durata__c, tipologia: e.Tipologia__c,
@@ -142,7 +143,7 @@ export async function load({ locals, params, url }) {
                     c.tipocompletamento = "1. Finale (esito finale positivo o negativo)";
                 } else {
                     if (c.stato_contrattualizzazione === 'Completata') {
-                        if (c.stato_progetto === 'IN VERIFICA') {
+                        if (c.stato_progetto === 'IN VERIFICA TECNICA') {
                             c.data_completamento = new Date(c.data_conclusione);
                             c.tipocompletamento = "2. Stimata (in asseverazione)";
                         } else {

@@ -8,8 +8,8 @@
 	export let values = [[]];
 	export let stacked;
 	export let legendPosition;
-	export let series;
 	export let h;
+	export let colors;
 
 	let chart;
 
@@ -17,8 +17,7 @@
 		isStacked: stacked,
 		height: h,
 		width: '100%',
-		series: series,
-
+		colors: colors,
 		hAxis: {
 			textStyle: {
 				fontSize: 12,
