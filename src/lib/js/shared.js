@@ -29,32 +29,30 @@ export const formatNumber = (v) => {
     )
 }
 
-export const  nFormatter = (num, digits) => {
+export const nFormatter = (num, digits) => {
     const lookup = [
-      { value: 1, symbol: "" },
-      { value: 1e3, symbol: "k" },
-      { value: 1e6, symbol: "M" },
-      { value: 1e9, symbol: "G" },
-      { value: 1e12, symbol: "T" },
-      { value: 1e15, symbol: "P" },
-      { value: 1e18, symbol: "E" }
+        { value: 1, symbol: "" },
+        { value: 1e3, symbol: "k" },
+        { value: 1e6, symbol: "M" },
+        { value: 1e9, symbol: "G" },
+        { value: 1e12, symbol: "T" },
+        { value: 1e15, symbol: "P" },
+        { value: 1e18, symbol: "E" }
     ];
     const regexp = /\.0+$|(?<=\.[0-9]*[1-9])0+$/;
     const item = lookup.findLast(item => num >= item.value);
     return item ? (num / item.value).toFixed(digits).replace(regexp, "").concat(item.symbol) : "0";
-  }
-
-  function intlFormat(num)
-{
-  return new Intl.NumberFormat().format(Math.round(num*10)/10);
 }
-export const  makeFriendly = (num) =>
-{
-  if(num >= 1000000)
-    return intlFormat(num/1000000)+'M';
-  if(num >= 1000)
-    return intlFormat(num/1000)+'k';
-  return intlFormat(num);
+
+function intlFormat(num) {
+    return new Intl.NumberFormat().format(Math.round(num * 10) / 10);
+}
+export const makeFriendly = (num) => {
+    if (num >= 1000000)
+        return intlFormat(num / 1000000) + 'M';
+    if (num >= 1000)
+        return intlFormat(num / 1000) + 'k';
+    return intlFormat(num);
 };
 
 export const percentuale = (v) => {
@@ -67,7 +65,7 @@ export const percentuale = (v) => {
     return formatter.format(v);
 }
 
-export const  formatBytes = (bytes, decimals = 2) =>{
+export const formatBytes = (bytes, decimals = 2) => {
     if (!+bytes) return '0 Bytes'
 
     const k = 1024
@@ -106,4 +104,80 @@ export async function caricaAvvisi(conn) {
     }
     );
     return records;
+}
+
+export const getQuarter = (d) => {
+    d = d || new Date();
+    let m = Math.floor(d.getMonth() / 3) + 1;
+    let qm = m > 4 ? m - 4 : m;
+    let qy = d.getFullYear();
+    return 'Q'+qm+'-' + qy;
+}
+
+export const getFirstDayOfQuarter = (q) =>{
+    let m = q.substring(1,2);
+    let year = q.substring(3);
+    let month = 0;
+    if(m==='1'){
+        month = 0;
+    }else if(m==='2'){
+        month = 3;
+    }else if (m==='3'){
+        month = 6;
+    }else {
+        month = 9;
+    }
+    return new Date(year,month,1);
+}
+
+export const addDays = (d, n) => {
+    
+    let res = new Date(new Date(d).setDate(d.getDate() + n));
+    if (d) {
+        return res;
+    } else { return null }
+}
+
+export const  monthDiff = (date1, date2) => {
+    let diffYears = date2.getFullYear() - date1.getFullYear();
+    let diffMonths = date2.getMonth() - date1.getMonth();
+    let diffDays = date2.getDate() - date1.getDate();
+    
+    let months = (diffYears * 12 + diffMonths);
+    if (diffDays > 0) {
+      months += '.' + diffDays;
+    } else if (diffDays < 0) {
+      months--;
+      months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
+    }
+    return months;
+}
+
+export const  quartersDiff = (q1, q2) => {
+    let date1 = getFirstDayOfQuarter(q1);
+    let date2 = getFirstDayOfQuarter(q2);
+    let diffYears = date2.getFullYear() - date1.getFullYear();
+    let diffMonths = date2.getMonth() - date1.getMonth();
+    let diffDays = date2.getDate() - date1.getDate();
+    
+    let months = (diffYears * 12 + diffMonths);
+    if (diffDays > 0) {
+      months += '.' + diffDays;
+    } else if (diffDays < 0) {
+      months--;
+      months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
+    }
+    return Math.floor(months/3);
+}
+
+export const mapTipologiaEnte = (misura,t)=>{
+    if(misura==='1.2 Abilitazione e facilitazione migrazione al Cloud'||misura==='1.4.1 Esperienza del cittadino nei servizi pubblici'){
+        if(t==='Comuni'||t==='Scuole'){
+            return t;
+        }else{
+            return 'Altre tipologie';
+        }
+    }else{
+        return 'Tutte le tipologie';
+    }
 }

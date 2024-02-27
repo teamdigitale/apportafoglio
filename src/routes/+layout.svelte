@@ -301,8 +301,8 @@
 																	>
 																</li>
 																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/crono"
-																		><span>crono</span></a
+																	<a class="dropdown-item list-item" href="/monitoraggio/proroghe"
+																		><span>proroghe</span></a
 																	>
 																</li>
 															</ul>
