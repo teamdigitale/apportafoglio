@@ -37,6 +37,7 @@
 			slantedTextAngle: 90
 		},
 		vAxis: {
+			textPosition: 'left',
 			textStyle: {
 				fontSize: 12,
 				color: '#000000',
@@ -58,7 +59,7 @@
 		chartArea: {
 			bottom: 80,
 			top: 40,
-			width: '100%',
+			width: '80%',
 			height: '80%'
 		}
 	};

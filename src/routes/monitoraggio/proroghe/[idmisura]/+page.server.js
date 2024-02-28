@@ -159,7 +159,10 @@ export async function load({ locals, params, url }) {
                             c.data_contrattualizzazione = requirementContrattualizzazione.find(r => r.idcandidatura === c.idcandidatura).due_date;
                             let crono = cronoprogrammi.find(
                                 cro => {
-                                    if (cro.idavviso !== null) {
+                                    if(idmisura==='a017Q00001DrNioQAF'){
+                                       
+                                        return cro.idmisura === idmisura && cro.tipologia === "COMPLETAMENTO DELL'ATTIVITA'";
+                                    }else if (cro.idavviso !== null) {
                                         return cro.idavviso === c.idavviso && (cro.range === 'Unico' ? true : cro.range === c.cluster) && cro.tipologia === "COMPLETAMENTO DELL'ATTIVITA'"
                                         
                                     } else {
@@ -170,7 +173,9 @@ export async function load({ locals, params, url }) {
                             if(crono){
                             c.data_completamento = addDays(new Date(c.data_contrattualizzazione), cronoprogrammi.find(
                                 cro => {
-                                    if (cro.idavviso !== null) {
+                                    if(idmisura==='a017Q00001DrNioQAF'){
+                                        return cro.idmisura === idmisura && cro.tipologia === "COMPLETAMENTO DELL'ATTIVITA'";
+                                    }else if (cro.idavviso !== null) {
                                         return cro.idavviso === c.idavviso && (cro.range === 'Unico' ? true : cro.range === c.cluster) && cro.tipologia === "COMPLETAMENTO DELL'ATTIVITA'"
                                         
                                     } else {
@@ -180,6 +185,7 @@ export async function load({ locals, params, url }) {
                             ).durata
                             );
                             }else{
+                               
                                 c.data_completamento=new Date(c.data_conclusione)
                             }
                             c.tipocompletamento = "4. Incerta (contrattualizzazione stimata)";
@@ -188,10 +194,24 @@ export async function load({ locals, params, url }) {
                         }
                     }
                 }
+                if(!c.data_completamento&&c.data_conclusione){
+                    c.data_completamento=new Date(c.data_conclusione);
+                }
+
                 c.quartercompletamento = getQuarter(c.data_completamento);
             }
 
         });
+
+        const senzacompl = [];
+        candidature.forEach(x => {
+            if(x.stato_candidatura==='FINANZIATA' && !x.data_completamento){
+                senzacompl.push(x);
+            }
+        });
+
+       //console.log(senzacompl);
+       // console.log(">>>"+senzacompl.length);
 
 
 

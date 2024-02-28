@@ -31,6 +31,7 @@
 		});
 	};
 
+
 	const sortTipologie = {
 		Comuni: 0,
 		Scuole: 1,
@@ -38,8 +39,7 @@
 		'Tutte le tipologie': 3
 	};
 
-	const determinaTarget = (m) => {
-		console.log(m);
+	const determinaTarget = (m,p) => {
 		if (m === '1.1 Infrastrutture digitali') {
 			return [
 				{
@@ -92,7 +92,31 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6400 }
 				}
 			];
-		} else if (m === '1.2 Abilitazione e facilitazione migrazione al Cloud') {
+		}else if (m === '1.4.3 Adozione PagoPA e AppIO' && p==='AppIO') {
+			return [
+				{
+					quarter: 'Q2-2026',
+					giorno: '2026-06-30',
+					valore: 11400,
+					buffer: 100,
+					quarter_prec: 'Q1-2026',
+					targetPerTipologia: { 'Tutte le tipologie': 11400 }
+				}
+			];
+		} else if (m === '1.4.3 Adozione PagoPA e AppIO' && p==='PagoPA') {
+			return [
+				
+				{
+					quarter: 'Q2-2026',
+					giorno: '2026-06-30',
+					valore: 5100,
+					buffer: 100,
+					quarter_prec: 'Q1-2026',
+					targetPerTipologia: { 'Tutte le tipologie': 5100 }
+				}
+			];
+		}
+		else if (m === '1.2 Abilitazione e facilitazione migrazione al Cloud') {
 			return [
 				{
 					quarter: 'Q3-2024',
@@ -100,7 +124,7 @@
 					valore: 4083,
 					buffer: 100,
 					quarter_prec: 'Q2-2024',
-					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 67 }
 				},
 				{
 					quarter: 'Q2-2026',
@@ -108,7 +132,7 @@
 					valore: 12464,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
-					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 67 }
 				}
 			];
 		} else {
@@ -116,7 +140,7 @@
 				{
 					quarter: 'Q3-2024',
 					giorno: '2024-09-30',
-					valore: 6375,
+					valore: 6508,
 					buffer: 100,
 					quarter_prec: 'Q2-2024',
 					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
@@ -124,16 +148,16 @@
 				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
-					valore: 12750,
+					valore: 13015,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
-					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
+					targetPerTipologia: { Comuni: 6600, Scuole: 6750, 'Altre tipologie': 8 }
 				}
 			];
 		}
 	};
 
-	let targets = determinaTarget(data.misura.misura);
+	let targets = determinaTarget(data.misura.misura, data.pacchetto);
 
 	let candidatureFinanziate = data.candidature.filter((c) => c.stato_candidatura === 'FINANZIATA');
 
@@ -334,7 +358,6 @@
 			});
 			res.push(row);
 		});
-		console.log(res);
 		return res;
 	};
 
@@ -910,7 +933,7 @@
 										<th><small>Tipologia Ente</small></th>
 										<th><small># positivi</small></th>
 										<th><small># in completamento</small></th>
-										<th><small># progetto attivi</small></th>
+										<th><small># progetti attivi</small></th>
 										<th><small>Target</small></th>
 										<th><small># mancanti al target</small></th>
 										<th><small>Capienza slot (uniforme)</small></th>
@@ -978,6 +1001,15 @@
 											</td>
 										</tr>
 									{/each}
+									<tr>
+										<td ><small><strong>Totali</strong></small></td>
+										<td><small><i>{candidatureFinanziatePositive.length}</i></small></td>
+										<td><small><i>{candidatureFinanziateNonPositive.length}</i></small></td>
+										<td><small><i>{candidatureFinanziatePositive.length+candidatureFinanziateNonPositive.length}</i></small></td>
+										<td><small><i>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce((acc, o) => acc + parseInt(o), 0)}</i></small></td>
+										<td ><small><i>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce((acc, o) => acc + parseInt(o), 0)-candidatureFinanziatePositive.length}</i></small></td>
+										<td><small><i>n.a.</i></small></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
