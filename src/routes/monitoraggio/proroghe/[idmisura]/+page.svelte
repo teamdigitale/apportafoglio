@@ -75,10 +75,10 @@
 				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
-					valore: 16500,
+					valore: 7400,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
-					targetPerTipologia: { 'Tutte le tipologie': 16500 }
+					targetPerTipologia: { 'Tutte le tipologie': 7400 }
 				}
 			];
 		} else if (m === '1.4.5 Digitalizzazione degli avvisi pubblici') {
@@ -97,10 +97,10 @@
 				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
-					valore: 11400,
+					valore: 6800,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
-					targetPerTipologia: { 'Tutte le tipologie': 11400 }
+					targetPerTipologia: { 'Tutte le tipologie': 6800 }
 				}
 			];
 		} else if (m === '1.4.3 Adozione PagoPA e AppIO' && p==='PagoPA') {
@@ -109,10 +109,10 @@
 				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
-					valore: 5100,
+					valore: 6800,
 					buffer: 100,
 					quarter_prec: 'Q1-2026',
-					targetPerTipologia: { 'Tutte le tipologie': 5100 }
+					targetPerTipologia: { 'Tutte le tipologie': 6800 }
 				}
 			];
 		}
