@@ -24,6 +24,7 @@
 				title="Il tuo portafoglio"
 			/>
 		</div>
+		<!--
         <div class="col-12 col-lg-6 my-4">
 			<Linkcard
 				altimg="moniotraggio"
@@ -34,5 +35,6 @@
 				title="Monitoraggio"
 			/>
 		</div>
+		-->
 	</div>
 </div>
