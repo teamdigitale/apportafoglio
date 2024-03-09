@@ -30,6 +30,18 @@
             "roles": [
                 "monitor"
             ]
+        },
+        {
+            "id": "0057Q000005uL1rQAE",
+            "roles": [
+                "productowner"
+            ]
+        },
+        {
+            "id": "0057Q0000072CnuQAE",
+            "roles": [
+                "productowner","primario"
+            ]
         }
         
         

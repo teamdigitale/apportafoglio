@@ -11,12 +11,12 @@
 
 	function getRandomArbitrary(min, max) {
 		min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+		max = Math.floor(max);
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 </script>
 
-<div class="it-header-wrapper ">
+<div class="it-header-wrapper">
 	<div class="it-header-slim-wrapper">
 		<div class="container">
 			<div class="row">
@@ -65,8 +65,7 @@
 												<li>
 													<a class="avatar size-md" href="/users">
 														<img
-															src={'/api/img/' +
-																encodeURIComponent(utentestandard.FullPhotoUrl)}
+															src={'/api/img/' + encodeURIComponent(utentestandard.FullPhotoUrl)}
 															alt={utentestandard.Name}
 														/>
 													</a>
@@ -112,9 +111,7 @@
 									</div>
 								</a>
 							</div>
-							<div class="it-right-zone">
-								
-							</div>
+							<div class="it-right-zone"></div>
 						</div>
 					</div>
 				</div>
@@ -160,101 +157,107 @@
 										</li>
 
 										<!-- consulta -->
-										{#if loggedstandard }
-										<li class="nav-item dropdown">
-											<a
-												class="nav-link dropdown-toggle"
-												href="#"
-												role="button"
-												data-bs-toggle="dropdown"
-												aria-expanded="false"
-												id="ddconsulta"
-											>
-												<span>consulta</span>
-												<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-expand"></use></svg
+										{#if loggedstandard}
+											<li class="nav-item dropdown">
+												<a
+													class="nav-link dropdown-toggle"
+													href="#"
+													role="button"
+													data-bs-toggle="dropdown"
+													aria-expanded="false"
+													id="ddconsulta"
 												>
-											</a>
-											<div
-												class="dropdown-menu"
-												role="region"
-												aria-labelledby="ddconsulta"
-												data-sveltekit-preload-data="off"
-											>
-												<div class="link-list-wrapper">
-													<ul class="link-list">
-														<li>
-															<a class="dropdown-item list-item" href="/op/avvisi"
-																><span>avvisi</span></a
-															>
-														</li>
-														<li>
-															<a class="dropdown-item list-item" href="/op/enti"
-																><span>enti</span></a
-															>
-														</li>
-                                                        <li>
-															<a class="dropdown-item list-item" href="/op/referenti"
-																><span>referenti</span></a
-															>
-														</li>
-														<li><span class="divider"></span></li>
-														<li>
-															<a class="dropdown-item list-item" href="/op/contatti"
-																><span>report accounting</span></a
-															>
-														</li>
-														<li>
-															<a class="dropdown-item list-item" href="/op/scadenze"
-																><span>scadenze</span></a
-															>
-														</li>
-													</ul>
+													<span>consulta</span>
+													<svg class="icon icon-xs"
+														><use href="/svg/sprites.svg#it-expand"></use></svg
+													>
+												</a>
+												<div
+													class="dropdown-menu"
+													role="region"
+													aria-labelledby="ddconsulta"
+													data-sveltekit-preload-data="off"
+												>
+													<div class="link-list-wrapper">
+														<ul class="link-list">
+															<li>
+																<a class="dropdown-item list-item" href="/op/avvisi"
+																	><span>avvisi</span></a
+																>
+															</li>
+															{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
+															<li>
+																<a class="dropdown-item list-item" href="/op/enti"
+																	><span>enti</span></a
+																>
+															</li>
+															<li>
+																<a class="dropdown-item list-item" href="/op/referenti"
+																	><span>referenti</span></a
+																>
+															</li>
+															<li><span class="divider"></span></li>
+															<li>
+																<a class="dropdown-item list-item" href="/op/contatti"
+																	><span>report accounting</span></a
+																>
+															</li>
+															<li>
+																<a class="dropdown-item list-item" href="/op/scadenze"
+																	><span>scadenze</span></a
+																>
+															</li>
+															{/if}
+														</ul>
+													</div>
 												</div>
-											</div>
-										</li>
+											</li>
 										{/if}
 
 										<!-- cruscotti -->
-										{#if loggedstandard }
-										<li class="nav-item dropdown">
-											<a
-												class="nav-link dropdown-toggle"
-												href="#"
-												role="button"
-												data-bs-toggle="dropdown"
-												aria-expanded="false"
-												id="ddcruscotti"
-											>
-												<span>cruscotti</span>
-												<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-expand"></use></svg
+										{#if loggedstandard}
+										{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
+											<li class="nav-item dropdown">
+												<a
+													class="nav-link dropdown-toggle"
+													href="#"
+													role="button"
+													data-bs-toggle="dropdown"
+													aria-expanded="false"
+													id="ddcruscotti"
 												>
-											</a>
-											<div
-												class="dropdown-menu"
-												role="region"
-												aria-labelledby="ddcruscotti"
-												data-sveltekit-preload-data="off"
-											>
-												<div class="link-list-wrapper">
-													<ul class="link-list">
-														<li>
-															<a class="dropdown-item list-item" href="/cruscotti/generale"
-																><span>generale</span></a
-															>
-														</li>
-														<li>
-															<a class="dropdown-item list-item" href="/cruscotti/fornitori"
-																><span>fornitori</span></a
-															>
-														</li>
-													</ul>
+													<span>cruscotti</span>
+													<svg class="icon icon-xs"
+														><use href="/svg/sprites.svg#it-expand"></use></svg
+													>
+												</a>
+												<div
+													class="dropdown-menu"
+													role="region"
+													aria-labelledby="ddcruscotti"
+													data-sveltekit-preload-data="off"
+												>
+													<div class="link-list-wrapper">
+														<ul class="link-list">
+															<li>
+																<a class="dropdown-item list-item" href="/cruscotti/generale"
+																	><span>generale</span></a
+																>
+															</li>
+															<li>
+																<a class="dropdown-item list-item" href="/cruscotti/fornitori"
+																	><span>fornitori</span></a
+																>
+															</li>
+														</ul>
+													</div>
 												</div>
-											</div>
-										</li>
+											</li>
+											{/if}
 										{/if}
 
 										{#if loggedstandard || loggedasseveratore}
-											{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
@@ -278,33 +281,44 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
-																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/risorse"
-																		><span>board risorse</span></a
-																	>
-																</li>
-																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/enti"
-																		><span>board enti</span></a
-																	>
-																</li>
-																<li data-sveltekit-preload-data="off">
-																	<a
-																		class="dropdown-item list-item"
-																		href="/monitoraggio/asseverazioni"
-																		><span>board asseverazioni</span></a
-																	>
-																</li>
-																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
-																		><span>board avvisi</span></a
-																	>
-																</li>
-																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/proroghe"
-																		><span>proroghe</span></a
-																	>
-																</li>
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																	<li data-sveltekit-preload-data="off">
+																		<a class="dropdown-item list-item" href="/monitoraggio/risorse"
+																			><span>board risorse</span></a
+																		>
+																	</li>
+																{/if}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																	<li data-sveltekit-preload-data="off">
+																		<a class="dropdown-item list-item" href="/monitoraggio/enti"
+																			><span>board enti</span></a
+																		>
+																	</li>
+																{/if}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
+																	<li data-sveltekit-preload-data="off">
+																		<a
+																			class="dropdown-item list-item"
+																			href="/monitoraggio/asseverazioni"
+																			><span>board asseverazioni</span></a
+																		>
+																	</li>
+																{/if}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																	<li data-sveltekit-preload-data="off">
+																		<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
+																			><span>board avvisi</span></a
+																		>
+																	</li>
+																{/if}
+
+																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																	<li data-sveltekit-preload-data="off">
+																		<a class="dropdown-item list-item" href="/monitoraggio/proroghe"
+																			><span>proroghe</span></a
+																		>
+																	</li>
+																{/if}
 															</ul>
 														</div>
 													</div>
@@ -330,7 +344,7 @@
 				<div class="img-responsive">
 					<div class="img-wrapper">
 						<video autoplay muted loop id="myVideo">
-							<source src="/vids/wait{getRandomArbitrary(0,5)}.mp4" type="video/mp4" />
+							<source src="/vids/wait{getRandomArbitrary(0, 5)}.mp4" type="video/mp4" />
 						</video>
 					</div>
 				</div>

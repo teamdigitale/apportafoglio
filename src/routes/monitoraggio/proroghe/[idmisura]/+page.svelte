@@ -31,7 +31,6 @@
 		});
 	};
 
-
 	const sortTipologie = {
 		Comuni: 0,
 		Scuole: 1,
@@ -39,7 +38,7 @@
 		'Tutte le tipologie': 3
 	};
 
-	const determinaTarget = (m,p) => {
+	const determinaTarget = (m, p) => {
 		if (m === '1.1 Infrastrutture digitali') {
 			return [
 				{
@@ -92,7 +91,7 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6400 }
 				}
 			];
-		}else if (m === '1.4.3 Adozione PagoPA e AppIO' && p==='AppIO') {
+		} else if (m === '1.4.3 Adozione PagoPA e AppIO' && p === 'AppIO') {
 			return [
 				{
 					quarter: 'Q2-2026',
@@ -103,9 +102,8 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6800 }
 				}
 			];
-		} else if (m === '1.4.3 Adozione PagoPA e AppIO' && p==='PagoPA') {
+		} else if (m === '1.4.3 Adozione PagoPA e AppIO' && p === 'PagoPA') {
 			return [
-				
 				{
 					quarter: 'Q2-2026',
 					giorno: '2026-06-30',
@@ -115,8 +113,7 @@
 					targetPerTipologia: { 'Tutte le tipologie': 6800 }
 				}
 			];
-		}
-		else if (m === '1.2 Abilitazione e facilitazione migrazione al Cloud') {
+		} else if (m === '1.2 Abilitazione e facilitazione migrazione al Cloud') {
 			return [
 				{
 					quarter: 'Q3-2024',
@@ -341,7 +338,7 @@
 			});
 		const quarters = calcolaQuarters(new Date(2022, 8, 1), new Date(2026, 11, 31));
 		let firstRow = ['Quarter'];
-		tipiDataCompletamento.forEach(e => {
+		tipiDataCompletamento.forEach((e) => {
 			firstRow = firstRow.concat([e]);
 		});
 
@@ -433,37 +430,158 @@
 		return result;
 	};
 
-	let calcolaSlotIniziali = (t) => {
-		//Gli slot vanno calcolati per ogni target
-		t.forEach((target) => {
-			let slots = [
-				{ quarter: 'Q3-2024', valore: 0, data: getFirstDayOfQuarter('Q3-2024') },
-				{ quarter: 'Q4-2024', valore: 0, data: getFirstDayOfQuarter('Q4-2024') },
-				{ quarter: 'Q1-2025', valore: 0, data: getFirstDayOfQuarter('Q1-2025') },
-				{ quarter: 'Q2-2025', valore: 0, data: getFirstDayOfQuarter('Q2-2025') },
-				{ quarter: 'Q3-2025', valore: 0, data: getFirstDayOfQuarter('Q3-2025') },
-				{ quarter: 'Q4-2025', valore: 0, data: getFirstDayOfQuarter('Q4-2025') },
-				{ quarter: 'Q1-2026', valore: 0, data: getFirstDayOfQuarter('Q1-2026') },
-				{ quarter: 'Q2-2026', valore: 0, data: getFirstDayOfQuarter('Q2-2026') },
-				{ quarter: 'Q3-2026', valore: 0, data: getFirstDayOfQuarter('Q3-2026') }
-			].filter((s) => getFirstDayOfQuarter(s.quarter) <= getFirstDayOfQuarter(target.quarter));
-			slots.pop();
-			if (slots.length > 0) {
-				let daAsseverare =
-					Math.round(target.valore * (1 + target.buffer / 100)) -
-					candidatureFinanziatePositive.length;
-				const capienzamedia = Math.round(daAsseverare / slots.length);
-				slots.forEach((element) => {
-					element.valore = capienzamedia < 0 ? 0 : capienzamedia;
-				});
+	$: calcolaIncrementaleSimulazione = (cand) => {
+		const result = [['Data', 'Stima positivi', 'Target']];
+		let c = cand;
+		let slotsim = slots;
+
+		for (let z = 0; z < c.length; z++) {
+			if (Object.entries(slotsim).reduce((a, b) => (a = a + b[1]), 0) <= 0) {
+				break;
 			}
-			target.slots = slots;
+			console.log('SLOT: ' + Object.entries(slotsim).reduce((a, b) => (a = a + b[1]), 0));
+			for (let x = slotsim.length - 1; x >= 0; x++) {
+				if (slotsim[x][0].startsWith(c.tipologia_ente) && slotsim[1] > 0) {
+					c.data_completamento = getFirstDayOfQuarter(
+						slotsim[x].substring(0, c.tipologia_ente.length)
+					);
+					slotsim[x][1] = slotsim[x][1] - 1;
+				}
+			}
+		}
+
+		const cc = c.map((item) => ({
+			...item,
+			data_completamento: item.data_completamento
+				? addDays(item.data_completamento, tempoMedioAsseverazione)
+				: null
+		}));
+		let days = dateRange(new Date(2022, 0, 1), new Date(2026, 11, 31));
+		days.forEach((d) => {
+			result.push([
+				d,
+				cc.filter(
+					(x) =>
+						x.data_completamento &&
+						x.data_completamento.getFullYear() === d.getFullYear() &&
+						x.data_completamento.getMonth() === d.getMonth() &&
+						x.data_completamento.getDate() === d.getDate()
+				).length,
+				null
+			]);
 		});
+
+		result.forEach((e, i) => {
+			if (i > 1) {
+				result[i][1] = result[i - 1][1] + Number(e[1]);
+			} else {
+				if (i === 1) {
+					result[i][1] = 0;
+				}
+			}
+		});
+		targets.forEach((t) => {
+			result.push([new Date(t.giorno), null, t.valore]);
+		});
+		return result;
+	};
+
+	$: slots = {};
+
+	let calcolaSlotIniziali = (t) => {
+		//Gli slot vanno calcolati per ogni target e per ogni tipologia ente...
+
+		tipologieEnti.forEach((te) => {
+			console.log('Tipologia ente: ' + te);
+
+			t.forEach((target) => {
+				let sss = [];
+				let slotste = [
+					{
+						quarter: 'Q3-2024',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q3-2024'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q4-2024',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q4-2024'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q1-2025',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q1-2025'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q2-2025',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q2-2025'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q3-2025',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q3-2025'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q4-2025',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q4-2025'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q1-2026',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q1-2026'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q2-2026',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q2-2026'),
+						tipologia_ente: te
+					},
+					{
+						quarter: 'Q3-2026',
+						valore: 0,
+						data: getFirstDayOfQuarter('Q3-2026'),
+						tipologia_ente: te
+					}
+				].filter((s) => getFirstDayOfQuarter(s.quarter) <= getFirstDayOfQuarter(target.quarter));
+				slotste.pop();
+				if (slotste.length > 0) {
+					let daAsseverare =
+						targets[targets.length - 1].targetPerTipologia[te] -
+						candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length;
+					console.log('Numero slots: ' + slotste.length);
+					const capienzamedia = Math.round(daAsseverare / slotste.length);
+					console.log(capienzamedia);
+					slotste.forEach((element) => {
+						let q = element.quarter;
+						element.valore = capienzamedia < 0 ? 0 : capienzamedia;
+						slots[te + q] = element.valore;
+						//slots.set(,element.valore);
+						//sss.push({q, valore: capienzamedia < 0 ? 0 : capienzamedia})
+					});
+
+					//slots.push({te, sss})
+				}
+
+				//slots = slots.concat(slotste);
+			});
+		});
+		//t.slots = slots;
 	};
 
 	$: calcolaSlotIniziali(targets);
 
-	let calcolaCompletamentiECapienze = (candidatureFinanziateNonPositive, targets, te) => {
+	$: console.log(slots);
+
+	$: calcolaCompletamentiECapienze = (candidatureFinanziateNonPositive, targets, te) => {
 		const result = [['# Progetti', 'Completamento attuale', 'Capienza slot']];
 		calcolaQuarters(new Date(2024, 5, 1), new Date(2026, 11, 31)).forEach((q) => {
 			result.push([
@@ -475,13 +593,7 @@
 				),
 				getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) &&
 				getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)
-					? Number(
-							Math.round(
-								(targets[targets.length - 1].targetPerTipologia[te] -
-									candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length) /
-									quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
-							)
-						)
+					? slots[te.concat(q)]
 					: 0
 			]);
 		});
@@ -566,8 +678,12 @@
 										</a>
 									</li>
 								</ul>
-								<hr/>
-								<a href="/monitoraggio/proroghe" class="go-back" ><svg class="icon icon-sm icon-primary me-2"><use href="/svg/sprites.svg#it-arrow-left"></use></svg>Torna indietro</a>
+								<hr />
+								<a href="/monitoraggio/proroghe" class="go-back"
+									><svg class="icon icon-sm icon-primary me-2"
+										><use href="/svg/sprites.svg#it-arrow-left"></use></svg
+									>Torna indietro</a
+								>
 							</div>
 						</div>
 					</div>
@@ -671,7 +787,6 @@
 				<div class="my-4">
 					<h6>Calcolo delle date di completamento (reali e stimate)</h6>
 					<div class="row d-flex align-items-center">
-
 						<div class="col-12 col-lg-9">
 							<Barchart
 								id="datecomplchart"
@@ -679,19 +794,21 @@
 								legendPosition="top"
 								stacked={'true'}
 								series={null}
-								h="400" colors={['#278262', '#f5ce93','#d68d20','#e07b8b']}
+								h="400"
+								colors={['#278262', '#f5ce93', '#d68d20', '#e07b8b']}
 							/>
 						</div>
 						<div class="col-12 col-lg-3">
-							<p><small>
-								Per le candidature già in esito tecnico finale (positivo o negativo), la data di
-								completamento è quella effettiva. Per le candidature in asseverazione e quelle in
-								realizzazione, la data di completamento è il giorno ultimo previsto della fase di
-								completamento del cronoprogramma, incluse le proroghe. Per le candidature non ancora
-								contrattualizzate, la data di completamento è la data prevista da cronoprogramma per
-								la contrattualizzazione sommata ai giorni previsti di cronoprogramma per il
-								completamento.
-							</small>
+							<p>
+								<small>
+									Per le candidature già in esito tecnico finale (positivo o negativo), la data di
+									completamento è quella effettiva. Per le candidature in asseverazione e quelle in
+									realizzazione, la data di completamento è il giorno ultimo previsto della fase di
+									completamento del cronoprogramma, incluse le proroghe. Per le candidature non
+									ancora contrattualizzate, la data di completamento è la data prevista da
+									cronoprogramma per la contrattualizzazione sommata ai giorni previsti di
+									cronoprogramma per il completamento.
+								</small>
 							</p>
 						</div>
 					</div>
@@ -1002,12 +1119,37 @@
 										</tr>
 									{/each}
 									<tr>
-										<td ><small><strong>Totali</strong></small></td>
+										<td><small><strong>Totali</strong></small></td>
 										<td><small><i>{candidatureFinanziatePositive.length}</i></small></td>
 										<td><small><i>{candidatureFinanziateNonPositive.length}</i></small></td>
-										<td><small><i>{candidatureFinanziatePositive.length+candidatureFinanziateNonPositive.length}</i></small></td>
-										<td><small><i>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce((acc, o) => acc + parseInt(o), 0)}</i></small></td>
-										<td ><small><i>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce((acc, o) => acc + parseInt(o), 0)-candidatureFinanziatePositive.length}</i></small></td>
+										<td
+											><small
+												><i
+													>{candidatureFinanziatePositive.length +
+														candidatureFinanziateNonPositive.length}</i
+												></small
+											></td
+										>
+										<td
+											><small
+												><i
+													>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce(
+														(acc, o) => acc + parseInt(o),
+														0
+													)}</i
+												></small
+											></td
+										>
+										<td
+											><small
+												><i
+													>{Object.values(targets[targets.length - 1].targetPerTipologia).reduce(
+														(acc, o) => acc + parseInt(o),
+														0
+													) - candidatureFinanziatePositive.length}</i
+												></small
+											></td
+										>
 										<td><small><i>n.a.</i></small></td>
 									</tr>
 								</tbody>
@@ -1044,30 +1186,41 @@
 														).length}
 													</small>
 												</td>
+
 												<td>
-													<small>
-														{#if getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) && getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)}
-															{Math.round(
-																(targets[targets.length - 1].targetPerTipologia[te] -
-																	candidatureFinanziatePositive.filter(
-																		(c) => c.tipologia_ente === te
-																	).length) /
-																	quartersDiff('Q3-2024', targets[targets.length - 1].quarter)
-															)}
-														{:else}
-															n.a.
-														{/if}
-													</small>
+													{#if getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) && getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)}
+														<div class="input-group input-number my-0">
+															<small>
+																<input
+																	type="number"
+																	bind:value={slots[te.concat(q)]}
+																	class="form-control text-primary"
+																	data-bs-input
+																	id="inputNumberBuffer-{te}"
+																	name="inputNumberBuffer-{te}"
+																	step="1"
+																/>
+															</small>
+														</div>
+													{:else}
+														<small>n.a.</small>
+													{/if}
 												</td>
 												<td class="text-center">
 													<small>
-														{#if candidatureFinanziateNonPositive.filter((c) => c.tipologia_ente === te && c.quartercompletamento === q).length > Math.round((targets[targets.length - 1].targetPerTipologia[te] - candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length) / quartersDiff('Q3-2024', targets[targets.length - 1].quarter))}
+														{#if getFirstDayOfQuarter('Q3-2024') <= getFirstDayOfQuarter(q) && getFirstDayOfQuarter(q) < getFirstDayOfQuarter(targets[targets.length - 1].quarter)}
+															{#if slots[te.concat(q)] === 0 || candidatureFinanziateNonPositive.filter((c) => c.tipologia_ente === te && c.quartercompletamento === q).length > slots[te.concat(q)]}
+																<svg class="icon icon-sm icon-danger"
+																	><use href="/svg/sprites.svg#it-ban"></use></svg
+																>
+															{:else}
+																<svg class="icon icon-sm icon-success"
+																	><use href="/svg/sprites.svg#it-check-circle"></use></svg
+																>
+															{/if}
+														{:else}
 															<svg class="icon icon-sm icon-danger"
 																><use href="/svg/sprites.svg#it-ban"></use></svg
-															>
-														{:else}
-															<svg class="icon icon-sm icon-success"
-																><use href="/svg/sprites.svg#it-check-circle"></use></svg
 															>
 														{/if}
 													</small>
@@ -1090,12 +1243,37 @@
 								stacked={'false'}
 								series={null}
 								h="400"
-								colors={['#0066cc','#ed7d31']}
+								colors={['#0066cc', '#ed7d31']}
 							/>
+							<p>
+								Capienza totale degli slots: <strong
+									>{formatNumber(
+										Object.entries(slots)
+											.filter((e) => e[0].startsWith(te))
+											.reduce((a, b) => (a = a + b[1]), 0)
+									)}</strong
+								>
+							</p>
+							<p>
+								Capienza totale minima da rispettare per il target:
+								<strong>
+									{formatNumber(
+										targets[targets.length - 1].targetPerTipologia[te] -
+											candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length
+									)}
+								</strong>
+							</p>
 						</div>
 					</div>
 				{/each}
-				
+			</div>
+			<div>
+				<Areachart
+					id="previsionepositivisimulazione"
+					title="Previsione esiti positivi asseverazione tecnica"
+					colors={['#009963']}
+					values={calcolaIncrementaleSimulazione(candidatureFinanziate)}
+				/>
 			</div>
 			<div class="it-page-section my-4" id="attuale">
 				<h5>Situazione attuale</h5>
