@@ -281,7 +281,7 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/risorse"
 																			><span>board risorse</span></a
