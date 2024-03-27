@@ -725,6 +725,23 @@
 				<h5>Candidature finanziate: {formatNumber(candidatureFinanziate.length)}</h5>
 				<h6>Ripartizione degli avanzamenti progettuali per tipologia ente</h6>
 				<div class="row my-1 d-flex align-items-center">
+					<div class="col-12 col-lg-12">
+						<p><small>Tutti gli enti</small></p>
+						<Columnchart
+							id="ripartizioneCandidature-ALL"
+							values={calcolaRipartizioneCandidature(
+								candidatureFinanziate
+							)}
+							series={calcolaColoriRipartizioniCandidature(
+								candidatureFinanziate
+							)}
+							legendPosition="top"
+							stacked={'percent'}
+							h="150"
+						/>
+					</div>
+				</div>
+				<div class="row my-1 d-flex align-items-center">
 					{#each tipologieEnti as te}
 						<div class="col-12 col-lg-4">
 							<p><small>{te}</small></p>
