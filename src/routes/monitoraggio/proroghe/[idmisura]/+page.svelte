@@ -724,6 +724,7 @@
 			<div class="it-page-section my-5" id="candidature">
 				<h5>Candidature finanziate: {formatNumber(candidatureFinanziate.length)}</h5>
 				<h6>Ripartizione degli avanzamenti progettuali per tipologia ente</h6>
+				{#if tipologieEnti.length>1}
 				<div class="row my-1 d-flex align-items-center">
 					<div class="col-12 col-lg-12">
 						<p><small>Tutti gli enti</small></p>
@@ -741,6 +742,7 @@
 						/>
 					</div>
 				</div>
+				{/if}
 				<div class="row my-1 d-flex align-items-center">
 					{#each tipologieEnti as te}
 						<div class="col-12 col-lg-4">
