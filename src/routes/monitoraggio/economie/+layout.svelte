@@ -2,9 +2,10 @@
 
 	import Cite from "$lib/c/cite.svelte";
     export let data;
-    let selectedMisura = '';
+    let selectedMisura = data.selectedMisura;
 
 	import { onMount } from 'svelte';
+	import { goto } from "$app/navigation";
 
 	onMount(async () => {
 		await setscroll();
@@ -19,8 +20,20 @@
 		});
 	};
 
+	const changeMisura = () => {
+		if(selectedMisura==='1.4.1 Esperienza del cittadino nei servizi pubblici'){
+			goto('/monitoraggio/economie/141/');
+		}else if (selectedMisura==='1.3.1 Piattaforma Digitale Nazionale Dati'){
+			goto('/monitoraggio/economie/131/');
+		}
+		else{
+			goto('/monitoraggio/economie/12/');
+		}
+	}
+
 </script>
 
+{selectedMisura}
 <div class="container my-4">
 	<h1>Economie misure</h1>
 	<Cite
@@ -104,14 +117,14 @@
 		</div>
 		<div class="col-12 col-lg-10 it-page-sections-container">
             <div class="it-page-section my-5" id="misure">
-                <h4>Misura</h4>
+                <h4>Misura {selectedMisura}</h4>
                 <div class="col-12 col-lg-12 my-4">
                     <div class="select-wrapper">
                         <label for="filterMisura">Misure</label>
-                        <select id="filterMisura" name="filterMisura" bind:value={selectedMisura}>
-                            <option value="">Tutte le misure</option>
+                        <select id="filterMisura" name="filterMisura" bind:value={selectedMisura} on:change={changeMisura}>
+                            <option value="" >Tutte le misure</option>
                             {#each data.misure as m}
-                                <option value={m.Id}>{m.Name}</option>
+                                <option value={m.Name}>{m.Name}</option>
                             {/each}
                         </select>
                     </div>

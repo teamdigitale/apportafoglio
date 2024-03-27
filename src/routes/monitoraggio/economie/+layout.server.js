@@ -18,7 +18,8 @@ export async function load({ locals }) {
         const values = await all;
 
         return {
-            misure: values[0]
+            misure: values[0],
+            selectedMisura: locals.selectedMisura
         };
     } else {
         throw redirect(303, '/users');

@@ -75,3 +75,24 @@ export const statusProgettoColor = {
     IN_LIQUIDAZIONE: "#12b57c",
     LIQUIDATO: "#278262"
 };
+
+
+
+
+const orderedTipologie = [["ALTRI ENTI", 130],
+["SCUOLE", 90],
+["COMUNI", 50],
+["PROVINCE", 40],
+["ISTITUTI DI RICERCA E AFAM", 100],
+["PA CENTRALI", 10],
+["AZIENDE PUBBLICHE DI SERVIZI ALLA PERSONA", 110],
+["ASL", 60],
+["UNIVERSITÀ", 80],
+["ENTI REGIONALI", 20],
+["ISTITUTI ZOOPROFILATTICI SPERIMENTALI", 70],
+["AOO", 120],
+["PROVINCE AUTONOME", 30]];
+
+export const orderEnti = (a,b) => {
+    return (orderedTipologie.find(ot => ot[0]===a.toUpperCase())[1]-orderedTipologie.find(ot => ot[0]===b.toUpperCase())[1]);
+}
