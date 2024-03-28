@@ -135,7 +135,7 @@
 		} else {
 			return [
 				{
-					quarter: 'Q4-2024',
+					quarter: 'Q3-2024',
 					giorno: '2024-09-30',
 					valore: 6508,
 					buffer: 100,
