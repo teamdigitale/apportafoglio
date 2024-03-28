@@ -9,7 +9,6 @@
 	import Scorecard from '$lib/c/scorecard.svelte';
 	import People from '$lib/c/people/people.svelte';
 	export let data;
-	console.log(data);
 
 	onMount(async () => {
 		await setscroll();
