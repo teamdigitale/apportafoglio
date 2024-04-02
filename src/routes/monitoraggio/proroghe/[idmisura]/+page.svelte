@@ -135,11 +135,11 @@
 		} else {
 			return [
 				{
-					quarter: 'Q3-2024',
-					giorno: '2024-09-30',
+					quarter: 'Q4-2024',
+					giorno: '2024-12-31',
 					valore: 6508,
 					buffer: 100,
-					quarter_prec: 'Q2-2024',
+					quarter_prec: 'Q3-2024',
 					targetPerTipologia: { Comuni: 6900, Scuole: 6000, 'Altre tipologie': 8 }
 				},
 				{
