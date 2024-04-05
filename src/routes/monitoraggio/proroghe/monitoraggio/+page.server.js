@@ -23,6 +23,7 @@ export async function load({ locals }) {
         const t = allvalues[1];
 
         t.forEach(tt => {
+            tt.pacchetto=tt.Requirement__r.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c;
             if (tt.Requirement__r.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name === '1.1 Infrastrutture digitali') { tt.tipologia_ente = 'Tutti'; tt.misura = "Misura_11" };
             if (tt.Requirement__r.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name === '1.1 e 1.2 Multimisura') { tt.tipologia_ente = 'Tutti'; tt.misura = "Misura_11_12" };
             if (tt.Requirement__r.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name === '1.4.5 Digitalizzazione degli avvisi pubblici') { tt.tipologia_ente = 'Tutti'; tt.misura = "Misura_145" };

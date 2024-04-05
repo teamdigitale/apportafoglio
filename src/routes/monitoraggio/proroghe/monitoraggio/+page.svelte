@@ -6,24 +6,42 @@
 	import { getQuarter, formatNumber } from '$lib/js/shared.js';
 	import Barchart from './barchart.svelte';
 	export let data;
-	let misureOptions = Object.values(
-		data.slots.reduce((a, { Misura__c }) => {
-			a[Misura__c] = a[Misura__c] || {
-				Misura__c,
-				count: 0
-			};
-			a[Misura__c].count++;
-			return a;
-		}, Object.create(null))
-	)
-		.map((x) => x.Misura__c)
-		.sort();
+
+	console.log(data);
+	let misureOptions = [
+		'Misura_11',
+		'Misura_11_12',
+		'Misura_12',
+		'Misura_131',
+		'Misura_141',
+		'Misura_143#PagoPA',
+		'Misura_143#AppIO',
+		'Misura_144',
+		'Misura_145'
+	];
+
+	let misureLabels = [
+		'1.1 Infrastrutture digitali',
+		'1.1 e 1.2 Multimisura',
+		'1.2 Abilitazione e facilitazione migrazione al Cloud',
+		'1.3.1 Piattaforma Digitale Nazionale Dati',
+		'1.4.1 Esperienza del cittadino nei servizi pubblici',
+		'1.4.3 Adozione PagoPA e AppIO - PagoPA',
+		'1.4.3 Adozione PagoPA e AppIO - AppIO',
+		'1.4.4 Adozione identità digitale',
+		'1.4.5 Digitalizzazione degli avvisi pubblici'
+	];
 
 	let filterMisure = misureOptions[0];
 
 	$: tipologie = Object.values(
 		data.slots
-			.filter((x) => x.Misura__c === filterMisure)
+			.filter((x) =>
+				filterMisure.indexOf('#') === -1
+					? x.Misura__c === filterMisure
+					: x.Misura__c === filterMisure.split('#')[0] &&
+						x.Pacchetto__c === filterMisure.split('#')[1]
+			)
 			.reduce((a, { Tipologia_Ente_proroghe__c }) => {
 				a[Tipologia_Ente_proroghe__c] = a[Tipologia_Ente_proroghe__c] || {
 					Tipologia_Ente_proroghe__c,
@@ -60,7 +78,12 @@
 
 	const calcolaCapienze = (m, p, t) => {
 		let d = data.slots
-			.filter((s) => s.Misura__c === m)
+			.filter((x) =>
+				filterMisure.indexOf('#') === -1
+					? x.Misura__c === filterMisure
+					: x.Misura__c === filterMisure.split('#')[0] &&
+						x.Pacchetto__c === filterMisure.split('#')[1]
+			)
 			.filter((s) => (p ? s.Pacchetto__c === p : true))
 			.filter((s) => s.Tipologia_Ente_proroghe__c === t);
 		const result = [];
@@ -97,7 +120,11 @@
 
 	const calcolaGiorniMedi = (t, s) => {
 		const tt = data.tasks
-			.filter((x) => x.misura === filterMisure)
+			.filter((x) =>
+				filterMisure.indexOf('#') === -1
+					? x.misura === filterMisure
+					: x.misura === filterMisure.split('#')[0] && x.pacchetto === filterMisure.split('#')[1]
+			)
 			.filter((x) => (s === 'Tutti' ? true : x.Status === s))
 			.filter((x) => x.tipologia_ente === t);
 		return tt.length > 0 ? Math.round(d3.mean(tt, (dd) => dd.Giorni_richiesti__c)) : 'n.a.';
@@ -105,7 +132,11 @@
 
 	const calcolaGiorniMinimi = (t, s) => {
 		const tt = data.tasks
-			.filter((x) => x.misura === filterMisure)
+			.filter((x) =>
+				filterMisure.indexOf('#') === -1
+					? x.misura === filterMisure
+					: x.misura === filterMisure.split('#')[0] && x.pacchetto === filterMisure.split('#')[1]
+			)
 			.filter((x) => (s === 'Tutti' ? true : x.Status === s))
 			.filter((x) => x.tipologia_ente === t);
 		return tt.length > 0 ? Math.round(d3.min(tt, (dd) => dd.Giorni_richiesti__c)) : 'n.a.';
@@ -113,7 +144,11 @@
 
 	const calcolaGiorniMassimi = (t, s) => {
 		const tt = data.tasks
-			.filter((x) => x.misura === filterMisure)
+			.filter((x) =>
+				filterMisure.indexOf('#') === -1
+					? x.misura === filterMisure
+					: x.misura === filterMisure.split('#')[0] && x.pacchetto === filterMisure.split('#')[1]
+			)
 			.filter((x) => (s === 'Tutti' ? true : x.Status === s))
 			.filter((x) => x.tipologia_ente === t);
 		return tt.length > 0 ? Math.round(d3.max(tt, (dd) => dd.Giorni_richiesti__c)) : 'n.a.';
@@ -202,8 +237,8 @@
 								<div class="select-wrapper">
 									<label for="filterMisura">Misura</label>
 									<select id="filterMisura" name="filterMisura" bind:value={filterMisure}>
-										{#each misureOptions as m}
-											<option value={m}>{m}</option>
+										{#each misureOptions as m,i}
+											<option value={m}>{misureLabels[i]}</option>
 										{/each}
 									</select>
 								</div>
