@@ -237,7 +237,7 @@
 								<div class="select-wrapper">
 									<label for="filterMisura">Misura</label>
 									<select id="filterMisura" name="filterMisura" bind:value={filterMisure}>
-										{#each misureOptions as m,i}
+										{#each misureOptions as m, i}
 											<option value={m}>{misureLabels[i]}</option>
 										{/each}
 									</select>
@@ -260,7 +260,12 @@
 														title={formatNumber(
 															data.tasks
 																.filter((x) => x.Status === 'In valutazione')
-																.filter((x) => x.misura === filterMisure)
+																.filter((x) =>
+																	filterMisure.indexOf('#') === -1
+																		? x.misura === filterMisure
+																		: x.misura === filterMisure.split('#')[0] &&
+																			x.pacchetto === filterMisure.split('#')[1]
+																)
 																.filter((x) => x.tipologia_ente === t).length
 														)}
 														bgcolor="warning"
@@ -273,7 +278,12 @@
 														title={formatNumber(
 															data.tasks
 																.filter((x) => x.Status === 'Approvazione automatica Servizio 1')
-																.filter((x) => x.misura === filterMisure)
+																.filter((x) =>
+																	filterMisure.indexOf('#') === -1
+																		? x.misura === filterMisure
+																		: x.misura === filterMisure.split('#')[0] &&
+																			x.pacchetto === filterMisure.split('#')[1]
+																)
 																.filter((x) => x.tipologia_ente === t).length
 														)}
 														bgcolor="success"
@@ -286,7 +296,12 @@
 														title={formatNumber(
 															data.tasks
 																.filter((x) => x.Status === 'Rigettato')
-																.filter((x) => x.misura === filterMisure)
+																.filter((x) =>
+																	filterMisure.indexOf('#') === -1
+																		? x.misura === filterMisure
+																		: x.misura === filterMisure.split('#')[0] &&
+																			x.pacchetto === filterMisure.split('#')[1]
+																)
 																.filter((x) => x.tipologia_ente === t).length
 														)}
 														bgcolor="danger"
@@ -298,7 +313,12 @@
 														text="Richieste totali"
 														title={formatNumber(
 															data.tasks
-																.filter((x) => x.misura === filterMisure)
+																.filter((x) =>
+																	filterMisure.indexOf('#') === -1
+																		? x.misura === filterMisure
+																		: x.misura === filterMisure.split('#')[0] &&
+																			x.pacchetto === filterMisure.split('#')[1]
+																)
 																.filter((x) => x.tipologia_ente === t).length
 														)}
 														bgcolor="primary"
