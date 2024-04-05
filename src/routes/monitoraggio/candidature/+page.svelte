@@ -260,7 +260,7 @@
 								{/each}
 								<tr>
 									<td class="text-end"><small><strong></strong></small></td>
-									<td class="text-center"
+									<td class="text-end"
 										><small
 											><strong
 												>{formatNumber(

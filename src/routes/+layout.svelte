@@ -321,7 +321,7 @@
 
 																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')}
 																	<li data-sveltekit-preload-data="off">
-																		<a class="dropdown-item list-item" href="/monitoraggio/proroghe"
+																		<a class="dropdown-item list-item" href="/monitoraggio/proroghe/monitoraggio"
 																			><span>proroghe</span></a
 																		>
 																	</li>
