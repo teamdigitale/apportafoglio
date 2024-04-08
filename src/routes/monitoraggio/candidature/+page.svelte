@@ -92,10 +92,38 @@
 		});
 		return res;
 	};
+
+	const calcolaPercentualeNumero = (i,d) => {
+		return datatoshow[1][i + 1] / datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+	};
+
+	const calcolaPercentualeNumeroCumulata = (i,d) => {
+		let res = 0;
+		for(let z = 0; z<=i; z++){
+			res = res+datatoshow[1][z+1] / datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+		}
+		return res;
+	};
+
+	const calcolaPercentualeValore = (i,d) => {
+		return datatoshow[2][i + 1] / datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+	};
+
+	const calcolaPercentualeValoreCumulata = (i,d) => {
+		let res = 0;
+		for(let z = 0; z<=i; z++){
+			res = res+datatoshow[2][z+1] / datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+		}
+		return res;
+	};
+
 </script>
 
 <h1>Riepilogo candidature</h1>
-<Cite text="Un sogno è solo un sogno. Un obiettivo è un sogno con un progetto e una scadenza." author="Harvey B. Mackay" />
+<Cite
+	text="Un sogno è solo un sogno. Un obiettivo è un sogno con un progetto e una scadenza."
+	author="Harvey B. Mackay"
+/>
 
 <div class="container">
 	<div class="row">
@@ -178,7 +206,7 @@
 							<div class="callout callout-highlight note">
 								<div class="callout-title">
 									<svg class="icon"><use href="/svg/sprites.svg#it-info-circle"></use></svg>
-									Dati relativi a
+									Dati relativi ai Comuni
 								</div>
 								<p>
 									<span
@@ -216,9 +244,11 @@
 								<tr>
 									<th scope="col" class="text-center"><small>Stato</small></th>
 									<th scope="col" class="text-end"><small>Numero</small></th>
-									<th scope="col" class="text-end"><small>Valore</small></th>
 									<th scope="col" class="text-end"><small>% numero</small></th>
+									<th scope="col" class="text-end"><small>% totale</small></th>
+									<th scope="col" class="text-end"><small>Valore</small></th>
 									<th scope="col" class="text-end"><small>% valore</small></th>
+									<th scope="col" class="text-end"><small>% totale</small></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -235,26 +265,21 @@
                                     transparent 100%
                                   );"><small>{s}</small></td
 											>
+											<td class="text-end"><small>{formatNumber(datatoshow[1][i + 1])}</small></td>
 											<td class="text-end"
-												><small>{formatNumber(datatoshow[1][i + 1])}</small></td
+												><small
+													>{percentuale(calcolaPercentualeNumero(i,datatoshow))}</small
+												></td
 											>
+											<td class="text-end"><small>{percentuale(calcolaPercentualeNumeroCumulata(i,datatoshow))}</small></td>
 											<td class="text-end"><small>{euro(datatoshow[2][i + 1])}</small></td>
+
 											<td class="text-end"
 												><small
-													>{percentuale(
-														datatoshow[1][i + 1] /
-															datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
-													)}</small
+													>{percentuale(calcolaPercentualeValore(i,datatoshow))}</small
 												></td
 											>
-											<td class="text-end"
-												><small
-													>{percentuale(
-														datatoshow[2][i + 1] /
-															datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
-													)}</small
-												></td
-											>
+											<td class="text-end"><small>{percentuale(calcolaPercentualeValoreCumulata(i,datatoshow))}</small></td>
 										</tr>
 									{/if}
 								{/each}
@@ -269,6 +294,8 @@
 											></small
 										></td
 									>
+									<td class="text-end"><small><strong></strong></small></td>
+									<td class="text-end"><small><strong></strong></small></td>
 									<td class="text-end"
 										><small
 											><strong
