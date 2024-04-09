@@ -19,7 +19,7 @@
 		'In realizzazione',
 		'In revisione',
 		'In verifica tecnica',
-		'Devono richiedere erogazione',
+		'Va richiesta erogazione',
 		'In verifica formale',
 		'In liquidazione',
 		'Liquidate'

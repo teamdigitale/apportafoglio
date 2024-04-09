@@ -63,7 +63,7 @@ export async function load({ locals }) {
         ncandidature = ncandidature.concat(nallvalues[2].map((x) => ({...x,stato: "In realizzazione"})));
         ncandidature = ncandidature.concat(nallvalues[3].map((x) => ({...x,stato: "In revisione"})));
         ncandidature = ncandidature.concat(nallvalues[4].map((x) => ({...x,stato: "In verifica tecnica"})));
-        ncandidature = ncandidature.concat(nallvalues[5].map((x) => ({...x,stato: "Devono richiedere erogazione"})));
+        ncandidature = ncandidature.concat(nallvalues[5].map((x) => ({...x,stato: "Va richiesta erogazione"})));
         ncandidature = ncandidature.concat(nallvalues[6].map((x) => ({...x,stato: "In verifica formale"})));
         ncandidature = ncandidature.concat(nallvalues[7].map((x) => ({...x,stato: "In liquidazione"})));
         ncandidature = ncandidature.concat(nallvalues[8].map((x) => ({...x,stato: "Liquidate"})));
