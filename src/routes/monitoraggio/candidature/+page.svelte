@@ -11,6 +11,7 @@
 	let selectedRegion = '';
 	let misura = '';
 	let tipologiaEnte = 'Tutti';
+	let pacchetto = 'Tutte';
 
 	const stati = [
 		'In candidatura',
@@ -38,6 +39,8 @@
 
 	const teoptions = ['Tutti', 'Comuni', 'Scuole', 'ASL','Altri (diversi da Comuni, Scuole, ASL)'];
 
+	const pacchetti = ["Tutte","PagoPA", "AppIO"];
+
 	const optionsTipologieEnti = [
 		{ misura: '', options: ['Tutti', 'Comuni', 'Scuole', 'ASL'] },
 		{
@@ -55,6 +58,7 @@
 		if (misura !== '') {
 			cc = cc
 				.filter((c) => c.misura === misura)
+				.filter((c) => misura==='1.4.3 Adozione PagoPA e AppIO'&&pacchetto!=='Tutte'?c.PacchettoProgram__c===pacchetto:true)
 				.filter((x) => (tipologiaEnte === 'Tutti' ? true :  tipologiaEnte==='Altri (diversi da Comuni, Scuole, ASL)'?(x.tipologia_ente!=='Comuni'&&x.tipologia_ente!=='Scuole'&&x.tipologia_ente!=='ASL') :  x.tipologia_ente === tipologiaEnte));
 		}
 		if (selectedArea === 'ALL') {
@@ -220,6 +224,22 @@
 									</div>
 								</div>
 
+								{#if misura==='1.4.3 Adozione PagoPA e AppIO'}
+								<hr class="my-0" />
+								<div class="my-4">
+									<div class="select-wrapper">
+										<label for="selectPiattaforma">Piattaforma</label>
+										<small>
+											<select id="selectPiattaforma" bind:value={pacchetto}>
+												{#each pacchetti as p}
+													<option value={p}>{p}</option>
+												{/each}
+											</select>
+										</small>
+									</div>
+								</div>
+								{/if}
+
 								<hr class="my-0" />
 								<div class="my-4">
 									<div class="select-wrapper">
@@ -265,7 +285,7 @@
 										></span
 									>, per
 									<span
-										><strong> {misura === '' ? 'tutte le misure' : 'la misura ' + misura}</strong>
+										><strong> {misura === '' ? 'tutte le misure' : 'la misura ' + misura} {misura==='1.4.3 Adozione PagoPA e AppIO'&&pacchetto!=='Tutte'?'(solo '+pacchetto+')':''}</strong>
 									</span><span>e per </span>
 									<span>
 										{#if tipologiaEnte === 'Tutti'}
