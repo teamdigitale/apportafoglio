@@ -10,6 +10,7 @@
 	let selectedArea = 'ALL';
 	let selectedRegion = '';
 	let misura = '';
+	let tipologiaEnte = 'Tutti';
 
 	const stati = [
 		'In candidatura',
@@ -17,6 +18,7 @@
 		'In realizzazione',
 		'In revisione',
 		'In verifica tecnica',
+		'Devono richiedere erogazione',
 		'In verifica formale',
 		'In liquidazione',
 		'Liquidate'
@@ -28,15 +30,32 @@
 		'#207bd6',
 		'#f5ce93',
 		'#e0a243',
+		'#2bd6d0',
 		'#cc7a00',
 		'#20d696',
 		'#009963'
 	];
 
+	const teoptions = ['Tutti', 'Comuni', 'Scuole', 'ASL','Altri (diversi da Comuni, Scuole, ASL)'];
+
+	const optionsTipologieEnti = [
+		{ misura: '', options: ['Tutti', 'Comuni', 'Scuole', 'ASL'] },
+		{
+			misura: '1.2 Abilitazione e facilitazione migrazione al Cloud',
+			options: ['Tutti', 'Comuni', 'Scuole', 'ASL']
+		},
+		{
+			misura: '1.4.1 Esperienza del cittadino nei servizi pubblici',
+			options: ['Tutti', 'Comuni', 'Scuole']
+		}
+	];
+
 	$: riepiloga = (cc) => {
 		let filtered;
 		if (misura !== '') {
-			cc = cc.filter((c) => c.misura === misura);
+			cc = cc
+				.filter((c) => c.misura === misura)
+				.filter((x) => (tipologiaEnte === 'Tutti' ? true :  tipologiaEnte==='Altri (diversi da Comuni, Scuole, ASL)'?(x.tipologia_ente!=='Comuni'&&x.tipologia_ente!=='Scuole'&&x.tipologia_ente!=='ASL') :  x.tipologia_ente === tipologiaEnte));
 		}
 		if (selectedArea === 'ALL') {
 			filtered = cc;
@@ -51,9 +70,7 @@
 			filtered,
 			function (D) {
 				return {
-					numero_candidature: d3.sum(D, function (d) {
-						return d.numero_candidature;
-					}),
+					numero_candidature: D.length,
 					valore_candidature: d3.sum(D, function (d) {
 						return d.valore;
 					})
@@ -85,6 +102,15 @@
 
 	$: datatoshow = calcolaRipartizione();
 
+	$: esisteCandidatura = (d) => {
+		if (
+			d[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)===0)
+			return false;
+		return true;
+	};
+
+
+
 	const calcolaStatiColors = () => {
 		let res = {};
 		statiColors.forEach((e, index) => {
@@ -93,30 +119,33 @@
 		return res;
 	};
 
-	const calcolaPercentualeNumero = (i,d) => {
+	const calcolaPercentualeNumero = (i, d) => {
 		return datatoshow[1][i + 1] / datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
 	};
 
-	const calcolaPercentualeNumeroCumulata = (i,d) => {
+	const calcolaPercentualeNumeroCumulata = (i, d) => {
 		let res = 0;
-		for(let z = 0; z<=i; z++){
-			res = res+datatoshow[1][z+1] / datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+		for (let z = 0; z <= i; z++) {
+			res =
+				res +
+				datatoshow[1][z + 1] / datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
 		}
 		return res;
 	};
 
-	const calcolaPercentualeValore = (i,d) => {
+	const calcolaPercentualeValore = (i, d) => {
 		return datatoshow[2][i + 1] / datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
 	};
 
-	const calcolaPercentualeValoreCumulata = (i,d) => {
+	const calcolaPercentualeValoreCumulata = (i, d) => {
 		let res = 0;
-		for(let z = 0; z<=i; z++){
-			res = res+datatoshow[2][z+1] / datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
+		for (let z = 0; z <= i; z++) {
+			res =
+				res +
+				datatoshow[2][z + 1] / datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0);
 		}
 		return res;
 	};
-
 </script>
 
 <h1>Riepilogo candidature</h1>
@@ -190,6 +219,21 @@
 										</small>
 									</div>
 								</div>
+
+								<hr class="my-0" />
+								<div class="my-4">
+									<div class="select-wrapper">
+										<label for="selectTipologiaEnte">Tipologia ente</label>
+										<small>
+											<select id="selectTipologiaEnte" bind:value={tipologiaEnte}>
+												{#each teoptions as teo}
+													<option value={teo}>{teo}</option>
+												{/each}
+											</select>
+										</small>
+									</div>
+								</div>
+
 								<hr class="my-0" />
 								<span id="italy"><GeoSelector bind:selectedArea bind:selectedRegion /></span>
 							</div>
@@ -199,29 +243,38 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-9 it-page-sections-container">
+			{#if esisteCandidatura(datatoshow)}
 			<div class="it-page-section my-5" id="riepilogo">
 				<div class="row my-4">
 					<div class="col-12 col-lg-12">
 						<small>
-							<div class="callout callout-highlight note">
-								<div class="callout-title">
-									<svg class="icon"><use href="/svg/sprites.svg#it-info-circle"></use></svg>
-									Dati relativi ai Comuni
-								</div>
-								<p>
-									<span
+							<div class="text-start">
+								<svg class="icon icon-primary icon-sm"
+									><use href="/svg/sprites.svg#it-info-circle"></use></svg
+								>
+								<span class="align-middle"
+									>Dati relativi a <span
 										><strong>
 											{#if selectedArea === 'ALL'}
-												Tutta Italia
+												tutta Italia
 											{:else if selectedRegion !== ''}
 												{selectedRegion}
 											{:else}
 												{selectedArea.replaceAll('_', ' ')}
 											{/if}</strong
 										></span
-									>e per
-									<span><strong> {misura === '' ? 'Tutte le misure' : misura}</strong> </span>
-								</p>
+									>, per
+									<span
+										><strong> {misura === '' ? 'tutte le misure' : 'la misura ' + misura}</strong>
+									</span><span>e per </span>
+									<span>
+										{#if tipologiaEnte === 'Tutti'}
+											<strong>tutte le tipologie</strong> di enti
+										{:else}
+											gli enti di tipologia: <strong>{tipologiaEnte}</strong>
+										{/if}
+									</span>
+								</span>
 							</div>
 						</small>
 					</div>
@@ -267,19 +320,23 @@
 											>
 											<td class="text-end"><small>{formatNumber(datatoshow[1][i + 1])}</small></td>
 											<td class="text-end"
+												><small>{percentuale(calcolaPercentualeNumero(i, datatoshow))}</small></td
+											>
+											<td class="text-end"
 												><small
-													>{percentuale(calcolaPercentualeNumero(i,datatoshow))}</small
+													>{percentuale(calcolaPercentualeNumeroCumulata(i, datatoshow))}</small
 												></td
 											>
-											<td class="text-end"><small>{percentuale(calcolaPercentualeNumeroCumulata(i,datatoshow))}</small></td>
 											<td class="text-end"><small>{euro(datatoshow[2][i + 1])}</small></td>
 
 											<td class="text-end"
+												><small>{percentuale(calcolaPercentualeValore(i, datatoshow))}</small></td
+											>
+											<td class="text-end"
 												><small
-													>{percentuale(calcolaPercentualeValore(i,datatoshow))}</small
+													>{percentuale(calcolaPercentualeValoreCumulata(i, datatoshow))}</small
 												></td
 											>
-											<td class="text-end"><small>{percentuale(calcolaPercentualeValoreCumulata(i,datatoshow))}</small></td>
 										</tr>
 									{/if}
 								{/each}
@@ -313,6 +370,24 @@
 					</div>
 				</div>
 			</div>
+			{:else}
+			<div class="it-page-section my-5" id="riepilogo">
+				<div class="row my-4">
+					<div class="col-12 col-lg-12">
+						<small>
+							<div class="text-start">
+								<svg class="icon icon-danger icon-sm"
+									><use href="/svg/sprites.svg#it-error"></use></svg
+								>
+								<span class="align-middle"
+									><strong>Non esistono candidature per in base ai filtri selezionati</strong>
+								</span>
+							</div>
+						</small>
+					</div>
+				</div>
+			</div>
+			{/if}
 		</div>
 	</div>
 </div>
