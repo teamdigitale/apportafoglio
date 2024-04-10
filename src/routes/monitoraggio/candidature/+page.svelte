@@ -17,7 +17,8 @@
 		'In candidatura',
 		'In contrattualizzazione',
 		'In realizzazione',
-		'In revisione',
+		//'In revisione',
+		'In revisione a seguito di verifica tecnica',
 		'In verifica tecnica',
 		'Va richiesta erogazione',
 		'In verifica formale',
@@ -37,9 +38,9 @@
 		'#009963'
 	];
 
-	const teoptions = ['Tutti', 'Comuni', 'Scuole', 'ASL','Altri (diversi da Comuni, Scuole, ASL)'];
+	const teoptions = ['Tutti', 'Comuni', 'Scuole', 'ASL', 'Altri (diversi da Comuni, Scuole, ASL)'];
 
-	const pacchetti = ["Tutte","PagoPA", "AppIO"];
+	const pacchetti = ['Tutte', 'PagoPA', 'AppIO'];
 
 	const optionsTipologieEnti = [
 		{ misura: '', options: ['Tutti', 'Comuni', 'Scuole', 'ASL'] },
@@ -53,13 +54,29 @@
 		}
 	];
 
+
+	$: console.log(tipologiaEnte);
+
 	$: riepiloga = (cc) => {
 		let filtered;
+		cc = cc.filter((c) => { return (
+					tipologiaEnte === 'Tutti'
+						? true
+						: tipologiaEnte === 'Altri (diversi da Comuni, Scuole, ASL)'
+							? (c.tipologia_ente !== 'Comuni' &&
+								c.tipologia_ente !== 'Scuole' &&
+								c.tipologia_ente !== 'ASL')
+							: c.tipologia_ente === tipologiaEnte)}
+				);
 		if (misura !== '') {
 			cc = cc
 				.filter((c) => c.misura === misura)
-				.filter((c) => misura==='1.4.3 Adozione PagoPA e AppIO'&&pacchetto!=='Tutte'?c.PacchettoProgram__c===pacchetto:true)
-				.filter((x) => (tipologiaEnte === 'Tutti' ? true :  tipologiaEnte==='Altri (diversi da Comuni, Scuole, ASL)'?(x.tipologia_ente!=='Comuni'&&x.tipologia_ente!=='Scuole'&&x.tipologia_ente!=='ASL') :  x.tipologia_ente === tipologiaEnte));
+				.filter((c) =>
+					misura === '1.4.3 Adozione PagoPA e AppIO' && pacchetto !== 'Tutte'
+						? c.PacchettoProgram__c === pacchetto
+						: true
+				)
+				;
 		}
 		if (selectedArea === 'ALL') {
 			filtered = cc;
@@ -107,13 +124,9 @@
 	$: datatoshow = calcolaRipartizione();
 
 	$: esisteCandidatura = (d) => {
-		if (
-			d[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)===0)
-			return false;
+		if (d[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0) === 0) return false;
 		return true;
 	};
-
-
 
 	const calcolaStatiColors = () => {
 		let res = {};
@@ -224,20 +237,20 @@
 									</div>
 								</div>
 
-								{#if misura==='1.4.3 Adozione PagoPA e AppIO'}
-								<hr class="my-0" />
-								<div class="my-4">
-									<div class="select-wrapper">
-										<label for="selectPiattaforma">Piattaforma</label>
-										<small>
-											<select id="selectPiattaforma" bind:value={pacchetto}>
-												{#each pacchetti as p}
-													<option value={p}>{p}</option>
-												{/each}
-											</select>
-										</small>
+								{#if misura === '1.4.3 Adozione PagoPA e AppIO'}
+									<hr class="my-0" />
+									<div class="my-4">
+										<div class="select-wrapper">
+											<label for="selectPiattaforma">Piattaforma</label>
+											<small>
+												<select id="selectPiattaforma" bind:value={pacchetto}>
+													{#each pacchetti as p}
+														<option value={p}>{p}</option>
+													{/each}
+												</select>
+											</small>
+										</div>
 									</div>
-								</div>
 								{/if}
 
 								<hr class="my-0" />
@@ -264,149 +277,155 @@
 		</div>
 		<div class="col-12 col-lg-9 it-page-sections-container">
 			{#if esisteCandidatura(datatoshow)}
-			<div class="it-page-section my-5" id="riepilogo">
-				<div class="row my-4">
-					<div class="col-12 col-lg-12">
-						<small>
-							<div class="text-start">
-								<svg class="icon icon-primary icon-sm"
-									><use href="/svg/sprites.svg#it-info-circle"></use></svg
-								>
-								<span class="align-middle"
-									>Dati relativi a <span
-										><strong>
-											{#if selectedArea === 'ALL'}
-												tutta Italia
-											{:else if selectedRegion !== ''}
-												{selectedRegion}
+				<div class="it-page-section my-5" id="riepilogo">
+					<div class="row my-4">
+						<div class="col-12 col-lg-12">
+							<small>
+								<div class="text-start">
+									<svg class="icon icon-primary icon-sm"
+										><use href="/svg/sprites.svg#it-info-circle"></use></svg
+									>
+									<span class="align-middle"
+										>Dati relativi a <span
+											><strong>
+												{#if selectedArea === 'ALL'}
+													tutta Italia
+												{:else if selectedRegion !== ''}
+													{selectedRegion}
+												{:else}
+													{selectedArea.replaceAll('_', ' ')}
+												{/if}</strong
+											></span
+										>, per
+										<span
+											><strong>
+												{misura === '' ? 'tutte le misure' : 'la misura ' + misura}
+												{misura === '1.4.3 Adozione PagoPA e AppIO' && pacchetto !== 'Tutte'
+													? '(solo ' + pacchetto + ')'
+													: ''}</strong
+											>
+										</span><span>e per </span>
+										<span>
+											{#if tipologiaEnte === 'Tutti'}
+												<strong>tutte le tipologie</strong> di enti
 											{:else}
-												{selectedArea.replaceAll('_', ' ')}
-											{/if}</strong
-										></span
-									>, per
-									<span
-										><strong> {misura === '' ? 'tutte le misure' : 'la misura ' + misura} {misura==='1.4.3 Adozione PagoPA e AppIO'&&pacchetto!=='Tutte'?'(solo '+pacchetto+')':''}</strong>
-									</span><span>e per </span>
-									<span>
-										{#if tipologiaEnte === 'Tutti'}
-											<strong>tutte le tipologie</strong> di enti
-										{:else}
-											gli enti di tipologia: <strong>{tipologiaEnte}</strong>
-										{/if}
+												gli enti di tipologia: <strong>{tipologiaEnte}</strong>
+											{/if}
+										</span>
 									</span>
-								</span>
-							</div>
-						</small>
+								</div>
+							</small>
+						</div>
 					</div>
-				</div>
 
-				<div>
-					<Columnchart
-						id="ripartizioneCandidature"
-						values={datatoshow}
-						series={calcolaStatiColors()}
-						legendPosition=""
-						stacked={'percent'}
-						h="200"
-					/>
-				</div>
-				<div class="my-4">
-					<div class="table-responsive">
-						<table class="table table-striped table-hover table-sm">
-							<thead>
-								<tr>
-									<th scope="col" class="text-center"><small>Stato</small></th>
-									<th scope="col" class="text-end"><small>Numero</small></th>
-									<th scope="col" class="text-end"><small>% numero</small></th>
-									<th scope="col" class="text-end"><small>% totale</small></th>
-									<th scope="col" class="text-end"><small>Valore</small></th>
-									<th scope="col" class="text-end"><small>% valore</small></th>
-									<th scope="col" class="text-end"><small>% totale</small></th>
-								</tr>
-							</thead>
-							<tbody>
-								{#each stati as s, i}
-									{#if datatoshow[1][i + 1] > 0}
-										<tr>
-											<td
-												class="text-end"
-												style="width:25% ; background: linear-gradient(
+					<div>
+						<Columnchart
+							id="ripartizioneCandidature"
+							values={datatoshow}
+							series={calcolaStatiColors()}
+							legendPosition=""
+							stacked={'percent'}
+							h="200"
+						/>
+					</div>
+					<div class="my-4">
+						<div class="table-responsive">
+							<table class="table table-striped table-hover table-sm">
+								<thead>
+									<tr>
+										<th scope="col" class="text-center"><small>Stato</small></th>
+										<th scope="col" class="text-end"><small>Numero</small></th>
+										<th scope="col" class="text-end"><small>% numero</small></th>
+										<th scope="col" class="text-end"><small>% totale</small></th>
+										<th scope="col" class="text-end"><small>Valore</small></th>
+										<th scope="col" class="text-end"><small>% valore</small></th>
+										<th scope="col" class="text-end"><small>% totale</small></th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each stati as s, i}
+										{#if datatoshow[1][i + 1] > 0}
+											<tr>
+												<td
+													class="text-end"
+													style="width:25% ; background: linear-gradient(
                                     to top,
                                     {statiColors[i]},
                                     {statiColors[i]} 0.3rem,
                                     transparent 0.3rem,
                                     transparent 100%
                                   );"><small>{s}</small></td
-											>
-											<td class="text-end"><small>{formatNumber(datatoshow[1][i + 1])}</small></td>
-											<td class="text-end"
-												><small>{percentuale(calcolaPercentualeNumero(i, datatoshow))}</small></td
-											>
-											<td class="text-end"
-												><small
-													>{percentuale(calcolaPercentualeNumeroCumulata(i, datatoshow))}</small
-												></td
-											>
-											<td class="text-end"><small>{euro(datatoshow[2][i + 1])}</small></td>
+												>
+												<td class="text-end"><small>{formatNumber(datatoshow[1][i + 1])}</small></td
+												>
+												<td class="text-end"
+													><small>{percentuale(calcolaPercentualeNumero(i, datatoshow))}</small></td
+												>
+												<td class="text-end"
+													><small
+														>{percentuale(calcolaPercentualeNumeroCumulata(i, datatoshow))}</small
+													></td
+												>
+												<td class="text-end"><small>{euro(datatoshow[2][i + 1])}</small></td>
 
-											<td class="text-end"
-												><small>{percentuale(calcolaPercentualeValore(i, datatoshow))}</small></td
-											>
-											<td class="text-end"
-												><small
-													>{percentuale(calcolaPercentualeValoreCumulata(i, datatoshow))}</small
-												></td
-											>
-										</tr>
-									{/if}
-								{/each}
-								<tr>
-									<td class="text-end"><small><strong></strong></small></td>
-									<td class="text-end"
-										><small
-											><strong
-												>{formatNumber(
-													datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
-												)}</strong
-											></small
-										></td
-									>
-									<td class="text-end"><small><strong></strong></small></td>
-									<td class="text-end"><small><strong></strong></small></td>
-									<td class="text-end"
-										><small
-											><strong
-												>{euro(
-													datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
-												)}</strong
-											></small
-										></td
-									>
-									<td class="text-end"><small><strong></strong></small></td>
-									<td class="text-end"><small><strong></strong></small></td>
-								</tr>
-							</tbody>
-						</table>
+												<td class="text-end"
+													><small>{percentuale(calcolaPercentualeValore(i, datatoshow))}</small></td
+												>
+												<td class="text-end"
+													><small
+														>{percentuale(calcolaPercentualeValoreCumulata(i, datatoshow))}</small
+													></td
+												>
+											</tr>
+										{/if}
+									{/each}
+									<tr>
+										<td class="text-end"><small><strong></strong></small></td>
+										<td class="text-end"
+											><small
+												><strong
+													>{formatNumber(
+														datatoshow[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
+													)}</strong
+												></small
+											></td
+										>
+										<td class="text-end"><small><strong></strong></small></td>
+										<td class="text-end"><small><strong></strong></small></td>
+										<td class="text-end"
+											><small
+												><strong
+													>{euro(
+														datatoshow[2].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0)
+													)}</strong
+												></small
+											></td
+										>
+										<td class="text-end"><small><strong></strong></small></td>
+										<td class="text-end"><small><strong></strong></small></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-			</div>
 			{:else}
-			<div class="it-page-section my-5" id="riepilogo">
-				<div class="row my-4">
-					<div class="col-12 col-lg-12">
-						<small>
-							<div class="text-start">
-								<svg class="icon icon-danger icon-sm"
-									><use href="/svg/sprites.svg#it-error"></use></svg
-								>
-								<span class="align-middle"
-									><strong>Non esistono candidature per in base ai filtri selezionati</strong>
-								</span>
-							</div>
-						</small>
+				<div class="it-page-section my-5" id="riepilogo">
+					<div class="row my-4">
+						<div class="col-12 col-lg-12">
+							<small>
+								<div class="text-start">
+									<svg class="icon icon-danger icon-sm"
+										><use href="/svg/sprites.svg#it-error"></use></svg
+									>
+									<span class="align-middle"
+										><strong>Non esistono candidature per in base ai filtri selezionati</strong>
+									</span>
+								</div>
+							</small>
+						</div>
 					</div>
 				</div>
-			</div>
 			{/if}
 		</div>
 	</div>

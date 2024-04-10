@@ -8,6 +8,7 @@ export const handle = async ({ event, resolve }) => {
 
     let cookiesfuidstd = event.cookies.get('session_id_std');
     let cookiesfuidass = event.cookies.get('session_id_ass');
+    let runas = event.cookies.get('runas');
     if (cookiesfuidstd) loggedstandard = true;
     if (cookiesfuidass) loggedasseveratore = true;
 
@@ -15,6 +16,7 @@ export const handle = async ({ event, resolve }) => {
         event.url.pathname === '/' ||
         event.url.pathname.startsWith('/api/oauth') ||
         event.url.pathname.startsWith('/accesso') ||
+        event.url.pathname.startsWith('/localaccess') ||
         event.url.pathname.startsWith('/users') ||
         event.url.pathname.startsWith('/opendata')
     )) {
@@ -44,6 +46,9 @@ export const handle = async ({ event, resolve }) => {
                     cookiesfuidstd = null;
                 } else {
                     idutentesf = res.user_id;
+                    if(runas&&runas!==''){
+                        idutentesf=runas;
+                    }
                 }
 
             });
