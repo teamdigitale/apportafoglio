@@ -254,7 +254,7 @@
 		I seguenti prospetti riportano lo <strong>stato attuale delle candidature attive</strong>,
 		suddivise per tipologia ente e cluster. Per "candidature attive" si intendo le candidature negli
 		stati
-		<i>"AMMESSA", "AMMESSA CON RISERVA", "ACCETTATA", "IN VERFICA" e "FINANZIATA"</i>.
+		<i>"AMMESSA", "AMMESSA CON RISERVA", "ACCETTATA", "IN VERIFICA" e "FINANZIATA"</i>.
 	</p>
 	<div class="row">
 		<div class="col-12 col-lg-4">
