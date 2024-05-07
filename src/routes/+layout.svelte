@@ -414,7 +414,7 @@
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-6 pb-2">
-						<h6>PA Digitale 2026</h6>
+						<h6>PA digitale 2026</h6>
 						<div class="link-list-wrapper">
 							<ul class="footer-list link-list clearfix">
 								<li>
