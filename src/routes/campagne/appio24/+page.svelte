@@ -118,7 +118,7 @@
 				s = s + '<li><small>';
 				s = s + x.servizio;
 				s = s + '</small></li>';
-				numero++;
+				numero = numero + 5;
 			});
 			s = s + '</ul>';
 		}
@@ -140,7 +140,7 @@
 				s = s + '<li><small>';
 				s = s + x.servizio;
 				s = s + '</small></li>';
-				numero++;
+				numero = numero + 5;
 			});
 			s = s + '</ul>';
 		}
@@ -162,7 +162,7 @@
 				s = s + '<li><small>';
 				s = s + x.servizio;
 				s = s + '</small></li>';
-				numero++;
+				numero = numero + 5;
 			});
 			s = s + '</ul>';
 		}
@@ -186,7 +186,6 @@
 	};
 
 	const fattoriKo = (c, n, fam) => {
-
 		let s = '';
 		let numero = 0;
 		const categorieAltro = [];
@@ -237,15 +236,17 @@
 		data.serviziAttivi
 			.filter((x) => x.Ente__c === selectedComune)
 			.forEach((sa) => {
-				if (
-					stringSimilarity(n, sa.Descrizione_Servizio__c) >= 0.39 &&
-					stringSimilar(n, sa.Descrizione_Servizio__c) >= 0.39 &&
-					fam === sa.Argomento__c
-					//&& sa.Nome_Servizio__c.toUpperCase().indexOf("ALTRO") > -1
-				) {
-					//s = s + '<p><strong>Servizio simile a ' + sa.Descrizione_Servizio__c + '</strong></p>';
-					simili.push(sa.Descrizione_Servizio__c);
-					numero++;
+				if (sa.Codice_Catalogo_Attribuito__c.endsWith('000')) {
+					if (
+						stringSimilarity(n, sa.Descrizione_Servizio__c) >= 0.39 &&
+						stringSimilar(n, sa.Descrizione_Servizio__c) >= 0.39 &&
+						fam === sa.Argomento__c
+						//&& sa.Nome_Servizio__c.toUpperCase().indexOf("ALTRO") > -1
+					) {
+						//s = s + '<p><strong>Servizio simile a ' + sa.Descrizione_Servizio__c + '</strong></p>';
+						simili.push(sa.Descrizione_Servizio__c);
+						numero++;
+					}
 				}
 			});
 		if (simili.length > 0) {
@@ -977,7 +978,7 @@
 																						class="chip chip-success chip-simple"
 																						style="width: 50%; cursor: pointer; background-color: {okColorScale(
 																							s.fattoriok.n
-																						)};"
+																						)}; border-color: rgba(0, 0, 0, 0);"
 																						on:mouseenter={() =>
 																							setpopover('s-' + i + '-' + j + '-pop-ok')}
 																						on:mouseleave={() =>
@@ -1008,7 +1009,7 @@
 																						class="chip chip-danger chip-simple"
 																						style="width: 50%; cursor: pointer; background-color: {koColorScale(
 																							s.fattoriko.n
-																						)};"
+																						)};  border-color: rgba(0, 0, 0, 0);"
 																						on:mouseenter={() =>
 																							setpopover('s-' + i + '-' + j + '-pop-ko')}
 																						on:mouseleave={() =>

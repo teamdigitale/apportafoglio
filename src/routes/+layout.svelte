@@ -289,7 +289,7 @@
 										{/if}
 
 										{#if loggedstandard || loggedasseveratore}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner'))}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')|| checkAbilitazione(data.utentestandard.idsf, 'primario'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
@@ -355,7 +355,7 @@
 																	-->
 																{/if}
 
-																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')|| checkAbilitazione(data.utentestandard.idsf, 'primario')}
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/proroghe/monitoraggio"
 																			><span>proroghe</span></a
