@@ -25,7 +25,7 @@
 		});
 	};
 
-	/*
+	
 	let chartmodals = [];
 
 	let showModal = false;
