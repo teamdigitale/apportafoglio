@@ -328,11 +328,13 @@
 																</li>
 															{/if}
 																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																<!--
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/enti"
 																			><span>board enti</span></a
 																		>
 																	</li>
+																	-->
 																{/if}
 																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
 																	<li data-sveltekit-preload-data="off">
@@ -344,11 +346,13 @@
 																	</li>
 																{/if}
 																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																<!--
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
 																			><span>board avvisi</span></a
 																		>
 																	</li>
+																	-->
 																{/if}
 
 																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')}
