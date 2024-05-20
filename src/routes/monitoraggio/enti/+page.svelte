@@ -109,7 +109,6 @@
 
 	$: finanziatoProCapite = euro(totalefinanziato / popolazione);
 
-	$: console.log('Popolazione: ' + popolazione + ' - Totale finanziato:' + totalefinanziato);
 
 	$: totaleliquidatonetto = data.candidature
 		.filter((e) => (selectedRegions.length === 0 ? true : selectedRegions.indexOf(e.regione) > -1))

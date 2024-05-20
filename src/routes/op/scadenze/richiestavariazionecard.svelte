@@ -108,7 +108,9 @@
                         {/if}
 					{/each}
 				{/if}
-                {#if (!scadenza.rv[0].comm || scadenza.rv[0].comm.length === 0 || scadenza.rv[0].comm.filter((c) => c.InsertedById === idu).length === 0) && Number(scadenza.rv[0].Giorni_richiesti__c) >= 90}
+                {#if (!scadenza.rv[0].comm || scadenza.rv[0].comm.length === 0 
+				//|| scadenza.rv[0].comm.filter((c) => c.InsertedById === idu).length === 0
+				) && Number(scadenza.rv[0].Giorni_richiesti__c) >= 90}
                 <div class="alert alert-primary" role="alert">
                     Non hai ancora inserito commenti. Procedi inserendo su SalesForce il tuo parere relativamente alla
                     richiesta di proroga dell'Ente.

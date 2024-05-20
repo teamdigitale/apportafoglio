@@ -1,0 +1,13 @@
+h4.ec-event-title {
+    font-size: 0.75rem;
+        line-height: 1rem;
+        white-space: auto;
+        text-overflow: unset;
+}
+
+.ec-day-grid .ec-event-title {
+    font-size: 0.75rem;
+        line-height: 1rem;
+        white-space: auto;
+        text-overflow: unset;
+}

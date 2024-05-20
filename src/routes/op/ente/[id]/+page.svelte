@@ -7,7 +7,6 @@
 	moment.locale('it');
 
 	export let data;
-	console.log(data);
 
 	onMount(async () => {
 		await setscroll();

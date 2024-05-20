@@ -6,7 +6,7 @@
 	import Combochart from './combochart.svelte';
 	moment.locale('it');
 
-    console.log(data);
+
 
 	onMount(async () => {});
 

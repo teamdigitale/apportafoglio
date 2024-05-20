@@ -19,7 +19,6 @@ export async function load({ locals, params }) {
     let idc = params.id;
     let connection = connstandard;
     let ass = params.id.split("°");
-    //console.log(ass);
     if (ass && ass.length == 2) {
         idc = ass[0];
         connection = connasseveratore;

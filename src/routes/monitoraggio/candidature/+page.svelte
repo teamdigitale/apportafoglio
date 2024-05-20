@@ -55,7 +55,6 @@
 	];
 
 
-	$: console.log(tipologiaEnte);
 
 	$: riepiloga = (cc) => {
 		let filtered;

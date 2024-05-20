@@ -1,5 +1,8 @@
 <script>
+	export let data;
 	import Linkcard from '$lib/c/linkcard.svelte';
+	$: loggedstandard = data.loggedstandard;
+
 </script>
 
 <div class="container">
@@ -19,7 +22,7 @@
 				altimg="portafoglio"
 				img="/img/buildings.jpg"
 				link="/users"
-				linktext="Voglio accedere"
+				linktext="{loggedstandard?'Area riservata':'Voglio accedere'}"
 				text="Consulta i dati con le tue credenziali"
 				title="Area riservata"
 			/>

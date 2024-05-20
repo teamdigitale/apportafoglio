@@ -142,10 +142,8 @@
 
 	let calcolabudgetTotaleStimato = (dps) => {
 		let tot = 0;
-		console.log(JSON.stringify(dps));
 		Object.entries(dps).forEach((cc) => {
 			Object.entries(cc[1]).forEach((c) => {
-				console.log(c)
 				if (platea.get(cc[0])) {
 					tot =
 						tot +

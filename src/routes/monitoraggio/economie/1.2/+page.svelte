@@ -400,7 +400,7 @@
 	import { euro, formatNumber, percentuale } from '$lib/js/shared.js';
 	import * as d3 from 'd3';
 	export let data;
-	console.log(data);
+
 	let c = data.candidature;
 	let e = data.enti;
 
@@ -500,7 +500,7 @@
 					t[1].forEach((c) => {
 						res = res + c[1].importo_stimato;
 
-						//console.log(res);
+
 						t.importo_stimato_beneficiario = res;
 					});
 				}
@@ -551,7 +551,6 @@
 			(d) => d.cluster
 		);
 
-		console.log(riep);
 		const li = listino.filter((l) => l.beneficiari === b).reverse();
         li.forEach((l) => {
 				if (l.beneficiari === 'Comuni' || l.beneficiari === 'Scuole') {
@@ -564,25 +563,16 @@
             });
 
             const min = li[li.length-1].importo_minimo;
-            console.log(">MIN"+min);
 		while (budget > 0&&budget>min) {
 			li.forEach((l) => {
 				riep
 					.filter((r) => r[0] === b)[0][1]
 					.filter((z) => z[0] === l.cluster)
 					.forEach((c) => {
-						/*console.log(
-							'Cluster: ' +
-								l.cluster +
-								' Numero enti: ' +
-								findNumeroEnti(b, l.cluster) +
-								' Numero c: ' +
-								c[1].numero_candidature
-						);*/
+
 						while ((budget>l.importo_massimo)&&(findNumeroEnti(b, l.cluster) - c[1].numero_candidature > 0)) {
 							if (budget > 0) {
 								budget = budget - l.importo_massimo;
-								console.log('>>' + budget);
 								c[1].numero_candidature = c[1].numero_candidature + 1;
 								res.push([l.cluster, l.importo_massimo, 1]);
 							}
@@ -590,15 +580,12 @@
 					});
 			});
 
-			//budget = budget - 10000;
-           console.log("x");
+
 		}
-		//console.log(li);
 
 		return res;
 	};
 
-	console.log(calcolaworstcase('ASL', 1412650.0));
 </script>
 
 <div class="it-page-section my-5" id="riepilogo">

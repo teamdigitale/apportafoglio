@@ -10,9 +10,6 @@ export async function GET({ params,locals }) {
   });
 const conn = new jsforce.Connection({ oauth2: oa });
 
-console.log("CODE: "+params.code);
-
-    console.log("OAUTH code: " + params.code);
     await conn.authorize(params.code);
     const connectionToken = conn.accessToken;
 

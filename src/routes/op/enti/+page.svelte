@@ -83,6 +83,7 @@
 	/>
 
 	<div class="row">
+		<!--
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterPortafoglio">Portafoglio</label>
@@ -93,6 +94,7 @@
 				</select>
 			</div>
 		</div>
+		-->
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterTipologiaEnte">Tipologia</label>

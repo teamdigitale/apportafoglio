@@ -40,10 +40,12 @@
 						</strong>
 					</span>
 				</div>
+				<!--
 				<div class="chip chip-simple float-end">
 					<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-pa"></use></svg>
 					<span class="chip-label">{referente.portafoglio}</span>
 				</div>
+				-->
 			</div>
 
 			<div>

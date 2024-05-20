@@ -7,7 +7,7 @@
 	import Barchart from './barchart.svelte';
 	export let data;
 
-	console.log(data);
+
 	let misureOptions = [
 		'Misura_11',
 		'Misura_11_12',

@@ -210,8 +210,6 @@ export async function load({ locals, params, url }) {
             }
         });
 
-       //console.log(senzacompl);
-       // console.log(">>>"+senzacompl.length);
 
 
 

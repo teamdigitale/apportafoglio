@@ -439,7 +439,6 @@
 			if (Object.entries(slotsim).reduce((a, b) => (a = a + b[1]), 0) <= 0) {
 				break;
 			}
-			console.log('SLOT: ' + Object.entries(slotsim).reduce((a, b) => (a = a + b[1]), 0));
 			for (let x = slotsim.length - 1; x >= 0; x++) {
 				if (slotsim[x][0].startsWith(c.tipologia_ente) && slotsim[1] > 0) {
 					c.data_completamento = getFirstDayOfQuarter(
@@ -492,7 +491,6 @@
 		//Gli slot vanno calcolati per ogni target e per ogni tipologia ente...
 
 		tipologieEnti.forEach((te) => {
-			console.log('Tipologia ente: ' + te);
 
 			t.forEach((target) => {
 				let sss = [];
@@ -557,9 +555,9 @@
 					let daAsseverare =
 						targets[targets.length - 1].targetPerTipologia[te] -
 						candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length;
-					console.log('Numero slots: ' + slotste.length);
+			
 					const capienzamedia = Math.round(daAsseverare / slotste.length);
-					console.log(capienzamedia);
+		
 					slotste.forEach((element) => {
 						let q = element.quarter;
 						element.valore = capienzamedia < 0 ? 0 : capienzamedia;
@@ -579,7 +577,7 @@
 
 	$: calcolaSlotIniziali(targets);
 
-	$: console.log(slots);
+
 
 	$: calcolaCompletamentiECapienze = (candidatureFinanziateNonPositive, targets, te) => {
 		const result = [['# Progetti', 'Completamento attuale', 'Capienza slot']];

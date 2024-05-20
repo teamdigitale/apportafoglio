@@ -11,6 +11,7 @@
 	moment.locale('it');
 
 	export let data;
+	console.log(data);
 	let cperpage;
 	let cp = 0;
 

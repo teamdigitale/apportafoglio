@@ -19,7 +19,6 @@
 	};
 
 	export let data;
-	console.log(data);
 	let serviziPerTipologiaEnte = Object.values(
 		data.servizi.reduce((a, { tipologia_ente }) => {
 			a[tipologia_ente] = a[tipologia_ente] || {
@@ -30,7 +29,6 @@
 			return a;
 		}, Object.create(null))
 	);
-	console.log(serviziPerTipologiaEnte);
 
 	const dataBaseLine = new Date(2021, 3, 1);
 

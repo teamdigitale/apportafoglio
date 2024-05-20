@@ -253,6 +253,38 @@
 													</div>
 												</div>
 											</li>
+											<li class="nav-item dropdown">
+												<a
+													class="nav-link dropdown-toggle"
+													href="#"
+													role="button"
+													data-bs-toggle="dropdown"
+													aria-expanded="false"
+													id="ddcampagne"
+												>
+													<span>campagne</span>
+													<svg class="icon icon-xs"
+														><use href="/svg/sprites.svg#it-expand"></use></svg
+													>
+												</a>
+												<div
+													class="dropdown-menu"
+													role="region"
+													aria-labelledby="ddcampagne"
+													data-sveltekit-preload-data="off"
+												>
+													<div class="link-list-wrapper">
+														<ul class="link-list">
+															<li>
+																<a class="dropdown-item list-item" href="/campagne/appio24"
+																	><span>Avviso App IO Comuni</span></a
+																>
+															</li>
+															
+														</ul>
+													</div>
+												</div>
+											</li>
 											{/if}
 										{/if}
 

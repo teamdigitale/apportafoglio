@@ -4,20 +4,18 @@ import jsforce from 'jsforce';
 export async function load({ locals }) {
     let contatti = [];
     let eventi = [];
-    const connection = locals.user.connectionStandard;
+    const connstandard = locals.user.connectionStandard;
 
-    if (connection) {
+
+
+
+    if (connstandard) {
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
-            accessToken: connection
+            accessToken: connstandard
         });
-        let idutentesf;
-        await conn.identity(function (err, res) {
-            idutentesf = res.user_id;
-        });
-
-        const qcontatti = contatti.concat(await loadContatti(conn, idutentesf));
-        const qeventi = eventi.concat(await loadEventi(conn, idutentesf));
+        const qcontatti = contatti.concat(await loadContatti(conn, locals.user.utentestandard.idsf));
+        const qeventi = eventi.concat(await loadEventi(conn, locals.user.utentestandard.idsf));
 
         const all = Promise.all([qcontatti, qeventi]);
         const values = await all;
@@ -37,7 +35,7 @@ export async function load({ locals }) {
             r.push({
                 CreatedDate: e.CreatedDate,
                 Account: { Name: e.Account.Name },
-                Subject:  e.Subject,
+                Subject: e.Subject,
                 Description: e.Subject,
                 Tipo: 'Riunione'
             });
@@ -57,7 +55,6 @@ const fieldsEventi = `select Account.Name,Id, WhoId, WhatId, WhoCount, WhatCount
 async function loadContatti(conn, u) {
     const contatti = [];
     if (u) {
-        //console.log('-Caricamento contatti');
         let soqlcontatti = fieldsContatti + ` where TaskSubtype ='Call' and WhatId in (select Id from Account where (Account_Manager__c = '` + u + `' or Tech_Implementation_User__c = '` + u + `')) and CreatedById ='` + u + `' order by CreatedDate desc`;
         let result_ = await conn.query(soqlcontatti);
         contatti.push(...result_.records);

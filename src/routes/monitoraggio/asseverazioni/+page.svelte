@@ -6,7 +6,6 @@
 
 	export let data;
 
-	console.log(data);
 
 	let compressed = true;
 
@@ -29,11 +28,6 @@
 	/*
 	let chartmodals = [];
 
-	$: showModal = (misura,tipologiaente) => {
-		console.log('chartdialog-' + misura + '-' + tipologiaente);
-		chartmodals.push('chartdialog-' + misura + '-' + tipologiaente);
-	}
-	*/
 	let showModal = false;
 	let idModal = '';
 

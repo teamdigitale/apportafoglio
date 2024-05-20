@@ -31,7 +31,6 @@ export const actions = {
 
 
         } catch (err) {
-            console.log(err.message);
         }
         throw redirect(303, '/users');
     },
@@ -60,7 +59,6 @@ export const actions = {
             });
 
         } catch (err) {
-            console.log(err.message);
         }
         throw redirect(303, '/users');
     },

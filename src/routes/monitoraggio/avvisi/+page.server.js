@@ -68,27 +68,20 @@ export async function load({ locals }) {
                 return a;
             }, Object.create(null))
         );
-        console.log(platee);
         //Candidature buone:
 
         //Ciclo sugli avvisi
         avvisi.forEach((a) => {
-            console.log("Analisi avviso: " + a.Name);
             if (a.Misura_Padre_1__c || a.Misura_Padre_2__c) {
                 if (a.Misura_Padre_1__c) {
-                    console.log("Misura di appartenenza: " + values[0].filter(m => m.Id === a.Misura_Padre_1__c)[0].Name);
                 }
                 if (a.Misura_Padre_2__c) {
-                    console.log("Misura di appartenenza: " + values[0].filter(m => m.Id === a.Misura_Padre_2__c)[0].Name);
                 }
             } else {
-                console.log("Misura di appartenenza: " + values[0].filter(m => m.Id === a.outfunds__Parent_Funding_Program__r.Id)[0].Name);
              
                 a.beneficiari.forEach(b => {
-                    console.log("Analisi beneficiario: " + b);
                     //calcolo la platea generale
                     const pgenerale = platee.filter(p => p.Tipologia_Ente__c.toUpperCase() === b.beneficiario)[0].count;
-                    console.log("Platea generale: " + pgenerale);
                     //{misura: '', avviso: '', beneficiario: '', platea_generale:c}
 
                     b.platea_generale = pgenerale;
