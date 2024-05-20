@@ -312,6 +312,7 @@
                                                     ><use href="/svg/sprites.svg#it-zoom-in"></use></svg
                                                 >
                                             </a>
+											
                                     </td>
 								</tr>
 							{/each}

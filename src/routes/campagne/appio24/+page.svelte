@@ -976,7 +976,7 @@
 																					<!-- svelte-ignore a11y-no-static-element-interactions -->
 																					<div
 																						class="chip chip-success chip-simple"
-																						style="width: 50%; cursor: pointer; background-color: {okColorScale(
+																						style="width: 50%; min-width:30px; cursor: pointer; background-color: {okColorScale(
 																							s.fattoriok.n
 																						)}; border-color: rgba(0, 0, 0, 0);"
 																						on:mouseenter={() =>
@@ -1007,7 +1007,7 @@
 																					<!-- svelte-ignore a11y-no-static-element-interactions -->
 																					<div
 																						class="chip chip-danger chip-simple"
-																						style="width: 50%; cursor: pointer; background-color: {koColorScale(
+																						style="width: 50%; min-width:30px; cursor: pointer; background-color: {koColorScale(
 																							s.fattoriko.n
 																						)};  border-color: rgba(0, 0, 0, 0);"
 																						on:mouseenter={() =>

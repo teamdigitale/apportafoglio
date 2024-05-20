@@ -83,10 +83,21 @@
 				</dd>
             </dl>
 			</div>
+			<div class="row">
+				<div class="col-12 col-lg-3">
 			<a class="read-more" href="/op/ente/{ente.Id}" target="_blank">
 				<span class="text">Dettaglio</span>
 				<svg class="icon"><use href="/svg/sprites.svg#it-external-link"></use></svg>
 			  </a>
+			</div>
+			<div class="col-12 col-lg-3">
+			  <a class="read-more" href="https://padigitale2026.lightning.force.com/lightning/r/Account/{ente.Id}/view" target="_blank">
+				<span class="text">CRM</span>
+				<svg class="icon"><use href="/svg/sprites.svg#it-external-link"></use></svg>
+			  </a>
+			</div>
+			</div>
+
 
 		</div>
 		
