@@ -115,7 +115,7 @@
 						<h6>Indirizzo</h6>
 
 						{data.ente.ShippingStreet}<br />
-						{data.ente.ShippingPostalCode} - {data.ente.ShippingCity}<br />
+						{data.ente.ShippingCity}<br />
 						{data.ente.ShippingState} - {data.ente.Regione__c}<br />
 						Area geografica: <strong>{data.ente.Area_geografica__c}</strong>
 					</div>

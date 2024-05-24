@@ -19,7 +19,7 @@ export async function load({ locals, params }) {
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: connection
         });
-        const qente = promiseQuery(conn, `select Name, Website, PEC__c, Phone, ShippingStreet, ShippingPostalCode,    Codice_fiscale__c, Area_geografica__c, Regione__c, ShippingState, ShippingCity, Tipologia_Ente__c, Account_Manager__r.Name, Tech_Implementation_User__r.Name, Account_Manager__r.Id, Tech_Implementation_User__r.Id,Account_Manager__r.FullPhotoUrl, Tech_Implementation_User__r.FullPhotoUrl,Asseveratore_1_2_Multimisura_1_1__r.Name, Asseveratore_1_2_Multimisura_1_1__r.FullPhotoUrl, 
+        const qente = promiseQuery(conn, `select Name, Website, PEC__c, Phone, ShippingStreet,     Codice_fiscale__c, Area_geografica__c, Regione__c, ShippingState, ShippingCity, Tipologia_Ente__c, Account_Manager__r.Name, Tech_Implementation_User__r.Name, Account_Manager__r.Id, Tech_Implementation_User__r.Id,Account_Manager__r.FullPhotoUrl, Tech_Implementation_User__r.FullPhotoUrl,Asseveratore_1_2_Multimisura_1_1__r.Name, Asseveratore_1_2_Multimisura_1_1__r.FullPhotoUrl, 
         Asseveratore_1_4_1__r.Name, Asseveratore_1_4_1__r.FullPhotoUrl, 
         Asseveratore_misure_automatiche__r.Name, Asseveratore_misure_automatiche__r.FullPhotoUrl   from Account  where Id = '`+ idente + `'`, MAX_FETCH);
         const qreferenti = promiseQuery(conn, `select Id, LastName, FirstName, MiddleName, Name, MobilePhone, Email, LastActivityDate, FiscalCode__c, Profilo__c, Stato__c from contact where accountid  = '` + idente + `'`, MAX_FETCH);

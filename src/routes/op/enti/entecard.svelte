@@ -62,12 +62,7 @@
 						{ente.ShippingCity}
 					</small>
 				</dd>
-				<dt class="col-sm-4"><small>Indirizzo:</small></dt>
-				<dd class="col-sm-8">
-					<small>
-						{ente.ShippingCity}
-					</small>
-				</dd>
+				
 				<dt class="col-sm-4"><small>PEC:</small></dt>
 				<dd class="col-sm-8">
 					<small>
