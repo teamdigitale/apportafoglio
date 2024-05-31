@@ -81,11 +81,11 @@ export async function load({ locals, params, url }) {
         );
         
 
-
+/*
         const snappioProvincia = d3.rollup(locals.snappio.snappio, (D) => D.length,(d) => d.codice, (d) => d.regione, (d) => d.provincia )
         const snappioRegione = d3.rollup(locals.snappio.snappio, (D) => D.length,(d) => d.codice, (d) => d.regione)
         const snappioNazionale = d3.rollup(locals.snappio.snappio, (D) => D.length,  (d) => d.codice )
-        
+  */      
 
         return {
             enti: enti,
@@ -93,9 +93,9 @@ export async function load({ locals, params, url }) {
             serviziACatalogo: serviziACatalogo,
             serviziAttivi: serviziAttivi,
             candidature: candidature,
-            snappioProvincia: snappioProvincia,
-            snappioRegione: snappioRegione,
-            snappioNazionale: snappioNazionale,
+            //snappioProvincia: snappioProvincia,
+            //snappioRegione: snappioRegione,
+            //snappioNazionale: snappioNazionale,
             candidature12: candidature12,
             candidature141: candidature141,
             candidaturepagopa: candidaturepagopa

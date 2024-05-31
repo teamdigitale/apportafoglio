@@ -1,68 +1,6 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
 
-import { MASTERP } from '$env/static/private';
-import { promiseQuery } from '$lib/index.js';
-import cron from 'node-cron';
-import * as d3 from 'd3';
-
-const MAXFETCH = 9999999999;
-
-let snappio;
-
-
-const serviziAppIO = async () => {
-
-    let conn = new jsforce.Connection({
-        loginUrl: "https://login.salesforce.com"
-    });
-    try {
-        await conn.login("fausto.mancini@padigitale2026.com", MASTERP.replaceAll("##", "$"));
-    } catch (err) {
-        console.log(err.message);
-    }
-    if (conn) {
-        const servizicandidature = await promiseQuery(
-            conn,
-            `select Candidatura__r.outfunds__Applying_Organization__c,Candidatura__r.outfunds__Applying_Organization__r.Regione__c, Candidatura__r.outfunds__Applying_Organization__r.ShippingState, codice_catalogo_attribuito_143appIO__c
-            from Servizio_Richiesta__c
-            where Selezionato__c = true and Candidatura__r.outfunds__Applying_Organization__r.Tipologia_Ente__c = 'Comuni'
-            and Candidatura__r.outfunds__FundingProgram__r.Pacchetto__c = 'AppIO' 
-            and Candidatura__r.outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA', 'FINANZIATA')`,MAXFETCH
-        )
-        //).map((x) => ({ente: x.Ente__c, regione: x.Candidatura__r.outfunds__Applying_Organization__r.Regione__c, provincia: x.Candidatura__r.outfunds__Applying_Organization__r.ShippingState,  codice: x.codice_catalogo_attribuito_143appIO__c }));
-        
-        const gcand = d3.flatGroup(servizicandidature, (d) => d.Candidatura__r.outfunds__Applying_Organization__c,(d) => d.Candidatura__r.outfunds__Applying_Organization__r.Regione__c, (d) => d.Candidatura__r.outfunds__Applying_Organization__r.ShippingState, (d) => d.codice_catalogo_attribuito_143appIO__c).map((x) => ({ente: x[0], regione: x[1], provincia: x[2],  codice: x[3] }));
-        
-        
-        const serviziattivi = await promiseQuery(
-            conn,
-            `select Ente__c, Ente__r.Regione__c, Ente__r.ShippingState,   Codice_Catalogo_Attribuito__c
-            from Servizio_Attivo__c
-            where Piattaforma_Servizi__c = 'AppIO'
-            and Ente__r.Tipologia_Ente__c = 'Comuni' and Ente__r.Name!='Account Marketing Cloud 1' and Ente__r.Name!='ACCOUNTSCATOLA'  and Ente__r.Name!='XXDTD_C2' and Ente__r.Name!='XXDTD_C' and Name!='YYACN_R'`,MAXFETCH
-        );
-        const gserv = d3.flatGroup(serviziattivi, (d)=>d.Ente__c, (d)=>d.Ente__r.Regione__c, (d)=>d.Ente__r.ShippingState,   (d)=>d.Codice_Catalogo_Attribuito__c).map((x) => ({ente: x[0], regione: x[1], provincia: x[2],  codice: x[3] }));
-        //).map((x) => ({ente: x.Ente__c, regione: x.Ente__r.Regione__c, provincia: x.Ente__r.ShippingState,  codice: x.Codice_Catalogo_Attribuito__c}));
-        
-        //const allEnti = await promiseQuery(conn, `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c from Account where IsDeleted = false and Tipologia_Ente__c = 'Comuni'  and  Name!='Account Marketing Cloud 1' and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' order by Name`, MAXFETCH);
-
-        let s = d3.flatGroup(gcand.concat(gserv), d => d.ente, d => d.regione, d => d.provincia, d => d.codice).map(
-            (x) => ({
-                ente: x[0],
-                regione: x[1],
-                provincia: x[2],
-                codice: x[3]
-            })
-        );    
-
-        //const serviziAppIO = serviziattivi.concat(servizicandidature.filter(a => !serviziattivi.find(b => b.ente === a.ente && b.regione===a.regione && b.provincia===a.provincia && b.codice===a.codice)));
-
-        
-       return s;
-    }
-}
-
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
     let loggedasseveratore = false;
@@ -158,13 +96,6 @@ export const handle = async ({ event, resolve }) => {
 
     }
 
-    if(!snappio ){
-        snappio = [];
-        snappio = await serviziAppIO();
-        
-    }
-
-    event.locals.snappio = {snappio: snappio};
     
 
 

@@ -6,6 +6,27 @@
 	import { dipendenze12, dipendenze141, dipendenzepagopa } from './dipendenze.js';
 	import { stringSimilarity } from 'string-similarity-js';
 
+	import { snappio } from './snappio.js';
+
+	const snappioProvincia = d3.rollup(
+		snappio,
+		(D) => D.length,
+		(d) => d.codice,
+		(d) => d.regione,
+		(d) => d.provincia
+	);
+	const snappioRegione = d3.rollup(
+		snappio,
+		(D) => D.length,
+		(d) => d.codice,
+		(d) => d.regione
+	);
+	const snappioNazionale = d3.rollup(
+		snappio,
+		(D) => D.length,
+		(d) => d.codice
+	);
+
 	export let data;
 	onMount(async () => {
 		await setscroll();
@@ -66,22 +87,22 @@
 	const fattoriOk = (c) => {
 		let s = '';
 		let numero = 0;
-		const percNazionale = !data.snappioNazionale.get(c)
+		const percNazionale = !snappioNazionale.get(c)
 			? 0
-			: data.snappioNazionale.get(c) / data.allEnti.length;
+			: snappioNazionale.get(c) / data.allEnti.length;
 		const percRegionale = !(
-			data.snappioRegione.get(c) && data.snappioRegione.get(c).get(regioneEnte)
+			snappioRegione.get(c) && snappioRegione.get(c).get(regioneEnte)
 		)
 			? 0
-			: data.snappioRegione.get(c).get(regioneEnte) /
+			: snappioRegione.get(c).get(regioneEnte) /
 				data.allEnti.filter((x) => x.Regione__c === regioneEnte).length;
 		const percProvinciale = !(
-			data.snappioProvincia.get(c) &&
-			data.snappioProvincia.get(c).get(regioneEnte) &&
-			data.snappioProvincia.get(c).get(regioneEnte).get(provinciaEnte)
+			snappioProvincia.get(c) &&
+			snappioProvincia.get(c).get(regioneEnte) &&
+			snappioProvincia.get(c).get(regioneEnte).get(provinciaEnte)
 		)
 			? 0
-			: data.snappioProvincia.get(c).get(regioneEnte).get(provinciaEnte) /
+			: snappioProvincia.get(c).get(regioneEnte).get(provinciaEnte) /
 				data.allEnti.filter((x) => x.ShippingState === provinciaEnte).length;
 		if (percNazionale > 0.5 || percRegionale > 0.5 || percProvinciale > 0.5) {
 			s = s + '<p><strong><small>Presenza sul territorio</small></strong></p>';
