@@ -2,6 +2,7 @@
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import Referentecard from './referentecard.svelte';
+	import { areaManager } from '$lib/js/shared';
 	export let data;
 
 	let pregnolato = false;
@@ -32,6 +33,38 @@
 	);
 	let filterStatoReferente = 'Attivo';
 
+	let acmOptions = [
+		{
+			Id: 'All',
+			Name: 'Tutti gli AcM'
+		}
+	]
+		.concat(
+			Object.values(
+				data.referenti.reduce((a, b) => {
+					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
+					if (b.Account.Account_Manager__c) {
+						a[b.Account.Account_Manager__c] = a[b.Account.Account_Manager__c] || {
+							Id: b.Account.Account_Manager__c,
+							Name: b.Account.Account_Manager__r.Name
+						};
+					}
+					return a;
+				}, Object.create(null))
+			)
+				//.map((x) => x.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
+				.sort((a, b) => {
+					return a.Name - b.Name;
+				})
+		)
+		.concat([
+			{
+				Id: 'undefined',
+				Name: 'Non assegnato'
+			}
+		]);
+	let filterAcm = acmOptions[0].Id;
+
 	let portafoglioOptions = ['Tutti i portafogli'].concat(
 		Object.values(
 			data.referenti.reduce((a, { portafoglio }) => {
@@ -53,6 +86,13 @@
 	let filterTelefonoReferente = '';
 
 	$: filteredReferenti = data.referenti
+	.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.Account.Account_Manager__c === null
+					: x.Account.Account_Manager__c === filterAcm
+		)
 		.filter((x) => (filterStatoReferente === 'Tutti' ? true : x.Stato__c === filterStatoReferente))
 		.filter((x) =>
 			filterPortafoglio == 'Tutti i portafogli' ? true : x.portafoglio === filterPortafoglio
@@ -118,7 +158,19 @@
 			</div>
 		</div>
 		-->
-		<div class="col-12 col-lg-3 my-4">
+		{#if areaManager(data.utentestandard.idsf)}
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
+			<div class="select-wrapper">
+				<label for="filterAcm">Account Manager</label>
+				<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+					{#each acmOptions as te}
+						<option value={te.Id}>{te.Name}</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+		{/if}
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
 			<div class="select-wrapper">
 				<label for="filterStatoReferente">Stato</label>
 				<select
@@ -132,7 +184,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoEnte">Nome dell'Ente</label>
 				<input
@@ -145,7 +197,7 @@
 				/>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoReferente">Nominativo del referente</label>
 				<input
@@ -158,7 +210,7 @@
 				/>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoReferente"
 					>Numero di telefono del referente</label

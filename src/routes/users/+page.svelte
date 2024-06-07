@@ -1,5 +1,6 @@
 <script>
 	import Usercard from '$lib/c/usercard.svelte';
+	import { areaManager } from '$lib/js/shared.js';
 	export let data;
 </script>
 
@@ -27,7 +28,7 @@
 		</p>
 	{:else}
 		<form method="POST" action="?/logoutstandard">
-			<Usercard utente={data.utentestandard} tipo="primario" />
+			<Usercard utente={data.utentestandard} tipo={areaManager(data.utentestandard.idsf)?'Area Manager':'AcM / TIM'} />
 		</form>
 	{/if}
 </div>

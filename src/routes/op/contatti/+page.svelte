@@ -2,7 +2,7 @@
 	// @ts-nocheck
 
 	import Cite from '$lib/c/cite.svelte';
-	import { euro } from '$lib/js/shared';
+	import { areaManager, euro } from '$lib/js/shared';
 
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
@@ -11,7 +11,6 @@
 	moment.locale('it');
 
 	export let data;
-	console.log(data);
 	let cperpage;
 	let cp = 0;
 
@@ -53,29 +52,78 @@
 
 	$: dates = getDatesBetween(rangeMin, rangeMax);
 
-	$: filteredContatti = data.contatti.filter(function (c) {
+	$: filteredContatti = data.contatti
+	.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.CreatedById === null
+					: x.CreatedById === filterAcm
+		)
+	.filter(function (c) {
 		return moment(c.CreatedDate).isAfter(moment(rangeMin));
 	});
 
-	$: result = [[]];
+	
 
-	$: cdataforchart = () => {
+	$: cdataforchart = (fc) => {
 		cp = 0;
 		// @ts-ignore
-		result = [['Data', 'Numero contatti']];
+		let result = [['Data', 'Numero contatti']];
 		dates.forEach((d) => {
 			result.push([
 				moment(d).format('DD/MM/YYYY'),
-				filteredContatti.filter(
+				fc
+				.filter(
 					(c) =>
 						moment(c.CreatedDate).startOf('day').toDate().getDate() ===
 						moment(d).startOf('day').toDate().getDate()
 				).length
 			]);
 		});
+		return result;
 	};
 
-	let topten = data.contatti
+	let acmOptions = [
+		{
+			Id: 'All',
+			Name: 'Tutti'
+		}
+	]
+		.concat(
+			Object.values(
+				data.contatti.reduce((a, b) => {
+					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
+					if (b.CreatedById) {
+						a[b.CreatedById] = a[b.CreatedById] || {
+							Id: b.CreatedById,
+							Name: b.CreatedByName
+						};
+					}
+					return a;
+				}, Object.create(null))
+			)
+				//.map((x) => x.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
+				.sort((a, b) => {
+					return a.Name - b.Name;
+				})
+		)
+		.concat([
+			{
+				Id: 'undefined',
+				Name: 'Non assegnato'
+			}
+		]);
+	let filterAcm = acmOptions[0].Id;
+
+	$: topten = data.contatti
+	.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.CreatedById === null
+					: x.CreatedById === filterAcm
+		)
 		.reduce((b, a) => {
 			let index = b.findIndex((j) => j.ente === a.Account.Name);
 			if (index > -1) b[index].count++;
@@ -87,7 +135,14 @@
 		})
 		.filter((x, index) => index < 10);
 
-	let worstten = data.contatti
+	$: worstten = data.contatti
+	.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.CreatedById === null
+					: x.CreatedById === filterAcm
+		)
 		.reduce((b, a) => {
 			let index = b.findIndex((j) => j.ente === a.Account.Name);
 			if (index > -1) b[index].count++;
@@ -99,7 +154,7 @@
 		})
 		.filter((x, index) => index < 10);
 
-	let getTopTen = () => {
+	let getTopTen = (fc) => {
 		const result = [['Ente', 'Numero contatti']];
 		topten.forEach((e) => {
 			result.push([e.ente, e.count]);
@@ -107,7 +162,7 @@
 		return result;
 	};
 
-	function getWorstTen() {
+	function getWorstTen(fc) {
 		const result = [['Ente', 'Numero contatti']];
 		worstten.forEach((e) => {
 			result.push([e.ente, e.count]);
@@ -117,7 +172,7 @@
 
 	onMount(async () => {
 		await setscroll();
-		cdataforchart();
+		cdataforchart(filteredContatti);
 	});
 
 	const setscroll = async () => {
@@ -220,14 +275,26 @@
 					i contatti anche in base ad un periodo temporale a tua scelta.
 				</p>
 				<div class="row">
-					<div class="col-12 col-lg-8 my-4">
+					{#if areaManager(data.utentestandard.idsf)}
+						<div class="col-12 col-lg-4 my-4">
+							<div class="select-wrapper">
+								<label for="filterAcm">Persona</label>
+								<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+									{#each acmOptions as te}
+										<option value={te.Id}>{te.Name}</option>
+									{/each}
+								</select>
+							</div>
+						</div>
+					{/if}
+					<div class="col-12 col-lg-4 my-4">
 						<div class="select-wrapper">
 							<label for="filterRange">Periodo</label>
 							<select
 								id="filterRange"
 								name="filterRange"
 								bind:value={range}
-								on:change={cdataforchart}
+								on:change={() => cdataforchart(filteredContatti)}
 							>
 								{#each rangeOptions as a}
 									<option value={a}>{a}</option>
@@ -241,7 +308,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12 col-lg-12 my-4">
-						<Stackedbar values={result} id="contatti" direction="vertical" />
+						<Stackedbar values={cdataforchart(filteredContatti)} id="contatti" direction="vertical" />
 					</div>
 				</div>
 				<div class="row">
@@ -299,7 +366,7 @@
 			<div class="it-page-section my-5" id="topten">
 				<h4>I dieci più contattati di sempre</h4>
 				<ol>
-					{#each getTopTen() as a, index}
+					{#each getTopTen(filteredContatti) as a, index}
 						{#if index > 0}
 							<li>{a[0]}: <strong>{a[1]}</strong></li>
 						{/if}
@@ -309,7 +376,7 @@
 			<div class="it-page-section my-5" id="worstten">
 				<h4>I dieci meno contattati di sempre</h4>
 				<ol>
-					{#each getWorstTen() as a, index}
+					{#each getWorstTen(filteredContatti) as a, index}
 						{#if index > 0}
 							<li>{a[0]}: <strong>{a[1]}</strong></li>
 						{/if}

@@ -1,7 +1,7 @@
 <script>
 	import { navigating } from '$app/stores';
 	import { page } from '$app/stores';
-	import { checkAbilitazione } from '$lib/js/shared.js';
+	import { areaManager, checkAbilitazione, ruolo } from '$lib/js/shared.js';
 	export let data;
 	$: loggedstandard = data.loggedstandard;
 	$: loggedasseveratore = data.loggedasseveratore;
@@ -14,6 +14,7 @@
 		max = Math.floor(max);
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
+
 </script>
 
 <div class="it-header-wrapper">
@@ -60,6 +61,9 @@
 									<div
 										class="d-flex align-items-center justify-content-around flex-wrap flex-sm-nowrap"
 									>
+									{#if loggedstandard }
+									<p class="mx-4 text-white align-middle my-0">{ruolo(utentestandard.idsf)}</p>
+									{/if}
 										<ul class="avatar-group-stacked">
 											{#if loggedstandard}
 												<li>
@@ -185,7 +189,7 @@
 																	><span>avvisi</span></a
 																>
 															</li>
-															{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
+															{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'areamanager')) }
 															<li>
 																<a class="dropdown-item list-item" href="/op/enti"
 																	><span>enti</span></a
@@ -216,7 +220,7 @@
 
 										<!-- cruscotti -->
 										{#if loggedstandard}
-										{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
+										{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'areamanager')) }
 											<li class="nav-item dropdown">
 												<a
 													class="nav-link dropdown-toggle"
@@ -253,6 +257,8 @@
 													</div>
 												</div>
 											</li>
+											{/if}
+											{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
 											<li class="nav-item dropdown">
 												<a
 													class="nav-link dropdown-toggle"

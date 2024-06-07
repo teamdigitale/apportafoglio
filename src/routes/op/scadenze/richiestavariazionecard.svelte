@@ -112,8 +112,7 @@
 				//|| scadenza.rv[0].comm.filter((c) => c.InsertedById === idu).length === 0
 				) && Number(scadenza.rv[0].Giorni_richiesti__c) >= 90}
                 <div class="alert alert-primary" role="alert">
-                    Non hai ancora inserito commenti. Procedi inserendo su SalesForce il tuo parere relativamente alla
-                    richiesta di proroga dell'Ente.
+                    Non sono ancora stati inseriti commenti.
                 </div>
                 {/if}
 			</div>

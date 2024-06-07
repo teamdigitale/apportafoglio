@@ -1,5 +1,6 @@
 <script>
 	import Cite from '$lib/c/cite.svelte';
+	import { areaManager, nomeUtente } from '$lib/js/shared';
 	import Entecard from './entecard.svelte';
 	export let data;
 
@@ -37,6 +38,38 @@
 	);
 	let filterRegione = 'Tutte le regioni';
 
+	let acmOptions = [
+		{
+			Id: 'All',
+			Name: 'Tutti gli AcM'
+		}
+	]
+		.concat(
+			Object.values(
+				data.enti.reduce((a, b) => {
+					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
+					if (b.Account_Manager__c) {
+						a[b.Account_Manager__c] = a[b.Account_Manager__c] || {
+							Id: b.Account_Manager__c,
+							Name: b.Account_Manager__r.Name
+						};
+					}
+					return a;
+				}, Object.create(null))
+			)
+				//.map((x) => x.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
+				.sort((a, b) => {
+					return a.Name - b.Name;
+				})
+		)
+		.concat([
+			{
+				Id: 'undefined',
+				Name: 'Non assegnato'
+			}
+		]);
+	let filterAcm = acmOptions[0].Id;
+
 	let portafoglioOptions = ['Tutti i portafogli'].concat(
 		Object.values(
 			data.enti.reduce((a, { portafoglio }) => {
@@ -57,7 +90,11 @@
 
 	$: filteredEnti = data.enti
 		.filter((x) =>
-			filterPortafoglio == 'Tutti i portafogli' ? true : x.portafoglio === filterPortafoglio
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.Account_Manager__c === null
+					: x.Account_Manager__c === filterAcm
 		)
 		.filter((x) =>
 			filterTipologiaEnte == 'Tutte le tipologie'
@@ -70,8 +107,7 @@
 				? true
 				: x.Name.toLowerCase().includes(filterNominativoEnte.toLowerCase())
 		)
-		.filter((x) => (!soloattivi ? true : x.Active__c == 1))
-		;
+		.filter((x) => (!soloattivi ? true : x.Active__c == 1));
 </script>
 
 <div class="container my-4">
@@ -95,6 +131,18 @@
 			</div>
 		</div>
 		-->
+		{#if areaManager(data.utentestandard.idsf)}
+		<div class="col-12 col-lg-3 my-4">
+			<div class="select-wrapper">
+				<label for="filterAcm">Account Manager</label>
+				<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+					{#each acmOptions as te}
+						<option value={te.Id}>{te.Name}</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+		{/if}
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterTipologiaEnte">Tipologia</label>
@@ -120,13 +168,18 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-3 my-4">
-		<div class="form-group">
-			<label class="active" for="filterNominativoEnte">Nome dell'Ente</label>
-			<input type="text" class="form-control" id="filterNominativoEnte" name="filterNominativoEnte" placeholder="Digitare parte del nome dell'Ente"
-			bind:value={filterNominativoEnte}>
-		  </div>
-		  </div>
-
+			<div class="form-group">
+				<label class="active" for="filterNominativoEnte">Nome dell'Ente</label>
+				<input
+					type="text"
+					class="form-control"
+					id="filterNominativoEnte"
+					name="filterNominativoEnte"
+					placeholder="Digitare parte del nome dell'Ente"
+					bind:value={filterNominativoEnte}
+				/>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">

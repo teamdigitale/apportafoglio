@@ -4,7 +4,7 @@
 	import Scorecard from '$lib/c/scorecard.svelte';
 
 	import Cite from '$lib/c/cite.svelte';
-	import { euro } from '$lib/js/shared';
+	import { areaManager, euro } from '$lib/js/shared';
 
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
@@ -21,7 +21,53 @@
 	let cperpagecompl;
 	let cpcompl = 0;
 
-	$: contrattualizzazioni = data.scadenze.filter(
+	let acmOptions = [
+		{
+			Id: 'All',
+			Name: 'Tutti gli AcM'
+		}
+	]
+		.concat(
+			Object.values(
+				data.scadenze.reduce((a, b) => {
+					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
+					if (
+						b.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c
+					) {
+						a[
+							b.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c
+						] = a[
+							b.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c
+						] || {
+							Id: b.outfunds__Funding_Request__r.outfunds__Applying_Organization__r
+								.Account_Manager__c,
+							Name: b.outfunds__Funding_Request__r.outfunds__Applying_Organization__r
+								.Account_Manager__r.Name
+						};
+					}
+					return a;
+				}, Object.create(null))
+			)
+				//.map((x) => x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
+				.sort((a, b) => {
+					return a.Name - b.Name;
+				})
+		)
+		.concat([
+			{
+				Id: 'undefined',
+				Name: 'Non assegnato'
+			}
+		]);
+	let filterAcm = acmOptions[0].Id;
+
+	$: contrattualizzazioni = data.scadenze.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		).filter(
 		(f) => f.RecordType.Name === 'Contrattualizzazione Fornitore'
 	);
 
@@ -39,7 +85,13 @@
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isAfter(moment().add(30, 'days'))
 	);
 
-	$: completamenti = data.scadenze.filter((f) => f.RecordType.Name === 'Completamento Attività');
+	$: completamenti = data.scadenze.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		).filter((f) => f.RecordType.Name === 'Completamento Attività');
 
 	$: completamenti7 = completamenti.filter((s) =>
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isBefore(moment().add(7, 'days'))
@@ -55,15 +107,33 @@
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isAfter(moment().add(30, 'days'))
 	);
 
-	$: richiestedivariazione = data.scadenze.filter((s) => {
+	$: richiestedivariazione = data.scadenze.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		).filter((s) => {
 		return s.rv.length > 0;
 	});
 
-	$: richiestedivariazione90 = data.scadenze.filter((s) => {
+	$: richiestedivariazione90 = data.scadenze.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		).filter((s) => {
 		return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) >= 90;
 	});
 
-	$: richiestedivariazioneno90 = data.scadenze.filter((s) => {
+	$: richiestedivariazioneno90 = data.scadenze.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		).filter((s) => {
 		return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) < 90;
 	});
 
@@ -181,8 +251,26 @@
 					>; per queste richieste è necssario il tuo parere affinche Unità di Missione possa
 					procedere con la valutazione.
 				</p>
-				<p>Per avere una visione globale del tuo portafoglio, consulta la pagina <a href="/cruscotti/generale">Cruscotto generale</a></p>
+				<p>
+					Per avere una visione globale del tuo portafoglio, consulta la pagina <a
+						href="/cruscotti/generale">Cruscotto generale</a
+					>
+				</p>
 			</div>
+			{#if areaManager(data.utentestandard.idsf)}
+				<div class="row">
+					<div class="col-12 col-lg-3 my-4">
+						<div class="select-wrapper">
+							<label for="filterAcm">Account Manager</label>
+							<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+								{#each acmOptions as te}
+									<option value={te.Id}>{te.Name}</option>
+								{/each}
+							</select>
+						</div>
+					</div>
+				</div>
+			{/if}
 			<div class="it-page-section my-5" id="scadenzecontrattualizzazioni">
 				<h4>Scadenze contrattualizzazione</h4>
 				<p>
@@ -271,7 +359,10 @@
 												></td
 											>
 											<td>
-												<a href="/op/candidatura/{c.outfunds__Funding_Request__r.Id}" target="_blank">
+												<a
+													href="/op/candidatura/{c.outfunds__Funding_Request__r.Id}"
+													target="_blank"
+												>
 													<svg class="icon icon-sm icon-primary"
 														><use href="/svg/sprites.svg#it-zoom-in"></use></svg
 													>
@@ -385,7 +476,10 @@
 												></td
 											>
 											<td
-												><a href="/op/candidatura/{c.outfunds__Funding_Request__r.Id}" target="_blank">
+												><a
+													href="/op/candidatura/{c.outfunds__Funding_Request__r.Id}"
+													target="_blank"
+												>
 													<svg class="icon icon-sm icon-primary"
 														><use href="/svg/sprites.svg#it-zoom-in"></use></svg
 													>

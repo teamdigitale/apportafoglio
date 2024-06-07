@@ -84,6 +84,8 @@
 
 	$: mostraSoloCandidabili = false;
 
+	$: mostraSoloNonAttivi = false;
+
 	const fattoriOk = (c) => {
 		let s = '';
 		let numero = 0;
@@ -293,7 +295,9 @@
 				x.Anagrafica_Servizi__r.Categoria__c
 			)
 		}))
-		.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true));
+		.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
+		.filter((x) => (mostraSoloNonAttivi ? (x.candidabile.startsWith('SI - Già attivo')===false) : true))
+		;
 
 	$: catalogoPerCategoria = d3.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c);
 
@@ -357,7 +361,7 @@
 				if (sa[0].Fondo_Innovazione__c) {
 					return 'NO - Fondo innovazione';
 				} else {
-					return 'SI';
+					return 'SI - Già attivo';
 				}
 			} else {
 				return 'NO - Servizio attivo avviato prima del 1 aprile 2021';
@@ -481,6 +485,24 @@
 								</div>
 							</div>
 						</div>
+						<div class="row my-4">
+							<div class="col-12">
+								<div class="form-check">
+									<div class="toggles">
+										<label for="soloNonAttivi">
+											Visualizza solo servizi non attivi
+											<input
+												type="checkbox"
+												id="soloNonAttivi"
+												bind:checked={mostraSoloNonAttivi}
+											/>
+											<span class="lever"></span>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
 
 						<div class="row my-4">
 							<div class="col-12">

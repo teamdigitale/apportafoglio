@@ -1,6 +1,6 @@
 <script>
 	import Pagination from '$lib/c/pagination.svelte';
-	import { euro } from '$lib/js/shared.js';
+	import { areaManager, euro } from '$lib/js/shared.js';
 
 	import Gauge from '$lib/c/charts/gauge.svelte';
 
@@ -37,6 +37,40 @@
 			.sort()
 	);
 	let filterRegioni = 'Tutte le regioni';
+
+	let acmOptions = [
+		{
+			Id: 'All',
+			Name: 'Tutti gli AcM'
+		}
+	]
+		.concat(
+			Object.values(
+				data.candidature.reduce((a, b) => {
+					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
+					if (b.outfunds__Applying_Organization__r.Account_Manager__c) {
+						a[b.outfunds__Applying_Organization__r.Account_Manager__c] = a[
+							b.outfunds__Applying_Organization__r.Account_Manager__c
+						] || {
+							Id: b.outfunds__Applying_Organization__r.Account_Manager__c,
+							Name: b.outfunds__Applying_Organization__r.Account_Manager__r.Name
+						};
+					}
+					return a;
+				}, Object.create(null))
+			)
+				//.map((x) => x.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
+				.sort((a, b) => {
+					return a.Name - b.Name;
+				})
+		)
+		.concat([
+			{
+				Id: 'undefined',
+				Name: 'Non assegnato'
+			}
+		]);
+	let filterAcm = acmOptions[0].Id;
 
 	let statoCandidaturaOptions = ['Tutti gli stati della candidatura'].concat(
 		Object.values(
@@ -136,6 +170,13 @@
 	}
 
 	$: filteredCandidature = data.candidature
+		.filter((x) =>
+			filterAcm === 'All'
+				? true
+				: filterAcm === 'undefined'
+					? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+					: x.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
+		)
 		.filter((x) =>
 			filterMisure === 'Tutte le misure'
 				? misureOptions.indexOf(x.Misura__c) > -1
@@ -270,10 +311,22 @@
 					Per avere dettagli sulle scadenze dei cronoprogrammi e sulle eventuali richieste di
 					variazione, consulta la pagina <a href="/op/scadenze">Scadenze</a>
 				</p>
-				
-				
 			</div>
 			<div class="sticky-top bg-white">
+				{#if areaManager(data.utentestandard.idsf)}
+					<div class="row my-6">
+						<div class="col-12 col-lg-4 my-6">
+							<div class="select-wrapper">
+								<label for="filterAcm">Account Manager</label>
+								<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+									{#each acmOptions as te}
+										<option value={te.Id}>{te.Name}</option>
+									{/each}
+								</select>
+							</div>
+						</div>
+					</div>
+				{/if}
 				<div class="row my-6">
 					<div class="col-12 col-lg-4 my-4">
 						<div class="form-check">
@@ -366,7 +419,14 @@
 				<h4>Contrattualizzazione</h4>
 				<div class="row">
 					{#each data.misure.filter( (x) => (filterMisure === misureOptions[0] ? true : x.Name === filterMisure) ) as m}
-						{#if candidature.filter((x) => x.Misura__c === m.Name).length > 0}
+						{#if candidature.filter((x) =>
+							filterAcm === 'All'
+								? true
+								: filterAcm === 'undefined'
+									? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+									: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+										filterAcm
+						).filter((x) => x.Misura__c === m.Name).length > 0}
 							<div class="col-12 col-lg-4 my-4">
 								<p>{m.Name}</p>
 								<Gauge
@@ -377,6 +437,14 @@
 											'',
 											Math.round(
 												(candidature
+													.filter((x) =>
+														filterAcm === 'All'
+															? true
+															: filterAcm === 'undefined'
+																? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+																: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+																	filterAcm
+													)
 													.filter((x) => x.Misura__c === m.Name)
 													.filter(
 														(x) =>
@@ -384,6 +452,14 @@
 															x.Stato_contrattualizzazione__c === 'Completata'
 													).length /
 													candidature
+														.filter((x) =>
+															filterAcm === 'All'
+																? true
+																: filterAcm === 'undefined'
+																	? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+																	: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+																		filterAcm
+														)
 														.filter((x) => x.Misura__c === m.Name)
 														.filter((x) => x.outfunds__Status__c === 'FINANZIATA').length) *
 													100
@@ -402,7 +478,14 @@
 				<h4>Completamento attività</h4>
 				<div class="row">
 					{#each data.misure.filter( (x) => (filterMisure === misureOptions[0] ? true : x.Name === filterMisure) ) as m}
-						{#if candidature.filter((x) => x.Misura__c === m.Name).length > 0}
+						{#if candidature.filter((x) =>
+							filterAcm === 'All'
+								? true
+								: filterAcm === 'undefined'
+									? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+									: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+										filterAcm
+						).filter((x) => x.Misura__c === m.Name).length > 0}
 							<div class="col-12 col-lg-4 my-4">
 								<p>{m.Name}</p>
 								<Gauge
@@ -413,6 +496,14 @@
 											'',
 											Math.round(
 												(candidature
+													.filter((x) =>
+														filterAcm === 'All'
+															? true
+															: filterAcm === 'undefined'
+																? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+																: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+																	filterAcm
+													)
 													.filter((x) => x.Misura__c === m.Name)
 													.filter(
 														(x) =>
@@ -424,6 +515,14 @@
 																'LIQUIDATO' === x.Stato_Progetto__c)
 													).length /
 													candidature
+														.filter((x) =>
+															filterAcm === 'All'
+																? true
+																: filterAcm === 'undefined'
+																	? x.outfunds__Applying_Organization__r.Account_Manager__c === null
+																	: x.outfunds__Applying_Organization__r.Account_Manager__c ===
+																		filterAcm
+														)
 														.filter((x) => x.Misura__c === m.Name)
 														.filter((x) => x.outfunds__Status__c === 'FINANZIATA').length) *
 													100

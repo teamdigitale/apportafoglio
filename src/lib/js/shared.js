@@ -181,3 +181,40 @@ export const mapTipologiaEnte = (misura,t)=>{
         return 'Tutte le tipologie';
     }
 }
+
+
+export const areaManager = (idsf) =>{
+    if(idsf){
+        const authuser = u.users.find(x => x.id === idsf);
+        if(authuser){
+            
+            if(authuser.roles&&authuser.roles.indexOf("areamanager")!==-1){
+                return authuser;
+            }
+        }
+    }
+    return undefined;
+}
+
+export const ruolo = (idsf) =>{
+    if(idsf){
+        const authuser = u.users.find(x => x.id === idsf);
+        if(authuser){
+            
+            if(authuser.roles&&authuser.roles.indexOf("areamanager")!==-1){
+                return 'Area Manager';
+            }
+        }
+    }
+    return 'AcM / TIM';
+}
+
+export const nomeUtente = (idsf) =>{
+    if(idsf){
+        const authuser = u.users.find(x => x.id === idsf);
+        if(authuser){
+            return authuser.name;
+        }
+    }
+    return 'Non assegnato';
+}

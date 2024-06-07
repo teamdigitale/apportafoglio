@@ -26,7 +26,6 @@
             ],
             "name": "Antonio Lettieri"
         },
-        
         {
             "id": "0057Q000005UXjoQAG",
             "roles": [
@@ -481,14 +480,7 @@
             "roles": [
                 "primario"
             ],
-            "name": "marco malandrino"
-        },
-        {
-            "id": "0057Q0000072GEMQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "MORENA MORETTI"
+            "name": "Marco Malandrino"
         },
         {
             "id": "0057Q0000072GEWQA2",
@@ -834,6 +826,13 @@
             "name": "Roberto Morelato"
         },
         {
+            "id": "0057Q0000072GEMQA2",
+            "roles": [
+                "primario"
+            ],
+            "name": "Morena Moretti"
+        },
+        {
             "id": "0057Q00000729oxQAA",
             "roles": [
                 "primario"
@@ -1154,6 +1153,122 @@
                 "primario"
             ],
             "name": "giovanni vespoli"
+        },
+        {
+            "id": "0057Q0000071pD0QAI",
+            "roles": [
+                "areamanager"
+            ],
+            "name": "Valentina Fiorentini",
+            "area": "NORD_EST",
+            "acm": [
+                {
+                    "id": "0057Q0000070qjNQAQ",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Alex Boschetti"
+                },
+                {
+                    "id": "0057Q0000072GDdQAM",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Alessandro Ferrara"
+                },
+                {
+                    "id": "0057Q0000070paFQAQ",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Andrea Piccoli"
+                },
+                {
+                    "id": "0057Q0000072GEMQA2",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Morena Moretti"
+                },
+                {
+                    "id": "0057Q0000072GEWQA2",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Diego Gardini"
+                },
+                {
+                    "id": "0057Q0000072GEbQAM",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Luigi D'Ambrosio"
+                },
+                {
+                    "id": "0057Q0000071oNhQAI",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Paolo Camuti Borani"
+                },
+                {
+                    "id": "0057Q0000071oO6QAI",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Raffaele Cartocci"
+                },
+                {
+                    "id": "0057Q0000070qjDQAQ",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Laura Aglio"
+                },
+                {
+                    "id": "0057Q0000070paUQAQ",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Antonio Candiello"
+                },
+                {
+                    "id": "0057Q0000070qGAQAY",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Francesco Bianchi"
+                },
+                {
+                    "id": "0057Q0000071oOBQAY",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Sara Guttilla"
+                },
+                {
+                    "id": "0057Q000005UXkDQAW",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Iacopo Portunato"
+                },
+                {
+                    "id": "0057Q000005xrdMQAQ",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Francesco Zotta"
+                },
+                
+                {
+                    "id": "0057Q0000072GEHQA2",
+                    "roles": [
+                        "primario"
+                    ],
+                    "name": "Marco Malandrino"
+                }
+            ]
         }
     ]
 }

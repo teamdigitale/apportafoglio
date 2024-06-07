@@ -31,8 +31,8 @@
 				</span>
 			</div>
             <div class="chip chip-simple float-end">
-                <svg class="icon icon-xs"><use href="/svg/sprites.svg#it-pa"></use></svg>
-                <span class="chip-label">{ente.portafoglio}</span>
+                <svg class="icon icon-xs"><use href="/svg/sprites.svg#it-user"></use></svg>
+                <span class="chip-label">{ente.Account_Manager__c?ente.Account_Manager__r.Name:'Non assegnato'}</span>
             </div>
 		</div>
 			<div>

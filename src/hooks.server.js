@@ -1,5 +1,6 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
+import { areaManager } from '$lib/js/shared';
 
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
@@ -50,6 +51,12 @@ export const handle = async ({ event, resolve }) => {
             let result_ = await conn.query(soqlUtente);
             utentestandard = result_.records[0];
             utentestandard.idsf = idutentesf;
+            utentestandard.viewas = idutentesf; 
+            const am = areaManager(idutentesf);
+            if(am){
+                utentestandard.viewas = am.acm.map((x) => (x.id)).join("','");
+                utentestandard.area = am.area;
+            }
         } catch (error) {
             sessionerror = error.message;
             event.cookies.delete('session_id_std', { path: '/' });
