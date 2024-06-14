@@ -6,30 +6,36 @@
 	import { dipendenze12, dipendenze141, dipendenzepagopa } from './dipendenze.js';
 	import { stringSimilarity } from 'string-similarity-js';
 
-	import { snappio } from './snappio.js';
 
-	const snappioProvincia = d3.rollup(
+	$: snappioProvincia = [];
+	$: snappioRegione =[];
+	$: snappioNazionale = [];
+
+	export let data;
+	onMount(async () => {
+		await setscroll();
+		/*
+		const response = await fetch("/snappio.json");
+  		const snappio = await response.json();
+		   snappioProvincia = d3.rollup(
 		snappio,
 		(D) => D.length,
 		(d) => d.codice,
 		(d) => d.regione,
 		(d) => d.provincia
 	);
-	const snappioRegione = d3.rollup(
+	snappioRegione = d3.rollup(
 		snappio,
 		(D) => D.length,
 		(d) => d.codice,
 		(d) => d.regione
 	);
-	const snappioNazionale = d3.rollup(
+	snappioNazionale = d3.rollup(
 		snappio,
 		(D) => D.length,
 		(d) => d.codice
 	);
-
-	export let data;
-	onMount(async () => {
-		await setscroll();
+	*/
 		//await setpopover();
 	});
 
@@ -87,8 +93,11 @@
 	$: mostraSoloNonAttivi = false;
 
 	const fattoriOk = (c) => {
+		
 		let s = '';
 		let numero = 0;
+		/*
+		if(snappioNazionale.length>0&&snappioRegione.length>0&&snappioProvincia.length>0){
 		const percNazionale = !snappioNazionale.get(c)
 			? 0
 			: snappioNazionale.get(c) / data.allEnti.length;
@@ -122,7 +131,8 @@
 				numero++;
 			}
 			s = s + '</ul>';
-		}
+		}}
+		*/
 
 		const dip12 = dipendenze12
 			.filter((s) => s.codici.indexOf(c) !== -1)

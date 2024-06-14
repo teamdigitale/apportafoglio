@@ -56,6 +56,8 @@ export const handle = async ({ event, resolve }) => {
             if(am){
                 utentestandard.viewas = am.acm.map((x) => (x.id)).join("','");
                 utentestandard.area = am.area;
+            }else{
+                utentestandard.viewas = idutentesf;
             }
         } catch (error) {
             sessionerror = error.message;

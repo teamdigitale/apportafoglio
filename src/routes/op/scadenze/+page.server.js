@@ -18,6 +18,8 @@ export async function load({ locals }) {
         await conn.identity(function (err, res) {
             idutentesf = res.user_id;
         });
+
+        
         const qscadenze = promiseQuery(conn, `
         select 
         outfunds__Funding_Request__r.Id, 
@@ -41,7 +43,7 @@ export async function load({ locals }) {
         and outfunds__Funding_Request__c in (select Id from outfunds__Funding_Request__c where outfunds__Applying_Organization__r.IsDeleted = false and `+
         (locals.user.utentestandard.area?
         ` outfunds__Applying_Organization__r.Area_geografica__c = '`+locals.user.utentestandard.area+`') `
-        :` (outfunds__Applying_Organization__r.Account_Manager__c = '` + idutentesf + `' or outfunds__Applying_Organization__r.Tech_Implementation_User__c = '` + idutentesf + `')) `)+
+        :` (outfunds__Applying_Organization__r.Account_Manager__c = '` + locals.user.utentestandard.viewas + `' or outfunds__Applying_Organization__r.Tech_Implementation_User__c = '` + locals.user.utentestandard.viewas + `')) `)+
         `order by outfunds__Due_Date__c 
         `, MAX_FETCH);
         const qvariazioni = promiseQuery(conn, `select Id, WhatId, Subject, IsClosed, CreatedDate, LastModifiedDate, Approvazione_Automatica__c,  Data_richiesta__c, Data_scadenza_iniziale__c, Giorni_richiesti__c, Motivazione_Rifiuto__c, Description  from Task where RecordType.Name = 'Variazione Cronoprogramma' and RecordType.SobjectType = 'Task' and status!='Completed' and status!='Rigettato' order by CreatedDate desc`, MAX_FETCH);
