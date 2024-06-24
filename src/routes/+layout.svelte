@@ -258,7 +258,7 @@
 												</div>
 											</li>
 											{/if}
-											{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'primario') }
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'campagne')) }
 											<li class="nav-item dropdown">
 												<a
 													class="nav-link dropdown-toggle"
