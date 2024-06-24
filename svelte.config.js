@@ -5,7 +5,7 @@ import adapter from "@sveltejs/adapter-vercel";
 const config = {
 	kit: {
 	  adapter: adapter({
-		maxDuration: 120
+		maxDuration: 180
 	  }),
 	},
 	preprocess: [vitePreprocess({})],
