@@ -282,7 +282,7 @@
 													<div class="link-list-wrapper">
 														<ul class="link-list">
 															<li>
-																<a class="dropdown-item list-item" href="/campagne/appio24"
+																<a class="dropdown-item list-item" href="/campagne/appio24/none"
 																	><span>Avviso App IO Comuni</span></a
 																>
 															</li>

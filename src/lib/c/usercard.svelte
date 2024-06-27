@@ -46,7 +46,7 @@
 					</div>
 					<div class="it-card-footer">
 						<button class="btn btn-info btn-xs btn-icon ms-1">
-							<span>Fammi usicre</span>
+							<span>Fammi uscire</span>
 							<svg class="icon icon-white ms-1"><use href="/svg/sprites.svg#it-logout"></use></svg>
 						</button>
 					</div>
