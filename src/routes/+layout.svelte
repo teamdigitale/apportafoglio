@@ -328,6 +328,13 @@
 																{/if}
 																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
 																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
+																		><span>residui avvisi aperti e misure</span></a
+																	>
+																</li>
+																{/if}
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
+																<li data-sveltekit-preload-data="off">
 																	<a class="dropdown-item list-item" href="/monitoraggio/candidature"
 																		><span>board candidature</span></a
 																	>
