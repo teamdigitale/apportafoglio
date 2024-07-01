@@ -211,6 +211,11 @@
 																	><span>scadenze</span></a
 																>
 															</li>
+															<li>
+																<a class="dropdown-item list-item" href="/op/proroghe"
+																	><span>richieste proroghe fase 2</span></a
+																>
+															</li>
 															{/if}
 														</ul>
 													</div>

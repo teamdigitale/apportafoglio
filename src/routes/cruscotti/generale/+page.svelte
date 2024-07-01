@@ -6,6 +6,8 @@
 
 	export let data;
 
+	console.log(data);
+
 	import { onMount } from 'svelte';
 	import Cite from '$lib/c/cite.svelte';
 
