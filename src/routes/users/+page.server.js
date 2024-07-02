@@ -15,7 +15,7 @@ export const actions = {
         const token = '' + data.get('tokenstandard');
 
         let conn = new jsforce.Connection({
-            loginUrl: "https://login.salesforce.com", , version:'60.0'
+            loginUrl: "https://login.salesforce.com",  version:'60.0'
         });
         try {
             await conn.login(email, password + token);
