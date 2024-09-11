@@ -218,3 +218,9 @@ export const nomeUtente = (idsf) =>{
     }
     return 'Non assegnato';
 }
+
+export const dangerColor = '#cc334d';
+export const warningColor = '#995c00';
+export const successColor = '#008055';
+export const primaryColor = '#0066cc';
+export const secondaryColor = '#5d7083';

@@ -36,10 +36,12 @@
 	"dependencies": {
 		"@actions/core": "^1.10.1",
 		"@actions/github": "^6.0.0",
+		"@observablehq/plot": "^0.6.16",
 		"@sveltejs/adapter-node": "^4.0.1",
 		"d3": "^7.9.0",
 		"moment": "^2.30.1",
 		"node-cron": "^3.0.3",
-		"string-similarity-js": "^2.1.4"
+		"string-similarity-js": "^2.1.4",
+		"tippy.js": "^6.3.7"
 	}
 }

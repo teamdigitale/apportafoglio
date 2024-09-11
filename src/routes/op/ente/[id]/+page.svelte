@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
@@ -21,8 +23,23 @@
 		});
 	};
 
-    let open = false;
+	let open = false;
 
+	let piattaformaOptions = ['Tutte'].concat(
+		Object.values(
+			data.servizi.reduce((a, { Piattaforma_Servizi__c }) => {
+				a[Piattaforma_Servizi__c] = a[Piattaforma_Servizi__c] || {
+					Piattaforma_Servizi__c,
+					count: 0
+				};
+				a[Piattaforma_Servizi__c].count++;
+				return a;
+			}, Object.create(null))
+		)
+			.map((x) => x.Piattaforma_Servizi__c)
+			.sort()
+	);
+	let filterPiattaforma = piattaformaOptions[0];
 </script>
 
 <div class="container my-4">
@@ -97,6 +114,9 @@
 										</a>
 										<a class="nav-link active" href="#scadenzario">
 											<span>Scadenzario </span>
+										</a>
+										<a class="nav-link active" href="#servizi">
+											<span>Servizi </span>
 										</a>
 									</li>
 								</ul>
@@ -257,19 +277,15 @@
 			</div>
 			<div class="it-page-section my-5" id="scadenzario">
 				<h4>Scadenzario</h4>
-                <div class="form-check col-4 col-lg-4">
-                    <div class="toggles">
-                        <label for="soloAperti">
-                            Mostra solo attività da fare 
-                            <input
-                                type="checkbox"
-                                id="soloAperti"
-                                bind:checked={open}
-                            />
-                            <span class="lever"></span>
-                        </label>
-                    </div>
-                </div>
+				<div class="form-check col-4 col-lg-4">
+					<div class="toggles">
+						<label for="soloAperti">
+							Mostra solo attività da fare
+							<input type="checkbox" id="soloAperti" bind:checked={open} />
+							<span class="lever"></span>
+						</label>
+					</div>
+				</div>
 				<div class="table-responsive">
 					<table class="table table-hover table-sm caption-top align-middle">
 						<thead>
@@ -278,12 +294,12 @@
 								<th>Misura</th>
 								<th>Tipologia</th>
 								<th>Stato</th>
-                                <th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							{#each data.scadenze.filter(s => !open?true:s.outfunds__Status__c==='Open') as s}
-								<tr class="text-{s.outfunds__Status__c==='Complete'?'success':'black'}">
+							{#each data.scadenze.filter( (s) => (!open ? true : s.outfunds__Status__c === 'Open') ) as s}
+								<tr class="text-{s.outfunds__Status__c === 'Complete' ? 'success' : 'black'}">
 									<td>
 										<small>
 											{moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').format('DD/MM/YYYY')}
@@ -303,17 +319,70 @@
 									</td>
 									<td>
 										<small>
-											{s.outfunds__Status__c==='Complete'?'Completato':s.outfunds__Status__c==='Open'?'Da fare':s.outfunds__Status__c}
+											{s.outfunds__Status__c === 'Complete'
+												? 'Completato'
+												: s.outfunds__Status__c === 'Open'
+													? 'Da fare'
+													: s.outfunds__Status__c}
 										</small>
 									</td>
-                                    <td>
-                                            <a href="/op/candidatura/{s.outfunds__Funding_Request__r.Id}" target="_blank">
-                                                <svg class="icon icon-sm icon-primary"
-                                                    ><use href="/svg/sprites.svg#it-zoom-in"></use></svg
-                                                >
-                                            </a>
-											
-                                    </td>
+									<td>
+										<a href="/op/candidatura/{s.outfunds__Funding_Request__r.Id}" target="_blank">
+											<svg class="icon icon-sm icon-primary"
+												><use href="/svg/sprites.svg#it-zoom-in"></use></svg
+											>
+										</a>
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="it-page-section my-5" id="servizi">
+				<h4>Servizi</h4>
+
+				<div class="form-check col-4 col-lg-4 my-4">
+					<div class="select-wrapper">
+						<label for="filterStatoAvviso">Piattaforma</label>
+						<select id="filterStatoAvviso" name="filterStatoAvviso" bind:value={filterPiattaforma}>
+							{#each piattaformaOptions as a}
+								<option value={a}>{a}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-hover table-sm caption-top align-middle">
+						<thead>
+							<tr>
+								<th>Piattaforma</th>
+								<th>Descrizione</th>
+								<th>Data attivazione</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each data.servizi
+								.filter((x) => x.Descrizione_Servizio__c !== 'tassonomia_non_valida')
+								.filter( (x) => (filterPiattaforma === piattaformaOptions[0] ? true : x.Piattaforma_Servizi__c === filterPiattaforma) ) as s}
+								<tr>
+									<td>
+										<small>
+											{s.Piattaforma_Servizi__c}
+										</small>
+									</td>
+									<td>
+										<small>
+											{s.Descrizione_Servizio__c}
+										</small>
+									</td>
+
+									<td>
+										<small>
+											{moment(s.Data_Attivazione__c, 'YYYY-MM-DD').format('DD/MM/YYYY')}
+										</small>
+									</td>
 								</tr>
 							{/each}
 						</tbody>

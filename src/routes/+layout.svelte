@@ -386,6 +386,46 @@
 												</li>
 											{/if}
 										{/if}
+
+										{#if false &&(loggedstandard || loggedasseveratore)}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor'))}
+												<!-- monitoraggio -->
+												<li class="nav-item dropdown">
+													<a
+														class="nav-link dropdown-toggle"
+														href="#"
+														role="button"
+														data-bs-toggle="dropdown"
+														aria-expanded="false"
+														id="ddanci"
+													>
+														<span>ANCI</span>
+														<svg class="icon icon-xs"
+															><use href="/svg/sprites.svg#it-expand"></use></svg
+														>
+													</a>
+													<div
+														class="dropdown-menu"
+														role="region"
+														aria-labelledby="ddanci"
+														data-sveltekit-preload-data="off"
+													>
+														<div class="link-list-wrapper">
+															<ul class="link-list">
+																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+																	<li data-sveltekit-preload-data="off">
+																		<a class="dropdown-item list-item" href="/anci/survey"
+																			><span>survey</span></a
+																		>
+																	</li>
+																{/if}
+																
+															</ul>
+														</div>
+													</div>
+												</li>
+											{/if}
+										{/if}
 									</ul>
 								</div>
 							</div>
