@@ -54,14 +54,16 @@
 		if (questionarioCompletato) questionarioAperto = true;
 	}
 
-	$: dataforlineinvii = (c, r, com) =>
-		c
-			.filter((x) => (r === regioni[0] ? true : x.pa2026.regione === r))
+	const dataforlineinvii = () => {
+		if(completati){
+		return	completati.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
 			.filter((x) =>
-				com === ''
+				nomeComune === ''
 					? true
-					: x.nome.replaceAll('Comune di', '').toUpperCase().indexOf(com.toUpperCase()) > -1
+					: x.nome.replaceAll('Comune di', '').toUpperCase().indexOf(nomeComune.toUpperCase()) > -1
 			);
+		}
+	};
 
 	$: contieneWarningsAlerts = (r) => {
 		let result = [];
@@ -114,6 +116,8 @@
 		});
 		return result.length;
 	};
+
+	$: completatiPerAndamentoInvii = dataforlineinvii();
 
 	$: risposteEvidenziate = contieneWarningsAlerts(risposte);
 	let mapsize;
@@ -178,10 +182,21 @@
 						bind:clientWidth={insightsWidth}
 					>
 						<AndamentoInvii
-							completati={dataforlineinvii(completati, regione, nomeComune)}
+							values={tutteLeRisposte
+							.filter((x) => x.surveyanci.completato)
+								.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+								.filter((x) =>
+									nomeComune === ''
+										? true
+										: x.nome
+												.replaceAll('Comune di', '')
+												.toUpperCase()
+												.indexOf(nomeComune.toUpperCase()) > -1
+								)}
 							boxWidth={insightsWidth}
+							{regione}
+							{nomeComune}
 						/>
-						
 					</div>
 				</div>
 				<h5 class="my-4">Filtri</h5>
@@ -250,13 +265,11 @@
 					{risposteEvidenziate}
 				/>
 				<hr />
-						<a href="/anci/survey/downloadrisposte" target="_blank">
-							<svg class="icon icon-sm icon-success"
-								><use href="/svg/sprites.svg#it-file-csv"></use></svg
-							><span
-							>Elenco dei comuni che hanno risposto</span
-						>
-						</a>
+				<a href="/anci/survey/downloadrisposte" target="_blank">
+					<svg class="icon icon-sm icon-success"
+						><use href="/svg/sprites.svg#it-file-csv"></use></svg
+					><span>Elenco dei comuni che hanno risposto</span>
+				</a>
 				<!--
 			<Tabellarisposte {risposte} />
 			-->
@@ -288,10 +301,10 @@
 					</div>
 					<div class="callout callout-highlight my-4">
 						<small>
-							E' possibile evidenziare i comuni secondo criteri di alert e warning. Per consultare i criteri <a href="/anci/survey/dettaglioquestionario/" target="_blank">clicca qui.
-							</a>
+							E' possibile evidenziare i comuni secondo criteri di alert e warning. Per consultare i
+							criteri <a href="/anci/survey/dettaglioquestionario/" target="_blank">clicca qui. </a>
 						</small>
-						<hr/>
+						<hr />
 						<div class="callout-title">
 							<svg class="icon icon-danger"><use href="/svg/sprites.svg#it-error"></use></svg><span
 								class="text-danger">Alert</span
