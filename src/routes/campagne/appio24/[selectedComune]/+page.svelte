@@ -7,16 +7,15 @@
 	import { stringSimilarity } from 'string-similarity-js';
 	import { goto } from '$app/navigation';
 
-
 	$: snappioProvincia = [];
-	$: snappioRegione =[];
+	$: snappioRegione = [];
 	$: snappioNazionale = [];
-	
 
 	const vai = (id) => {
-		console.log(id);
-		goto('/campagne/appio24/'+id);
-	}
+		goto('/campagne/appio24/' + id);
+	};
+
+	let prefiltrocomune = '';
 
 	export let data;
 	onMount(async () => {
@@ -100,7 +99,6 @@
 	$: mostraSoloNonAttivi = false;
 
 	const fattoriOk = (c) => {
-		
 		let s = '';
 		let numero = 0;
 		/*
@@ -301,46 +299,56 @@
 		return { n: numero, t: s };
 	};
 
-	$: servizi = selectedComune!=='none'?(data.serviziACatalogo
-		.map((x) => ({
-			...x,
-			candidabile: candidabile(x),
-			fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
-			fattoriko: fattoriKo(
-				x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
-				x.Name,
-				x.Anagrafica_Servizi__r.Categoria__c
-			)
-		}))
-		.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
-		.filter((x) => (mostraSoloNonAttivi ? (x.candidabile.startsWith('SI - Già attivo')===false) : true))):[]
-		;
+	$: servizi =
+		selectedComune !== 'none'
+			? data.serviziACatalogo
+					.map((x) => ({
+						...x,
+						candidabile: candidabile(x),
+						fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
+						fattoriko: fattoriKo(
+							x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
+							x.Name,
+							x.Anagrafica_Servizi__r.Categoria__c
+						)
+					}))
+					.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
+					.filter((x) =>
+						mostraSoloNonAttivi ? x.candidabile.startsWith('SI - Già attivo') === false : true
+					)
+			: [];
 
 	$: catalogoPerCategoria = d3.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c);
 
 	$: selectedComune = data.selectedComune;
 
-	$: serviziAttivi = selectedComune!=='none'?data.serviziAttivi
-		.filter(
-			(x) =>
-				x.Ente__c === selectedComune &&
-				(filterCategoria === ''
-					? true
-					: x.Argomento__c === filterCategoria || x.Argomento__c === 'Altro')
-		)
-		.map((x) => ({
-			...x,
-			dataAttivazioneAmmissibile: servizioAttivatoNeiTermini(new Date(x.Data_Attivazione__c))
-		})):[];
+	$: serviziAttivi =
+		selectedComune !== 'none'
+			? data.serviziAttivi
+					.filter(
+						(x) =>
+							x.Ente__c === selectedComune &&
+							(filterCategoria === ''
+								? true
+								: x.Argomento__c === filterCategoria || x.Argomento__c === 'Altro')
+					)
+					.map((x) => ({
+						...x,
+						dataAttivazioneAmmissibile: servizioAttivatoNeiTermini(new Date(x.Data_Attivazione__c))
+					}))
+			: [];
 
-	$: filteredServiziInCandidature = selectedComune!=='none'?data.candidature.filter(
-		(x) =>
-			x.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
-			(filterCategoria === ''
-				? true
-				: x.argomento_attribuito_143appIO__c === filterCategoria ||
-					x.argomento_attribuito_143appIO__c === 'Altro')
-	):[];
+	$: filteredServiziInCandidature =
+		selectedComune !== 'none'
+			? data.candidature.filter(
+					(x) =>
+						x.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+						(filterCategoria === ''
+							? true
+							: x.argomento_attribuito_143appIO__c === filterCategoria ||
+								x.argomento_attribuito_143appIO__c === 'Altro')
+				)
+			: [];
 
 	$: serviziCandidatureAttive = d3.group(
 		filteredServiziInCandidature,
@@ -520,7 +528,6 @@
 							</div>
 						</div>
 
-
 						<div class="row my-4">
 							<div class="col-12">
 								<div class="select-wrapper">
@@ -628,6 +635,23 @@
 			<div class="it-page-section my-5" id="selezioneComune">
 				<div class="row">
 					<div class="col-12 col-lg-4">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-text"
+									><svg class="icon icon-sm"><use href="/svg/sprites.svg#it-pa"></use></svg></span
+								>
+								<label class="active" for="prefiltrocomune">Filtra la lista a destra</label>
+								<input
+									type="text"
+									class="form-control"
+									id="prefiltrocomune"
+									name="prefiltrocomune"
+									bind:value={prefiltrocomune}
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-4">
 						<div class="select-wrapper">
 							<label for="selezioneComune">Seleziona un Comune</label>
 							<select
@@ -635,18 +659,14 @@
 								id="selezioneComune"
 								title="Seleziona un Comune"
 								required
-								
 								on:change={(e) => vai(e.target.value)}
-								
-
 							>
-							<option value='none' >Seleziona un comune</option>
-								{#each data.enti as c}
-								{#if selectedComune===c.Id}
-									<option value={c.Id} selected >{c.Name}</option>
-								{:else}
-								
-									<option value={c.Id} >{c.Name}</option>
+								<option value="none">Seleziona un comune</option>
+								{#each data.enti.filter( (x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase().replace('Comune di ', '').indexOf(prefiltrocomune.toUpperCase()) !== -1) ) as c}
+									{#if selectedComune === c.Id}
+										<option value={c.Id} selected>{c.Name}</option>
+									{:else}
+										<option value={c.Id}>{c.Name}</option>
 									{/if}
 								{/each}
 							</select>

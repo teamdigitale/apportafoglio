@@ -4,6 +4,8 @@
 	export let trimmedRows;
     export let cp;
 
+	import { formatNumber } from '$lib/js/shared.js';
+
 	$: totalRows = rows.length;
 	$: currentPage = cp;
 	$: totalPages = Math.ceil(totalRows / perPage);
@@ -59,7 +61,7 @@
 			</li>
 		</ul>
 		<p>
-			stai visualizzando gli elementi da {start + 1} a {end + 1} su un totale di {totalRows} elementi
+			stai visualizzando gli elementi da {start + 1} a {end + 1} su un totale di {formatNumber(totalRows)} elementi
 		</p>
 	</nav>
 {/if}

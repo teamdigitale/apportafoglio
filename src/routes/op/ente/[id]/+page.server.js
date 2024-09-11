@@ -1,6 +1,5 @@
+// @ts-nocheck
 import jsforce from 'jsforce';
-import moment from "moment/min/moment-with-locales";
-moment.locale("it");
 
 import { redirect } from '@sveltejs/kit';
 import { promiseQuery } from '$lib';
@@ -39,28 +38,28 @@ export async function load({ locals, params }) {
         and outfunds__Funding_Request__r.outfunds__Status__c IN ('AMMESSA','ACCETTATA','FINANZIATA')
         and outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Id = '`+ idente + `'
         order by outfunds__Status__c asc, outfunds__Due_Date__c desc`, MAX_FETCH);
-        const all = Promise.all([qente, qreferenti, qcandidature,qscadenze]);
+        const qservizi = promiseQuery(conn, `select Id, Descrizione_Servizio__c,  Piattaforma_Servizi__c, Data_Attivazione__c,Ente__c  from Servizio_Attivo__c where Ente__c = '` + idente + `'`, MAX_FETCH);
+
+        const all = Promise.all([qente, qreferenti, qcandidature, qscadenze, qservizi]);
         const values = await all;
 
         values[2].forEach(e => {
-            if(e.outfunds__FundingProgram__r.Pacchetto__c && e.outfunds__FundingProgram__r.Pacchetto__c!==''){
-                e.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = e.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name+' - '+e.outfunds__FundingProgram__r.Pacchetto__c;
+            if (e.outfunds__FundingProgram__r.Pacchetto__c && e.outfunds__FundingProgram__r.Pacchetto__c !== '') {
+                e.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = e.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name + ' - ' + e.outfunds__FundingProgram__r.Pacchetto__c;
             }
         });
 
         values[3].forEach(e => {
-            if(e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c && e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c!==''){
-                e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name+' - '+e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c;
+            if (e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c && e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c !== '') {
+                e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name + ' - ' + e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c;
             }
         });
 
-
-        //const misure = await promiseQuery(conn, `select count(Avviso__r.outfunds__Parent_Funding_Program__r.Id),Avviso__r.outfunds__Parent_Funding_Program__r.Name from Dettaglio_Cronoprogramma__c where Cluster__r.Tipologia_Ente__c = '`+values[0][0].Tipologia_Ente__c+`' AND Avviso__r.outfunds__Parent_Funding_Program__r.Name != NULL group by Avviso__r.outfunds__Parent_Funding_Program__r.Name`, MAX_FETCH);
-        const misure = await promiseQuery(conn, `select count(Avviso__r.outfunds__Parent_Funding_Program__r.Id),Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c  from Dettaglio_Cronoprogramma__c where Cluster__r.Tipologia_Ente__c = '`+values[0][0].Tipologia_Ente__c+`' AND Avviso__r.outfunds__Parent_Funding_Program__r.Name != NULL group by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c order by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c`, MAX_FETCH);
+        const misure = await promiseQuery(conn, `select count(Avviso__r.outfunds__Parent_Funding_Program__r.Id),Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c  from Dettaglio_Cronoprogramma__c where Cluster__r.Tipologia_Ente__c = '` + values[0][0].Tipologia_Ente__c + `' AND Avviso__r.outfunds__Parent_Funding_Program__r.Name != NULL group by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c order by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c`, MAX_FETCH);
 
         misure.forEach(e => {
-            if(e.Pacchetto__c && e.Pacchetto__c!==''){
-                e.Name = e.Name+' - '+e.Pacchetto__c;
+            if (e.Pacchetto__c && e.Pacchetto__c !== '') {
+                e.Name = e.Name + ' - ' + e.Pacchetto__c;
             }
         });
 
@@ -69,6 +68,7 @@ export async function load({ locals, params }) {
             referenti: values[1],
             candidature: values[2],
             scadenze: values[3],
+            servizi: values[4],
             misure: misure
         };
     } else {

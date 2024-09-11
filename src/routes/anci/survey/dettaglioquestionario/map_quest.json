@@ -1,0 +1,181 @@
+{
+    "data": [
+        {
+            "id": 138,
+            "tipo": "multicheck",
+            "nota": "Il Comune deve selezionare una o più opzioni",
+            "warnings": [],
+            "alerts": ["Se il Comune seleziona 'Non sono disponibili informazioni sul modello di gestione ICT del Comune'"]
+        },
+        {
+            "id": 10,
+            "tipo": "value",
+            "nota": "Il Comune deve inserire il valore",
+            "warnings": ["Se le risorse effettive sono inferiori alle risorse previste nel piano assunzionale"],
+            "alerts": []
+        },{
+            "id": 13,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Amministrativo'"],
+            "alerts": []
+        },{
+            "id": 14,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'In fase di nomina'"],
+            "alerts": []
+        },{
+            "id": 15,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Supporto significativo' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 17,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Si, sono stati dismessi meno del 25% dei server'"],
+            "alerts": ["Se il Comune seleziona 'No, non è stato dismesso ancora nessun server'"]
+        },{
+            "id": 18,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Più di 10 anni'"],
+            "alerts": ["Se il Comune seleziona 'Non sono disponibili informazioni nel dettaglio'"]
+        },{
+            "id": 23,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": [],
+            "alerts": ["Se il Comune ha selezionato 'Dato non disponibile' per almeno una delle voci"]
+        },{
+            "id": 24,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Non sono disponibili informazioni'"],
+            "alerts": ["Se il Comune seleziona 'No'"]
+        },{
+            "id": 22,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'No, non è possibile accedere da dispositivi mobili ad applicazioni o a dati interni'"],
+            "alerts": []
+        },{
+            "id": 26,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Servizi non erogati' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 137,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Il Comune sta attualmente sviluppando un sistema di Disaster Recovery'"],
+            "alerts": ["Se il Comune seleziona 'No, il Comune non dispone di un sistema di Disaster Recovery'"]
+        },{
+            "id": 30,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Da 1 a 5' o 'Oltre i 5' per almeno una delle voci"],
+            "alerts": ["Se il Comune ha selezionato 'Dato non disponibile' per almeno una delle voci"]
+        },{
+            "id": 33,
+            "tipo": "multicheckoptions",
+            "nota": "Il Comune deve selezionare una o più opzioni per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Nessuno' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 34,
+            "tipo": "multicheckoptions",
+            "nota": "Il Comune deve selezionare una o più opzioni per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Nessuno' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 36,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'La maggior parte dei servizi forniti dal settore non è digitale' per almeno una delle voci"],
+            "alerts": ["Se il Comune ha selezionato 'Servizio non gestito' per almeno una delle voci"]
+        },{
+            "id": 37,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Utilizzo Basso (Minore del 25%)' per almeno una delle voci"],
+            "alerts": ["Se il Comune ha selezionato 'Nessun utilizzo' per almeno una delle voci"]
+        },{
+            "id": 39,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Non pianificato' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 41,
+            "tipo": "multicheck",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": ["Se il Comune ha selezionato 'Non sono attuate specifiche azioni in merito' per almeno una delle voci"],
+            "alerts": []
+        },{
+            "id": 44,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Si, sono utilizzate anche per dati e documenti di rilevanza amministrativa'"],
+            "alerts": []
+        },{
+            "id": 38,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione per ogni voce",
+            "warnings": [],
+            "alerts": ["Se il Comune ha selezionato 'Assente' per il Portale dei Servizi"]
+        },{
+            "id": 46,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": [],
+            "alerts": ["Se il Comune seleziona 'No'"]
+        },{
+            "id": 48,
+            "tipo": "multiradio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": [],
+            "alerts": ["Se il Comune seleziona 'Non digitalizzata' per almeno una delle opzioni"]
+        },{
+            "id": 56,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Non si conosce la risposta'"],
+            "alerts": ["Se il Comune seleziona 'No, in nessun modo'"]
+        },{
+            "id": 57,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'Gran parte'"],
+            "alerts": ["Se il Comune seleziona 'Tutti'"]
+        },{
+            "id": 58,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'No' oppure 'Non ancora'"],
+            "alerts": []
+        },{
+            "id": 49,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'No'"],
+            "alerts": []
+        },{
+            "id": 51,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'No, non è ancora stata avviata l’attività di semplificazione'"],
+            "alerts": []
+        },{
+            "id": 53,
+            "tipo": "radio",
+            "nota": "Il Comune deve selezionare una opzione",
+            "warnings": ["Se il Comune seleziona 'No, non viene gestita la fascicolazione digitale delle pratiche'"],
+            "alerts": []
+        }
+        
+    ]
+}

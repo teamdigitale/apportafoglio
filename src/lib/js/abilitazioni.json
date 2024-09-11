@@ -1165,7 +1165,7 @@
         {
             "id": "0057Q0000071pD0QAI",
             "roles": [
-                "areamanager"
+                "areamanager","campagne","productowner"
             ],
             "name": "Valentina Fiorentini",
             "area": "NORD_EST",
