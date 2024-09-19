@@ -16,6 +16,7 @@
 	import moment from 'moment/min/moment-with-locales';
 	import { redirect } from '@sveltejs/kit';
 	import { scale } from 'svelte/transition';
+	import DettaglioComune from './DettaglioComune.svelte';
 	moment.locale('it');
 
 	$: geofeatures = (risp) => {
@@ -39,9 +40,7 @@
 	$: projection = d3.geoConicConformal().fitSize([mapwidth - margin, height - margin], regs);
 
 	const raggioWarning = (d) => {
-
 		const baseradius = regione === 'Tutte' ? 6 : 20;
-
 
 		return (
 			baseradius *
@@ -50,9 +49,20 @@
 				risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).surveyanci.livelloAlert)
 		);
 	};
-</script>
 
-<div id="svgmap">
+	let comuneSelezionato;
+	const seleziona = (event) => {
+		comuneSelezionato = event.target.textContent;
+	};
+	$: risposta = risposte.find((y) => y.nome ===  comuneSelezionato);
+	
+</script>
+{#if risposta}
+	<DettaglioComune {risposta} mapwidth={200} />
+{/if}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div id="svgmap" on:click={seleziona}>
 	<ObservablePlot
 		options={{
 			projection: projection,
@@ -81,9 +91,13 @@
 						r: 1,
 						fill: 'black',
 						fillOpacity: 1,
+						//C
+						/*
+						target: '_blank',
 						href: (d) =>
 							'/anci/survey/rispostaente/' +
 							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).pa2026.id
+							*/
 					})
 				),
 
@@ -122,7 +136,9 @@
 								: '#0066cc',
 						fillOpacity: 0.5,
 						strokeOpacity: 1,
-						title: (d) =>
+						title: (d) => 'Comune di '+d.properties.name,
+						/*
+						title: (d) =>d.properties.name
 							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).surveyanci
 								.completato
 								? [
@@ -151,9 +167,14 @@
 											)
 									].join('\r\n')
 								: String.fromCodePoint(0x1f3e2) + '\tComune di ' + d.properties.name,
+								*/
+								//C
+								/*
+						target: '_blank',
 						href: (d) =>
 							'/anci/survey/rispostaente/' +
 							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).pa2026.id
+							*/
 					}
 					/*Plot.centroid({
 						r: regione === 'Tutte' ? 3 : 10,

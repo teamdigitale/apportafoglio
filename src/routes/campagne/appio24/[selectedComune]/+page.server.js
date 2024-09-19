@@ -61,7 +61,7 @@ export async function load({ locals, params, url }) {
             conn,
             `select Id, Ente__c, Descrizione_Servizio__c, Nome_Servizio__c, Codice_Catalogo_Attribuito__c, Codice_Servizio__c, Data_Attivazione__c, Fondo_Innovazione__c, Argomento__c 
             from Servizio_Attivo__c 
-            where Piattaforma_Servizi__c = 'AppIO'
+            where Piattaforma_Servizi__c = 'AppIO' and IsDeleted_pagoPA__c = false
             and  Name!='Account Marketing Cloud 1' and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' 
             and Ente__r.Id = '`+selectedComune+`' and Ente__r.Tipologia_Ente__c = 'Comuni'`, MAXFETCH
         );
