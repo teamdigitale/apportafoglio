@@ -38,7 +38,7 @@ export async function load({ locals, params }) {
         and outfunds__Funding_Request__r.outfunds__Status__c IN ('AMMESSA','ACCETTATA','FINANZIATA')
         and outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Id = '`+ idente + `'
         order by outfunds__Status__c asc, outfunds__Due_Date__c desc`, MAX_FETCH);
-        const qservizi = promiseQuery(conn, `select Id, Descrizione_Servizio__c,  Piattaforma_Servizi__c, Data_Attivazione__c,Ente__c  from Servizio_Attivo__c where Ente__c = '` + idente + `'`, MAX_FETCH);
+        const qservizi = promiseQuery(conn, `select Id, Descrizione_Servizio__c,  Piattaforma_Servizi__c, Data_Attivazione__c,Ente__c  from Servizio_Attivo__c where IsDeleted_pagoPA__c = false and Ente__c = '` + idente + `'`, MAX_FETCH);
 
         const all = Promise.all([qente, qreferenti, qcandidature, qscadenze, qservizi]);
         const values = await all;
