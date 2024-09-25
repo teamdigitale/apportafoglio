@@ -52,15 +52,15 @@
 	};
 
 	const calcolaImpegnate = (a) => {
-		return a.risorse.get('ACCETTATA')
+		return (a.risorse.get('ACCETTATA')
 			? a.risorse.get('ACCETTATA')
-			: 0 + a.risorse.get('AMMESSA')
+			: 0) + (a.risorse.get('AMMESSA')
 				? a.risorse.get('AMMESSA')
-				: 0 + a.risorse.get('AMMESSA CON RISERVA')
+				: 0) + (a.risorse.get('AMMESSA CON RISERVA')
 					? a.risorse.get('AMMESSA CON RISERVA')
-					: 0 + a.risorse.get('IN VERIFICA')
+					: 0) + (a.risorse.get('IN VERIFICA')
 						? a.risorse.get('IN VERIFICA')
-						: 0;
+						: 0);
 	};
 
 	const calcolaFinanziate = (a) => {
@@ -97,7 +97,11 @@
 		row.push(finanziate);
 		row.push(rinunciate);
 		row.push(revocate);
-		row.push(valoreAvviso - impegnate - finanziate - rinunciate - revocate);
+		if(valoreAvviso - impegnate - finanziate - rinunciate - revocate>0){
+			row.push(valoreAvviso - impegnate - finanziate - rinunciate - revocate);
+		}else{
+			row.push(0);
+		}
 		result.push(row);
 		return result;
 	};
@@ -346,6 +350,23 @@
 																		{#if calcolaResidue(a) > 0}
 																			<div class="p-2 bd-highlight">
 																				<div
+																					style="width:100% ; margin-bottom:0.5rem; padding-left:0.5rem; background: linear-gradient(
+																		to right,
+																		{statiColors[4]},
+																		{statiColors[4]} 0.3rem,
+																		transparent 0.3rem,
+																		transparent 100%
+																	  );"
+																				>
+																					<small
+																						><strong>Residue:</strong>
+																						{euro(calcolaResidue(a))}</small
+																					>
+																				</div>
+																			</div>
+																			{:else}
+																			<div class="p-2 bd-highlight">
+																				<div class="text-danger"
 																					style="width:100% ; margin-bottom:0.5rem; padding-left:0.5rem; background: linear-gradient(
 																		to right,
 																		{statiColors[4]},
