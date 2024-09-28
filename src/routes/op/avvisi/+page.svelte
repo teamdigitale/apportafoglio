@@ -30,22 +30,22 @@
 	);
 	let filterStatoAvviso = 'Tutti gli stati';
 
-	let pacchettoOptions = ['Tutti i pacchetti'].concat(
-		Object.values(
-			data.avvisi.reduce((a, { Pacchetto__c }) => {
-				a[Pacchetto__c] = a[Pacchetto__c] || {
-					Pacchetto__c,
-					count: 0
-				};
-				a[Pacchetto__c].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.Pacchetto__c)
-			.filter((v) => (v ? true : false))
-			.sort()
-	);
-	let filterPacchetto = 'Tutti i pacchetti';
+	$: pacchettoOptions = fp();
+	$: filterPacchetto = 'Tutti i pacchetti';
+
+	$: fp = () => {
+		if (filterMisura === null || filterMisura === '') {
+			return ['Tutti i pacchetti'];
+		} else {
+			if (data.misure.find((x) => x.Id === filterMisura).Name.indexOf('1.4.4') > -1) {
+				return ['Tutti i pacchetti', 'ANPR/ANSC', 'SPID/CIE'];
+			} else if (data.misure.find((x) => x.Id === filterMisura).Name.indexOf('1.4.3') > -1) {
+				return ['Tutti i pacchetti', 'AppIO', 'PagoPA'];
+			} else {
+				return ['Tutti i pacchetti'];
+			}
+		}
+	};
 
 	$: beneficiariOptions = ['Tutti i beneficiari'].concat(
 		calcolaBeneficiari()
@@ -103,7 +103,8 @@
 					{/each}
 				</select>
 			</div>
-        </div><div class="col-12 col-lg-3 my-4">
+		</div>
+		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterPacchetto">Pacchetto</label>
 				<select id="filterPacchetto" name="filterPacchetto" bind:value={filterPacchetto}>
@@ -112,7 +113,8 @@
 					{/each}
 				</select>
 			</div>
-        </div><div class="col-12 col-lg-3 my-4">
+		</div>
+		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterBeneficiari">Beneficiari</label>
 				<select id="filterBeneficiari" name="filterBeneficiari" bind:value={filterBeneficiari}>
@@ -125,11 +127,10 @@
 	</div>
 
 	<div class="row">
-        {#each filteredAvvisi as avviso}
-		<div class="col-12 col-lg-4 my-4">
-            <Avvisocard {avviso} />
-		</div>
-        {/each}
-
+		{#each filteredAvvisi as avviso}
+			<div class="col-12 col-lg-6 my-4">
+				<Avvisocard {avviso} />
+			</div>
+		{/each}
 	</div>
 </div>

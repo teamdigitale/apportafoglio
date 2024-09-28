@@ -250,7 +250,7 @@
 			<div class="it-page-section my-5" id="referenti">
 				<h4>Referenti attivi</h4>
 				<div class="row fullheight">
-					<Referentecard referente={data.referenti.filter((r) => r.Profilo__c === null)[0]} />
+					<Referentecard referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]} />
 					{#each data.referenti.filter((r) => r.Profilo__c !== null && r.Stato__c === 'Attivo') as referente}
 						<Referentecard {referente} />
 					{/each}

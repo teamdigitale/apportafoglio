@@ -15,6 +15,12 @@
 
 	export let data;
 
+	let showinfo = false;
+
+	const toggleinfo = () => {
+		showinfo = !showinfo;
+	};
+
 	let warningStrutturati = data.warningStrutturati;
 	let alertStrutturati = data.alertStrutturati;
 
@@ -28,6 +34,11 @@
 			.sort()
 	);
 	let regione = regioni[0];
+
+	let georeg = {
+		...georegioni,
+		features: georegioni.features.filter((x) => regioni.indexOf(x.properties.reg_name) > -1)
+	};
 
 	$: tutteLeRisposte = data.r.map((x) => ({
 		...x,
@@ -55,13 +66,15 @@
 	}
 
 	const dataforlineinvii = () => {
-		if(completati){
-		return	completati.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
-			.filter((x) =>
-				nomeComune === ''
-					? true
-					: x.nome.replaceAll('Comune di', '').toUpperCase().indexOf(nomeComune.toUpperCase()) > -1
-			);
+		if (completati) {
+			return completati
+				.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+				.filter((x) =>
+					nomeComune === ''
+						? true
+						: x.nome.replaceAll('Comune di', '').toUpperCase().indexOf(nomeComune.toUpperCase()) >
+							-1
+				);
 		}
 	};
 
@@ -131,31 +144,107 @@
 </script>
 
 <div class="container my-4">
-	<h1>Survey ANCI</h1>
-	<Cite text="Se non chiedi, la risposta è sempre no." author="Nora Roberts" />
+	<h1>Mappa dei Comuni digitali</h1>
+	<!--
+	Cite text="Se non chiedi, la risposta è sempre no." author="Nora Roberts" 
+	-->
 </div>
 
-<div class="row">
-	{#if !expandedInsights}
-		<div class="col-12 col-lg-3 border-end" transition:fade>
-			<div class="sticky-top">
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<h5 class="my-4">
-					Insights
-					<!--
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	In base a quanto previsto dagli articoli 2, 12 e 13 comma 3 del DPCM 16 settembre 2014 (Codice di
+	comportamento e di tutela della dignità e dell’etica dei dirigenti e dei dipendenti della
+	Presidenza del Consiglio dei ministri), si ricorda che qualsiasi diffusione di informazioni e dati
+	riguardanti progetti e iniziative che coinvolgono questo Dipartimento e partner istituzionali o
+	l'Ufficio del Sottosegretario alla Presidenza del Consiglio dei ministri con delega
+	all’innovazione tecnologica dovrà essere preventivamente autorizzata dal Responsabile della
+	comunicazione e informazione istituzionale. Per richiedere l'autorizzazione, è necessario inviare
+	un’apposita richiesta alla seguente casella di posta elettronica: <a
+		href="mailto:g.campagnano@innovazione.gov.it">g.campagnano@innovazione.gov.it</a
+	>. Si raccomanda di rispettare rigorosamente tali disposizioni per evitare eventuali violazioni
+	del codice di comportamento.
+	<p>
+		<button
+			title="Ho capito"
+			type="button"
+			class="btn-close"
+			data-bs-dismiss="alert"
+			aria-label="Chiudi"
+		>
+			<svg class="icon"><use href="/svg/sprites.svg#it-close"></use></svg>
+		</button>
+	</p>
+</div>
+{#if !showinfo}
+	<div class="alert alert-primary alert-dismissible fade show" role="alert">
+		<p>
+			E’ un’indagine, unica a livello nazionale per portata e caratteristiche, sullo stato di
+			digitalizzazione del territorio: un’attività di ricerca che prevede una raccolta puntuale di
+			informazioni che ANCI e Dipartimento stanno direttamente richiedendo ai Comuni tramite la
+			somministrazione di un questionario.<a href="#" role="button" on:click={toggleinfo}> Maggiori informazioni</a>
+		</p>
+
+		<p>
+			<button
+				title="Ho capito"
+				type="button"
+				class="btn-close"
+				data-bs-dismiss="alert"
+				aria-label="Chiudi"
+			>
+				<svg class="icon"><use href="/svg/sprites.svg#it-close"></use></svg>
+			</button>
+		</p>
+	</div>
+
+	<div class="row" transition:fade>
+		{#if !expandedInsights}
+			<div class="col-12 col-lg-3 border-end" transition:fade>
+				<div class="sticky-top">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<h5 class="my-4">
+						Insights
+						<!--
 					<svg on:click={toggleInsights} class="icon icon-sm icon-primary cliccabile"
 						><use href="/svg/sprites.svg#{expandedInsights ? 'it-minimize' : 'it-maximize'}"
 						></use></svg
 					>
 					-->
-				</h5>
-				<hr class="my-4" />
-				<div class="row align-middle" bind:clientWidth={insightsWidth}>
-					<div class="col-12 col-lg-{expandedInsights ? '6' : '12'} align-middle">
-						<ProportionalBar
-							values={d3.flatRollup(
-								tutteLeRisposte
+					</h5>
+					<hr class="my-4" />
+					<div class="row align-middle" bind:clientWidth={insightsWidth}>
+						<div class="col-12 col-lg-{expandedInsights ? '6' : '12'} align-middle">
+							<ProportionalBar
+								values={d3.flatRollup(
+									tutteLeRisposte
+										.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+										.filter((x) =>
+											nomeComune === ''
+												? true
+												: x.nome
+														.replaceAll('Comune di', '')
+														.toUpperCase()
+														.indexOf(nomeComune.toUpperCase()) > -1
+										),
+									(D) => D.length,
+									(d) => d.statocomune
+								)}
+								colors={[
+									['Mai aperto', '#cc334d'],
+									['In compilazione', '#0066cc'],
+									['Completato', '#008055']
+								]}
+								title="Stato compilazione"
+							/>
+						</div>
+
+						<div
+							class="col-12 col-lg-{expandedInsights ? '6' : '12'}"
+							bind:clientWidth={insightsWidth}
+						>
+							<AndamentoInvii
+								values={tutteLeRisposte
+									.filter((x) => x.surveyanci.completato)
 									.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
 									.filter((x) =>
 										nomeComune === ''
@@ -164,72 +253,44 @@
 													.replaceAll('Comune di', '')
 													.toUpperCase()
 													.indexOf(nomeComune.toUpperCase()) > -1
-									),
-								(D) => D.length,
-								(d) => d.statocomune
-							)}
-							colors={[
-								['Mai aperto', '#cc334d'],
-								['In compilazione', '#0066cc'],
-								['Completato', '#008055']
-							]}
-							title="Stato compilazione"
-						/>
-					</div>
-
-					<div
-						class="col-12 col-lg-{expandedInsights ? '6' : '12'}"
-						bind:clientWidth={insightsWidth}
-					>
-						<AndamentoInvii
-							values={tutteLeRisposte
-							.filter((x) => x.surveyanci.completato)
-								.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
-								.filter((x) =>
-									nomeComune === ''
-										? true
-										: x.nome
-												.replaceAll('Comune di', '')
-												.toUpperCase()
-												.indexOf(nomeComune.toUpperCase()) > -1
-								)}
-							boxWidth={insightsWidth}
-							{regione}
-							{nomeComune}
-						/>
-					</div>
-				</div>
-				<h5 class="my-4">Filtri</h5>
-				<hr class="my-4" />
-				<div>
-					<div class="select-wrapper my-2">
-						<label for="regione">Regione</label>
-						<select id="regione" name="regione" bind:value={regione}>
-							{#each regioni as m}
-								<option value={m}>{m}</option>
-							{/each}
-						</select>
-					</div>
-				</div>
-				<br />
-				<div>
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-text"
-								><svg class="icon icon-sm"><use href="/svg/sprites.svg#it-pa"></use></svg></span
-							>
-							<label class="active" for="nomeComune">Comune</label>
-							<input
-								type="text"
-								class="form-control"
-								id="nomeComune"
-								name="nomeComune"
-								bind:value={nomeComune}
+									)}
+								boxWidth={insightsWidth}
+								{regione}
+								{nomeComune}
 							/>
 						</div>
 					</div>
-				</div>
-				<!--
+					<h5 class="my-4">Filtri</h5>
+					<hr class="my-4" />
+					<div>
+						<div class="select-wrapper my-2">
+							<label for="regione">Regione</label>
+							<select id="regione" name="regione" bind:value={regione}>
+								{#each regioni as m}
+									<option value={m}>{m}</option>
+								{/each}
+							</select>
+						</div>
+					</div>
+					<br />
+					<div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-text"
+									><svg class="icon icon-sm"><use href="/svg/sprites.svg#it-pa"></use></svg></span
+								>
+								<label class="active" for="nomeComune">Comune</label>
+								<input
+									type="text"
+									class="form-control"
+									id="nomeComune"
+									name="nomeComune"
+									bind:value={nomeComune}
+								/>
+							</div>
+						</div>
+					</div>
+					<!--
 		<div class="form-check form-check-group">
 			<div class="toggles">
 				<label for="questionarioAperto">
@@ -248,132 +309,283 @@
 			>
 		</div>
 		-->
+				</div>
 			</div>
-		</div>
-		<div
-			class="col-12 col-lg-6"
-			bind:clientWidth={mapsize}
-			data-sveltekit-preload-data="off"
-			transition:fade
-		>
-			<div class="sticky-top">
-				<Mappaquestionario
-					regioni={georegioni}
-					mapwidth={mapsize}
-					{regione}
-					{risposte}
-					{risposteEvidenziate}
-				/>
-				<hr />
-				<a href="/anci/survey/downloadrisposte" target="_blank">
-					<svg class="icon icon-sm icon-success"
-						><use href="/svg/sprites.svg#it-file-csv"></use></svg
-					><span>Elenco dei comuni che hanno risposto</span>
-				</a>
-				<!--
-			<Tabellarisposte {risposte} />
-			-->
-			</div>
-		</div>
-	{/if}
-	<div class="col-12 col-lg-{expandedInsights ? '12' : '3'} border-start" transition:fade>
-		{#if !expandedInsights}
-			<div transition:fade>
-				<h5 class="my-4">Evidenzia</h5>
-				<hr />
-				<div class="evidenzia">
-					<div class="form-check form-check-group">
-						<div class="toggles">
-							<label for="questionarioCompletato">
-								Questionario completato
-								<input
-									type="checkbox"
-									id="questionarioCompletato"
-									aria-labelledby="questionarioCompletato-help"
-									bind:checked={questionarioCompletato}
-								/>
-								<span class="lever"></span>
-							</label>
-						</div>
-						<small id="questionarioCompletato-help" class="form-text"
-							>Mostra solo chi ha completato il questionario</small
-						>
-					</div>
-					<div class="callout callout-highlight my-4">
-						<small>
-							E' possibile evidenziare i comuni secondo criteri di alert e warning. Per consultare i
-							criteri <a href="/anci/survey/dettaglioquestionario/" target="_blank">clicca qui. </a>
-						</small>
-						<hr />
-						<div class="callout-title">
-							<svg class="icon icon-danger"><use href="/svg/sprites.svg#it-error"></use></svg><span
-								class="text-danger">Alert</span
-							>
-						</div>
-						{#each alertStrutturati as ws}
-							<p class="text-primary"><b>{ws.sezione}</b></p>
-							{#each ws.tipi as t}
-								{#if contaWarningsAlertsPerTipologia(risposte, t.tipo) > 0}
-									<div class="form-check form-check-group">
-										<input
-											id="checkboxalerts{t.tipo}"
-											type="checkbox"
-											bind:checked={t.selezionato}
-										/>
-										<label for="checkboxalerts{t.tipo}">{t.tipo}</label>
+			<div
+				class="col-12 col-lg-6"
+				bind:clientWidth={mapsize}
+				data-sveltekit-preload-data="off"
+				transition:fade
+			>
+				<div class="sticky-top">
+					<Mappaquestionario
+						regioni={georeg}
+						mapwidth={mapsize}
+						{regione}
+						{risposte}
+						{risposteEvidenziate}
+					/>
+					<hr />
+					<a href="/anci/survey/downloadrisposte" target="_blank">
+						<svg class="icon icon-sm icon-success"
+							><use href="/svg/sprites.svg#it-file-csv"></use></svg
+						><span>Elenco dei comuni che hanno risposto</span>
+					</a>
 
-										<small id="checkboxalerts-help" class="form-text"
-											><b>{contaWarningsAlertsPerTipologia(risposte, t.tipo)} Comuni</b> -
-											<b
-												>{percentuale(
-													contaWarningsAlertsPerTipologia(risposte, t.tipo) /
-														risposte.filter((x) => x.surveyanci.completato).length
-												)}</b
-											></small
-										>
-									</div>
-								{/if}
-							{/each}
-						{/each}
-					</div>
-
-					<div class="callout callout-highlight my-4">
-						<div class="callout-title">
-							<svg class="icon icon-warning"
-								><use href="/svg/sprites.svg#it-warning-circle"></use></svg
-							><span class="text-warning">Warning</span>
-						</div>
-						{#each warningStrutturati as ws}
-							<p class="text-primary"><b>{ws.sezione}</b></p>
-							{#each ws.tipi as t}
-								{#if contaWarningsAlertsPerTipologia(risposte, t.tipo) > 0}
-									<div class="form-check form-check-group">
-										<input
-											id="checkboxalerts{t.tipo}"
-											type="checkbox"
-											bind:checked={t.selezionato}
-										/>
-										<label for="checkboxalerts{t.tipo}">{t.tipo}</label>
-
-										<small id="checkboxalerts-help" class="form-text"
-											><b>{contaWarningsAlertsPerTipologia(risposte, t.tipo)} Comuni</b> -
-											<b
-												>{percentuale(
-													contaWarningsAlertsPerTipologia(risposte, t.tipo) /
-														risposte.filter((x) => questionarioCompletato).length
-												)}</b
-											></small
-										>
-									</div>
-								{/if}
-							{/each}
-						{/each}
-					</div>
+					<Tabellarisposte {risposte} />
 				</div>
 			</div>
 		{/if}
+		<div class="col-12 col-lg-{expandedInsights ? '12' : '3'} border-start" transition:fade>
+			{#if !expandedInsights}
+				<div transition:fade>
+					<h5 class="my-4">Evidenzia</h5>
+					<hr />
+					<div class="evidenzia">
+						<div class="form-check form-check-group">
+							<div class="toggles">
+								<label for="questionarioCompletato">
+									Questionario completato
+									<input
+										type="checkbox"
+										id="questionarioCompletato"
+										aria-labelledby="questionarioCompletato-help"
+										bind:checked={questionarioCompletato}
+									/>
+									<span class="lever"></span>
+								</label>
+							</div>
+							<small id="questionarioCompletato-help" class="form-text"
+								>Mostra solo chi ha completato il questionario</small
+							>
+						</div>
+						<div class="callout callout-highlight my-4">
+							<small>
+								E' possibile evidenziare i comuni secondo criteri di alert e warning. Per consultare
+								i criteri <a href="/anci/survey/dettaglioquestionario/" target="_blank"
+									>clicca qui.
+								</a>
+							</small>
+							<hr />
+							<div class="callout-title">
+								<svg class="icon icon-danger"><use href="/svg/sprites.svg#it-error"></use></svg
+								><span class="text-danger">Alert</span>
+							</div>
+							{#each alertStrutturati as ws}
+								<p class="text-primary"><b>{ws.sezione}</b></p>
+								{#each ws.tipi as t}
+									{#if contaWarningsAlertsPerTipologia(risposte, t.tipo) > 0}
+										<div class="form-check form-check-group">
+											<input
+												id="checkboxalerts{t.tipo}"
+												type="checkbox"
+												bind:checked={t.selezionato}
+											/>
+											<label for="checkboxalerts{t.tipo}">{t.tipo}</label>
+
+											<small id="checkboxalerts-help" class="form-text"
+												><b
+													>{contaWarningsAlertsPerTipologia(risposte, t.tipo)} Comun{contaWarningsAlertsPerTipologia(
+														risposte,
+														t.tipo
+													) === 1
+														? 'e'
+														: 'i'}</b
+												>
+												-
+												<b
+													>{percentuale(
+														contaWarningsAlertsPerTipologia(risposte, t.tipo) /
+															risposte.filter((x) => x.surveyanci.completato).length
+													)}</b
+												></small
+											>
+										</div>
+									{/if}
+								{/each}
+							{/each}
+						</div>
+
+						<div class="callout callout-highlight my-4">
+							<div class="callout-title">
+								<svg class="icon icon-warning"
+									><use href="/svg/sprites.svg#it-warning-circle"></use></svg
+								><span class="text-warning">Warning</span>
+							</div>
+							{#each warningStrutturati as ws}
+								<p class="text-primary"><b>{ws.sezione}</b></p>
+								{#each ws.tipi as t}
+									{#if contaWarningsAlertsPerTipologia(risposte, t.tipo) > 0}
+										<div class="form-check form-check-group">
+											<input
+												id="checkboxalerts{t.tipo}"
+												type="checkbox"
+												bind:checked={t.selezionato}
+											/>
+											<label for="checkboxalerts{t.tipo}">{t.tipo}</label>
+
+											<small id="checkboxalerts-help" class="form-text"
+												><b
+													>{contaWarningsAlertsPerTipologia(risposte, t.tipo)} Comun{contaWarningsAlertsPerTipologia(
+														risposte,
+														t.tipo
+													) === 1
+														? 'e'
+														: 'i'}</b
+												>
+												-
+												<b
+													>{percentuale(
+														contaWarningsAlertsPerTipologia(risposte, t.tipo) /
+															risposte.filter((x) => questionarioCompletato).length
+													)}</b
+												></small
+											>
+										</div>
+									{/if}
+								{/each}
+							{/each}
+						</div>
+					</div>
+				</div>
+			{/if}
+		</div>
 	</div>
-</div>
+{/if}
+
+{#if showinfo}
+	<div transition:fade class="row">
+		<div class="col-12 col-lg-12">
+			<div class="alert alert-primary" role="alert">
+				<p class="text-end">
+					<a class="btn" href="#" role="button" on:click={toggleinfo}>
+						<svg class="icon primary icon-primary"
+							><use href="/svg/sprites.svg#it-close-circle"></use></svg
+						>
+						Chiudi
+					</a>
+				</p>
+				<h2>Cos’è la Mappa dei Comuni Digitali</h2>
+				<p>
+					L'ANCI e il Dipartimento per la trasformazione digitale il 15 maggio 2023 hanno
+					sottoscritto un Accordo per la messa in campo di azioni congiunte di supporto ai Comuni
+					nel proprio percorso di digitalizzazione dell’ente. Ne è scaturito un progetto il cui
+					principale obiettivo è quello di aumentare la capacità dei Comuni di gestire l’intero
+					ciclo della trasformazione digitale, inquadrando le risorse PNRR all’interno di un più
+					ampio percorso che punti alla completa semplificazione e digitalizzazione dei processi.
+					Tra i diversi strumenti di supporto previsti, a luglio 2024, in occasione di “Missione
+					Italia”, l’evento organizzato da ANCI, è partita una delle iniziative strategiche per
+					traghettare i Comuni oltre il PNRR e agevolare un percorso di trasformazione digitale che
+					sia duraturo e pervasivo, denominata “Mappa dei Comuni digitali”. E’ un’indagine, unica a
+					livello nazionale per portata e caratteristiche, sullo stato di digitalizzazione del
+					territorio: un’attività di ricerca che prevede una raccolta puntuale di informazioni che
+					ANCI e Dipartimento stanno direttamente richiedendo ai Comuni tramite la somministrazione
+					di un questionario. Successivamente i dati raccolti saranno pubblicati in un report che
+					racconterà in maniera completa lo stato di digitalizzazione degli enti locali sul
+					territorio italiano.
+				</p>
+				<h2>Obiettivi della survey</h2>
+				<ul>
+					<li>
+						Stato della transizione digitale: Valutare il grado di attuale digitalizzazione dei
+						Comuni
+					</li>
+					<li>Sfide e ostacoli: Esaminare le sfide e gli ostacoli alla digitalizzazione</li>
+					<li>
+						Priorità future: Definire le priorità future e individuare le sfide che potrebbero
+						ostacolare il raggiungimento di tali priorità
+					</li>
+				</ul>
+				<h2>Cosa prevede il Piano Triennale per l’Informatica</h2>
+				<p>
+					L’iniziativa “Mappa dei Comuni Digitali” fa diretto riferimento a quanto previsto dal <a
+						href="https://www.agid.gov.it/sites/agid/files/2024-06/piano_triennale_per_linformatica_nella_pa_2024-2026.pdf"
+						target="_blank"
+						>Piano Triennale per l’informatica nella Pubblica Amministrazione 2024-2026</a
+					> nel Capitolo 1 - Organizzazione e gestione del cambiamento per la parte relativa al “Monitoraggio”
+					dove è indicato l’Obiettivo 1.3 - Monitorare e analizzare lo stato di digitalizzazione del
+					paese. Obiettivo che molti Comuni hanno richiamato anche nel PIAO. La compilazione del questionario
+					relativo alla “Mappa dei Comuni Digitali”, (con scadenza prevista entro il 30 settembre ma
+					che sarà prorogata al 18 ottobre 2024) assolve quindi al compito assegnato agli Enti Locali
+					indicati quali destinatari dell’attività. Infatti, uno dei Risultati attesi (RA1.3.2) è proprio
+					l’Acquisizione ed elaborazione di informazioni analitiche da Enti locali che prevede quale
+					target per il 2024 la “Raccolta dati tramite survey, coinvolgendo attivamente gli Enti locali
+					per ottenere un quadro iniziale dello stato di digitalizzazione”. Azione che proseguirà anche
+					nel 2025 con il “Secondo ciclo di raccolta dati tramite survey, permettendo un confronto con
+					i dati raccolti nell'anno precedente e identificando eventuali trend”.
+				</p>
+				<h2>Perché è importante partecipare</h2>
+				<h3>Benefici generali:</h3>
+				<ul>
+					<li>
+						Partecipare alla più completa mappatura sullo stato di digitalizzazione del territorio
+					</li>
+					<li>
+						Contribuire al miglioramento delle politiche nazionali in ambito di digitalizzazione e
+						alla pianificazione dei futuri finanziamenti
+					</li>
+					<li>Rafforzare la voce dei Comuni nel dibattito nazionale sul digitale</li>
+				</ul>
+				<h3>Beneficio per il Comune:</h3>
+				<ul>
+					<li>
+						Fotografia chiara dello stato di salute del Comune, ulteriormente arricchita da dati di
+						contesto già in possesso del Dipartimento
+					</li>
+					<li>Parametro oggettivo per confrontarsi anche con altre amministrazioni</li>
+					<li>Strumento per implementare una vera agenda digitale, basata sui dati</li>
+				</ul>
+				<h3>Beneficio per il sistema Comuni:</h3>
+				<ul>
+					<li>
+						Creazione d percorsi di formazioni gratuiti in base alle vere esigenze del territorio
+					</li>
+					<li>Creazione di un percorso di supporto e affiancamento dedicato</li>
+				</ul>
+
+				<h2>Come si accede al questionario</h2>
+				<p>
+					A luglio 2024 è stata inviata una mail a tutti i sindaci dei comuni coinvolti, con le
+					indicazioni dettagliate sulla compilazione del questionario, disponibile al seguente link
+					https://mappacomunidigitali.anci.it Si accede per la prima volta a una pagina di
+					registrazione, che presenta un campo in cui indicare la mail della persona chi si occuperà
+					della compilazione, scelta dal Comune. Il delegato potrà scegliere la password e accedere
+					dunque alla schermata di login.
+				</p>
+				<h2>Come si compila il questionario</h2>
+				<p>
+					La survey può essere compilata in più riprese. È importante però salvare le proprie
+					risposte prima di lasciare/cambiare la sezione o chiudere il questionario. All’accesso
+					successivo tutte le risposte già date saranno conservate ed è ovviamente possibile
+					modificarle. Questo per garantire all’ente di avere il tempo necessario a reperire tutte
+					le informazioni necessarie in modo corretto. Una volta compilate tutte le domande (se ne è
+					stata tralasciata qualcuna comparirà un alert) è necessario inviare il questionario
+					facendo clic sull’ultima sezione.
+				</p>
+
+				<h2>Contatti utili</h2>
+				<p>
+					Nel caso in cui non sia stata ricevuta la mail o si hanno problemi ad accedere o più in
+					generale per assistenza tecnica è possibile rivolgersi a Anci Digitale S.p.A.
+				</p>
+				<ul>
+					<li>Email: mappacomunidigitali@ancidigitale.it</li>
+					<li>
+						Tel. 06 83394257 (Opzione 1 Assistenza Comuni / Questionario Mappa Comuni Digitali)
+					</li>
+				</ul>
+				<p class="text-end">
+					<a class="btn" href="#" role="button" on:click={toggleinfo}>
+						<svg class="icon primary icon-primary"
+							><use href="/svg/sprites.svg#it-close-circle"></use></svg
+						>
+						Chiudi
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.evidenzia span {

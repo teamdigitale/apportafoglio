@@ -14,7 +14,6 @@
 		max = Math.floor(max);
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
-
 </script>
 
 <div class="it-header-wrapper">
@@ -61,9 +60,9 @@
 									<div
 										class="d-flex align-items-center justify-content-around flex-wrap flex-sm-nowrap"
 									>
-									{#if loggedstandard }
-									<p class="mx-4 text-white align-middle my-0">{ruolo(utentestandard.idsf)}</p>
-									{/if}
+										{#if loggedstandard}
+											<p class="mx-4 text-white align-middle my-0">{ruolo(utentestandard.idsf)}</p>
+										{/if}
 										<ul class="avatar-group-stacked">
 											{#if loggedstandard}
 												<li>
@@ -111,7 +110,9 @@
 									</svg>
 									<div class="it-brand-text">
 										<div class="it-brand-title">APPortafoglio</div>
-										<div class="it-brand-tagline d-none d-md-block">PA2026 in tasca</div>
+										<div class="it-brand-tagline d-none d-md-block">
+											Il tuo supporto per la digitalizzazione del Paese
+										</div>
 									</div>
 								</a>
 							</div>
@@ -189,33 +190,35 @@
 																	><span>avvisi</span></a
 																>
 															</li>
-															{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'areamanager')) }
-															<li>
-																<a class="dropdown-item list-item" href="/op/enti"
-																	><span>enti</span></a
-																>
-															</li>
-															<li>
-																<a class="dropdown-item list-item" href="/op/referenti"
-																	><span>referenti</span></a
-																>
-															</li>
-															<li><span class="divider"></span></li>
-															<li>
-																<a class="dropdown-item list-item" href="/op/contatti"
-																	><span>report accounting</span></a
-																>
-															</li>
-															<li>
-																<a class="dropdown-item list-item" href="/op/scadenze"
-																	><span>scadenze</span></a
-																>
-															</li>
-															<li>
-																<a class="dropdown-item list-item" href="/op/proroghe"
-																	><span>richieste proroghe fase 2</span></a
-																>
-															</li>
+															{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
+																<li>
+																	<a class="dropdown-item list-item" href="/op/enti"
+																		><span>enti</span></a
+																	>
+																</li>
+																<li>
+																	<a class="dropdown-item list-item" href="/op/referenti"
+																		><span>referenti</span></a
+																	>
+																</li>
+																{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager'))}
+																	<li><span class="divider"></span></li>
+																	<li>
+																		<a class="dropdown-item list-item" href="/op/contatti"
+																			><span>report accounting</span></a
+																		>
+																	</li>
+																	<li>
+																		<a class="dropdown-item list-item" href="/op/scadenze"
+																			><span>scadenze</span></a
+																		>
+																	</li>
+																	<li>
+																		<a class="dropdown-item list-item" href="/op/proroghe"
+																			><span>richieste proroghe</span></a
+																		>
+																	</li>
+																{/if}
 															{/if}
 														</ul>
 													</div>
@@ -225,82 +228,82 @@
 
 										<!-- cruscotti -->
 										{#if loggedstandard}
-										{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'areamanager')) }
-											<li class="nav-item dropdown">
-												<a
-													class="nav-link dropdown-toggle"
-													href="#"
-													role="button"
-													data-bs-toggle="dropdown"
-													aria-expanded="false"
-													id="ddcruscotti"
-												>
-													<span>cruscotti</span>
-													<svg class="icon icon-xs"
-														><use href="/svg/sprites.svg#it-expand"></use></svg
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager'))}
+												<li class="nav-item dropdown">
+													<a
+														class="nav-link dropdown-toggle"
+														href="#"
+														role="button"
+														data-bs-toggle="dropdown"
+														aria-expanded="false"
+														id="ddcruscotti"
 													>
-												</a>
-												<div
-													class="dropdown-menu"
-													role="region"
-													aria-labelledby="ddcruscotti"
-													data-sveltekit-preload-data="off"
-												>
-													<div class="link-list-wrapper">
-														<ul class="link-list">
-															<li>
-																<a class="dropdown-item list-item" href="/cruscotti/generale"
-																	><span>generale</span></a
-																>
-															</li>
-															<li>
-																<a class="dropdown-item list-item" href="/cruscotti/fornitori"
-																	><span>fornitori</span></a
-																>
-															</li>
-														</ul>
+														<span>cruscotti</span>
+														<svg class="icon icon-xs"
+															><use href="/svg/sprites.svg#it-expand"></use></svg
+														>
+													</a>
+													<div
+														class="dropdown-menu"
+														role="region"
+														aria-labelledby="ddcruscotti"
+														data-sveltekit-preload-data="off"
+													>
+														<div class="link-list-wrapper">
+															<ul class="link-list">
+																<li>
+																	<a class="dropdown-item list-item" href="/cruscotti/generale"
+																		><span>generale</span></a
+																	>
+																</li>
+																<li>
+																	<a class="dropdown-item list-item" href="/cruscotti/fornitori"
+																		><span>fornitori</span></a
+																	>
+																</li>
+															</ul>
+														</div>
 													</div>
-												</div>
-											</li>
+												</li>
 											{/if}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'primario')||checkAbilitazione(data.utentestandard.idsf, 'campagne')) }
-											<li class="nav-item dropdown">
-												<a
-													class="nav-link dropdown-toggle"
-													href="#"
-													role="button"
-													data-bs-toggle="dropdown"
-													aria-expanded="false"
-													id="ddcampagne"
-												>
-													<span>campagne</span>
-													<svg class="icon icon-xs"
-														><use href="/svg/sprites.svg#it-expand"></use></svg
+
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
+												<li class="nav-item dropdown">
+													<a
+														class="nav-link dropdown-toggle"
+														href="#"
+														role="button"
+														data-bs-toggle="dropdown"
+														aria-expanded="false"
+														id="ddcampagne"
 													>
-												</a>
-												<div
-													class="dropdown-menu"
-													role="region"
-													aria-labelledby="ddcampagne"
-													data-sveltekit-preload-data="off"
-												>
-													<div class="link-list-wrapper">
-														<ul class="link-list">
-															<li>
-																<a class="dropdown-item list-item" href="/campagne/appio24/none"
-																	><span>Avviso App IO Comuni</span></a
-																>
-															</li>
-															
-														</ul>
+														<span>campagne</span>
+														<svg class="icon icon-xs"
+															><use href="/svg/sprites.svg#it-expand"></use></svg
+														>
+													</a>
+													<div
+														class="dropdown-menu"
+														role="region"
+														aria-labelledby="ddcampagne"
+														data-sveltekit-preload-data="off"
+													>
+														<div class="link-list-wrapper">
+															<ul class="link-list">
+																<li>
+																	<a class="dropdown-item list-item" href="/campagne/appio24/none"
+																		><span>Avviso App IO Comuni</span></a
+																	>
+																</li>
+															</ul>
+														</div>
 													</div>
-												</div>
-											</li>
+												</li>
 											{/if}
 										{/if}
 
-										{#if loggedstandard || loggedasseveratore}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')|| checkAbilitazione(data.utentestandard.idsf, 'primario'))}
+										{#if loggedstandard}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
@@ -324,28 +327,25 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
-																	<li data-sveltekit-preload-data="off">
-																		<a class="dropdown-item list-item" href="/monitoraggio/risorse"
-																			><span>board risorse</span></a
-																		>
-																	</li>
-																{/if}
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
+																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/monitoraggio/risorse"
+																		><span>board risorse</span></a
+																	>
+																</li>
+
 																<li data-sveltekit-preload-data="off">
 																	<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
 																		><span>residui avvisi aperti e misure</span></a
 																	>
 																</li>
-																{/if}
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
+
 																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/candidature"
-																		><span>board candidature</span></a
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/candidature"><span>progetti</span></a
 																	>
 																</li>
-															{/if}
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+
 																<!--
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/enti"
@@ -353,17 +353,14 @@
 																		>
 																	</li>
 																	-->
-																{/if}
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor') || checkAbilitazione(data.utentestandard.idsf, 'productowner')}
-																	<li data-sveltekit-preload-data="off">
-																		<a
-																			class="dropdown-item list-item"
-																			href="/monitoraggio/asseverazioni"
-																			><span>board asseverazioni</span></a
-																		>
-																	</li>
-																{/if}
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
+
+																<li data-sveltekit-preload-data="off">
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/asseverazioni"><span>asseverazioni</span></a
+																	>
+																</li>
+
 																<!--
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
@@ -371,15 +368,14 @@
 																		>
 																	</li>
 																	-->
-																{/if}
 
-																{#if checkAbilitazione(data.utentestandard.idsf, 'productowner') || checkAbilitazione(data.utentestandard.idsf, 'monitor')|| checkAbilitazione(data.utentestandard.idsf, 'primario')}
-																	<li data-sveltekit-preload-data="off">
-																		<a class="dropdown-item list-item" href="/monitoraggio/proroghe/monitoraggio"
-																			><span>proroghe</span></a
-																		>
-																	</li>
-																{/if}
+																<li data-sveltekit-preload-data="off">
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/proroghe/monitoraggio"
+																		><span>campagna di riprogrammazione</span></a
+																	>
+																</li>
 															</ul>
 														</div>
 													</div>
@@ -387,8 +383,8 @@
 											{/if}
 										{/if}
 
-										{#if false &&(loggedstandard || loggedasseveratore)}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor'))}
+										{#if loggedstandard}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
@@ -399,7 +395,7 @@
 														aria-expanded="false"
 														id="ddanci"
 													>
-														<span>ANCI</span>
+														<span>osservatorio</span>
 														<svg class="icon icon-xs"
 															><use href="/svg/sprites.svg#it-expand"></use></svg
 														>
@@ -412,14 +408,11 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
-																{#if checkAbilitazione(data.utentestandard.idsf, 'monitor')}
-																	<li data-sveltekit-preload-data="off">
-																		<a class="dropdown-item list-item" href="/anci/survey"
-																			><span>survey</span></a
-																		>
-																	</li>
-																{/if}
-																
+																<li data-sveltekit-preload-data="off">
+																	<a class="dropdown-item list-item" href="/anci/survey/map"
+																		><span>mappa dei comuni digitali</span></a
+																	>
+																</li>
 															</ul>
 														</div>
 													</div>

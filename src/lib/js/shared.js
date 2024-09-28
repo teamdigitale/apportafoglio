@@ -111,84 +111,84 @@ export const getQuarter = (d) => {
     let m = Math.floor(d.getMonth() / 3) + 1;
     let qm = m > 4 ? m - 4 : m;
     let qy = d.getFullYear();
-    return 'Q'+qm+'-' + qy;
+    return 'Q' + qm + '-' + qy;
 }
 
-export const getFirstDayOfQuarter = (q) =>{
-    let m = q.substring(1,2);
+export const getFirstDayOfQuarter = (q) => {
+    let m = q.substring(1, 2);
     let year = q.substring(3);
     let month = 0;
-    if(m==='1'){
+    if (m === '1') {
         month = 0;
-    }else if(m==='2'){
+    } else if (m === '2') {
         month = 3;
-    }else if (m==='3'){
+    } else if (m === '3') {
         month = 6;
-    }else {
+    } else {
         month = 9;
     }
-    return new Date(year,month,1);
+    return new Date(year, month, 1);
 }
 
 export const addDays = (d, n) => {
-    
+
     let res = new Date(new Date(d).setDate(d.getDate() + n));
     if (d) {
         return res;
     } else { return null }
 }
 
-export const  monthDiff = (date1, date2) => {
+export const monthDiff = (date1, date2) => {
     let diffYears = date2.getFullYear() - date1.getFullYear();
     let diffMonths = date2.getMonth() - date1.getMonth();
     let diffDays = date2.getDate() - date1.getDate();
-    
+
     let months = (diffYears * 12 + diffMonths);
     if (diffDays > 0) {
-      months += '.' + diffDays;
+        months += '.' + diffDays;
     } else if (diffDays < 0) {
-      months--;
-      months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
+        months--;
+        months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
     }
     return months;
 }
 
-export const  quartersDiff = (q1, q2) => {
+export const quartersDiff = (q1, q2) => {
     let date1 = getFirstDayOfQuarter(q1);
     let date2 = getFirstDayOfQuarter(q2);
     let diffYears = date2.getFullYear() - date1.getFullYear();
     let diffMonths = date2.getMonth() - date1.getMonth();
     let diffDays = date2.getDate() - date1.getDate();
-    
+
     let months = (diffYears * 12 + diffMonths);
     if (diffDays > 0) {
-      months += '.' + diffDays;
+        months += '.' + diffDays;
     } else if (diffDays < 0) {
-      months--;
-      months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
+        months--;
+        months += '.' + (new Date(date2.getFullYear(), date2.getMonth(), 0).getDate() + diffDays);
     }
-    return Math.floor(months/3);
+    return Math.floor(months / 3);
 }
 
-export const mapTipologiaEnte = (misura,t)=>{
-    if(misura==='1.2 Abilitazione e facilitazione migrazione al Cloud'||misura==='1.4.1 Esperienza del cittadino nei servizi pubblici'){
-        if(t==='Comuni'||t==='Scuole'){
+export const mapTipologiaEnte = (misura, t) => {
+    if (misura === '1.2 Abilitazione e facilitazione migrazione al Cloud' || misura === '1.4.1 Esperienza del cittadino nei servizi pubblici') {
+        if (t === 'Comuni' || t === 'Scuole') {
             return t;
-        }else{
+        } else {
             return 'Altre tipologie';
         }
-    }else{
+    } else {
         return 'Tutte le tipologie';
     }
 }
 
 
-export const areaManager = (idsf) =>{
-    if(idsf){
+export const areaManager = (idsf) => {
+    if (idsf) {
         const authuser = u.users.find(x => x.id === idsf);
-        if(authuser){
-            
-            if(authuser.roles&&authuser.roles.indexOf("areamanager")!==-1){
+        if (authuser) {
+
+            if (authuser.roles && authuser.roles.indexOf("Area Manager") !== -1) {
                 return authuser;
             }
         }
@@ -196,23 +196,40 @@ export const areaManager = (idsf) =>{
     return undefined;
 }
 
-export const ruolo = (idsf) =>{
-    if(idsf){
+export const viewall = (idsf) => {
+    if (idsf) {
         const authuser = u.users.find(x => x.id === idsf);
-        if(authuser){
-            
-            if(authuser.roles&&authuser.roles.indexOf("areamanager")!==-1){
-                return 'Area Manager';
+        if (authuser) {
+
+            if (authuser.roles && (
+                authuser.roles.indexOf("Osservatorio") !== -1
+                ||authuser.roles.indexOf("Relazioni Istituzionali") !== -1
+                ||authuser.roles.indexOf("TO Executive") !== -1
+                ||authuser.roles.indexOf("Product Owner") !== -1
+                )) {
+                return true;
             }
         }
     }
-    return 'AcM / TIM';
+    return false;
 }
 
-export const nomeUtente = (idsf) =>{
-    if(idsf){
+export const ruolo = (idsf) => {
+    if (idsf) {
         const authuser = u.users.find(x => x.id === idsf);
-        if(authuser){
+        if (authuser) {
+            if (authuser.roles && authuser.roles.length > 0) { }
+            return authuser.roles[0];
+        }
+
+    }
+    return ""
+}
+
+export const nomeUtente = (idsf) => {
+    if (idsf) {
+        const authuser = u.users.find(x => x.id === idsf);
+        if (authuser) {
             return authuser.name;
         }
     }
