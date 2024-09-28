@@ -62,10 +62,18 @@ async function caricaAvvisi(conn) {
     }
 
     records.forEach((a) => {
-        a.Name = a.Name.replaceAll('"',"'").replaceAll('”',"'");
-        if(data.filter(d =>  d.titolo.startsWith(a.Name) )[0]){
-         a.beneficiari = data.filter(d =>  d.titolo.startsWith(a.Name)  )[0].beneficiari }
+        a.Name = a.Name.replaceAll('"', "'").replaceAll('”', "'");
+        if (data.filter(d => d.titolo.startsWith(a.Name))[0]) {
+            a.beneficiari = data.filter(d => d.titolo.startsWith(a.Name))[0].beneficiari;
         }
+        if(a.Name.indexOf("1.4.4")>-1){
+            if(a.Name.indexOf("ANPR ANSC")>-1){
+                a.Pacchetto__c='ANPR/ANSC';
+            }else{
+                a.Pacchetto__c='SPID/CIE';
+            }
+        }
+    }
     );
     return records;
 }

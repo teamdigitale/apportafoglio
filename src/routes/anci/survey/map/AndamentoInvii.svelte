@@ -13,7 +13,6 @@
 	export let regione;
 	export let nomeComune;
 
-	console.log(values.length);
 
 	$: completatiPerData = d3
 		.flatGroup(

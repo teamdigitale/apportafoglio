@@ -40,7 +40,10 @@
 
 	const teoptions = ['Tutti', 'Comuni', 'Scuole', 'ASL', 'Altri (diversi da Comuni, Scuole, ASL)'];
 
-	const pacchetti = ['Tutte', 'PagoPA', 'AppIO'];
+	$: pacchetti =
+		misura === '1.4.3 Adozione PagoPA e AppIO'
+			? ['Tutte', 'PagoPA', 'AppIO']
+			: ['Tutte', 'ANPR/ANSC', 'SPID/CIE'];
 
 	const optionsTipologieEnti = [
 		{ misura: '', options: ['Tutti', 'Comuni', 'Scuole', 'ASL'] },
@@ -54,28 +57,25 @@
 		}
 	];
 
-
-
 	$: riepiloga = (cc) => {
 		let filtered;
-		cc = cc.filter((c) => { return (
-					tipologiaEnte === 'Tutti'
-						? true
-						: tipologiaEnte === 'Altri (diversi da Comuni, Scuole, ASL)'
-							? (c.tipologia_ente !== 'Comuni' &&
-								c.tipologia_ente !== 'Scuole' &&
-								c.tipologia_ente !== 'ASL')
-							: c.tipologia_ente === tipologiaEnte)}
-				);
+		cc = cc.filter((c) => {
+			return tipologiaEnte === 'Tutti'
+				? true
+				: tipologiaEnte === 'Altri (diversi da Comuni, Scuole, ASL)'
+					? c.tipologia_ente !== 'Comuni' &&
+						c.tipologia_ente !== 'Scuole' &&
+						c.tipologia_ente !== 'ASL'
+					: c.tipologia_ente === tipologiaEnte;
+		});
 		if (misura !== '') {
 			cc = cc
 				.filter((c) => c.misura === misura)
 				.filter((c) =>
-					misura === '1.4.3 Adozione PagoPA e AppIO' && pacchetto !== 'Tutte'
+					((misura === '1.4.3 Adozione PagoPA e AppIO'||misura==='1.4.4 Adozione identità digitale') && pacchetto !== 'Tutte')
 						? c.PacchettoProgram__c === pacchetto
 						: true
-				)
-				;
+				);
 		}
 		if (selectedArea === 'ALL') {
 			filtered = cc;
@@ -164,7 +164,7 @@
 	};
 </script>
 
-<h1>Riepilogo candidature</h1>
+<h1>Riepilogo progetti</h1>
 <Cite
 	text="Un sogno è solo un sogno. Un obiettivo è un sogno con un progetto e una scadenza."
 	author="Harvey B. Mackay"
@@ -236,7 +236,7 @@
 									</div>
 								</div>
 
-								{#if misura === '1.4.3 Adozione PagoPA e AppIO'}
+								{#if misura === '1.4.3 Adozione PagoPA e AppIO' || misura==='1.4.4 Adozione identità digitale'}
 									<hr class="my-0" />
 									<div class="my-4">
 										<div class="select-wrapper">

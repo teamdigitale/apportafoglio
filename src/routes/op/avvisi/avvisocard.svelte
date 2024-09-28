@@ -43,11 +43,13 @@
 			</div>
 
 			<p>
-				{#each avviso.beneficiari as b}
-					<div class="chip chip-simple">
-						<span class="chip-label">{b}</span>
-					</div>
-				{/each}
+				{#if avviso.beneficiari}
+					{#each avviso.beneficiari as b}
+						<div class="chip chip-simple">
+							<span class="chip-label">{b}</span>
+						</div>
+					{/each}
+				{/if}
 			</p>
 			<div>
 				<h6>{avviso.Name}</h6>
@@ -102,6 +104,4 @@
 		min-height: 100%;
 		height: 100%;
 	}
-
-
 </style>

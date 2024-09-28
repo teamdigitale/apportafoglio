@@ -34,7 +34,7 @@
 					>
 						<strong
 							>{referente.Name}
-							{#if referente.Stato__c !== 'Attivo'}
+							{#if referente.Stato__c !== 'Attivo' && referente.Stato__c !== null}
 								&nbsp;({referente.Stato__c})
 							{/if}
 						</strong>

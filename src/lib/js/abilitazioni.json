@@ -1,1282 +1,1911 @@
 {
     "users": [
         {
-            "id": "0057Q0000072NWoQAM",
-            "roles": [
-                "primario",
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q0000072hdUQAQ",
-            "roles": [
-                "asseveratore"
-            ]
-        },
-        {
-            "id": "0057Q00000375UHQAY",
-            "roles": [
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q000008Ssk3QAC",
-            "roles": [
-                "monitor"
-            ],
-            "name": "Antonio Lettieri"
-        },
-        {
-            "id": "0057Q000005UXjoQAG",
-            "roles": [
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q000008GbNiQAK",
-            "roles": [
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q000005uL1rQAE",
-            "roles": [
-                "productowner"
-            ]
-        },
-        {
-            "id": "0057Q0000072CnuQAE",
-            "roles": [
-                "productowner"
-            ]
-        },
-        {
-            "id": "0057Q0000070pauQAA",
-            "roles": [
-                "productowner"
-            ]
-        },
-        {
-            "id": "0057Q000008EGNWQA4",
-            "roles": [
-                "productowner","campagne"
-            ]
-        },
-        {
-            "id": "0057Q0000037gR7QAI",
-            "roles": [
-                "primario",
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q00000729pMQAQ",
-            "roles": [
-                "primario",
-                "monitor"
-            ]
-        },
-        {
-            "id": "0057Q000005UXkDQAW",
-            "roles": [
-                "primario"
-            ],
-            "name": "Iacopo Portunato"
-        },
-        {
-            "id": "0057Q000005UXopQAG",
-            "roles": [
-                "primario"
-            ],
-            "name": "Oriella Barone"
-        },
-        {
-            "id": "0057Q000005UXpJQAW",
-            "roles": [
-                "primario"
-            ],
-            "name": "Danilo Del Console"
-        },
-        {
-            "id": "0057Q000005UXtlQAG",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giovanni Pergola"
-        },
-        {
-            "id": "0057Q000005u3BHQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Pietro Disi"
-        },
-        {
-            "id": "0057Q000005xrdMQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Francesco Zotta"
-        },
-        {
-            "id": "0057Q0000070pa5QAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Massimiliano Carloni"
-        },
-        {
-            "id": "0057Q0000070paFQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Andrea Piccoli"
-        },
-        {
-            "id": "0057Q0000070paUQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Antonio Candiello"
-        },
-        {
-            "id": "0057Q0000070paoQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Angelo Pizzulo"
-        },
-        {
-            "id": "0057Q0000070pfGQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giuseppe Facino"
-        },
-        {
-            "id": "0057Q0000070pfaQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giuseppe Mancinelli"
-        },
-        {
-            "id": "0057Q0000070pfpQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Chiara Martini"
-        },
-        {
-            "id": "0057Q0000070pojQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Alfonso Fiorentino"
-        },
-        {
-            "id": "0057Q0000070ppDQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Barbara Baldacchini"
-        },
-        {
-            "id": "0057Q0000070q2eQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Michele Lo Squadro"
-        },
-        {
-            "id": "0057Q0000070q2yQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Paolo Strangis"
-        },
-        {
-            "id": "0057Q0000070qBdQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Francesco Iozzi"
-        },
-        {
-            "id": "0057Q0000070qG0QAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Michele Leone"
-        },
-        {
-            "id": "0057Q0000070qGAQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Francesco Bianchi"
-        },
-        {
-            "id": "0057Q0000070qGeQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Matteo Delli Carri"
-        },
-        {
-            "id": "0057Q0000070qGjQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Ester Anzalone"
-        },
-        {
-            "id": "0057Q0000070qHDQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Roberto Pastorino"
-        },
-        {
-            "id": "0057Q0000070qQCQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Silvia Barbieri"
-        },
-        {
-            "id": "0057Q0000070qQRQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Elisabetta Carfagna"
-        },
-        {
-            "id": "0057Q0000070qVrQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Corrado Zoccali"
-        },
-        {
-            "id": "0057Q0000070qaJQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Raffaele Mosca"
-        },
-        {
-            "id": "0057Q0000070qelQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Marco Virno"
-        },
-        {
-            "id": "0057Q0000070qj8QAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Raffaele Santo"
-        },
-        {
-            "id": "0057Q0000070qjDQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Laura Aglio"
-        },
-        {
-            "id": "0057Q0000070qjNQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Alex Boschetti"
-        },
-        {
-            "id": "0057Q0000071oNhQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Paolo Camuti Borani"
-        },
-        {
-            "id": "0057Q0000071oO6QAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Raffaele Cartocci"
-        },
-        {
-            "id": "0057Q0000071oOBQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Sara Guttilla"
-        },
-        {
-            "id": "0057Q0000071ohRQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Paola Lorenzelli"
-        },
-        {
-            "id": "0057Q0000071ohWQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Mario Alberto Del Giudice"
-        },
-        {
-            "id": "0057Q0000071ohbQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Luigi Marzano"
-        },
-        {
-            "id": "0057Q0000071ohgQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Mattia Cazzamalli"
-        },
-        {
-            "id": "0057Q0000071ohlQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Jacopo Gandin"
-        },
-        {
-            "id": "0057Q0000071oyvQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Luis Gatto"
-        },
-        {
-            "id": "0057Q0000071p3DQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Rossana Muratore"
-        },
-        {
-            "id": "0057Q0000071p3IQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Marco Montemagno Mancini"
-        },
-        {
-            "id": "0057Q0000071p3SQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Rosario Alagna"
-        },
-        {
-            "id": "0057Q0000071p3cQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Paolino Fierro"
-        },
-        {
-            "id": "0057Q0000071p3hQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Lorella Vivona"
-        },
-        {
-            "id": "0057Q0000071pDKQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Maria Luisa Gallo"
-        },
-        {
-            "id": "0057Q0000071pDPQAY",
-            "roles": [
-                "primario"
-            ],
-            "name": "Marilena Tallarida"
-        },
-        {
-            "id": "0057Q00000729pMQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Claudio Scarpa"
-        },
-        {
-            "id": "0057Q00000729pbQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giovanni Pizza"
-        },
-        {
-            "id": "0057Q00000729pgQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Andrea Rossi"
-        },
-        {
-            "id": "0057Q00000729pqQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Jonathan Cammilleri"
-        },
-        {
-            "id": "0057Q00000729pvQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Antonello Botte"
-        },
-        {
-            "id": "0057Q00000729q5QAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Massimo Staniscia"
-        },
-        {
-            "id": "0057Q00000729qtQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giuseppe Cazzorla"
-        },
-        {
-            "id": "0057Q0000072G1NQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Fulvia Calascibetta"
-        },
-        {
-            "id": "0057Q0000072G3OQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Sandro Piana AcM"
-        },
-        {
-            "id": "0057Q0000072GDdQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Alessandro Ferrara"
-        },
-        {
-            "id": "0057Q0000072GEHQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Marco Malandrino"
-        },
-        {
-            "id": "0057Q0000072GEWQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Diego Gardini"
-        },
-        {
-            "id": "0057Q0000072GEbQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Luigi D'Ambrosio"
-        },
-        {
-            "id": "0057Q0000072GFAQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Davide D'Aprile"
-        },
-        {
-            "id": "0057Q0000072GFoQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Vincenzo Muneroni"
-        },
-        {
-            "id": "0057Q0000072GFtQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Arnaldo Merante"
-        },
-        {
-            "id": "0057Q0000072GIdQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Rocco Defina"
-        },
-        {
-            "id": "0057Q0000072GIiQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Franco Micoli"
-        },
-        {
-            "id": "0057Q0000072GKPQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Gianpiero Sepe"
-        },
-        {
-            "id": "0057Q0000072GKUQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Roberta Tragno"
-        },
-        {
-            "id": "0057Q0000072GLDQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Vito La Marca"
-        },
-        {
-            "id": "0057Q0000072GLIQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Andrea Ingrosso"
-        },
-        {
-            "id": "0057Q0000072GLNQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Mirko Landolfo"
-        },
-        {
-            "id": "0057Q0000072HExQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Achille Montanaro"
-        },
-        {
-            "id": "0057Q0000072NVWQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Antonio Di Marino"
-        },
-        {
-            "id": "0057Q0000072NVbQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Maurizio Caiazza"
-        },
-        {
-            "id": "0057Q0000072NW5QAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Vittoria Tascio"
-        },
-        {
-            "id": "0057Q0000072NWAQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Fabio Pozzi"
-        },
-        {
-            "id": "0057Q0000072NWPQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Davide Ferrari"
-        },
-        {
-            "id": "0057Q0000072NWUQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Federico Groppo"
-        },
-        {
-            "id": "0057Q0000072NWZQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Massimo Dalmazzi"
-        },
-        {
-            "id": "0057Q0000072Q5RQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Dario Caprio"
-        },
-        {
-            "id": "0057Q0000072TEDQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Federico Maria De Scalzi"
-        },
-        {
-            "id": "0057Q0000072TEIQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Martina Orsini"
-        },
-        {
-            "id": "0057Q0000072UWPQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Celestino Iorio"
-        },
-        {
-            "id": "0057Q0000072YrKQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Luigi Marafante"
-        },
-        {
-            "id": "0057Q0000072YrZQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Angelo Capodieci"
-        },
-        {
-            "id": "0057Q0000072YrjQAE",
-            "roles": [
-                "primario"
-            ],
-            "name": "Antonio Capodieci"
-        },
-        {
-            "id": "0057Q0000072YsDQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Daniela Belotti"
-        },
-        {
-            "id": "0057Q0000072YyQQAU",
-            "roles": [
-                "primario"
-            ],
-            "name": "Monica Menini"
-        },
-        {
-            "id": "0057Q0000072hXlQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Michele Schillizzi"
-        },
-        {
-            "id": "0057Q0000072hY0QAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Silvia Bendinelli"
-        },
-        {
-            "id": "0057Q0000072y3OQAQ",
-            "roles": [
-                "primario"
-            ],
-            "name": "Antonio Nocella"
-        },
-        {
-            "id": "0057Q00000BgIkMQAV",
-            "roles": [
-                "primario"
-            ],
-            "name": "Andrea Boglio"
-        },
-        {
             "id": "0057Q0000070paZQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Stefano Venturino"
-        },
-        {
-            "id": "0057Q0000070pajQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Giacomo FIoroni"
+            "name": "STEFANO VENTURINO"
         },
         {
             "id": "0057Q0000070pauQAA",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Antonio Lisi"
+            "name": "ANTONIO LISI"
         },
         {
             "id": "0057Q0000070pfQQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Andrea Ruoppolo"
+            "name": "ANDREA RUOPPOLO"
         },
         {
             "id": "0057Q0000070pkHQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Sergio Maria Scala"
+            "name": "SERGIO MARIA SCALA"
         },
         {
             "id": "0057Q0000070poZQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Giovanni Guglielmotto"
+            "name": "GIOVANNI GUGLIELMOTTO"
         },
         {
             "id": "0057Q0000070ppNQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Francesco Castellani"
+            "name": "FRANCESCO CASTELLANI"
         },
         {
             "id": "0057Q0000070q2FQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Francesco Camilucci"
+            "name": "FRANCESCO CAMILUCCI"
         },
         {
             "id": "0057Q0000070q2oQAA",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Nazzareno Sileno"
+            "name": "NAZZARENO SILENO"
         },
         {
             "id": "0057Q0000070q33QAA",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Francesco Santoro"
+            "name": "FRANCESCO SANTORO"
         },
         {
             "id": "0057Q0000070qGFQAY",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Vincenzo Masciullo"
+            "name": "VINCENZO MASCIULLO"
         },
         {
             "id": "0057Q0000070qGZQAY",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Alessandro Zanni"
+            "name": "ALESSANDRO ZANNI"
         },
         {
             "id": "0057Q0000070qH8QAI",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Marco Malavasi"
-        },
-        {
-            "id": "0057Q0000070qQ2QAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Armonia Di Biase"
-        },
-        {
-            "id": "0057Q0000070qQlQAI",
-            "roles": [
-                "primario"
-            ],
-            "name": "Alessandro Giommi"
-        },
-        {
-            "id": "0057Q00000729onQAA",
-            "roles": [
-                "primario"
-            ],
-            "name": "Roberto Morelato"
-        },
-        {
-            "id": "0057Q0000072GEMQA2",
-            "roles": [
-                "primario"
-            ],
-            "name": "Morena Moretti"
+            "name": "MARCO MALAVASI"
         },
         {
             "id": "0057Q00000729oxQAA",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Matani Luciano"
+            "name": "MATANI LUCIANO"
         },
         {
             "id": "0057Q00000729p7QAA",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Pasquale Mastrangelo"
+            "name": "PASQUALE MASTRANGELO"
         },
         {
             "id": "0057Q00000729pCQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Marco Mastrapasqua"
+            "name": "MARCO MASTRAPASQUA"
         },
         {
             "id": "0057Q00000729pHQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Paolo Goria"
+            "name": "PAOLO GORIA"
         },
         {
             "id": "0057Q00000729qPQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Gianluca Barile"
+            "name": "GIANLUCA BARILE"
         },
         {
             "id": "0057Q00000729qUQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Fabio Pergola"
+            "name": "FABIO PERGOLA"
         },
         {
             "id": "0057Q00000729qZQAQ",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Donato Montaruli"
+            "name": "DONATO MONTARULI"
         },
         {
             "id": "0057Q0000072AYRQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Simone Secci"
+            "name": "SIMONE SECCI"
         },
         {
             "id": "0057Q0000072Co4QAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Antonio Genovesi"
+            "name": "ANTONIO GENOVESI"
         },
         {
             "id": "0057Q0000072DSyQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Gianfranco Straface"
+            "name": "GIANFRANCO STRAFACE"
         },
         {
             "id": "0057Q0000072DTIQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Rosario Riggio"
+            "name": "ROSARIO RIGGIO"
         },
         {
             "id": "0057Q0000072G1SQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Giuseppe Cassibba"
+            "name": "GIUSEPPE CASSIBBA"
         },
         {
             "id": "0057Q0000072GHLQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Stefano Marcon"
+            "name": "STEFANO MARCON"
         },
         {
             "id": "0057Q0000072GJgQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Pierluigi Zaccaria"
+            "name": "PIERLUIGI ZACCARIA"
         },
         {
             "id": "0057Q0000072GKFQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Ugo Caloni"
+            "name": "UGO CALONI"
         },
         {
             "id": "0057Q0000072GKKQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Angelo Lupacchino"
+            "name": "ANGELO LUPACCHINO"
         },
         {
             "id": "0057Q0000072H94QAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Alessandro Di Florio"
+            "name": "ALESSANDRO DI FLORIO"
         },
         {
             "id": "0057Q0000072H99QAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Prisco Santonicola"
+            "name": "PRISCO SANTONICOLA"
         },
         {
             "id": "0057Q0000072H9EQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Antonella Gemmabella"
+            "name": "ANTONELLA GEMMABELLA"
         },
         {
             "id": "0057Q0000072H9iQAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Filippo D'Errigo"
+            "name": "FILIPPO D'ERRIGO"
         },
         {
             "id": "0057Q0000072H9xQAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Raffaele Palmieri"
+            "name": "RAFFAELE PALMIERI"
         },
         {
             "id": "0057Q0000072HA2QAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Salvatore Lo Verso"
+            "name": "SALVATORE LO VERSO"
         },
         {
             "id": "0057Q0000072LDoQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Raffaele Malfer"
+            "name": "RAFFAELE MALFER"
         },
         {
             "id": "0057Q0000072NVgQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Marco Milesi"
+            "name": "MARCO MILESI"
         },
         {
             "id": "0057Q0000072NVqQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Simona Dini"
+            "name": "SIMONA DINI"
         },
         {
             "id": "0057Q0000072NVvQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Nicola Cesaroni"
+            "name": "NICOLA CESARONI"
         },
         {
             "id": "0057Q0000072NW0QAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Roberto Dinelli"
+            "name": "ROBERTO DINELLI"
         },
         {
             "id": "0057Q0000072NW6QAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Roberto Mozzillo"
+            "name": "ROBERTO MOZZILLO"
         },
         {
             "id": "0057Q0000072NWjQAM",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Pierpaolo Favale"
-        },
-        {
-            "id": "0057Q0000072NWoQAM",
-            "roles": [
-                "primario"
-            ],
-            "name": "Fausto Mancini"
+            "name": "PIERPAOLO FAVALE"
         },
         {
             "id": "0057Q0000072Q5MQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Francesco Iacovone"
+            "name": "FRANCESCO IACOVONE"
         },
         {
             "id": "0057Q0000072SaNQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Alessio De Castro"
+            "name": "ALESSIO DE CASTRO"
         },
         {
             "id": "0057Q0000072TENQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Gianluca D'Alleo"
+            "name": "GIANLUCA D'ALLEO"
         },
         {
             "id": "0057Q0000072TFBQA2",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Raffaele Pisanò"
+            "name": "RAFFAELE PISANÒ"
         },
         {
             "id": "0057Q0000072UcSQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Alessandro Alessandra"
+            "name": "ALESSANDRO ALESSANDRA"
         },
         {
             "id": "0057Q0000072Yr5QAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Claudio Bonafini"
+            "name": "CLAUDIO BONAFINI"
         },
         {
             "id": "0057Q0000072YrAQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Corrado Salemi"
+            "name": "CORRADO SALEMI"
         },
         {
             "id": "0057Q0000072YrPQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Guido Migliarino"
+            "name": "GUIDO MIGLIARINO"
         },
         {
             "id": "0057Q0000072YryQAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Alessandro Cubeddu"
+            "name": "ALESSANDRO CUBEDDU"
         },
         {
             "id": "0057Q0000072Ys8QAE",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Ivano Collotta"
+            "name": "IVANO COLLOTTA"
         },
         {
             "id": "0057Q0000072YyGQAU",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Licia Russo"
+            "name": "LICIA RUSSO"
         },
         {
             "id": "0057Q0000072hWTQAY",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Antonio Conforti"
+            "name": "ANTONIO CONFORTI"
         },
         {
             "id": "0057Q0000072hWdQAI",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Massimo Urbano"
+            "name": "MASSIMO URBANO"
         },
         {
             "id": "0057Q0000072hWnQAI",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "Lamberto locche"
+            "name": "LAMBERTO LOCCHE"
         },
         {
             "id": "0057Q0000072hXvQAI",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "antonio campanile"
+            "name": "ANTONIO CAMPANILE"
         },
         {
             "id": "0057Q0000072hY5QAI",
             "roles": [
-                "primario"
+                "Technical Implementation Manager"
             ],
-            "name": "giovanni vespoli"
+            "name": "GIOVANNI VESPOLI"
         },
         {
-            "id": "0057Q00000378DUQAY",
+            "id": "0057Q00000BgPLJQA3",
             "roles": [
-                "primario",
-                "monitor"
+                "Technical Implementation Manager"
             ],
-            "name": "Edoardo Pregnolato"
+            "name": "FLAVIO MASO"
+        },
+        {
+            "id": "0057Q00000BgQ8QQAV",
+            "roles": [
+                "Technical Implementation Manager"
+            ],
+            "name": "PAOLO MOLLO"
+        },
+        {
+            "id": "0057Q00000BgnijQAB",
+            "roles": [
+                "Technical Implementation Manager"
+            ],
+            "name": "FRANCESCO PUCCIO"
+        },
+        {
+            "id": "0057Q00000BgnitQAB",
+            "roles": [
+                "Technical Implementation Manager"
+            ],
+            "name": "ALESSIO DEGOLA"
+        },
+        {
+            "id": "0057Q000005UXkDQAW",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "IACOPO PORTUNATO"
+        },
+        {
+            "id": "0057Q000005UXopQAG",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ORIELLA BARONE"
+        },
+        {
+            "id": "0057Q000005UXpJQAW",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DANILO DEL CONSOLE"
+        },
+        {
+            "id": "0057Q000005UXtlQAG",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIOVANNI PERGOLA"
+        },
+        {
+            "id": "0057Q000005u3BHQAY",
+            "roles": [
+                "Account Manager","Relazioni Istituzionali"
+            ],
+            "name": "PIETRO DISI"
+        },
+        {
+            "id": "0057Q000005xrdMQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FRANCESCO ZOTTA"
+        },
+        {
+            "id": "0057Q0000070paFQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANDREA PICCOLI"
+        },
+        {
+            "id": "0057Q0000070paUQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANTONIO CANDIELLO"
+        },
+        {
+            "id": "0057Q0000070paoQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANGELO PIZZULO"
+        },
+        {
+            "id": "0057Q0000070pfGQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIUSEPPE FACINO"
+        },
+        {
+            "id": "0057Q0000070pfaQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIUSEPPE MANCINELLI"
+        },
+        {
+            "id": "0057Q0000070pfpQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "CHIARA MARTINI"
+        },
+        {
+            "id": "0057Q0000070pojQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ALFONSO FIORENTINO"
+        },
+        {
+            "id": "0057Q0000070ppDQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "BARBARA BALDACCHINI"
+        },
+        {
+            "id": "0057Q0000070q2eQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MICHELE LO SQUADRO"
+        },
+        {
+            "id": "0057Q0000070q2yQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "PAOLO STRANGIS"
+        },
+        {
+            "id": "0057Q0000070qBdQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FRANCESCO IOZZI"
+        },
+        {
+            "id": "0057Q0000070qG0QAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MICHELE LEONE"
+        },
+        {
+            "id": "0057Q0000070qGAQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FRANCESCO BIANCHI"
+        },
+        {
+            "id": "0057Q0000070qGeQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MATTEO DELLI CARRI"
+        },
+        {
+            "id": "0057Q0000070qGjQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ESTER ANZALONE"
+        },
+        {
+            "id": "0057Q0000070qHDQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ROBERTO PASTORINO"
+        },
+        {
+            "id": "0057Q0000070qQCQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "SILVIA BARBIERI"
+        },
+        {
+            "id": "0057Q0000070qQRQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ELISABETTA CARFAGNA"
+        },
+        {
+            "id": "0057Q0000070qVrQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "CORRADO ZOCCALI"
+        },
+        {
+            "id": "0057Q0000070qaJQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "RAFFAELE MOSCA"
+        },
+        {
+            "id": "0057Q0000070qelQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARCO VIRNO"
+        },
+        {
+            "id": "0057Q0000070qj8QAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "RAFFAELE SANTO"
+        },
+        {
+            "id": "0057Q0000070qjDQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LAURA AGLIO"
+        },
+        {
+            "id": "0057Q0000070qjNQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ALEX BOSCHETTI"
+        },
+        {
+            "id": "0057Q0000071oNhQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "PAOLO CAMUTI BORANI"
+        },
+        {
+            "id": "0057Q0000071oO6QAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "RAFFAELE CARTOCCI"
+        },
+        {
+            "id": "0057Q0000071oOBQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "SARA GUTTILLA"
+        },
+        {
+            "id": "0057Q0000071ohRQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "PAOLA LORENZELLI"
+        },
+        {
+            "id": "0057Q0000071ohWQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARIO ALBERTO DEL GIUDICE"
+        },
+        {
+            "id": "0057Q0000071ohbQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LUIGI MARZANO"
+        },
+        {
+            "id": "0057Q0000071ohgQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MATTIA CAZZAMALLI"
+        },
+        {
+            "id": "0057Q0000071ohlQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "JACOPO GANDIN"
+        },
+        {
+            "id": "0057Q0000071oyvQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LUIS GATTO"
+        },
+        {
+            "id": "0057Q0000071p3DQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ROSSANA MURATORE"
+        },
+        {
+            "id": "0057Q0000071p3IQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARCO MONTEMAGNO MANCINI"
+        },
+        {
+            "id": "0057Q0000071p3SQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ROSARIO ALAGNA"
+        },
+        {
+            "id": "0057Q0000071p3cQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "PAOLINO FIERRO"
+        },
+        {
+            "id": "0057Q0000071p3hQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LORELLA VIVONA"
+        },
+        {
+            "id": "0057Q0000071pDKQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARIA LUISA GALLO"
+        },
+        {
+            "id": "0057Q0000071pDPQAY",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARILENA TALLARIDA"
+        },
+        {
+            "id": "0057Q00000729pMQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "CLAUDIO SCARPA"
+        },
+        {
+            "id": "0057Q00000729pbQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIOVANNI PIZZA"
+        },
+        {
+            "id": "0057Q00000729pgQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANDREA ROSSI"
+        },
+        {
+            "id": "0057Q00000729pqQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "JONATHAN CAMMILLERI"
+        },
+        {
+            "id": "0057Q00000729pvQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANTONELLO BOTTE"
+        },
+        {
+            "id": "0057Q00000729q5QAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MASSIMO STANISCIA"
+        },
+        {
+            "id": "0057Q00000729qtQAA",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIUSEPPE CAZZORLA"
+        },
+        {
+            "id": "0057Q0000072G1NQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FULVIA CALASCIBETTA"
+        },
+        {
+            "id": "0057Q0000072GDdQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ALESSANDRO FERRARA"
+        },
+        {
+            "id": "0057Q0000072GEHQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARCO MALANDRINO"
+        },
+        {
+            "id": "0057Q0000072GEMQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MORENA MORETTI"
+        },
+        {
+            "id": "0057Q0000072GEWQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DIEGO GARDINI"
+        },
+        {
+            "id": "0057Q0000072GEbQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LUIGI D'AMBROSIO"
+        },
+        {
+            "id": "0057Q0000072GFAQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DAVIDE D'APRILE"
+        },
+        {
+            "id": "0057Q0000072GFoQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "VINCENZO MUNERONI"
+        },
+        {
+            "id": "0057Q0000072GFtQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ARNALDO MERANTE"
+        },
+        {
+            "id": "0057Q0000072GIdQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ROCCO DEFINA"
+        },
+        {
+            "id": "0057Q0000072GIiQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FRANCO MICOLI"
+        },
+        {
+            "id": "0057Q0000072GKPQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "GIANPIERO SEPE"
+        },
+        {
+            "id": "0057Q0000072GKUQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ROBERTA TRAGNO"
+        },
+        {
+            "id": "0057Q0000072GLDQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "VITO LA MARCA"
+        },
+        {
+            "id": "0057Q0000072GLIQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANDREA INGROSSO"
+        },
+        {
+            "id": "0057Q0000072GLNQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MIRKO LANDOLFO"
+        },
+        {
+            "id": "0057Q0000072HExQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ACHILLE MONTANARO"
+        },
+        {
+            "id": "0057Q0000072NVWQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANTONIO DI MARINO"
+        },
+        {
+            "id": "0057Q0000072NVbQAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MAURIZIO CAIAZZA"
+        },
+        {
+            "id": "0057Q0000072NW5QAM",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "VITTORIA TASCIO"
+        },
+        {
+            "id": "0057Q0000072NWAQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FABIO POZZI"
+        },
+        {
+            "id": "0057Q0000072NWPQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DAVIDE FERRARI"
+        },
+        {
+            "id": "0057Q0000072NWUQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FEDERICO GROPPO"
+        },
+        {
+            "id": "0057Q0000072NWZQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MASSIMO DALMAZZI"
+        },
+        {
+            "id": "0057Q0000072Q5RQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DARIO CAPRIO"
+        },
+        {
+            "id": "0057Q0000072TEDQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "FEDERICO MARIA DE SCALZI"
+        },
+        {
+            "id": "0057Q0000072TEIQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARTINA ORSINI"
+        },
+        {
+            "id": "0057Q0000072UWPQA2",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "CELESTINO IORIO"
+        },
+        {
+            "id": "0057Q0000072YrKQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LUIGI MARAFANTE"
+        },
+        {
+            "id": "0057Q0000072YrZQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANGELO CAPODIECI"
+        },
+        {
+            "id": "0057Q0000072YrjQAE",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANTONIO CAPODIECI"
+        },
+        {
+            "id": "0057Q0000072YsDQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "DANIELA BELOTTI"
+        },
+        {
+            "id": "0057Q0000072YyQQAU",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MONICA MENINI"
+        },
+        {
+            "id": "0057Q0000072hXlQAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MICHELE SCHILLIZZI"
+        },
+        {
+            "id": "0057Q0000072hY0QAI",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "SILVIA BENDINELLI"
+        },
+        {
+            "id": "0057Q0000072y3OQAQ",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANTONIO NOCELLA"
+        },
+        {
+            "id": "0057Q00000BgIkMQAV",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANDREA BOGLIO"
+        },
+        {
+            "id": "0057Q00000BgQVAQA3",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "ANNA MARIA FIORI"
+        },
+        {
+            "id": "0057Q00000BgQVFQA3",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "LUISA ATZEI"
         },
         {
             "id": "0057Q0000071pD0QAI",
             "roles": [
-                "areamanager","campagne","productowner"
+                "Area Manager"
             ],
-            "name": "Valentina Fiorentini",
+            "name": "VALENTINA FIORENTINI",
             "area": "NORD_EST",
             "acm": [
                 {
-                    "id": "0057Q0000070qjNQAQ",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Alex Boschetti"
-                },
-                {
-                    "id": "0057Q0000072GDdQAM",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Alessandro Ferrara"
-                },
-                {
-                    "id": "0057Q0000070paFQAQ",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Andrea Piccoli"
-                },
-                {
-                    "id": "0057Q0000072GEMQA2",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Morena Moretti"
-                },
-                {
-                    "id": "0057Q0000072GEWQA2",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Diego Gardini"
-                },
-                {
-                    "id": "0057Q0000072GEbQAM",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Luigi D'Ambrosio"
-                },
-                {
-                    "id": "0057Q0000071oNhQAI",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Paolo Camuti Borani"
-                },
-                {
-                    "id": "0057Q0000071oO6QAI",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Raffaele Cartocci"
-                },
-                {
-                    "id": "0057Q0000070qjDQAQ",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Laura Aglio"
-                },
-                {
-                    "id": "0057Q0000070paUQAQ",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Antonio Candiello"
-                },
-                {
-                    "id": "0057Q0000070qGAQAY",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Francesco Bianchi"
-                },
-                {
-                    "id": "0057Q0000071oOBQAY",
-                    "roles": [
-                        "primario"
-                    ],
-                    "name": "Sara Guttilla"
-                },
-                {
                     "id": "0057Q000005UXkDQAW",
                     "roles": [
-                        "primario"
+                        "Account Manager"
                     ],
-                    "name": "Iacopo Portunato"
+                    "name": "IACOPO PORTUNATO"
                 },
                 {
                     "id": "0057Q000005xrdMQAQ",
                     "roles": [
-                        "primario"
+                        "Account Manager"
                     ],
-                    "name": "Francesco Zotta"
+                    "name": "FRANCESCO ZOTTA"
                 },
-                
+                {
+                    "id": "0057Q0000070paFQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANDREA PICCOLI"
+                },
+                {
+                    "id": "0057Q0000070paUQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANTONIO CANDIELLO"
+                },
+                {
+                    "id": "0057Q0000070qGAQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FRANCESCO BIANCHI"
+                },
+                {
+                    "id": "0057Q0000070qjDQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LAURA AGLIO"
+                },
+                {
+                    "id": "0057Q0000070qjNQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ALEX BOSCHETTI"
+                },
+                {
+                    "id": "0057Q0000071oNhQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "PAOLO CAMUTI BORANI"
+                },
+                {
+                    "id": "0057Q0000071oO6QAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "RAFFAELE CARTOCCI"
+                },
+                {
+                    "id": "0057Q0000071oOBQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "SARA GUTTILLA"
+                },
+                {
+                    "id": "0057Q0000072GDdQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ALESSANDRO FERRARA"
+                },
                 {
                     "id": "0057Q0000072GEHQA2",
                     "roles": [
-                        "primario"
+                        "Account Manager"
                     ],
-                    "name": "Marco Malandrino"
+                    "name": "MARCO MALANDRINO"
+                },
+                {
+                    "id": "0057Q0000072GEMQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MORENA MORETTI"
+                },
+                {
+                    "id": "0057Q0000072GEWQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DIEGO GARDINI"
+                },
+                {
+                    "id": "0057Q0000072GEbQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LUIGI D'AMBROSIO"
                 }
             ]
+        },
+        {
+            "id": "0057Q00000729qKQAQ",
+            "roles": [
+                "Area Manager"
+            ],
+            "name": "ADELAIDE RAMASSOTTO",
+            "area": "NORD_OVEST",
+            "acm": [
+                {
+                    "id": "0057Q0000070pfpQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "CHIARA MARTINI"
+                },
+                {
+                    "id": "0057Q0000070qHDQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ROBERTO PASTORINO"
+                },
+                {
+                    "id": "0057Q0000071pDKQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARIA LUISA GALLO"
+                },
+                {
+                    "id": "0057Q0000071pDPQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARILENA TALLARIDA"
+                },
+                {
+                    "id": "0057Q0000072GLIQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANDREA INGROSSO"
+                },
+                {
+                    "id": "0057Q0000072GLNQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MIRKO LANDOLFO"
+                },
+                {
+                    "id": "0057Q0000072HExQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ACHILLE MONTANARO"
+                },
+                {
+                    "id": "0057Q0000072NWPQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DAVIDE FERRARI"
+                },
+                {
+                    "id": "0057Q0000072NWUQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FEDERICO GROPPO"
+                },
+                {
+                    "id": "0057Q0000072NWZQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MASSIMO DALMAZZI"
+                },
+                {
+                    "id": "0057Q0000072TEDQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FEDERICO MARIA DE SCALZI"
+                },
+                {
+                    "id": "0057Q0000072TEIQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARTINA ORSINI"
+                },
+                {
+                    "id": "0057Q0000072YsDQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DANIELA BELOTTI"
+                },
+                {
+                    "id": "0057Q0000072hXlQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MICHELE SCHILLIZZI"
+                },
+                {
+                    "id": "0057Q00000BgIkMQAV",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANDREA BOGLIO"
+                }
+            ]
+        },
+        {
+            "id": "0057Q00000375LXQAY",
+            "roles": [
+                "Area Manager"
+            ],
+            "name": "ALVISE DE SANCTIS",
+            "area": "LOMBARDIA",
+            "acm": [
+                {
+                    "id": "0057Q0000070paoQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANGELO PIZZULO"
+                },
+                {
+                    "id": "0057Q0000070pfGQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIUSEPPE FACINO"
+                },
+                {
+                    "id": "0057Q0000070qGeQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MATTEO DELLI CARRI"
+                },
+                {
+                    "id": "0057Q0000070qGjQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ESTER ANZALONE"
+                },
+                {
+                    "id": "0057Q0000071ohRQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "PAOLA LORENZELLI"
+                },
+                {
+                    "id": "0057Q0000071ohWQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARIO ALBERTO DEL GIUDICE"
+                },
+                {
+                    "id": "0057Q0000071ohbQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LUIGI MARZANO"
+                },
+                {
+                    "id": "0057Q0000071ohgQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MATTIA CAZZAMALLI"
+                },
+                {
+                    "id": "0057Q0000071ohlQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "JACOPO GANDIN"
+                },
+                {
+                    "id": "0057Q0000072GIdQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ROCCO DEFINA"
+                },
+                {
+                    "id": "0057Q0000072GIiQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FRANCO MICOLI"
+                },
+                {
+                    "id": "0057Q0000072NVWQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANTONIO DI MARINO"
+                },
+                {
+                    "id": "0057Q0000072NVbQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MAURIZIO CAIAZZA"
+                },
+                {
+                    "id": "0057Q0000072YrKQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LUIGI MARAFANTE"
+                },
+                {
+                    "id": "0057Q0000072YyQQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MONICA MENINI"
+                },
+                {
+                    "id": "0057Q0000072y3OQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANTONIO NOCELLA"
+                }
+            ]
+        },
+        {
+            "id": "0057Q0000071OmEQAU",
+            "roles": [
+                "Area Manager"
+            ],
+            "name": "ALBERTO GIACCARI",
+            "area": "SUD_EST",
+            "acm": [
+                {
+                    "id": "0057Q000005UXpJQAW",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DANILO DEL CONSOLE"
+                },
+                {
+                    "id": "0057Q000005UXtlQAG",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIOVANNI PERGOLA"
+                },
+                {
+                    "id": "0057Q0000070q2eQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MICHELE LO SQUADRO"
+                },
+                {
+                    "id": "0057Q0000070qG0QAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MICHELE LEONE"
+                },
+                {
+                    "id": "0057Q0000070qelQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARCO VIRNO"
+                },
+                {
+                    "id": "0057Q0000070qj8QAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "RAFFAELE SANTO"
+                },
+                {
+                    "id": "0057Q00000729pMQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "CLAUDIO SCARPA"
+                },
+                {
+                    "id": "0057Q00000729q5QAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MASSIMO STANISCIA"
+                },
+                {
+                    "id": "0057Q00000729qtQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIUSEPPE CAZZORLA"
+                },
+                {
+                    "id": "0057Q0000072YrZQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANGELO CAPODIECI"
+                },
+                {
+                    "id": "0057Q0000072YrjQAE",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANTONIO CAPODIECI"
+                }
+            ]
+        },
+        {
+            "id": "0057Q00000375H0QAI",
+            "roles": [
+                "Area Manager"
+            ],
+            "name": "MICHELE VITIELLO",
+            "area": "SUD_OVEST",
+            "acm": [
+                {
+                    "id": "0057Q000005UXopQAG",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ORIELLA BARONE"
+                },
+                {
+                    "id": "0057Q0000070q2yQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "PAOLO STRANGIS"
+                },
+                {
+                    "id": "0057Q0000070qBdQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FRANCESCO IOZZI"
+                },
+                {
+                    "id": "0057Q0000070qVrQAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "CORRADO ZOCCALI"
+                },
+                {
+                    "id": "0057Q0000070qaJQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "RAFFAELE MOSCA"
+                },
+                {
+                    "id": "0057Q0000071oyvQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LUIS GATTO"
+                },
+                {
+                    "id": "0057Q0000071p3DQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ROSSANA MURATORE"
+                },
+                {
+                    "id": "0057Q0000071p3IQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARCO MONTEMAGNO MANCINI"
+                },
+                {
+                    "id": "0057Q0000071p3SQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ROSARIO ALAGNA"
+                },
+                {
+                    "id": "0057Q0000071p3cQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "PAOLINO FIERRO"
+                },
+                {
+                    "id": "0057Q0000071p3hQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LORELLA VIVONA"
+                },
+                {
+                    "id": "0057Q00000729pbQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIOVANNI PIZZA"
+                },
+                {
+                    "id": "0057Q00000729pgQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANDREA ROSSI"
+                },
+                {
+                    "id": "0057Q00000729pqQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "JONATHAN CAMMILLERI"
+                },
+                {
+                    "id": "0057Q00000729pvQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANTONELLO BOTTE"
+                },
+                {
+                    "id": "0057Q0000072G1NQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FULVIA CALASCIBETTA"
+                },
+                {
+                    "id": "0057Q0000072GKPQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIANPIERO SEPE"
+                },
+                {
+                    "id": "0057Q0000072GKUQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ROBERTA TRAGNO"
+                },
+                {
+                    "id": "0057Q0000072GLDQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "VITO LA MARCA"
+                },
+                {
+                    "id": "0057Q0000072UWPQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "CELESTINO IORIO"
+                }
+            ]
+        },
+        {
+            "id": "0057Q00000375HAQAY",
+            "roles": [
+                "Area Manager"
+            ],
+            "name": "SANDRO PIANA",
+            "area": "CENTRO",
+            "acm": [
+                {
+                    "id": "0057Q000005u3BHQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "PIETRO DISI"
+                },
+                {
+                    "id": "0057Q0000070pfaQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "GIUSEPPE MANCINELLI"
+                },
+                {
+                    "id": "0057Q0000070pojQAA",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ALFONSO FIORENTINO"
+                },
+                {
+                    "id": "0057Q0000070ppDQAQ",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "BARBARA BALDACCHINI"
+                },
+                {
+                    "id": "0057Q0000070qQCQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "SILVIA BARBIERI"
+                },
+                {
+                    "id": "0057Q0000070qQRQAY",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ELISABETTA CARFAGNA"
+                },
+                {
+                    "id": "0057Q0000072GFAQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DAVIDE D'APRILE"
+                },
+                {
+                    "id": "0057Q0000072GFoQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "VINCENZO MUNERONI"
+                },
+                {
+                    "id": "0057Q0000072GFtQAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ARNALDO MERANTE"
+                },
+                {
+                    "id": "0057Q0000072NW5QAM",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "VITTORIA TASCIO"
+                },
+                {
+                    "id": "0057Q0000072NWAQA2",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "FABIO POZZI"
+                },
+                {
+                    "id": "0057Q0000072Q5RQAU",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "DARIO CAPRIO"
+                },
+                {
+                    "id": "0057Q0000072hY0QAI",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "SILVIA BENDINELLI"
+                },
+                {
+                    "id": "0057Q00000BgQVAQA3",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "ANNA MARIA FIORI"
+                },
+                {
+                    "id": "0057Q00000BgQVFQA3",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "LUISA ATZEI"
+                }
+            ]
+        },
+
+        {
+            "id": "0057Q0000072NWoQAM",
+            "roles": [
+                "Osservatorio"
+            ],
+            "name": "FAUSTO MANCINI"
+        },
+        {
+            "id": "0057Q00000375UHQAY",
+            "roles": [
+                "Osservatorio"
+            ],
+            "name": "MARIACHIARA FORTUNA"
+        },
+        {
+            "id": "0057Q000008GbNiQAK",
+            "roles": [
+                "Osservatorio"
+            ],
+            "name": "GABRIELE SPINA"
+        },
+        {
+            "id": "0057Q000007359cQAA",
+            "roles": [
+                "Osservatorio"
+            ],
+            "name": "CAROLINA ALKER"
+        },
+        {
+            "id": "0057Q0000037gR7QAI",
+            "roles": [
+                "Relazioni Istituzionali"
+            ],
+            "name": "DANIELE DE BERNARDIN"
+        },
+        {
+            "id": "0057Q000003758LQAQ",
+            "roles": [
+                "Relazioni Istituzionali"
+            ],
+            "name": "CHIARA JACINI"
+        },
+        {
+            "id": "0057Q000003758BQAQ",
+            "roles": [
+                "Relazioni Istituzionali"
+            ],
+            "name": "CHIARA DANEO"
+        },
+        {
+            "id": "0057Q0000072G1wQAE",
+            "roles": [
+                "Relazioni Istituzionali"
+            ],
+            "name": "FABRIZIO ARDUINI"
+        },
+        {
+            "id": "0057Q000005UXjoQAG",
+            "roles": [
+                "TO Executive"
+            ],
+            "name": "FABRIZIO SALVATORE"
+        },
+        {
+            "id": "0057Q0000070q2UQAQ",
+            "roles": [
+                "TO Executive"
+            ],
+            "name": "FEDERICA MATTA"
+        },
+        {
+            "id": "0057Q0000072WduQAE",
+            "roles": [
+                "TO Executive"
+            ],
+            "name": "MARIELVA DE GROSSI"
+        },
+        {
+            "id": "0057Q000008EGNWQA4",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "DANIELE AMURRI"
+        },
+        {
+            "id": "0057Q0000070pauQAA",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "ANTONIO LISI"
+        },
+        {
+            "id": "0057Q000005uL1rQAE",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "SIMONE JACCA"
+        },
+        {
+            "id": "0057Q00000377sBQAQ",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "LUCIANO NOEL CASTRO"
+        },
+        {
+            "id": "0057Q0000070ppNQAQ",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "FRANCESCO CASTELLANI"
+        },
+        {
+            "id": "0057Q0000070q33QAA",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "FRANCESCO SANTORO"
+        },
+        {
+            "id": "0057Q0000072CnuQAE",
+            "roles": [
+                "Product Owner"
+            ],
+            "name": "ALESSIO ZOLLA"
         }
+
+        
+        
+
+
     ]
 }

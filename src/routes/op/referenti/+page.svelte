@@ -2,13 +2,19 @@
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import Referentecard from './referentecard.svelte';
-	import { areaManager } from '$lib/js/shared';
+	import { areaManager, formatNumber } from '$lib/js/shared';
 	export let data;
+
+	const MAXVIEW = 200;
 
 	let pregnolato = false;
 
 	let memes = [
-		{ id: 1, img: 'scuola', label: 'Pregnolato che scopre un comune senza scuola... che ha candidato "Mensa scolastica"' },
+		{
+			id: 1,
+			img: 'scuola',
+			label: 'Pregnolato che scopre un comune senza scuola... che ha candidato "Mensa scolastica"'
+		},
 		{ id: 2, img: 'parere', label: "Pregnolato che aspetta il parere dell'account" },
 		{ id: 3, img: 'liquida', label: 'Pregnolato che liquida scuole e comuni' },
 		{ id: 4, img: 'proroghe', label: "Pregnolato che approva le proroghe dell'ultimo minuto" },
@@ -85,8 +91,8 @@
 	let filterNominativoReferente = '';
 	let filterTelefonoReferente = '';
 
-	$: filteredReferenti = data.referenti
-	.filter((x) =>
+	$: ff = data.referenti
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
@@ -114,6 +120,8 @@
 					? x.MobilePhone.includes(filterTelefonoReferente)
 					: false
 		);
+
+	$: filteredReferenti = ff.slice(0, MAXVIEW);
 
 	let caru;
 
@@ -145,6 +153,13 @@
 		author="Lillian Hellman"
 	/>
 
+	{#if ff.length>MAXVIEW}
+	<div class="alert alert-warning" role="alert">
+		Sono visualizzati {MAXVIEW} su {formatNumber(ff.length)} referenti. Agisci sui filtri di ricerca per
+		restringere il numero di risultati.
+	</div>
+	{/if}
+
 	<div class="row">
 		<!--
 		<div class="col-12 col-lg-6 my-4">
@@ -159,18 +174,18 @@
 		</div>
 		-->
 		{#if areaManager(data.utentestandard.idsf)}
-		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
-			<div class="select-wrapper">
-				<label for="filterAcm">Account Manager</label>
-				<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
-					{#each acmOptions as te}
-						<option value={te.Id}>{te.Name}</option>
-					{/each}
-				</select>
+			<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf) ? '4' : '3'} my-4">
+				<div class="select-wrapper">
+					<label for="filterAcm">Account Manager</label>
+					<select id="filterAcm" name="filterAcm" bind:value={filterAcm}>
+						{#each acmOptions as te}
+							<option value={te.Id}>{te.Name}</option>
+						{/each}
+					</select>
+				</div>
 			</div>
-		</div>
 		{/if}
-		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf) ? '4' : '3'} my-4">
 			<div class="select-wrapper">
 				<label for="filterStatoReferente">Stato</label>
 				<select
@@ -184,7 +199,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf) ? '4' : '3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoEnte">Nome dell'Ente</label>
 				<input
@@ -197,7 +212,7 @@
 				/>
 			</div>
 		</div>
-		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf) ? '4' : '3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoReferente">Nominativo del referente</label>
 				<input
@@ -210,7 +225,7 @@
 				/>
 			</div>
 		</div>
-		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf)?'4':'3'} my-4">
+		<div class="col-12 col-lg-{areaManager(data.utentestandard.idsf) ? '4' : '3'} my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoReferente"
 					>Numero di telefono del referente</label
