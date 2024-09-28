@@ -1,6 +1,7 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
-import { areaManager } from '$lib/js/shared';
+import { areaManager, viewall } from '$lib/js/shared';
+
 
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
@@ -8,6 +9,7 @@ export const handle = async ({ event, resolve }) => {
 
     let cookiesfuidstd = event.cookies.get('session_id_std');
     let cookiesfuidass = event.cookies.get('session_id_ass');
+    
     if (cookiesfuidstd) loggedstandard = true;
     if (cookiesfuidass) loggedasseveratore = true;
 
@@ -24,11 +26,9 @@ export const handle = async ({ event, resolve }) => {
     let utentestandard = event.locals.utentestandard;
     let utenteasseveratore = event.locals.utenteasseveratore;
 
-
     let sessionerror = '';
 
     if (loggedstandard && !utentestandard) {
-
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: cookiesfuidstd
@@ -44,6 +44,7 @@ export const handle = async ({ event, resolve }) => {
                     cookiesfuidstd = null;
                 } else {
                     idutentesf = res.user_id;
+                   
                 }
 
             });
@@ -53,6 +54,11 @@ export const handle = async ({ event, resolve }) => {
             utentestandard.idsf = idutentesf;
             utentestandard.viewas = idutentesf; 
             const am = areaManager(idutentesf);
+            const oss = viewall(idutentesf);
+           
+            if(oss){
+                utentestandard.vasoss=true
+            }
             if(am){
                 utentestandard.viewas = am.acm.map((x) => (x.id)).join("','");
                 utentestandard.area = am.area;
@@ -100,14 +106,15 @@ export const handle = async ({ event, resolve }) => {
             loggedasseveratore = false;
             cookiesfuidass = null;
             utenteasseveratore = null;
-            
+
         }
 
     }
 
+
     
 
-
+    
     event.locals.user = {
         loggedstandard: loggedstandard,
         connectionStandard: cookiesfuidstd,
@@ -117,7 +124,6 @@ export const handle = async ({ event, resolve }) => {
         utenteasseveratore: utenteasseveratore,
         sessionerror: sessionerror
     };
-
 
     return resolve(event);
 

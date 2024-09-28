@@ -27,31 +27,31 @@ export async function load({ locals }) {
 
         const nmisure = promiseQuery(conn, `select Id, Name, outfunds__Start_Date__c,outfunds__End_Date__c,  outfunds__Status__c, outfunds__Total_Program_Amount__c from outfunds__Funding_Program__c where IsDeleted =false and outfunds__Parent_Funding_Program__c = '' and outfunds__Total_Program_Amount__c != null order by Name`, MAX_FETCH);
 
-        const nincandidatura = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const nincandidatura = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA') `,MAX_FETCH );
-        const nincontrattualizzazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const nincontrattualizzazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c = null `,MAX_FETCH );
-        const ninrealizzazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ninrealizzazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c = '' `,MAX_FETCH );
-        const ninrevisione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ninrevisione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c != '' `,MAX_FETCH );
-        const ninverificatecnica = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ninverificatecnica = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO','IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c != 'Positivo' and Ultimo_Esito_Conformit_Tecnica__c != 'Negativo' `,MAX_FETCH );
-        const ndevonorichiedereerogazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ndevonorichiedereerogazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') `,MAX_FETCH );
-        const ninverificaformale = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ninverificaformale = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') `,MAX_FETCH );
-        const ninliquidazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const ninliquidazione = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN LIQUIDAZIONE') `,MAX_FETCH );
-        const nliquidate = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
+        const nliquidate = promiseQuery(conn,`select Id, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c,Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name,outfunds__FundingProgram__r.Name, PacchettoProgram__c,  outfunds__Applying_Organization__r.Regione__c, outfunds__Applying_Organization__r.Tipologia_Ente__c 
         from outfunds__Funding_Request__c
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('LIQUIDATO') `,MAX_FETCH );
 
@@ -105,6 +105,14 @@ export async function load({ locals }) {
                 }else{
                     c.misura = '1.1 Infrastrutture digitali';
                     c.valore = c.valore1;
+                }
+            }
+
+            if(c.misura === '1.4.4 Adozione identità digitale'){
+                if(c.outfunds__FundingProgram__r.Name.indexOf("ANSC")>-1){
+                    c.PacchettoProgram__c = 'ANPR/ANSC'
+                }else{
+                    c.PacchettoProgram__c = 'SPID/CIE'
                 }
             }
         }); 
