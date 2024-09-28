@@ -16,14 +16,14 @@ export async function load({ locals, params }) {
         });
         const e = await promiseQuery(conn, `Select Name from Account where Id = '` + idente + `'`, 100);
         if (e && e.length === 1) {
-            const risposte_res = await fetch('https://rollingwords.it/dist/quest/survey_anci.json', {
+            const risposte_res = await fetch('https://rollingwords.it/temp/survey_anci.json', {
                 method: 'GET',
                 credentials: 'same-origin',
                 redirect: 'follow',
                 agent: null,
                 headers: {
                     "Content-Type": "text/plain",
-                    'Authorization': 'Basic ' + btoa(UNCI + ':' + UPCI.replaceAll('##', '$')),
+                    //'Authorization': 'Basic ' + btoa(UNCI + ':' + UPCI.replaceAll('##', '$')),
                 },
                 timeout: 10000
             });
