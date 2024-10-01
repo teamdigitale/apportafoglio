@@ -95,8 +95,8 @@
 		</div>
 
 		<div class="col-12 col-lg-10 it-page-sections-container">
-            <h2>Controlli di Alert e Warning</h2>
-            <p>Nelle sezioni seguenti vengono riportate le domande per le quali vengono fatti controlli di Alert o Warning, indicandone la logica.</p>
+            <h2>Criteri di alert e warning</h2>
+            <p>Nelle sezioni seguenti vengono riportate le domande per le quali vengono fatti controlli di alert o warning, indicandone la logica.</p>
 			{#each survey.pages.filter((x) => x.title !== 'ANAGRAFICA' && x.title !== 'GOVERNANCE E INNOVAZIONE') as p}
 				<h5 id="heading-{p.id}">{p.title}</h5>
 				{#each survey.questions.filter((x) => x.page_number === p.id) as q}

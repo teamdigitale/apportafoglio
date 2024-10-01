@@ -16,7 +16,7 @@ export async function load({ locals, params }) {
         });
         const e = await promiseQuery(conn, `Select Name from Account where Id = '` + idente + `'`, 100);
         if (e && e.length === 1) {
-            const risposte_res = await fetch('https://rollingwords.it/dist/quest/survey_anci.json', {
+            const risposte_res = await fetch('https://rollingwords.it/dist/quest/surveycom.php?id='+idente, {
                 method: 'GET',
                 credentials: 'same-origin',
                 redirect: 'follow',
@@ -24,8 +24,9 @@ export async function load({ locals, params }) {
                 headers: {
                     "Content-Type": "text/plain",
                     'Authorization': 'Basic ' + btoa(UNCI + ':' + UPCI),
+
                 },
-                timeout: 10000
+                timeout: 100000
             });
             const risposte = await risposte_res.json();
             const risp = risposte.data.filter(x => x.pa2026.id === idente)[0];
@@ -40,13 +41,10 @@ export async function load({ locals, params }) {
                     })
                 });
             });
-
-            
             risp.surveyanci.sezioni.forEach(s => {
                 s.domande.forEach(d => {
                    d.domanda = dd.find(x => x.codice ===d.codice).domanda;
                    d.options = dd.find(x => x.codice ===d.codice).options;
-                   
                    
                 });
             });

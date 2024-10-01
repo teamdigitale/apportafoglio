@@ -40,7 +40,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-12 col-lg-2">
+		<div class="col-12 col-lg-3">
 			<div data-bs-toggle="sticky" data-bs-stackable="true">
 				<nav
 					class="navbar it-navscroll-wrapper navbar-expand-lg it-bottom-navscroll it-right-side"
@@ -107,7 +107,7 @@
 			</div>
 		</div>
 		{#if data.risposta}
-			<div class="col-12 col-lg-10 it-page-sections-container">
+			<div class="col-12 col-lg-9 it-page-sections-container">
 				<h5 id="heading-com">
 					{data.risposta.nome}
 				</h5>
@@ -131,10 +131,13 @@
 								<Utente {s} />
 							</div>
 							<div class="col-12 col-lg-4">
+								<!--
 								<Demografico censimento={data.risposta.censimento} />
+							-->
 								<Insights {s} />
 								
 							</div>
+							
 						</div>
 					{/if}
 					{#if s.codice === '2'}

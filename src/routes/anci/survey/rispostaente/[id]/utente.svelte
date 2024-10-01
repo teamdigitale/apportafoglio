@@ -14,7 +14,7 @@
 			<div class="categoryicon-top">
 				<svg class="icon"><use href="/svg/sprites.svg#it-user"></use></svg>
 				<span class="text text-primary"
-					><b>Dati del referente per la compilazione del questionario</b></span
+					><b>Dati del referente del Comune per la compilazione del questionario</b></span
 				>
 			</div>
 

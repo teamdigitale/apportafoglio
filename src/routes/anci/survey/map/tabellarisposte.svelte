@@ -5,9 +5,13 @@
 
 	export let risposte;
 
+
+
 	let cperpage;
 	let cp = 0;
 </script>
+
+
 
 <div class="table-responsive">
 	<table class="table table-hover table-sm caption-top align-middle">
@@ -15,8 +19,7 @@
 		<thead>
 			<tr>
 				<th><small>Comune</small></th>
-				<th class="text-center"><small>Questionario aperto</small></th>
-				<th class="text-center"><small>Questionario completato</small></th>
+				<th class="text-center"><small>Stato del questionario</small></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,26 +29,22 @@
 						<td>
 							<small>{r.nome}</small>
 						</td>
-						<td class="text-center"
-							><small>
-								{#if r.surveyanci.aperto}
-									<svg class="icon icon-sm icon-primary"
-										><use href="/svg/sprites.svg#it-check-circle"></use></svg
+						<td class="text-center">
+							{#if r.surveyanci.aperto && !r.surveyanci.completato}
+								<small class="text-primary">In compilazione</small>
+							{:else if r.surveyanci.completato}
+								<a href="/anci/survey/rispostaente/{r.pa2026.id}" target="_blank">
+									<small class="text-success"
+										>Completato
+										<svg class="icon icon-sm icon-success"
+											><use href="/svg/sprites.svg#it-file"></use></svg
+										></small
 									>
-								{/if}
-							</small></td
-						>
-						<td class="text-center"
-							><small
-								>{#if r.surveyanci.completato}
-                                <a href="/anci/survey/rispostaente/{r.pa2026.id}" target="_blank">
-									<svg class="icon icon-sm icon-success"
-										><use href="/svg/sprites.svg#it-check-circle"></use></svg
-									>
-                                </a>
-								{/if}</small
-							></td
-						>
+								</a>
+							{:else}
+								<small class="text-danger">Mai aperto</small>
+							{/if}
+						</td>
 					</tr>
 				{/each}
 			{/if}

@@ -387,8 +387,8 @@
 											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio')
 											 || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') 
 											 || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali')
-											 //|| checkAbilitazione(data.utentestandard.idsf, 'Area Manager') 
-											 //|| checkAbilitazione(data.utentestandard.idsf, 'Account Manager') 
+											 || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') 
+											 || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') 
 											 
 											 )}
 												<!-- monitoraggio -->
@@ -401,7 +401,7 @@
 														aria-expanded="false"
 														id="ddanci"
 													>
-														<span>osservatorio</span>
+														<span>iniziative</span>
 														<svg class="icon icon-xs"
 															><use href="/svg/sprites.svg#it-expand"></use></svg
 														>

@@ -15,6 +15,7 @@
 
 	export let data;
 
+
 	let showinfo = false;
 
 	const toggleinfo = () => {
@@ -141,27 +142,41 @@
 
 	let expandedInsights = false;
 	let insightsWidth;
+
+
+	const statoRisp = (r) => {
+		if(r.surveyanci.aperto && !r.surveyanci.completato){
+			return "In compilazione";
+		}else if (r.surveyanci.completato){
+			return "Completato";
+		}else{
+			return "Mai aperto";
+		}
+	}
+
+	let stato = 'Tutti';
+
 </script>
 
 <div class="container my-4">
-	<h1>Mappa dei Comuni digitali</h1>
+	<h1>Mappa dei Comuni Digitali</h1>
 	<!--
 	Cite text="Se non chiedi, la risposta è sempre no." author="Nora Roberts" 
 	-->
 </div>
-
+<p>
+	È un’indagine, unica a livello nazionale per portata e caratteristiche, sullo stato di
+	digitalizzazione del territorio: un’attività di ricerca che prevede una raccolta puntuale di
+	informazioni che ANCI e Dipartimento stanno direttamente richiedendo ai Comuni tramite la
+	somministrazione di un questionario.
+</p>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
 	In base a quanto previsto dagli articoli 2, 12 e 13 comma 3 del DPCM 16 settembre 2014 (Codice di
 	comportamento e di tutela della dignità e dell’etica dei dirigenti e dei dipendenti della
-	Presidenza del Consiglio dei ministri), si ricorda che qualsiasi diffusione di informazioni e dati
-	riguardanti progetti e iniziative che coinvolgono questo Dipartimento e partner istituzionali o
-	l'Ufficio del Sottosegretario alla Presidenza del Consiglio dei ministri con delega
-	all’innovazione tecnologica dovrà essere preventivamente autorizzata dal Responsabile della
-	comunicazione e informazione istituzionale. Per richiedere l'autorizzazione, è necessario inviare
-	un’apposita richiesta alla seguente casella di posta elettronica: <a
-		href="mailto:g.campagnano@innovazione.gov.it">g.campagnano@innovazione.gov.it</a
-	>. Si raccomanda di rispettare rigorosamente tali disposizioni per evitare eventuali violazioni
-	del codice di comportamento.
+	Presidenza del Consiglio dei ministri), si ricorda che è vietata qualsiasi diffusione di
+	informazioni e dati riguardanti progetti e iniziative che coinvolgono questo Dipartimento a meno
+	di specifica autorizzazione. Si raccomanda di rispettare rigorosamente questa disposizione per
+	evitare violazioni del codice di comportamento.
 	<p>
 		<button
 			title="Ho capito"
@@ -175,27 +190,6 @@
 	</p>
 </div>
 {#if !showinfo}
-	<div class="alert alert-primary alert-dismissible fade show" role="alert">
-		<p>
-			E’ un’indagine, unica a livello nazionale per portata e caratteristiche, sullo stato di
-			digitalizzazione del territorio: un’attività di ricerca che prevede una raccolta puntuale di
-			informazioni che ANCI e Dipartimento stanno direttamente richiedendo ai Comuni tramite la
-			somministrazione di un questionario.<a href="#" role="button" on:click={toggleinfo}> Maggiori informazioni</a>
-		</p>
-
-		<p>
-			<button
-				title="Ho capito"
-				type="button"
-				class="btn-close"
-				data-bs-dismiss="alert"
-				aria-label="Chiudi"
-			>
-				<svg class="icon"><use href="/svg/sprites.svg#it-close"></use></svg>
-			</button>
-		</p>
-	</div>
-
 	<div class="row" transition:fade>
 		{#if !expandedInsights}
 			<div class="col-12 col-lg-3 border-end" transition:fade>
@@ -262,6 +256,7 @@
 					</div>
 					<h5 class="my-4">Filtri</h5>
 					<hr class="my-4" />
+	
 					<div>
 						<div class="select-wrapper my-2">
 							<label for="regione">Regione</label>
@@ -324,47 +319,74 @@
 						{regione}
 						{risposte}
 						{risposteEvidenziate}
+						entiNonCompilato={data.entiNonCompilato}
 					/>
 					<hr />
+					<div class="row">
+						
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="select-wrapper my-4">
+								<label for="regione">Stato questionario</label>
+								<select id="regione" name="regione" bind:value={stato}>
+									<option value="Tutti">Tutti</option>
+									<option value="Completato">Completato</option>
+									<option value="In compilazione">In compilazione</option>
+									<option value="Mai aperto">Mai aperto</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<Tabellarisposte risposte={tutteLeRisposte.filter(x => stato==='Tutti'?true: statoRisp(x)===stato).filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+						.filter((x) =>
+							nomeComune === ''
+								? true
+								: x.nome
+										.replaceAll('Comune di', '')
+										.toUpperCase()
+										.indexOf(nomeComune.toUpperCase()) > -1
+						).sort((a,b) => {return ('' + a.nome).localeCompare(b.nome);})} />
+						
 					<a href="/anci/survey/downloadrisposte" target="_blank">
 						<svg class="icon icon-sm icon-success"
 							><use href="/svg/sprites.svg#it-file-csv"></use></svg
-						><span>Elenco dei comuni che hanno risposto</span>
+						><span>Scarica il quadro generale in csv</span>
 					</a>
 
-					<Tabellarisposte {risposte} />
 				</div>
 			</div>
 		{/if}
 		<div class="col-12 col-lg-{expandedInsights ? '12' : '3'} border-start" transition:fade>
 			{#if !expandedInsights}
 				<div transition:fade>
-					<h5 class="my-4">Evidenzia</h5>
+					<h5 class="my-4">Opzioni di visualizzazione</h5>
 					<hr />
-					<div class="evidenzia">
-						<div class="form-check form-check-group">
-							<div class="toggles">
-								<label for="questionarioCompletato">
-									Questionario completato
-									<input
-										type="checkbox"
-										id="questionarioCompletato"
-										aria-labelledby="questionarioCompletato-help"
-										bind:checked={questionarioCompletato}
-									/>
-									<span class="lever"></span>
-								</label>
-							</div>
-							<small id="questionarioCompletato-help" class="form-text"
-								>Mostra solo chi ha completato il questionario</small
-							>
+					<div class="form-check form-check-group">
+						<div class="toggles">
+							<label for="questionarioCompletato">
+								Questionario completato
+								<input
+									type="checkbox"
+									id="questionarioCompletato"
+									aria-labelledby="questionarioCompletato-help"
+									bind:checked={questionarioCompletato}
+								/>
+								<span class="lever"></span>
+							</label>
 						</div>
+						<small id="questionarioCompletato-help" class="form-text"
+							>Mostra solo chi ha completato il questionario</small
+						>
+					</div>
+					<div class="evidenzia">
 						<div class="callout callout-highlight my-4">
 							<small>
-								E' possibile evidenziare i comuni secondo criteri di alert e warning. Per consultare
-								i criteri <a href="/anci/survey/dettaglioquestionario/" target="_blank"
-									>clicca qui.
-								</a>
+								È possibile visualizzare lo stato di compilazione del questionario per Comune
+								utilizzando i criteri di <a
+									href="/anci/survey/dettaglioquestionario/"
+									target="_blank">alert e warning</a
+								>.
 							</small>
 							<hr />
 							<div class="callout-title">
@@ -437,7 +459,7 @@
 												<b
 													>{percentuale(
 														contaWarningsAlertsPerTipologia(risposte, t.tipo) /
-															risposte.filter((x) => questionarioCompletato).length
+															risposte.filter((x) => x.surveyanci.completato).length
 													)}</b
 												></small
 											>

@@ -15,7 +15,7 @@
 			<div class="card rounded shadow border-bottom-card">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-12 col-lg-6">
+						<div class="col-12 col-lg-9">
 							<div class="head-tags">
 								<p class="card-tag">
 									{tipo}
@@ -36,7 +36,7 @@
 							</div>
 						</div>
 						{#if areaManager(utente.idsf)}
-						<div class="col-12 col-lg-6">
+						<div class="col-12 col-lg-3">
 						
 							<GeoViewer selectedArea={areaManager(utente.idsf).area} selectedRegion=""  />
 						

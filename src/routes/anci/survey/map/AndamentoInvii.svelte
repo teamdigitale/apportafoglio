@@ -37,7 +37,7 @@
 </script>
 
 <div class="callout callout-highlight">
-	<div class="callout-title">Andamento invii risposte</div>
+	<div class="callout-title">Andamento questionari compilati</div>
 	<ObservablePlot
 		options={{
 			width: boxWidth,

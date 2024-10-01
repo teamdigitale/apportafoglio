@@ -60,8 +60,10 @@
 				</button>
 			</li>
 		</ul>
+		<!--
 		<p>
 			stai visualizzando gli elementi da {start + 1} a {end + 1} su un totale di {formatNumber(totalRows)} elementi
 		</p>
+		-->
 	</nav>
 {/if}

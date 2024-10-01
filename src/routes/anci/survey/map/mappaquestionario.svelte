@@ -11,13 +11,30 @@
 	export let risposteEvidenziate = [];
 	export let regione;
 	export let mapwidth;
+	export let entiNonCompilato;
 	const margin = 40;
 
 	import moment from 'moment/min/moment-with-locales';
 	import { redirect } from '@sveltejs/kit';
 	import { scale } from 'svelte/transition';
 	import DettaglioComune from './DettaglioComune.svelte';
+
+	import geocomuni from './Limiti01012024_g.json';
+	import nomi_istat_anci from "./nomi_istat_anci.json";
 	moment.locale('it');
+
+	const compareComuni = (comanci,comsf) => {
+    
+    if(comanci===comsf) return true;
+    const ia = nomi_istat_anci.find(x => x.nome_sf===comsf);
+    if(ia){
+        if(ia.nome_istat===comanci.replaceAll("Comune di ","")){
+            return true;
+        }
+    }
+    return false;
+    
+}
 
 	$: geofeatures = (risp) => {
 		const res = [];
@@ -54,11 +71,16 @@
 	const seleziona = (event) => {
 		comuneSelezionato = event.target.textContent;
 	};
-	$: risposta = risposte.find((y) => y.nome ===  comuneSelezionato);
-	
+	$: risposta = risposte.find((y) => y.nome === comuneSelezionato);
 </script>
+
 {#if risposta}
 	<DettaglioComune {risposta} mapwidth={200} />
+{:else if (comuneSelezionato&&comuneSelezionato.length<200)}
+	<div class="alert alert-warning" role="alert">
+		<p>Il <b>{comuneSelezionato}</b> non ha ancora iniziato a compilare il questionario</p>
+		<p></p>
+	</div>
 {/if}
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -76,6 +98,18 @@
 				Plot.geo(regs, {
 					stroke: '#0066cc'
 				}),
+				/*
+				Plot.geo(
+					geocomuni.features
+					
+					, {
+					stroke: 'grey',
+					strokeWidth: 0.2,
+					fill: 'grey',
+					fillOpacity: 0.2,
+					title: (d) => 'Comune di ' + d.properties.COMUNE
+				}),
+				*/
 
 				Plot.geo(geofeatures(risposteEvidenziate), {
 					stroke: dangerColor,
@@ -90,7 +124,7 @@
 					Plot.centroid({
 						r: 1,
 						fill: 'black',
-						fillOpacity: 1,
+						fillOpacity: 1
 						//C
 						/*
 						target: '_blank',
@@ -136,7 +170,7 @@
 								: '#0066cc',
 						fillOpacity: 0.5,
 						strokeOpacity: 1,
-						title: (d) => 'Comune di '+d.properties.name,
+						title: (d) => 'Comune di ' + d.properties.name
 						/*
 						title: (d) =>d.properties.name
 							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).surveyanci
@@ -168,8 +202,8 @@
 									].join('\r\n')
 								: String.fromCodePoint(0x1f3e2) + '\tComune di ' + d.properties.name,
 								*/
-								//C
-								/*
+						//C
+						/*
 						target: '_blank',
 						href: (d) =>
 							'/anci/survey/rispostaente/' +
