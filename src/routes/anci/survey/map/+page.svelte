@@ -13,6 +13,9 @@
 	import { percentuale } from '$lib/js/shared';
 	import AndamentoInvii from './AndamentoInvii.svelte';
 
+	import moment from 'moment/min/moment-with-locales';
+	moment.locale('it');
+
 	export let data;
 
 
@@ -306,6 +309,7 @@
 		-->
 				</div>
 			</div>
+			
 			<div
 				class="col-12 col-lg-6"
 				bind:clientWidth={mapsize}
@@ -313,6 +317,8 @@
 				transition:fade
 			>
 				<div class="sticky-top">
+					<p><small>Ultimo aggiornamento dati: {moment(data.lastUpdate).calendar()
+						.toLocaleLowerCase()}</small></p>
 					<Mappaquestionario
 						regioni={georeg}
 						mapwidth={mapsize}

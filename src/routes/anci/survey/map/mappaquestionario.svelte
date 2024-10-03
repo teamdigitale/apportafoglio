@@ -23,6 +23,7 @@
 	import nomi_istat_anci from "./nomi_istat_anci.json";
 	moment.locale('it');
 
+	
 	const compareComuni = (comanci,comsf) => {
     
     if(comanci===comsf) return true;
@@ -40,8 +41,8 @@
 		const res = [];
 		risp.forEach((r) => {
 			if (r.geo) {
-				res.push(r.geo[0]);
-				//res.push({...r.geo[0],properties: {...r.properties}});
+				res.push({...r.geo[0], completato: (r.surveyanci&&r.surveyanci.completato)?true:false});
+				
 			}
 		});
 		return res;
@@ -159,13 +160,14 @@
 					geofeatures(risposte),
 					{
 						fill: (d) =>
-							risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
-								.completato
+						//risposte.find((x) => x.nome === 'Comune di ' + d.properties.name)&&risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
+						//compareComuni
+						d.completato
 								? '#008055'
 								: '#0066cc',
 						stroke: (d) =>
-							risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
-								.completato
+						//risposte.find((x) => x.nome === 'Comune di ' + d.properties.name)&&risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
+						d.completato
 								? '#008055'
 								: '#0066cc',
 						fillOpacity: 0.5,

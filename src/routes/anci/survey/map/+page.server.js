@@ -48,7 +48,8 @@ export async function load({ locals }) {
             warnings: risposte.warnings,
             warningStrutturati: risposte.warningStrutturati,
             alertStrutturati: risposte.alertStrutturati,
-            strutturaSezioni: risposte.strutturaSezioni
+            strutturaSezioni: risposte.strutturaSezioni,
+            lastUpdate: risposte.lastUpdate
         };
     } else {
         throw redirect(303, '/users');
