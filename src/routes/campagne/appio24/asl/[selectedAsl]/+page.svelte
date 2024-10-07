@@ -12,7 +12,7 @@
 	$: snappioNazionale = [];
 
 	const vai = (id) => {
-		goto('/campagne/appio24/' + id);
+		goto('/campagne/appio24/asl/' + id);
 	};
 
 	let prefiltrocomune = '';
@@ -145,7 +145,7 @@
 				(s) =>
 					data.candidature12.filter(
 						(c) =>
-							c.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+							c.Candidatura__r.outfunds__Applying_Organization__c === selectedAsl &&
 							c.Name === s.servizio
 					).length > 0
 			);
@@ -167,7 +167,7 @@
 				(s) =>
 					data.candidature141.filter(
 						(c) =>
-							c.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+							c.Candidatura__r.outfunds__Applying_Organization__c === selectedAsl &&
 							c.Name.toUpperCase() === s.servizio.toUpperCase()
 					).length > 0
 			);
@@ -189,7 +189,7 @@
 				(s) =>
 					data.candidaturepagopa.filter(
 						(c) =>
-							c.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+							c.Candidatura__r.outfunds__Applying_Organization__c === selectedAsl &&
 							c.Name.toUpperCase() === s.servizio.toUpperCase()
 					).length > 0
 			);
@@ -229,7 +229,7 @@
 		const categorieAltro = [];
 		const altrofam = data.serviziAttivi.filter(
 			(x) =>
-				x.Ente__c === selectedComune &&
+				x.Ente__c === selectedAsl &&
 				x.Argomento__c === fam &&
 				x.Nome_Servizio__c.toUpperCase().indexOf('ALTRO') > -1
 		);
@@ -249,11 +249,12 @@
 
 		const altrofamCand = data.candidature.filter(
 			(x) =>
-				x.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+				x.Candidatura__r.outfunds__Applying_Organization__c === selectedAsl &&
 				x.argomento_attribuito_143appIO__c === fam &&
+				x.codice_catalogo_attribuito_143appIO__c &&
 				x.codice_catalogo_attribuito_143appIO__c.endsWith('000') &&
 				data.serviziAttivi.filter(
-					(xx) => xx.Ente__c === selectedComune && xx.Codice_Servizio__c === x.Codice_Servizio__c
+					(xx) => xx.Ente__c === selectedAsl && xx.Codice_Servizio__c === x.Codice_Servizio__c
 				).length === 0
 		);
 		if (altrofamCand.length > 0) {
@@ -272,9 +273,9 @@
 
 		const simili = [];
 		data.serviziAttivi
-			.filter((x) => x.Ente__c === selectedComune)
+			.filter((x) => x.Ente__c === selectedAsl)
 			.forEach((sa) => {
-				if (sa.Codice_Catalogo_Attribuito__c.endsWith('000')) {
+				if (sa.Codice_Catalogo_Attribuito__c&&sa.Codice_Catalogo_Attribuito__c.endsWith('000')) {
 					if (
 						stringSimilarity(n, sa.Descrizione_Servizio__c) >= 0.39 &&
 						stringSimilar(n, sa.Descrizione_Servizio__c) >= 0.39 &&
@@ -300,7 +301,7 @@
 	};
 
 	$: servizi =
-		selectedComune !== 'none'
+		selectedAsl !== 'none'
 			? data.serviziACatalogo
 					.map((x) => ({
 						...x,
@@ -320,14 +321,14 @@
 
 	$: catalogoPerCategoria = d3.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c);
 
-	$: selectedComune = data.selectedComune;
+	$: selectedAsl = data.selectedAsl;
 
 	$: serviziAttivi =
-		selectedComune !== 'none'
+		selectedAsl !== 'none'
 			? data.serviziAttivi
 					.filter(
 						(x) =>
-							x.Ente__c === selectedComune &&
+							x.Ente__c === selectedAsl &&
 							(filterCategoria === ''
 								? true
 								: x.Argomento__c === filterCategoria || x.Argomento__c === 'Altro')
@@ -339,10 +340,10 @@
 			: [];
 
 	$: filteredServiziInCandidature =
-		selectedComune !== 'none'
+		selectedAsl !== 'none'
 			? data.candidature.filter(
 					(x) =>
-						x.Candidatura__r.outfunds__Applying_Organization__c === selectedComune &&
+						x.Candidatura__r.outfunds__Applying_Organization__c === selectedAsl &&
 						(filterCategoria === ''
 							? true
 							: x.argomento_attribuito_143appIO__c === filterCategoria ||
@@ -405,11 +406,11 @@
 		return 'SI';
 	};
 
-	$: regioneEnte = data.enti.find((x) => x.Id === selectedComune)
-		? data.enti.find((x) => x.Id === selectedComune).Regione__c
+	$: regioneEnte = data.enti.find((x) => x.Id === selectedAsl)
+		? data.enti.find((x) => x.Id === selectedAsl).Regione__c
 		: '';
-	$: provinciaEnte = data.enti.find((x) => x.Id === selectedComune)
-		? data.enti.find((x) => x.Id === selectedComune).ShippingState
+	$: provinciaEnte = data.enti.find((x) => x.Id === selectedAsl)
+		? data.enti.find((x) => x.Id === selectedAsl).ShippingState
 		: '';
 
 	$: okColorScale = d3.scaleLinear().domain([1, 5]).range(['#cbf5e6', '#058256']).clamp(true);
@@ -476,7 +477,7 @@
 										<a class="nav-link" href="#selezioneComune">
 											<span>1. Selezione Comune </span>
 										</a>
-										{#if selectedComune !== 'none'}
+										{#if selectedAsl !== 'none'}
 											<a class="nav-link" href="#serviziattivi">
 												<span>2. Servizi attivi </span>
 											</a>
@@ -536,7 +537,7 @@
 										<option value="">Tutte</option>
 										{#each [...catalogoPerCategoria.keys()] as cat}
 											<option value={cat}
-												>{cat}{selectedComune !== 'none'
+												>{cat}{selectedAsl !== 'none'
 													? ' - ' +
 														servizi.filter(
 															(x) =>
@@ -557,7 +558,7 @@
 		<div class="col-12 col-lg-9 it-page-sections-container">
 			<h4>
 				<span><img class="icon icon" src="/svg/logo-io-app-2021.svg" alt="logo app io" /></span>
-				<span>Campagna adesione avviso Misura 1.4.3 "Adozione app IO" Comuni - maggio 2024</span>
+				<span>Campagna adesione avviso Misura 1.4.3 "Adozione app IO" ASL</span>
 			</h4>
 
 			<div class="it-page-section my-5" id="informativaavviso">
@@ -653,7 +654,7 @@
 					</div>
 					<div class="col-12 col-lg-4">
 						<div class="select-wrapper">
-							<label for="selezioneComune">Seleziona un Comune</label>
+							<label for="selezioneComune">Seleziona ASL/AO/Azienda sanitaria</label>
 							<select
 								class="form-control"
 								id="selezioneComune"
@@ -663,7 +664,7 @@
 							>
 								<option value="none">Seleziona un comune</option>
 								{#each data.enti.filter( (x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase().replace('Comune di ', '').indexOf(prefiltrocomune.toUpperCase()) !== -1) ) as c}
-									{#if selectedComune === c.Id}
+									{#if selectedAsl === c.Id}
 										<option value={c.Id} selected>{c.Name}</option>
 									{:else}
 										<option value={c.Id}>{c.Name}</option>
@@ -672,9 +673,9 @@
 							</select>
 						</div>
 					</div>
-					{#if selectedComune !== 'none'}
+					{#if selectedAsl !== 'none'}
 						<div class="col-12 col-lg-4">
-							<a class="read-more" href="/op/ente/{selectedComune}" target="_blank">
+							<a class="read-more" href="/op/ente/{selectedAsl}" target="_blank">
 								<span class="text">Scheda ente</span>
 								<svg class="icon"><use href="/svg/sprites.svg#it-external-link"></use></svg>
 							</a>
@@ -692,7 +693,7 @@
 				</div>
 			</div>
 
-			{#if selectedComune !== 'none'}
+			{#if selectedAsl !== 'none'}
 				<div class="it-page-section my-5" id="serviziattivi">
 					<div class="row">
 						<div class="col-12 col-lg-12">
@@ -944,7 +945,7 @@
 				</div>
 			{/if}
 
-			{#if selectedComune !== 'none'}
+			{#if selectedAsl !== 'none'}
 				<div class="it-page-section my-5" id="catalogo">
 					<div class="accordion accordion-background-hover" id="accCatalogo">
 						<div class="accordion-item">

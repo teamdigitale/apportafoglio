@@ -41,13 +41,37 @@ export async function load({ locals, params, url }) {
             and Tipologia_Ente__c = 'Comuni'  
             and Name!='ACCOUNTSCATOLA' order by Name`, MAXFETCH);
         */
+
+        enti =    locals.user.utentestandard.vasoss ?
+            promiseQuery(conn, `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c 
+            from Account 
+            where IsDeleted = false 
+            and Tipologia_Ente__c = 'Comuni' 
+            and  Name!='Account Marketing Cloud 1' and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' order by Name`, MAXFETCH) :
+            locals.user.utentestandard.area ?
+                promiseQuery(conn, `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c 
+                from Account 
+                where IsDeleted = false 
+                and Tipologia_Ente__c = 'Comuni' 
+                and  Name!='Account Marketing Cloud 1'
+                and Area_geografica__c = '` + locals.user.utentestandard.area + `'
+                and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' order by Name`, MAXFETCH) :
+                promiseQuery(conn, `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c 
+                from Account 
+                where IsDeleted = false 
+                and Tipologia_Ente__c = 'Comuni' 
+                and  Name!='Account Marketing Cloud 1'
+                and (Account_Manager__c in ('` + locals.user.utentestandard.viewas + `') or Tech_Implementation_User__c in ('` + locals.user.utentestandard.viewas + `'))
+                and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' order by Name`, MAXFETCH);
+
+                /*
         enti =  promiseQuery(conn, 
                 `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c 
                 from Account 
                 where IsDeleted = false 
                 and Tipologia_Ente__c = 'Comuni' 
                 and  Name!='Account Marketing Cloud 1' and Name!='ACCOUNTSCATOLA'  and Name!='XXDTD_C2' and Name!='XXDTD_C' and Name!='YYACN_R' order by Name`, MAXFETCH);
-
+*/
                 if(selectedComune&&selectedComune!=='none'){
         /*allEnti =  promiseQuery(conn, 
             `Select Id, Name,  ShippingState,  Codice_amministrativo__c, Active__c, Area_geografica__c,  Regione__c 

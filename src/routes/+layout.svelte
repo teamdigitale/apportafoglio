@@ -190,7 +190,7 @@
 																	><span>avvisi</span></a
 																>
 															</li>
-															{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
+															{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
 																<li>
 																	<a class="dropdown-item list-item" href="/op/enti"
 																		><span>enti</span></a
@@ -267,7 +267,7 @@
 												</li>
 											{/if}
 
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
@@ -290,8 +290,9 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
+																
 																<li>
-																	<a class="dropdown-item list-item" href="/campagne/appio24/none"
+																	<a class="dropdown-item list-item" href="/campagne/appio24/comuni/none"
 																		><span>Avviso App IO Comuni</span></a
 																	>
 																</li>
@@ -303,7 +304,7 @@
 										{/if}
 
 										{#if loggedstandard}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali'))}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
@@ -387,9 +388,9 @@
 											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio')
 											 || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') 
 											 || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali')
-											 || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') 
+											 || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') 
 											 || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') 
-											 
+											 || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') 
 											 )}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">

@@ -1,5 +1,5 @@
 <script>
-	import { areaManager } from '$lib/js/shared';
+	import { areaManager, operationAssistant } from '$lib/js/shared';
 	import GeoViewer from './geo/GeoViewer.svelte';
 
 	// @ts-nocheck
@@ -35,10 +35,18 @@
 								</div>
 							</div>
 						</div>
-						{#if areaManager(utente.idsf)}
+						{#if areaManager(utente.idsf) }
 						<div class="col-12 col-lg-3">
 						
 							<GeoViewer selectedArea={areaManager(utente.idsf).area} selectedRegion=""  />
+						
+						
+						</div>
+						{/if}
+						{#if operationAssistant(utente.idsf) }
+						<div class="col-12 col-lg-3">
+						
+							<GeoViewer selectedArea={operationAssistant(utente.idsf).area} selectedRegion=""  />
 						
 						
 						</div>

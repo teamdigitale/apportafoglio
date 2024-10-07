@@ -196,6 +196,23 @@ export const areaManager = (idsf) => {
     return undefined;
 }
 
+export const operationAssistant = (idsf) => {
+    if (idsf) {
+        const authuser = u.users.find(x => x.id === idsf);
+        if (authuser) {
+
+            if (authuser.roles && authuser.roles.indexOf("Operation Assistant") !== -1) {
+                return authuser;
+            }
+        }
+    }
+    return undefined;
+}
+
+export const getAM = (area) => {
+    return u.users.find(x => x.area===area && x.roles.filter(r => r==="Area Manager").length===1);
+}
+
 export const viewall = (idsf) => {
     if (idsf) {
         const authuser = u.users.find(x => x.id === idsf);

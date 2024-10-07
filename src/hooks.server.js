@@ -1,7 +1,6 @@
 import jsforce from 'jsforce';
 import { redirect } from '@sveltejs/kit';
-import { areaManager, viewall } from '$lib/js/shared';
-
+import { areaManager, getAM, operationAssistant, osservatorio, viewall } from '$lib/js/shared';
 
 export const handle = async ({ event, resolve }) => {
     let loggedstandard = false;
@@ -26,9 +25,11 @@ export const handle = async ({ event, resolve }) => {
     let utentestandard = event.locals.utentestandard;
     let utenteasseveratore = event.locals.utenteasseveratore;
 
+
     let sessionerror = '';
 
     if (loggedstandard && !utentestandard) {
+
         const conn = new jsforce.Connection({
             instanceUrl: "https://padigitale2026.my.salesforce.com",
             accessToken: cookiesfuidstd
@@ -54,6 +55,7 @@ export const handle = async ({ event, resolve }) => {
             utentestandard.idsf = idutentesf;
             utentestandard.viewas = idutentesf; 
             const am = areaManager(idutentesf);
+            const oa = operationAssistant(idutentesf);
             const oss = viewall(idutentesf);
            
             if(oss){
@@ -62,7 +64,14 @@ export const handle = async ({ event, resolve }) => {
             if(am){
                 utentestandard.viewas = am.acm.map((x) => (x.id)).join("','");
                 utentestandard.area = am.area;
-            }else{
+            }else if(oa){
+                
+                
+                utentestandard.viewas = getAM(oa.area).acm.map((x) => (x.id)).join("','");
+                
+                utentestandard.area = oa.area;
+            }
+            else{
                 utentestandard.viewas = idutentesf;
             }
         } catch (error) {
@@ -71,6 +80,7 @@ export const handle = async ({ event, resolve }) => {
             loggedstandard = false;
             cookiesfuidstd = null;
             utentestandard = null;
+            console.log(error);
         }
 
     }
