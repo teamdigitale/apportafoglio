@@ -1,29 +1,27 @@
 <script>
+	export let data;
+
 	// @ts-nocheck
 
 	import Columnchart from './columnchart.svelte';
-	import * as d3 from 'd3';
-	export let data;
+
 	import GeoSelector from './geo/GeoSelector.svelte';
 	import { euro, formatNumber, percentuale } from '$lib/js/shared';
-	import Cite from '$lib/c/cite.svelte';
-	let selectedArea = 'ALL';
-	let selectedRegion = '';
-	let misura = '';
-	let tipologiaEnte = 'Tutti';
-	let pacchetto = 'Tutte';
-	console.log(data);
+
+	let selectedArea = data.selectedArea ? data.selectedArea : 'ALL';
+	let selectedRegion = data.selectedRegion ? data.selectedRegion : '';
+	let misura = data.misura ? data.misura : '';
+	let tipologiaEnte = data.tipologiaEnte ? data.tipologiaEnte : 'Tutti';
+	let pacchetto =  (misura === '1.4.3 Adozione PagoPA e AppIO' || misura === '1.4.4 Adozione identità digitale')?( data.pacchetto ? data.pacchetto : 'Tutte'):'Tutte';
 
 	const stati = [
 		'In candidatura',
 		'In contrattualizzazione',
 		'In realizzazione',
-		//'In revisione',
 		'In revisione a seguito di verifica tecnica',
 		'In verifica tecnica',
 		'Va richiesta erogazione',
 		'In verifica formale',
-		'In liquidazione',
 		'Liquidate'
 	];
 
@@ -35,7 +33,6 @@
 		'#e0a243',
 		'#2bd6d0',
 		'#cc7a00',
-		'#20d696',
 		'#009963'
 	];
 
@@ -45,6 +42,8 @@
 		misura === '1.4.3 Adozione PagoPA e AppIO'
 			? ['Tutte', 'PagoPA', 'AppIO']
 			: ['Tutte', 'ANPR/ANSC', 'SPID/CIE'];
+
+    
 
 	const optionsTipologieEnti = [
 		{ misura: '', options: ['Tutti', 'Comuni', 'Scuole', 'ASL'] },
@@ -58,50 +57,7 @@
 		}
 	];
 
-	$: riepiloga = (cc) => {
-		let filtered;
-		cc = cc.filter((c) => {
-			return tipologiaEnte === 'Tutti'
-				? true
-				: tipologiaEnte === 'Altri (diversi da Comuni, Scuole, ASL)'
-					? c.tipologia_ente !== 'Comuni' &&
-						c.tipologia_ente !== 'Scuole' &&
-						c.tipologia_ente !== 'ASL'
-					: c.tipologia_ente === tipologiaEnte;
-		});
-		if (misura !== '') {
-			cc = cc
-				.filter((c) => c.misura === misura)
-				.filter((c) =>
-					((misura === '1.4.3 Adozione PagoPA e AppIO'||misura==='1.4.4 Adozione identità digitale') && pacchetto !== 'Tutte')
-						? c.PacchettoProgram__c === pacchetto
-						: true
-				);
-		}
-		if (selectedArea === 'ALL') {
-			filtered = cc;
-		} else {
-			if (selectedRegion === '') {
-				filtered = cc.filter((c) => c.area_geografica === selectedArea);
-			} else {
-				filtered = cc.filter((c) => c.regione === selectedRegion);
-			}
-		}
-		return d3.rollup(
-			filtered,
-			function (D) {
-				return {
-					numero_candidature: D.length,
-					valore_candidature: d3.sum(D, function (d) {
-						return d.valore;
-					})
-				};
-			},
-			(d) => d.stato
-		);
-	};
-
-	$: filtered = riepiloga(data.candidature);
+	$: filtered = data.candidature;
 
 	$: calcolaRipartizione = () => {
 		const result = [];
@@ -109,13 +65,13 @@
 		const row = [];
 		row.push('Numero');
 		stati.forEach((s) => {
-			row.push(filtered.get(s) ? filtered.get(s).numero_candidature : 0);
+			row.push(filtered[s] && filtered[s][0] ? filtered[s][0].numero : 0);
 		});
 		result.push(row);
 		const row2 = [];
 		row2.push('Valore');
 		stati.forEach((s) => {
-			row2.push(filtered.get(s) ? filtered.get(s).valore_candidature : 0);
+			row2.push(filtered[s] && filtered[s][0] ? filtered[s][0].valore : 0);
 		});
 		result.push(row2);
 		return result;
@@ -127,6 +83,7 @@
 		if (d[1].reduce((a, b) => (a = a + (!isNaN(b) ? b : 0)), 0) === 0) return false;
 		return true;
 	};
+
 
 	const calcolaStatiColors = () => {
 		let res = {};
@@ -166,10 +123,6 @@
 </script>
 
 <h1>Riepilogo progetti</h1>
-<Cite
-	text="Un sogno è solo un sogno. Un obiettivo è un sogno con un progetto e una scadenza."
-	author="Harvey B. Mackay"
-/>
 
 <div class="container">
 	<div class="row">
@@ -211,65 +164,79 @@
 							<span>Indietro</span>
 						</button>
 						<div class="menu-wrapper">
-							<div class="link-list-wrapper">
-								<h3>Filtri</h3>
-								<div class="progress">
-									<div
-										class="progress-bar it-navscroll-progressbar"
-										role="progressbar"
-										aria-valuenow="0"
-										aria-valuemin="0"
-										aria-valuemax="100"
-									></div>
-								</div>
-
-								<div class="my-4">
-									<div class="select-wrapper">
-										<label for="selectMisura">Misure</label>
-										<small>
-											<select id="selectMisura" bind:value={misura}>
-												<option value="">Tutte</option>
-												{#each data.misure as m}
-													<option value={m.Name}>{m.Name}</option>
-												{/each}
-											</select>
-										</small>
+							<form method="POST" action="?/update">
+								<div class="link-list-wrapper">
+									<h3>Filtri</h3>
+									<div class="progress">
+										<div
+											class="progress-bar it-navscroll-progressbar"
+											role="progressbar"
+											aria-valuenow="0"
+											aria-valuemin="0"
+											aria-valuemax="100"
+										></div>
 									</div>
-								</div>
 
-								{#if misura === '1.4.3 Adozione PagoPA e AppIO' || misura==='1.4.4 Adozione identità digitale'}
-									<hr class="my-0" />
 									<div class="my-4">
 										<div class="select-wrapper">
-											<label for="selectPiattaforma">Piattaforma</label>
+											<label for="selectMisura">Misure</label>
 											<small>
-												<select id="selectPiattaforma" bind:value={pacchetto}>
-													{#each pacchetti as p}
-														<option value={p}>{p}</option>
+												<select name="misura" id="selectMisura" bind:value={misura}>
+													<option value="">Tutte</option>
+													{#each data.misure as m}
+														<option value={m.Name}>{m.Name}</option>
 													{/each}
 												</select>
 											</small>
 										</div>
 									</div>
-								{/if}
 
-								<hr class="my-0" />
-								<div class="my-4">
-									<div class="select-wrapper">
-										<label for="selectTipologiaEnte">Tipologia ente</label>
-										<small>
-											<select id="selectTipologiaEnte" bind:value={tipologiaEnte}>
-												{#each teoptions as teo}
-													<option value={teo}>{teo}</option>
-												{/each}
-											</select>
-										</small>
+									{#if misura === '1.4.3 Adozione PagoPA e AppIO' || misura === '1.4.4 Adozione identità digitale'}
+										<hr class="my-0" />
+										<div class="my-4">
+											<div class="select-wrapper">
+												<label for="selectPiattaforma">Piattaforma</label>
+												<small>
+													<select id="selectPiattaforma" bind:value={pacchetto}>
+														{#each pacchetti as p}
+															<option value={p}>{p}</option>
+														{/each}
+													</select>
+												</small>
+											</div>
+										</div>
+									{/if}
+
+									<hr class="my-0" />
+									<div class="my-4">
+										<div class="select-wrapper">
+											<label for="selectTipologiaEnte">Tipologia ente</label>
+											<small>
+												<select id="selectTipologiaEnte" bind:value={tipologiaEnte}>
+													{#each teoptions as teo}
+														<option value={teo}>{teo}</option>
+													{/each}
+												</select>
+											</small>
+										</div>
 									</div>
-								</div>
 
-								<hr class="my-0" />
-								<span id="italy"><GeoSelector bind:selectedArea bind:selectedRegion /></span>
-							</div>
+									<hr class="my-0" />
+									<span id="italy"><GeoSelector bind:selectedArea bind:selectedRegion /></span>
+								</div>
+								<div class="text-center">
+									<a
+										href="/monitoraggio/progetti?misura={misura}&pacchetto={pacchetto}&area={selectedArea}&regione={selectedRegion}&te={tipologiaEnte}"
+									>
+										<small class="text-primary"
+											>Aggiorna
+											<svg class="icon icon-sm icon-primary"
+												><use href="/svg/sprites.svg#it-refresh"></use></svg
+											></small
+										>
+									</a>
+								</div>
+							</form>
 						</div>
 					</div>
 				</nav>
@@ -278,7 +245,8 @@
 		<div class="col-12 col-lg-9 it-page-sections-container">
 			{#if esisteCandidatura(datatoshow)}
 				<div class="it-page-section my-5" id="riepilogo">
-					<div class="row my-4">
+					<!--
+                    <div class="row my-4">
 						<div class="col-12 col-lg-12">
 							<small>
 								<div class="text-start">
@@ -317,7 +285,7 @@
 							</small>
 						</div>
 					</div>
-
+                    -->
 					<div>
 						<Columnchart
 							id="ripartizioneCandidature"
@@ -351,8 +319,8 @@
 													style="width:25% ; background: linear-gradient(
                                     to top,
                                     {statiColors[i]},
-                                    {statiColors[i]} 0.3rem,
-                                    transparent 0.3rem,
+                                    {statiColors[i]} 0.4rem,
+                                    transparent 0.4rem,
                                     transparent 100%
                                   );"><small>{s}</small></td
 												>

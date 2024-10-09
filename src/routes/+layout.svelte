@@ -343,7 +343,7 @@
 																<li data-sveltekit-preload-data="off">
 																	<a
 																		class="dropdown-item list-item"
-																		href="/monitoraggio/candidature"><span>progetti</span></a
+																		href="/monitoraggio/progetti"><span>progetti</span></a
 																	>
 																</li>
 
