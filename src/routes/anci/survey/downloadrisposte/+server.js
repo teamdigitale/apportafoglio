@@ -53,6 +53,7 @@ export async function GET({ params, locals }) {
                 area: x.pa2026.area,
                 regione: x.pa2026.regione,
                 comune: x.nome,
+                cluster: x.pa2026.cluster,
                 stato_compilazione: x.surveyanci.completato
                     ? 'Completato'
                     : x.surveyanci.aperto
