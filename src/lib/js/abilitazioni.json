@@ -841,6 +841,13 @@
             "name": "LUIGI D'AMBROSIO"
         },
         {
+            "id": "005J7000000EmdXIAS",
+            "roles": [
+                "Account Manager"
+            ],
+            "name": "MARA MONTICONE"
+        },
+        {
             "id": "0057Q0000072GFAQA2",
             "roles": [
                 "Account Manager"
@@ -1232,6 +1239,13 @@
                         "Account Manager"
                     ],
                     "name": "CHIARA MARTINI"
+                },
+                {
+                    "id": "005J7000000EmdXIAS",
+                    "roles": [
+                        "Account Manager"
+                    ],
+                    "name": "MARA MONTICONE"
                 },
                 {
                     "id": "0057Q0000070qHDQAY",
