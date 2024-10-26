@@ -56,8 +56,7 @@
 	$: completati = tutteLeRisposte.filter((x) => x.surveyanci.completato);
 
 	$: risposte = tutteLeRisposte
-		.filter((x) => (questionarioAperto ? x.surveyanci.aperto : true))
-		.filter((x) => (questionarioCompletato ? x.surveyanci.completato : true))
+	.filter((x) => view==='Completato'?x.surveyanci.completato : view==='Mai aperto'?!x.surveyanci.aperto:view==='In compilazione'?(x.surveyanci.aperto&&!x.surveyanci.completato):true)
 		.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
 		.filter((x) =>
 			nomeComune === ''
@@ -157,7 +156,12 @@
 		}
 	}
 
+	const orderRisp = ["Completato","In compilazione", "Mai aperto"];
+
 	let stato = 'Tutti';
+
+	let viewOptions = ["Completato","In compilazione","Mai aperto"];
+	let view = viewOptions[0];
 
 </script>
 
@@ -225,7 +229,7 @@
 										),
 									(D) => D.length,
 									(d) => d.statocomune
-								)}
+								).sort((a,b) => orderRisp.indexOf(a[0])-orderRisp.indexOf(b[0]))}
 								colors={[
 									['Mai aperto', '#cc334d'],
 									['In compilazione', '#0066cc'],
@@ -325,7 +329,7 @@
 						{regione}
 						{risposte}
 						{risposteEvidenziate}
-						entiNonCompilato={data.entiNonCompilato}
+						{view}
 					/>
 					<hr />
 					<div class="row">
@@ -368,22 +372,16 @@
 				<div transition:fade>
 					<h5 class="my-4">Opzioni di visualizzazione</h5>
 					<hr />
-					<div class="form-check form-check-group">
-						<div class="toggles">
-							<label for="questionarioCompletato">
-								Questionario completato
-								<input
-									type="checkbox"
-									id="questionarioCompletato"
-									aria-labelledby="questionarioCompletato-help"
-									bind:checked={questionarioCompletato}
-								/>
-								<span class="lever"></span>
-							</label>
+					
+					<div>
+						<div class="select-wrapper my-2">
+							<label for="regione">Stato</label>
+							<select id="regione" name="regione" bind:value={view}>
+								{#each viewOptions as m}
+									<option value={m}>{m}</option>
+								{/each}
+							</select>
 						</div>
-						<small id="questionarioCompletato-help" class="form-text"
-							>Mostra solo chi ha completato il questionario</small
-						>
 					</div>
 					<div class="evidenzia">
 						<div class="callout callout-highlight my-4">

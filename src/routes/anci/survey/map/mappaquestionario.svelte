@@ -11,7 +11,6 @@
 	export let risposteEvidenziate = [];
 	export let regione;
 	export let mapwidth;
-	export let entiNonCompilato;
 	const margin = 40;
 
 	import moment from 'moment/min/moment-with-locales';
@@ -19,30 +18,27 @@
 	import { scale } from 'svelte/transition';
 	import DettaglioComune from './DettaglioComune.svelte';
 
-	import geocomuni from './Limiti01012024_g.json';
-	import nomi_istat_anci from "./nomi_istat_anci.json";
+	import com from './comuni_def_2.json';
 	moment.locale('it');
+	export let view;
 
-	
-	const compareComuni = (comanci,comsf) => {
-    
-    if(comanci===comsf) return true;
-    const ia = nomi_istat_anci.find(x => x.nome_sf===comsf);
-    if(ia){
-        if(ia.nome_istat===comanci.replaceAll("Comune di ","")){
-            return true;
-        }
-    }
-    return false;
-    
-}
+	$: viewMode = view;
+
+	$: getOpacity = (s, v) => {
+		return 0.5;
+	};
 
 	$: geofeatures = (risp) => {
 		const res = [];
 		risp.forEach((r) => {
+			r.geo = com.features.find((c) => c.properties.PRO_COM_T === r.pa2026.istat);
+			
 			if (r.geo) {
-				res.push({...r.geo[0], completato: (r.surveyanci&&r.surveyanci.completato)?true:false});
-				
+				res.push({
+					...r.geo,
+					completato: r.surveyanci.completato,
+					maiaperto: !r.surveyanci.aperto
+				});
 			}
 		});
 		return res;
@@ -69,15 +65,17 @@
 	};
 
 	let comuneSelezionato;
+	let istatSelezionato;
 	const seleziona = (event) => {
-		comuneSelezionato = event.target.textContent;
+		comuneSelezionato = event.target.textContent.substring(9);
+		istatSelezionato = event.target.textContent.substring(0,6)
 	};
-	$: risposta = risposte.find((y) => y.nome === comuneSelezionato);
+	$: risposta = risposte.find((y) => y.pa2026.istat === istatSelezionato);
 </script>
 
 {#if risposta}
-	<DettaglioComune {risposta} mapwidth={200} />
-{:else if (comuneSelezionato&&comuneSelezionato.length<200)}
+	<DettaglioComune {risposta}  />
+{:else if comuneSelezionato && comuneSelezionato.length < 200}
 	<div class="alert alert-warning" role="alert">
 		<p>Il <b>{comuneSelezionato}</b> non ha ancora iniziato a compilare il questionario</p>
 		<p></p>
@@ -97,7 +95,7 @@
 			marginRight: 30,
 			marks: [
 				Plot.geo(regs, {
-					stroke: '#0066cc'
+					stroke: 'lightgrey'
 				}),
 				/*
 				Plot.geo(
@@ -120,23 +118,19 @@
 					fillOpacity: 0
 				}),
 
+				,
+				/*
 				Plot.dot(
 					geofeatures(risposte),
 					Plot.centroid({
 						r: 1,
 						fill: 'black',
 						fillOpacity: 1
-						//C
-						/*
-						target: '_blank',
-						href: (d) =>
-							'/anci/survey/rispostaente/' +
-							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).pa2026.id
-							*/
+						
 					})
 				),
+				*/
 
-				,
 				/*
 				Plot.dot(
 					geofeatures(risposte).filter(
@@ -160,19 +154,14 @@
 					geofeatures(risposte),
 					{
 						fill: (d) =>
-						//risposte.find((x) => x.nome === 'Comune di ' + d.properties.name)&&risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
-						//compareComuni
-						d.completato
-								? '#008055'
-								: '#0066cc',
-						stroke: (d) =>
-						//risposte.find((x) => x.nome === 'Comune di ' + d.properties.name)&&risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
-						d.completato
-								? '#008055'
-								: '#0066cc',
-						fillOpacity: 0.5,
-						strokeOpacity: 1,
-						title: (d) => 'Comune di ' + d.properties.name
+							//risposte.find((x) => x.nome === 'Comune di ' + d.properties.name)&&risposte.find((x) => x.nome === 'Comune di ' + d.properties.name).surveyanci
+							//compareComuni
+							d.completato ? '#008055' : d.maiaperto ? '#cc334d' : '#0066cc',
+						stroke: (d) => (d.completato ? '#008055' : d.maiaperto ? '#cc334d' : '#0066cc'),
+						fillOpacity: 0.8,
+						strokeWidth: 0,
+						strokeOpacity: 0,
+						title: (d) => d.properties.PRO_COM_T+' - Comune di ' + d.properties.COMUNE
 						/*
 						title: (d) =>d.properties.name
 							risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).surveyanci

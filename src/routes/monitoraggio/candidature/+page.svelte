@@ -12,7 +12,6 @@
 	let misura = '';
 	let tipologiaEnte = 'Tutti';
 	let pacchetto = 'Tutte';
-	console.log(data);
 
 	const stati = [
 		'In candidatura',

@@ -94,10 +94,12 @@
 								{#if data.risposta}
 									<ul class="link-list">
 										<li class="nav-item">
-											{#each d3.flatGroup(data.risposta.surveyanci.sezioni) as sezione}
+											{#each d3.flatGroup(data.risposta.surveyanci.sezioni) as sezione,i}
+											{#if i!==0}
 												<a class="nav-link active" href="#heading{sezione.codice}">
 													<span>{sezione.codice}. {sezione.nome}</span>
 												</a>
+												{/if}
 											{/each}
 										</li>
 									</ul>
@@ -125,23 +127,11 @@
 					</a>
 				</div>
 				<hr />
-				{#each data.risposta.surveyanci.sezioni as s}
+				{#each data.risposta.surveyanci.sezioni as s,i}
+				{#if i!==0}
 					<h5 id="heading{s.codice}">{s.codice}. {s.nome}</h5>
-					{#if s.codice === '1'}
-						<div class="row">
-							<div class="col-12 col-lg-8">
-								<Utente {s} />
-							</div>
-							<div class="col-12 col-lg-4">
-								<!--
-								<Demografico censimento={data.risposta.censimento} />
-							-->
-								<Insights {s} />
-								
-							</div>
-							
-						</div>
 					{/if}
+					
 					{#if s.codice === '2'}
 						<div class="row">
 							<div class="col-12 col-lg-8">
