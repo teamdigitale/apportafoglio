@@ -97,18 +97,7 @@
 				Plot.geo(regs, {
 					stroke: 'lightgrey'
 				}),
-				/*
-				Plot.geo(
-					geocomuni.features
-					
-					, {
-					stroke: 'grey',
-					strokeWidth: 0.2,
-					fill: 'grey',
-					fillOpacity: 0.2,
-					title: (d) => 'Comune di ' + d.properties.COMUNE
-				}),
-				*/
+			
 
 				Plot.geo(geofeatures(risposteEvidenziate), {
 					stroke: dangerColor,
