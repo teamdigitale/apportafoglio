@@ -108,17 +108,7 @@
 				}),
 
 				,
-				/*
-				Plot.dot(
-					geofeatures(risposte),
-					Plot.centroid({
-						r: 1,
-						fill: 'black',
-						fillOpacity: 1
-						
-					})
-				),
-				*/
+				
 
 				/*
 				Plot.dot(
