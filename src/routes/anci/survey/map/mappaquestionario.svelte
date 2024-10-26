@@ -110,25 +110,6 @@
 				,
 				
 
-				/*
-				Plot.dot(
-					geofeatures(risposte).filter(
-						(x) =>
-							risposte.find((y) => y.nome === 'Comune di ' + x.properties.name).surveyanci
-								.completato
-					),
-					Plot.centroid({
-						r: regione === 'Tutte' ? 5 : 15,
-						symbol: 'square',
-						fill: '#995c00',
-						stroke: '#995c00',
-						fillOpacity: 0,
-						strokeOpacity: 1,
-                        href: (d) => '/anci/survey/ente/'+risposte.find((y) => y.nome === 'Comune di ' + d.properties.name).pa2026.id
-					})
-				),
-                */
-
 				Plot.geo(
 					geofeatures(risposte),
 					{
