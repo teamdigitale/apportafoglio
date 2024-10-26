@@ -41,7 +41,6 @@ export async function load({ locals }) {
         });
         let risposte = await risposte_res.json();
         const r = risposte.data.filter(x => entiStandard.filter(e => e.Id===x.pa2026.id).length>0 );
-        //const entiNonCompilato = entiStandard.filter(e => risposte.data.filter(r => r.pa2026.id!==e.Id).length>0);
         return {
             r: r,
             alerts: risposte.alerts,
