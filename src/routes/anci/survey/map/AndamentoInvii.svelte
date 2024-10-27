@@ -10,8 +10,6 @@
 
 	export let values;
 	export let boxWidth;
-	export let regione;
-	export let nomeComune;
 
 
 	$: completatiPerData = d3

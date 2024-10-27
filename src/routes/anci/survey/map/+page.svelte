@@ -256,8 +256,7 @@
 													.indexOf(nomeComune.toUpperCase()) > -1
 									)}
 								boxWidth={insightsWidth}
-								{regione}
-								{nomeComune}
+
 							/>
 						</div>
 					</div>
