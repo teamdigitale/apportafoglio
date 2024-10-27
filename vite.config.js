@@ -11,7 +11,8 @@ export default defineConfig({
 			  chunkFileNames: `[name].js?v=${version}`,
 			  assetFileNames: `[name].[ext]?v=${version}`
 		  }
-		}
+		},
+		sourcemap: false
 	  }
 	
 	/*  ,
