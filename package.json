@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "npx cross-env NODE_OPTIONS=--max-old-space-size=8192 vite dev",
-		"build": "NODE_OPTIONS=--max_old_space_size=8192 vite build",
+		"build": "cross-env NODE_OPTIONS=--max_old_space_size=8192 vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
@@ -39,6 +39,7 @@
 		"@observablehq/plot": "^0.6.16",
 		"@sveltejs/adapter-node": "^4.0.1",
 		"@turf/turf": "^7.1.0",
+		"cross-env": "^7.0.3",
 		"d3": "^7.9.0",
 		"moment": "^2.30.1",
 		"string-similarity-js": "^2.1.4"
