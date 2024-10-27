@@ -329,6 +329,7 @@
 						{risposte}
 						{risposteEvidenziate}
 						{view}
+						com = {data.com}
 					/>
 					<hr />
 					<div class="row">

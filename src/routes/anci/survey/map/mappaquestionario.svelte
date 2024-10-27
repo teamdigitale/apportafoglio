@@ -18,7 +18,7 @@
 	import { scale } from 'svelte/transition';
 	import DettaglioComune from './DettaglioComune.svelte';
 
-	import com from './comuni_def_2.json';
+	export let com;
 	moment.locale('it');
 	export let view;
 
