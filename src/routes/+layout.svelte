@@ -485,7 +485,7 @@
 				<div class="img-responsive">
 					<div class="img-wrapper">
 						<video autoplay muted loop id="myVideo">
-							<source src="/vids/wait{getRandomArbitrary(0, 5)}.mp4" type="video/mp4" />
+							<source src="/vids/wait4.mp4" type="video/mp4" />
 						</video>
 					</div>
 				</div>
