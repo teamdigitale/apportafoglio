@@ -42,7 +42,7 @@ export async function load({ locals }) {
         let risposte = await risposte_res.json();
         const r = risposte.data.filter(x => entiStandard.filter(e => e.Id===x.pa2026.id).length>0 );
 
-        const comuni_res = await fetch('https://rollingwords.it/dist/quest/comuni_def_2.json', {
+        const comuni_res = await fetch('https://rollingwords.it/dist/quest/comuni_def.json', {
             method: 'GET',
             credentials: 'same-origin',
             redirect: 'follow',
