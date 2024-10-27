@@ -16,7 +16,7 @@ export default defineConfig({
 		commonjsOptions: {
 			sourceMap: false,
 		},
-		minify: true,
+		minify: true
 	}
 
 	/*  ,
