@@ -65,6 +65,16 @@ export const percentuale = (v) => {
     return formatter.format(v);
 }
 
+export const percentualeintera = (v) => {
+    const option = {
+        style: 'percent',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    };
+    const formatter = new Intl.NumberFormat("it-IT", option);
+    return formatter.format(v);
+}
+
 export const formatBytes = (bytes, decimals = 2) => {
     if (!+bytes) return '0 Bytes'
 

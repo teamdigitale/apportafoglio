@@ -341,10 +341,17 @@
 																</li>
 
 																<li data-sveltekit-preload-data="off">
+																	{#if  checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') }
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/progettioa"><span>progetti</span></a
+																	>
+																	{:else}
 																	<a
 																		class="dropdown-item list-item"
 																		href="/monitoraggio/progetti"><span>progetti</span></a
 																	>
+																	{/if}
 																</li>
 
 																<!--

@@ -64,31 +64,31 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
         }
 
 
-        const pInCandidatura = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        const pInCandidatura = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2,  outfunds__Applying_Organization__r.Account_Manager__r.Name acm 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA') ${condition}`, MAX_FETCH);
-        const pInContrattualizzazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA') ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInContrattualizzazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2, outfunds__Applying_Organization__r.Account_Manager__r.Name acm 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c = null ${condition}`, MAX_FETCH);
-        const pInRealizzazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c = null ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInRealizzazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2, outfunds__Applying_Organization__r.Account_Manager__r.Name acm 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c = '' ${condition}`, MAX_FETCH);
-        const pInRevisione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c = '' ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInRevisione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2, outfunds__Applying_Organization__r.Account_Manager__r.Name acm 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c != '' ${condition}`, MAX_FETCH);
-        const pInVerificaTecnica = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('DA AVVIARE','AVVIATO') and Data_Contrattualizzazione__c != null  and Ultimo_Esito_Conformit_Tecnica__c != '' ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInVerificaTecnica = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2, outfunds__Applying_Organization__r.Account_Manager__r.Name acm 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO','IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c != 'Positivo' and Ultimo_Esito_Conformit_Tecnica__c != 'Negativo' ${condition}`, MAX_FETCH);
-        const pInRichiestaErogazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO','IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c != 'Positivo' and Ultimo_Esito_Conformit_Tecnica__c != 'Negativo' ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInRichiestaErogazione = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2, outfunds__Applying_Organization__r.Account_Manager__r.Name acm
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition}`, MAX_FETCH);
-        const pInVerificaFormale = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
+        const pInVerificaFormale = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 , outfunds__Applying_Organization__r.Account_Manager__r.Name acm
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition}`, MAX_FETCH);
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
         
-        const pLiquidate = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
+        const pLiquidate = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 , outfunds__Applying_Organization__r.Account_Manager__r.Name acm
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN LIQUIDAZIONE','LIQUIDATO') ${condition}`, MAX_FETCH);
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN LIQUIDAZIONE','LIQUIDATO') ${condition} group by outfunds__Applying_Organization__r.Account_Manager__r.Name`, MAX_FETCH);
 
         const nall = Promise.all([pmisure, pInCandidatura, pInContrattualizzazione, pInRealizzazione, pInRevisione, pInVerificaTecnica, pInRichiestaErogazione, pInVerificaFormale, pLiquidate]);
         const nallvalues = await nall;
