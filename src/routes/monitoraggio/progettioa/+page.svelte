@@ -80,7 +80,7 @@
 		const row2 = [];
 		row2.push('Valore');
 		stati.forEach((s) => {
-			row2.push(filtered[s] ? d3.sum(filtered[s], (d) => d.numero) : 0);
+			row2.push(filtered[s] ? d3.sum(filtered[s], (d) => d.valore) : 0);
 		});
 		result.push(row2);
 		return result;
