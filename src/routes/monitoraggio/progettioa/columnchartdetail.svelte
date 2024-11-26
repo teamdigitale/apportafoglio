@@ -18,7 +18,6 @@
 		height: h,
 		width: '100%',
 		series: series,
-
 		hAxis: {
 			textStyle: {
 				fontSize: 12,
