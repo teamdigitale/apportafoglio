@@ -50,7 +50,7 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
         }
 
         if (regione !== null) {
-            condition = condition + " and outfunds__Applying_Organization__r.Regione__c = '" + regione + "'";
+            condition = condition + " and outfunds__Applying_Organization__r.Regione__c = '" + regione.replaceAll("'","\\'") + "'";
         }
 
         if (te !== null&&te!=='Tutti') {
