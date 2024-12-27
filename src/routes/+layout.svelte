@@ -335,8 +335,8 @@
 																</li>
 
 																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/avvisi"
-																		><span>residui avvisi aperti e misure</span></a
+																	<a class="dropdown-item list-item" href="/monitoraggio/residuimisure"
+																		><span>residui misure</span></a
 																	>
 																</li>
 
