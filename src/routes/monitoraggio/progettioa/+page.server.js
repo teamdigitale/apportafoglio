@@ -95,7 +95,7 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
 
         if(misura==='1.1 Infrastrutture digitali')
         nallvalues.forEach(e => {
-            if(e[0].valore1!==0){
+            if(e[0]&&e[0]!==null&&e[0]!==undefined&&e[0].valore1!==0){
                 e[0].valore = e[0].valore-e[0].valore2
             }
 
@@ -103,7 +103,7 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
 
         if(misura==='1.2 Abilitazione e facilitazione migrazione al Cloud')
         nallvalues.forEach(e => {
-            if(e[0].valore2!==0){
+            if(e[0]&&e[0]!==null&&e[0]!==undefined&&e[0].valore2!==0){
                 e[0].valore = e[0].valore-e[0].valore1
             }
             

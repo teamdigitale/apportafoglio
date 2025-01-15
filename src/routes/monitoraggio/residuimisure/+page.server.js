@@ -19,18 +19,36 @@ export async function load({ locals }) {
             `, MAX_FETCH);
         const candidature_avvisi_standard = await promiseQuery(conn, `
             select outfunds__Awarded_Amount__c,outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, outfunds__FundingProgram__r.Name,outfunds__Status__c, rinuncia__c, Revoca__c from outfunds__Funding_Request__c where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA', 'FINANZIATA','RINUNCIATA','REVOCATA')
-            and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name != '1.1 e 1.2 Multimisura' 
+            and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name != '1.1 e 1.2 Multimisura'
+            and outfunds__Applying_Organization__r.Name != 'XXDTD_C' 
+            and outfunds__Applying_Organization__r.Name != 'XXDTD_C2' 
+            and outfunds__Applying_Organization__r.Name != 'YYDTD_A'  
+            and outfunds__Applying_Organization__r.Name != 'ACCOUNTSCATOLA' 
+            and outfunds__Applying_Organization__r.Name != 'Account Marketing Cloud 1'  
+            and outfunds__Applying_Organization__r.Name != 'YYACN_R'   
             `, MAX_FETCH);
 
         const candidature_avviso_multi_1_1 = await promiseQuery(conn, `
                 select Awarded_Amount_Padre_1__c, outfunds__FundingProgram__r.Name,outfunds__Status__c, rinuncia__c, Revoca__c from outfunds__Funding_Request__c where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA', 'FINANZIATA','RINUNCIATA','REVOCATA')
                 and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = '1.1 e 1.2 Multimisura' 
+                and outfunds__Applying_Organization__r.Name != 'XXDTD_C' 
+                and outfunds__Applying_Organization__r.Name != 'XXDTD_C2' 
+                and outfunds__Applying_Organization__r.Name != 'YYDTD_A'  
+                and outfunds__Applying_Organization__r.Name != 'ACCOUNTSCATOLA' 
+                and outfunds__Applying_Organization__r.Name != 'Account Marketing Cloud 1'  
+                and outfunds__Applying_Organization__r.Name != 'YYACN_R'  
                 and hasServizi11__c = true
                 `, MAX_FETCH);
 
         const candidature_avviso_multi_1_2 = await promiseQuery(conn, `
                     select Awarded_Amount_Padre_2__c, outfunds__FundingProgram__r.Name,outfunds__Status__c, rinuncia__c, Revoca__c from outfunds__Funding_Request__c where outfunds__Status__c in ('AMMESSA', 'AMMESSA CON RISERVA', 'ACCETTATA', 'IN VERIFICA', 'FINANZIATA','RINUNCIATA','REVOCATA')
-                    and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = '1.1 e 1.2 Multimisura' 
+                    and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = '1.1 e 1.2 Multimisura'
+                    and outfunds__Applying_Organization__r.Name != 'XXDTD_C' 
+                    and outfunds__Applying_Organization__r.Name != 'XXDTD_C2' 
+                    and outfunds__Applying_Organization__r.Name != 'YYDTD_A'  
+                    and outfunds__Applying_Organization__r.Name != 'ACCOUNTSCATOLA' 
+                    and outfunds__Applying_Organization__r.Name != 'Account Marketing Cloud 1'  
+                    and outfunds__Applying_Organization__r.Name != 'YYACN_R'   
                     and hasServizi12__c = true
                     `, MAX_FETCH);
 
