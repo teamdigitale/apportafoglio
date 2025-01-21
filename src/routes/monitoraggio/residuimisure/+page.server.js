@@ -111,7 +111,8 @@ export async function load({ locals }) {
                             (c) =>
                                 c.outfunds__FundingProgram__r.Name === avviso.Name &&
                                 c.outfunds__Status__c === 'RINUNCIATA' &&
-                                c.rinuncia__c === 'Decretato'
+                                c.rinuncia__c === 'Decretato' &&
+                                c.misura === avviso.misura
                         ),
                         (d) => d.importo
                     );
@@ -130,7 +131,8 @@ export async function load({ locals }) {
                             (c) =>
                                 c.outfunds__FundingProgram__r.Name === avviso.Name &&
                                 c.outfunds__Status__c === 'REVOCATA' &&
-                                c.Revoca__c === 'Revoca Definitiva'
+                                c.Revoca__c === 'Revoca Definitiva' &&
+                                c.misura === avviso.misura
                         ),
                         (d) => d.importo
                     );
@@ -187,7 +189,8 @@ export async function load({ locals }) {
                         (c) =>
                             c.outfunds__FundingProgram__r.Name === avviso.Name &&
                             c.outfunds__Status__c === 'RINUNCIATA' &&
-                            c.rinuncia__c !== 'Decretato'
+                            c.rinuncia__c !== 'Decretato' &&
+                            c.misura === avviso.misura
                     ),
                     (d) => d.importo
                 );
@@ -206,7 +209,8 @@ export async function load({ locals }) {
                         (c) =>
                             c.outfunds__FundingProgram__r.Name === avviso.Name &&
                             c.outfunds__Status__c === 'REVOCATA' &&
-                            c.Revoca__c !== 'Revoca Definitiva'
+                            c.Revoca__c !== 'Revoca Definitiva' &&
+                            c.misura === avviso.misura
                     ),
                     (d) => d.importo
                 );
