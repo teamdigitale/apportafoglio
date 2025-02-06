@@ -53,6 +53,8 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
             condition = condition + " and outfunds__Applying_Organization__r.Regione__c = '" + regione.replaceAll("'","\\'") + "'";
         }
 
+
+        
         if (te !== null&&te!=='Tutti') {
             if(te!=='Altri (diversi da Comuni, Scuole, ASL)'){
                 condition = condition + " and outfunds__Applying_Organization__r.Tipologia_Ente__c = '" + te + "'";
@@ -62,7 +64,8 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
                 condition = condition + " and outfunds__Applying_Organization__r.Tipologia_Ente__c != 'ASL' ";
             }
         }
-
+        
+        //condition = condition + " and outfunds__Applying_Organization__r.Tipologia_Ente__c in ('PROVINCE','PROVINCE AUTONOME') "
 
         const pInCandidatura = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
         from outfunds__Funding_Request__c 
@@ -84,7 +87,7 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
         where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('COMPLETATO') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition}`, MAX_FETCH);
         const pInVerificaFormale = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
         from outfunds__Funding_Request__c 
-        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN VERIFICA') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition}`, MAX_FETCH);
+        where outfunds__Status__c ='FINANZIATA' and Stato_Progetto__c in ('IN VERIFICA','AVVIATO') and Ultimo_Esito_Conformit_Tecnica__c in ('Positivo') ${condition}`, MAX_FETCH);
         
         const pLiquidate = promiseQuery(conn, `select count(Id) numero, sum(outfunds__Awarded_Amount__c) valore, sum(Awarded_Amount_Padre_1__c) valore1, sum(Awarded_Amount_Padre_2__c) valore2 
         from outfunds__Funding_Request__c 
