@@ -204,6 +204,11 @@
 																{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager'))}
 																	<li><span class="divider"></span></li>
 																	<li>
+																		<a class="dropdown-item list-item" href="/op/progetti"
+																			><span>riepilogo progetti</span></a
+																		>
+																	</li>
+																	<li>
 																		<a class="dropdown-item list-item" href="/op/contatti"
 																			><span>report accounting</span></a
 																		>
