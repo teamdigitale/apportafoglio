@@ -1,6 +1,6 @@
 <script>
 	import Cite from '$lib/c/cite.svelte';
-	import { areaManager, formatNumber, nomeUtente } from '$lib/js/shared';
+	import { areaManager, formatNumber } from '$lib/js/shared';
 	import Entecard from './entecard.svelte';
 	export let data;
 
@@ -90,6 +90,8 @@
 
 	let filterNominativoEnte = '';
 
+	let filterSoppresso = false;
+
 	$: ff = data.enti
 		.filter((x) =>
 			filterAcm === 'All'
@@ -109,7 +111,8 @@
 				? true
 				: x.Name.toLowerCase().includes(filterNominativoEnte.toLowerCase())
 		)
-		.filter((x) => (!soloattivi ? true : x.Active__c == 1));
+		.filter((x) => (!soloattivi ? true : x.Active__c == 1))
+		.filter((x) => (!filterSoppresso ? true : x.Stato_giuridico__c === 'Soppresso'));
 
 	$: filteredEnti = ff.slice(0, MAXVIEW);
 </script>
@@ -122,11 +125,11 @@
 		author="Guy Debord"
 	/>
 
-	{#if ff.length>MAXVIEW}
-	<div class="alert alert-warning" role="alert">
-		Sono visualizzati {MAXVIEW} su {formatNumber(ff.length)} enti. Agisci sui filtri di ricerca per
-		restringere il numero di risultati.
-	</div>
+	{#if ff.length > MAXVIEW}
+		<div class="alert alert-warning" role="alert">
+			Sono visualizzati {MAXVIEW} su {formatNumber(ff.length)} enti. Agisci sui filtri di ricerca per
+			restringere il numero di risultati.
+		</div>
 	{/if}
 
 	<div class="row">
@@ -189,6 +192,16 @@
 					placeholder="Digitare parte del nome dell'Ente"
 					bind:value={filterNominativoEnte}
 				/>
+			</div>
+		</div>
+		<div class="col-12 col-lg-3 my-4 form-check">
+			<div class="toggles">
+				<label class="active" for="filterSoppresso"
+					>Soppresso
+
+					<input type="checkbox" id="filterSoppresso" bind:checked={filterSoppresso} />
+					<span class="lever"></span>
+				</label>
 			</div>
 		</div>
 	</div>
