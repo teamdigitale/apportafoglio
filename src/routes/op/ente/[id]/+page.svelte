@@ -6,13 +6,10 @@
 	import moment from 'moment/min/moment-with-locales';
 	import Referentecard from './referentecard.svelte';
 	import Candidature from './candidature.svelte';
+	import Viz from '$lib/c/Viz.svelte';
 	moment.locale('it');
 
 	export let data;
-
-	onMount(async () => {
-		await setscroll();
-	});
 
 	const setscroll = async () => {
 		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
@@ -40,6 +37,53 @@
 			.sort()
 	);
 	let filterPiattaforma = piattaformaOptions[0];
+
+	// 	let graph = `digraph {
+	//   graph [rankdir="LR"]
+	//   node [shape="box"]
+	// 		"${data.ente.Id}" [shape=record, fontsize="9",  label="${data.ente.Name} "]\n`;
+	// 	data.relazioni.destinazioni.forEach(
+	// 		(r) =>
+	// 			(graph += `"${r.id}" [shape=record, fontsize="9",  label="${r.name} | Motivazione: ${r.motivazione}"]\n`)
+	// 	);
+	// 	data.relazioni.destinazioni.forEach((r) => (graph += `"${r.id}" -> "${data.ente.Id}"\n`));
+	// 	graph += '}';
+
+	console.log(data.relazioni);
+
+	const getGraph = () => {
+		let nodes = '';
+		data.relazioni.destinazioni
+			.map(
+				(r) => (nodes += `"${r.id}" [shape=record, fontsize="9",  label="{${r.name} | ${r.id}}"]\n`)
+			)
+			.concat(
+				data.relazioni.destinazioni.map(
+					(r) => (nodes += `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
+				)
+			)
+			.replaceAll(',', '');
+		// remove all the commas because items in array are separated by a comma, which would invalidate the graph
+		return nodes.replaceAll(',', '');
+	};
+
+	let graph = `digraph {
+		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
+		"${data.ente.Id}" [shape=record, fontsize="9",  label="{ ${data.ente.Name} | ${data.ente.Id}}"]\n
+		${
+			data.relazioni.destinazioni.length > 0
+				? data.relazioni.destinazioni
+						.map((r) => `"${r.id}" [shape=record, fontsize="9",  label="{${r.name} | ${r.id}}"]\n`)
+						.join(' ')
+						.concat(
+							data.relazioni.destinazioni
+								.map((r) => `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
+								.join(' ')
+						)
+				: ''
+		}
+		}`;
+	console.log(graph);
 </script>
 
 <div class="container my-4">
@@ -49,6 +93,12 @@
 		author="Roberto Gervaso"
 	/>
 </div>
+
+{#if data.ente.Stato_giuridico__c === 'Soppresso'}
+	<div class="alert alert-warning my-2" role="alert">
+		<strong>Attenzione!</strong> Questo ente è stato soppresso.
+	</div>
+{/if}
 
 <div class="container">
 	<div class="row">
@@ -102,10 +152,15 @@
 									></div>
 								</div>
 								<ul class="link-list">
-									<li class="nav-item">
+									<li class="nav-item active">
 										<a class="nav-link active" href="#ente">
 											<span>Ente </span>
 										</a>
+										{#if data.relazioni.Stato_giuridico__c === 'Soppresso'}
+											<a class="nav-link active" href="#relazioni">
+												<span>Relazioni </span>
+											</a>
+										{/if}
 										<a class="nav-link active" href="#referenti">
 											<span>Referenti </span>
 										</a>
@@ -247,10 +302,25 @@
 					</div>
 				</div>
 			</div>
+
+			{#if data.ente.Stato_giuridico__c === 'Soppresso'}
+				<div class="it-page-section my-5" id="Relazioni">
+					<h4>Relazioni</h4>
+					<div class="container" style="justify-items: center;">
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<Viz graphdata={graph} id="prova" />
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
 			<div class="it-page-section my-5" id="referenti">
 				<h4>Referenti attivi</h4>
 				<div class="row fullheight">
-					<Referentecard referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]} />
+					<Referentecard
+						referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]}
+					/>
 					{#each data.referenti.filter((r) => r.Profilo__c !== null && r.Stato__c === 'Attivo') as referente}
 						<Referentecard {referente} />
 					{/each}
