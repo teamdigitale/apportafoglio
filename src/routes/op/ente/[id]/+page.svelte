@@ -38,17 +38,6 @@
 	);
 	let filterPiattaforma = piattaformaOptions[0];
 
-	// 	let graph = `digraph {
-	//   graph [rankdir="LR"]
-	//   node [shape="box"]
-	// 		"${data.ente.Id}" [shape=record, fontsize="9",  label="${data.ente.Name} "]\n`;
-	// 	data.relazioni.destinazioni.forEach(
-	// 		(r) =>
-	// 			(graph += `"${r.id}" [shape=record, fontsize="9",  label="${r.name} | Motivazione: ${r.motivazione}"]\n`)
-	// 	);
-	// 	data.relazioni.destinazioni.forEach((r) => (graph += `"${r.id}" -> "${data.ente.Id}"\n`));
-	// 	graph += '}';
-
 	console.log(data.relazioni);
 
 	const getGraph = () => {
@@ -69,20 +58,34 @@
 
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
-		"${data.ente.Id}" [shape=record, fontsize="9",  label="{ ${data.ente.Name} | ${data.ente.Id}}"]\n
-		${
-			data.relazioni.destinazioni.length > 0
-				? data.relazioni.destinazioni
-						.map((r) => `"${r.id}" [shape=record, fontsize="9",  label="{${r.name} | ${r.id}}"]\n`)
-						.join(' ')
-						.concat(
-							data.relazioni.destinazioni
-								.map((r) => `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
-								.join(' ')
-						)
-				: ''
-		}
+		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Id}}"]\n
+		${data.relazioni.destinazioni
+			.map(
+				(r) =>
+					`"${r.id}" [shape=record, style="rounded", fontsize="9",  label="{${r.name.replaceAll('"', '')} | ${r.id}}"]\n`
+			)
+			.join(' ')
+			.concat(
+				data.relazioni.origini
+					.map(
+						(r) =>
+							`"${r.id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.name.replaceAll('"', '')} | ${r.id}}"]\n`
+					)
+					.join(' ')
+			)
+			.concat(
+				data.relazioni.destinazioni
+					.map((r) => `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
+					.join(' ')
+			)
+			.concat(
+				data.relazioni.origini
+					.map((r) => `"${r.id}" ->  "${data.ente.Id}" [label = "  ${r.motivazione}"]\n`)
+					.join(' ')
+			)}}
+			
 		}`;
+
 	console.log(graph);
 </script>
 
@@ -156,7 +159,7 @@
 										<a class="nav-link active" href="#ente">
 											<span>Ente </span>
 										</a>
-										{#if data.relazioni.Stato_giuridico__c === 'Soppresso'}
+										{#if data.relazioni.destinazioni.length != 0 || data.relazioni.origini.length != 0 || data.ente.Stato_giuridico__c === 'Soppresso'}
 											<a class="nav-link active" href="#relazioni">
 												<span>Relazioni </span>
 											</a>
@@ -303,8 +306,8 @@
 				</div>
 			</div>
 
-			{#if data.ente.Stato_giuridico__c === 'Soppresso'}
-				<div class="it-page-section my-5" id="Relazioni">
+			{#if data.relazioni.destinazioni.length != 0 || data.relazioni.origini.length != 0 || data.ente.Stato_giuridico__c === 'Soppresso'}
+				<div class="it-page-section my-5" id="relazioni">
 					<h4>Relazioni</h4>
 					<div class="container" style="justify-items: center;">
 						<div class="row">
