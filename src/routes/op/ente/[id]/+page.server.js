@@ -19,9 +19,9 @@ export async function load({ locals, params }) {
             accessToken: connection
         });
         const qente = promiseQuery(conn, `select Id, Name, Website, PEC__c, Phone, ShippingStreet, Stato_giuridico__c, Area_geografica__c, Regione__c, ShippingState, ShippingCity, Tipologia_Ente__c, Account_Manager__r.Name, Tech_Implementation_User__r.Name, Account_Manager__r.Id, Tech_Implementation_User__r.Id,Account_Manager__r.FullPhotoUrl, Tech_Implementation_User__r.FullPhotoUrl,Asseveratore_1_2_Multimisura_1_1__r.Name, Asseveratore_1_2_Multimisura_1_1__r.FullPhotoUrl, Asseveratore_1_4_1__r.Name, Asseveratore_1_4_1__r.FullPhotoUrl, Asseveratore_misure_automatiche__r.Name, Asseveratore_misure_automatiche__r.FullPhotoUrl,
-            (SELECT Ente_destinazione__c, Motivazione_variazione__c  FROM Account.Registri_eventi_enti__r),
-            (SELECT Ente_destinazione__c, Motivazione_variazione__c, Ente_correlato__c   FROM Account.Registri_eventi_enti1__r)
-            from Account where Id = '`+ idente + `'`, MAX_FETCH);
+            (SELECT Motivazione_variazione__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200),
+            (SELECT Motivazione_variazione__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200)
+            from Account where Id = '` + idente + `'`, MAX_FETCH);
         const qreferenti = promiseQuery(conn, `select Id, LastName, FirstName, MiddleName, Name, MobilePhone, Email, LastActivityDate, FiscalCode__c, Profilo__c, Stato__c from contact where accountid  = '` + idente + `'`, MAX_FETCH);
         const qcandidature = promiseQuery(conn, `select Id, outfunds__FundingProgram__r.Pacchetto__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c, Awarded_Amount_Padre_2__c, Codice_CUP__c, outfunds__Status__c, Stato_Progetto__c,  Data_Finanziamento__c, Data_Ricezione_CUP__c, Data_invio_candidatura__c, Data_conclusione__c, Data_avanzamento_in_Liquidato__c, Data_Contrattualizzazione__c, Data_avanzamento_step_5__c, Data_completamento_attivit__c,  Data_avanzamento_in_Liquidazione__c, Data_Revoca_Decretata__c, Data_Rinuncia__c,  Data_asseverazione_tecnica__c, Data_comunicazione_revoca__c, Data_decreto_rinuncia__c, Data_ultimo_esito_controlli_formali__c, Data_ultimo_esito_asseverazione_tecnica__c   from outfunds__Funding_Request__c where Data_invio_candidatura__c!=null and outfunds__Applying_Organization__r.Id = '` + idente + `'`, MAX_FETCH);
         const qscadenze = promiseQuery(conn, `select 
@@ -64,24 +64,38 @@ export async function load({ locals, params }) {
             }
         });
 
-        let relazioni = { destinazioni: [], origini: [] };
+        const relazioni = {
+            destinazioni: [], origini: []
+        };
 
-        if (values[0][0].Registri_eventi_enti__r && values[0][0].Registri_eventi_enti__r.records && values[0][0].Registri_eventi_enti__r.records.length > 0) {
-            const id = values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__c).join("','")
-            if (id.length > 0) {
-                const destinazioniQuery = await promiseQuery(conn, `select Id, Name from Account where Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__c).join("','") + `')`, MAX_FETCH);
-                const valuesQuery = await Promise.all(destinazioniQuery);
-                relazioni.destinazioni = valuesQuery.map(e => { return { 'id': e.Id, 'name': e.Name, 'motivazione': values[0][0].Registri_eventi_enti__r.records.find((r) => r.Ente_destinazione__c === e.Id).Motivazione_variazione__c } })
-            }
+        if (values[0][0].Registri_eventi_enti__r?.records?.length > 0) {
+            const relazioniDestinazioni = await promiseQuery(conn, `select Id, (SELECT Motivazione_variazione__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
+            const valuesRelazioni = await Promise.all([relazioniDestinazioni]);
+            relazioni.destinazioni = values[0][0].Registri_eventi_enti__r.records.map(e => {
+                if (e.Ente_destinazione__r.Id && e.Ente_destinazione__r.Name) {
+                    let origini = []
+                    valuesRelazioni[0].filter((rel) => rel.Id === e.Ente_destinazione__r.Id).map(rel =>
+                        origini = rel.Registri_eventi_enti1__r?.records?.map(origine => { return { ...origine.Ente_correlato__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []
+
+                    )
+                    return { ...e.Ente_destinazione__r, Motivazione: e.Motivazione_variazione__c, origini }
+                }
+            })
+
         }
+        if (values[0][0].Registri_eventi_enti1__r?.records?.length > 0) {
+            const relazioniOrigini = await promiseQuery(conn, `select Id, (SELECT Motivazione_variazione__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__r?.Id).join("','") + `')`, MAX_FETCH);
+            const valuesRelazioni = await Promise.all([relazioniOrigini]);
+            relazioni.origini = values[0][0].Registri_eventi_enti1__r.records.map(e => {
+                if (e.Ente_correlato__r.Id && e.Ente_correlato__r.Name) {
+                    let destinazioni = []
+                    valuesRelazioni[0].filter((rel) => rel.Id === e.Ente_correlato__r.Id).map(rel =>
+                        destinazioni = rel.Registri_eventi_enti__r?.records?.map(origine => { return { ...origine.Ente_destinazione__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []
 
-        if (values[0][0].Registri_eventi_enti1__r && values[0][0].Registri_eventi_enti1__r.records && values[0][0].Registri_eventi_enti1__r.records.length > 0) {
-            const id = values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__c).join("','")
-            if (id.length > 0) {
-                const originiQuery = await promiseQuery(conn, `select Id, Name from Account where Id in ('` + values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__c).join("','") + `')`, MAX_FETCH);
-                const valuesQuery = await Promise.all(originiQuery);
-                relazioni.origini = valuesQuery.map(e => { return { 'id': e.Id, 'name': e.Name, 'motivazione': values[0][0].Registri_eventi_enti1__r.records.find((r) => r.Ente_correlato__c === e.Id).Motivazione_variazione__c } })
-            }
+                    )
+                    return { ...e.Ente_correlato__r, Motivazione: e.Motivazione_variazione__c, destinazioni }
+                }
+            })
         }
 
         return {

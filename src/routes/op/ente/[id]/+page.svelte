@@ -38,55 +38,69 @@
 	);
 	let filterPiattaforma = piattaformaOptions[0];
 
-	console.log(data.relazioni);
-
-	const getGraph = () => {
-		let nodes = '';
-		data.relazioni.destinazioni
-			.map(
-				(r) => (nodes += `"${r.id}" [shape=record, fontsize="9",  label="{${r.name} | ${r.id}}"]\n`)
-			)
-			.concat(
-				data.relazioni.destinazioni.map(
-					(r) => (nodes += `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
-				)
-			)
-			.replaceAll(',', '');
-		// remove all the commas because items in array are separated by a comma, which would invalidate the graph
-		return nodes.replaceAll(',', '');
-	};
-
+	// TODO: replace the replaceAll('"', '') with a better solution
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
 		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Id}}"]\n
 		${data.relazioni.destinazioni
-			.map(
-				(r) =>
-					`"${r.id}" [shape=record, style="rounded", fontsize="9",  label="{${r.name.replaceAll('"', '')} | ${r.id}}"]\n`
-			)
+			.map((r) => {
+				if (r.Id && r.Name) {
+					const origini = r.origini
+						.map((originiRel) => {
+							if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
+								return `"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`;
+						})
+						.join(' ');
+					return `"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n ${origini}`;
+				}
+			})
 			.join(' ')
 			.concat(
 				data.relazioni.origini
-					.map(
-						(r) =>
-							`"${r.id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.name.replaceAll('"', '')} | ${r.id}}"]\n`
-					)
+					.map((r) => {
+						if (r.Id && r.Name) {
+							const destinazioni = r.destinazioni
+								.map((originiRel) => {
+									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
+										return `"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`;
+								})
+								.join(' ');
+							return `"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n ${destinazioni}`;
+						}
+					})
 					.join(' ')
 			)
 			.concat(
 				data.relazioni.destinazioni
-					.map((r) => `"${data.ente.Id}" ->  "${r.id}" [label = "  ${r.motivazione}"]\n`)
+					.map((r) => {
+						if (r.Id && r.Name) {
+							const origini = r.origini
+								.map((originiRel) => {
+									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
+										return ` "${originiRel.Id}" -> "${r.Id}" [label = "  ${originiRel.Motivazione}"]\n `;
+								})
+								.join(' ');
+							return `"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n ${origini}\n`;
+						}
+					})
 					.join(' ')
 			)
 			.concat(
 				data.relazioni.origini
-					.map((r) => `"${r.id}" ->  "${data.ente.Id}" [label = "  ${r.motivazione}"]\n`)
+					.map((r) => {
+						if (r.Id && r.Name) {
+							const destinazioni = r.destinazioni
+								.map((originiRel) => {
+									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
+										return ` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`;
+								})
+								.join(' ');
+							return `"${r.Id}" ->  "${data.ente.Id}" [label = "  ${r.Motivazione}"]\n ${destinazioni}`;
+						}
+					})
 					.join(' ')
 			)}}
-			
 		}`;
-
-	console.log(graph);
 </script>
 
 <div class="container my-4">
