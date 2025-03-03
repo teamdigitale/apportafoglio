@@ -38,69 +38,54 @@
 	);
 	let filterPiattaforma = piattaformaOptions[0];
 
+	const node = [];
+	const relations = [];
+
 	// TODO: replace the replaceAll('"', '') with a better solution
+	data.relazioni.destinazioni.forEach((r) => {
+		if (r.Id && r.Name) {
+			r.origini.forEach((originiRel) => {
+				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
+					node.push(
+						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`
+					);
+					relations.push(
+						` "${originiRel.Id}" -> "${r.Id}" [label = "  ${originiRel.Motivazione}"]\n `
+					);
+				}
+			});
+			node.push(
+				`"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n `
+			);
+			relations.push(`"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n`);
+		}
+	});
+
+	data.relazioni.origini.forEach((r) => {
+		if (r.Id && r.Name) {
+			r.destinazioni.forEach((originiRel) => {
+				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
+					node.push(
+						`"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`
+					);
+					relations.push(
+						` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`
+					);
+				}
+			});
+			node.push(
+				`"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n `
+			);
+			relations.push(`"${r.Id}" ->  "${data.ente.Id}" [label = "  ${r.Motivazione}"]\n `);
+		}
+	});
+
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
 		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Id}}"]\n
-		${data.relazioni.destinazioni
-			.map((r) => {
-				if (r.Id && r.Name) {
-					const origini = r.origini
-						.map((originiRel) => {
-							if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
-								return `"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`;
-						})
-						.join(' ');
-					return `"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n ${origini}`;
-				}
-			})
-			.join(' ')
-			.concat(
-				data.relazioni.origini
-					.map((r) => {
-						if (r.Id && r.Name) {
-							const destinazioni = r.destinazioni
-								.map((originiRel) => {
-									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
-										return `"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`;
-								})
-								.join(' ');
-							return `"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n ${destinazioni}`;
-						}
-					})
-					.join(' ')
-			)
-			.concat(
-				data.relazioni.destinazioni
-					.map((r) => {
-						if (r.Id && r.Name) {
-							const origini = r.origini
-								.map((originiRel) => {
-									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
-										return ` "${originiRel.Id}" -> "${r.Id}" [label = "  ${originiRel.Motivazione}"]\n `;
-								})
-								.join(' ');
-							return `"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n ${origini}\n`;
-						}
-					})
-					.join(' ')
-			)
-			.concat(
-				data.relazioni.origini
-					.map((r) => {
-						if (r.Id && r.Name) {
-							const destinazioni = r.destinazioni
-								.map((originiRel) => {
-									if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id)
-										return ` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`;
-								})
-								.join(' ');
-							return `"${r.Id}" ->  "${data.ente.Id}" [label = "  ${r.Motivazione}"]\n ${destinazioni}`;
-						}
-					})
-					.join(' ')
-			)}}
-		}`;
+		${node.join(' ')}
+		${relations.join(' ')}
+};`;
 </script>
 
 <div class="container my-4">
