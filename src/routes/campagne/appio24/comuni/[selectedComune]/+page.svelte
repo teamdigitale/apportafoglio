@@ -424,6 +424,7 @@
 				<nav
 					class="navbar it-navscroll-wrapper navbar-expand-lg it-bottom-navscroll it-right-side"
 					data-bs-navscroll
+					style="position: relative; z-index: 0;"
 				>
 					<button
 						class="custom-navbar-toggler"
@@ -662,7 +663,9 @@
 								on:change={(e) => vai(e.target.value)}
 							>
 								<option value="none">Seleziona un comune</option>
-								{#each data.enti.filter( (x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase().replace('Comune di ', '').indexOf(prefiltrocomune.toUpperCase()) !== -1) ) as c}
+								{#each data.enti.filter((x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase()
+												.replace('Comune di ', '')
+												.indexOf(prefiltrocomune.toUpperCase()) !== -1)) as c}
 									{#if selectedComune === c.Id}
 										<option value={c.Id} selected>{c.Name}</option>
 									{:else}
