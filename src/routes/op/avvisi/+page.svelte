@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Cite from '$lib/c/cite.svelte';
 	import Avvisocard from './avvisocard.svelte';
 	export let data;
@@ -25,7 +25,7 @@
 				return a;
 			}, Object.create(null))
 		)
-			.map((x) => x.outfunds__Status__c)
+			.map((x: any) => x.outfunds__Status__c)
 			.sort()
 	);
 	let filterStatoAvviso = 'Tutti gli stati';
@@ -47,19 +47,17 @@
 		}
 	};
 
-	$: beneficiariOptions = ['Tutti i beneficiari'].concat(
-		calcolaBeneficiari()
-			.filter((item, index, arr) => arr.indexOf(item) === index)
-			.sort()
-	);
+	$: beneficiariOptions = calcolaBeneficiari();
 	let filterBeneficiari = 'Tutti i beneficiari';
 
 	function calcolaBeneficiari() {
-		let res = [];
+		let res: string[] = [];
 		for (let z = 0; z < data.avvisi.length; z++) {
-			res = res.concat(data.avvisi[z].beneficiari);
+			if (data.avvisi[z].beneficiari) res = res.concat(data.avvisi[z].beneficiari);
 		}
-		return res;
+		return ['Tutti i beneficiari'].concat(
+			res.filter((item, index, arr) => arr.indexOf(item) === index).sort()
+		);
 	}
 
 	$: filteredAvvisi = data.avvisi
@@ -72,10 +70,10 @@
 		.filter((x) =>
 			filterPacchetto === 'Tutti i pacchetti' ? true : x.Pacchetto__c === filterPacchetto
 		)
-		.filter((x) =>
-			filterBeneficiari === 'Tutti i beneficiari'
-				? true
-				: x.beneficiari.indexOf(filterBeneficiari) > -1
+		.filter(
+			(x) =>
+				filterBeneficiari === 'Tutti i beneficiari' ||
+				(x.beneficiari && x.beneficiari.includes(filterBeneficiari))
 		);
 </script>
 
@@ -97,7 +95,14 @@
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterMisura">Misura</label>
-				<select id="filterMisura" name="filterMisura" bind:value={filterMisura}>
+				<select
+					id="filterMisura"
+					name="filterMisura"
+					bind:value={filterMisura}
+					on:change={() => {
+						if (filterPacchetto !== 'Tutti i pacchetti') filterPacchetto = 'Tutti i pacchetti';
+					}}
+				>
 					{#each misuraOptions as m}
 						<option value={m.idmisura}>{m.misura}</option>
 					{/each}
@@ -107,7 +112,12 @@
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterPacchetto">Pacchetto</label>
-				<select id="filterPacchetto" name="filterPacchetto" bind:value={filterPacchetto}>
+				<select
+					id="filterPacchetto"
+					name="filterPacchetto"
+					bind:value={filterPacchetto}
+					disabled={fp().length === 1}
+				>
 					{#each pacchettoOptions as p}
 						<option value={p}>{p}</option>
 					{/each}
