@@ -47,7 +47,7 @@
 			r.origini.forEach((originiRel) => {
 				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
 					node.push(
-						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`
+						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
 					);
 					relations.push(
 						` "${originiRel.Id}" -> "${r.Id}" [label = "  ${originiRel.Motivazione}"]\n `
@@ -55,7 +55,7 @@
 				}
 			});
 			node.push(
-				`"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n `
+				`"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
 			);
 			relations.push(`"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n`);
 		}
@@ -66,7 +66,7 @@
 			r.destinazioni.forEach((originiRel) => {
 				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
 					node.push(
-						`"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Id}}"]\n`
+						`"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
 					);
 					relations.push(
 						` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`
@@ -74,7 +74,7 @@
 				}
 			});
 			node.push(
-				`"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Id}}"]\n `
+				`"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
 			);
 			relations.push(`"${r.Id}" ->  "${data.ente.Id}" [label = "  ${r.Motivazione}"]\n `);
 		}
@@ -82,7 +82,7 @@
 
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
-		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Id}}"]\n
+		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
 		${node.join(' ')}
 		${relations.join(' ')}
 };`;
