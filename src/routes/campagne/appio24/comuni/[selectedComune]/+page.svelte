@@ -11,10 +11,6 @@
 	$: snappioRegione = [];
 	$: snappioNazionale = [];
 
-	const vai = (id) => {
-		goto('/campagne/appio24/comuni/' + id);
-	};
-
 	let prefiltrocomune = '';
 
 	export let data;
@@ -301,24 +297,28 @@
 
 	$: servizi =
 		selectedComune !== 'none'
-			? data.serviziACatalogo
-					.map((x) => ({
-						...x,
-						candidabile: candidabile(x),
-						fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
-						fattoriko: fattoriKo(
-							x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
-							x.Name,
-							x.Anagrafica_Servizi__r.Categoria__c
-						)
-					}))
-					.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
-					.filter((x) =>
-						mostraSoloNonAttivi ? x.candidabile.startsWith('SI - Già attivo') === false : true
+			? data.serviziACatalogo.map((x) => ({
+					...x,
+					candidabile: candidabile(x),
+					fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
+					fattoriko: fattoriKo(
+						x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
+						x.Name,
+						x.Anagrafica_Servizi__r.Categoria__c
 					)
+				}))
 			: [];
 
-	$: catalogoPerCategoria = d3.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c);
+	$: serviziFiltrati = servizi
+		.filter((x) =>
+			filterCategoria === '' ? true : x.Anagrafica_Servizi__r.Categoria__c === filterCategoria
+		)
+		.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
+		.filter((x) =>
+			mostraSoloNonAttivi ? x.candidabile.startsWith('SI - Già attivo') === false : true
+		);
+
+	$: catalogoPerCategoria = d3.group(serviziFiltrati, (d) => d.Anagrafica_Servizi__r.Categoria__c);
 
 	$: selectedComune = data.selectedComune;
 
@@ -535,15 +535,22 @@
 									<label for="filterCategoria">Categorie</label>
 									<select id="filterCategoria" name="filterCategoria" bind:value={filterCategoria}>
 										<option value="">Tutte</option>
-										{#each [...catalogoPerCategoria.keys()] as cat}
+										{#each [...d3
+												.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c)
+												.keys()] as cat}
 											<option value={cat}
 												>{cat}{selectedComune !== 'none'
 													? ' - ' +
-														servizi.filter(
-															(x) =>
-																x.candidabile.startsWith('SI') &&
-																x.Anagrafica_Servizi__r.Categoria__c === cat
-														).length
+														servizi
+															.filter((x) =>
+																mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true
+															)
+															.filter((x) =>
+																mostraSoloNonAttivi
+																	? x.candidabile.startsWith('SI - Già attivo') === false
+																	: true
+															)
+															.filter((x) => x.Anagrafica_Servizi__r.Categoria__c === cat).length
 													: ''}</option
 											>
 										{/each}
@@ -660,7 +667,7 @@
 								id="selezioneComune"
 								title="Seleziona un Comune"
 								required
-								on:change={(e) => vai(e.target.value)}
+								on:change={(e) => goto('/campagne/appio24/comuni/' + e.target.value)}
 							>
 								<option value="none">Seleziona un comune</option>
 								{#each data.enti.filter((x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase()
@@ -960,13 +967,7 @@
 									aria-expanded="false"
 									aria-controls="collapsecatalogo"
 								>
-									Catalogo: sono disponibili ancora {servizi.filter(
-										(x) =>
-											x.candidabile.startsWith('SI') &&
-											(filterCategoria === ''
-												? true
-												: x.Anagrafica_Servizi__r.Categoria__c === filterCategoria)
-									).length} servizi
+									Catalogo: sono disponibili ancora {serviziFiltrati.length} servizi
 								</button>
 							</h2>
 							<div
@@ -983,13 +984,7 @@
 												<table class="table table-hover table-sm caption-top align-middle">
 													<caption
 														><strong
-															>Sono disponibili ancora {servizi.filter(
-																(x) =>
-																	x.candidabile.startsWith('SI') &&
-																	(filterCategoria === ''
-																		? true
-																		: x.Anagrafica_Servizi__r.Categoria__c === filterCategoria)
-															).length} servizi</strong
+															>Sono disponibili ancora {serviziFiltrati.length} servizi</strong
 														></caption
 													>
 													<thead>
