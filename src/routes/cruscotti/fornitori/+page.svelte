@@ -7,6 +7,7 @@
 	import Pagination from '$lib/c/pagination.svelte';
 	import { euro } from '$lib/js/shared';
 	import Treemap from './treemap.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 
 	let cperpage;
 	let cp = 0;
@@ -14,15 +15,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	$: calcola = () => {
 		let aa = data.misure;
@@ -159,19 +151,19 @@
 			}
 		}
 		let result = [];
-		
-		result.push(['Label', 'Parent', 'Numero','Valore']);
-		result.push(['Soggetti realizzatori', null, 0,0]);
+
+		result.push(['Label', 'Parent', 'Numero', 'Valore']);
+		result.push(['Soggetti realizzatori', null, 0, 0]);
 		data.nomiFornitori.forEach((f) => {
 			let tot = 0;
-            let value = 0;
+			let value = 0;
 			const cands = r.filter(
 				(c) =>
 					c.fornitori.filter((ff) => ff.Denominazione_Soggetto_Realizzatore__c === f).length > 0
 			);
 			tot = tot + cands.length;
-            value = value+cands.reduce((acc, o) => acc + parseInt(o.outfunds__Awarded_Amount__c), 0);
-			result.push([f, 'Soggetti realizzatori', tot,value]);
+			value = value + cands.reduce((acc, o) => acc + parseInt(o.outfunds__Awarded_Amount__c), 0);
+			result.push([f, 'Soggetti realizzatori', tot, value]);
 			if (cands.length > 0) {
 				const misure = Object.values(
 					cands.reduce((a, { Misura__c }) => {
@@ -185,22 +177,22 @@
 				)
 					.map((x) => x.Misura__c)
 					.sort();
-                    
+
 				misure.forEach((m) => {
-                    let totmisure = 0;
-                    let valueMisure = 0;
-                    const candsMisure = cands.filter((c) => c.Misura__c === m);
-                    totmisure = totmisure+candsMisure.length;
-                    valueMisure = valueMisure+candsMisure.reduce((acc, o) => acc + parseInt(o.outfunds__Awarded_Amount__c), 0);
-					result.push([m + '-' + f, f, totmisure,valueMisure]);
+					let totmisure = 0;
+					let valueMisure = 0;
+					const candsMisure = cands.filter((c) => c.Misura__c === m);
+					totmisure = totmisure + candsMisure.length;
+					valueMisure =
+						valueMisure +
+						candsMisure.reduce((acc, o) => acc + parseInt(o.outfunds__Awarded_Amount__c), 0);
+					result.push([m + '-' + f, f, totmisure, valueMisure]);
 				});
 			}
 		});
 
 		return result;
 	};
-
-    
 </script>
 
 <div class="container my-4">
@@ -307,10 +299,16 @@
 			</div>
 			<div class="it-page-section my-5" id="distribuzione">
 				<h4>Distribuzione totale</h4>
-				<p>In questa sezion puoi visualizzare la distribuzione globale dei fornitori per <strong>numero di candidure</strong> e per <strong>valore</strong>.</p>
+				<p>
+					In questa sezion puoi visualizzare la distribuzione globale dei fornitori per <strong
+						>numero di candidure</strong
+					>
+					e per <strong>valore</strong>.
+				</p>
 				<div class="alert alert-primary" role="alert">
-                    L'area dei rettangoli rappresenta il numero di candidature pesate sul totale mentre il colore rappresenta il valore delle candidature pesate sul totale.
-                </div>
+					L'area dei rettangoli rappresenta il numero di candidature pesate sul totale mentre il
+					colore rappresenta il valore delle candidature pesate sul totale.
+				</div>
 				<Treemap values={calcolaDatiPerDistribuzione()} />
 			</div>
 

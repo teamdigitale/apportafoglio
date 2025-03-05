@@ -1,24 +1,15 @@
 <script>
 	// @ts-nocheck
-
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
 	import Referentecard from './referentecard.svelte';
 	import Candidature from './candidature.svelte';
 	import Viz from '$lib/c/Viz.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 	moment.locale('it');
 
 	export let data;
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let open = false;
 

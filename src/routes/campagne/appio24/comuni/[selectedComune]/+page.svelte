@@ -2,14 +2,13 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { formatDate, percentuale } from '$lib/js/shared.js';
+	import { formatDate, setscroll } from '$lib/js/shared.js';
 	import { dipendenze12, dipendenze141, dipendenzepagopa } from './dipendenze.js';
 	import { stringSimilarity } from 'string-similarity-js';
 	import { goto } from '$app/navigation';
-
-	$: snappioProvincia = [];
-	$: snappioRegione = [];
-	$: snappioNazionale = [];
+	// $: snappioProvincia = [];
+	// $: snappioRegione = [];
+	// $: snappioNazionale = [];
 
 	let prefiltrocomune = '';
 
@@ -68,15 +67,6 @@
 	const count = (xs) => xs.reduce((a, x) => ((a[x] = (a[x] || 0) + 1), a), {});
 
 	const uniq = (xs) => [...new Set(xs)];
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let popover;
 

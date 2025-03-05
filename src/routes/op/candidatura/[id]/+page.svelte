@@ -2,24 +2,14 @@
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
-
 	import Pagination from '$lib/c/pagination.svelte';
-	import { euro, formatBytes } from '$lib/js/shared';
+	import { euro, formatBytes, setscroll } from '$lib/js/shared';
 	moment.locale('it');
 	export let data;
 
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">

@@ -3,11 +3,11 @@
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
+	import { setscroll } from '$lib/js/shared.js';
 	moment.locale('it');
 
 	import Calendar from '@event-calendar/core';
 	import TimeGrid from '@event-calendar/day-grid';
-
 	export let data;
 
 	let events = data.calendario.map((x) => ({
@@ -42,15 +42,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">

@@ -1,6 +1,5 @@
 <script>
 	// @ts-nocheck
-
 	import { statusIndex, statusColor, statusProgettoIndex, statusProgettoColor } from '$lib';
 	import Scorecard from '$lib/c/scorecard.svelte';
 	import {
@@ -9,7 +8,8 @@
 		getFirstDayOfQuarter,
 		getQuarter,
 		monthDiff,
-		quartersDiff
+		quartersDiff,
+		setscroll
 	} from '$lib/js/shared.js';
 	import { onMount } from 'svelte';
 	import Barchart from './barchart.svelte';
@@ -21,15 +21,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	const sortTipologie = {
 		Comuni: 0,
@@ -491,7 +482,6 @@
 		//Gli slot vanno calcolati per ogni target e per ogni tipologia ente...
 
 		tipologieEnti.forEach((te) => {
-
 			t.forEach((target) => {
 				let sss = [];
 				let slotste = [
@@ -555,9 +545,9 @@
 					let daAsseverare =
 						targets[targets.length - 1].targetPerTipologia[te] -
 						candidatureFinanziatePositive.filter((c) => c.tipologia_ente === te).length;
-			
+
 					const capienzamedia = Math.round(daAsseverare / slotste.length);
-		
+
 					slotste.forEach((element) => {
 						let q = element.quarter;
 						element.valore = capienzamedia < 0 ? 0 : capienzamedia;
@@ -576,8 +566,6 @@
 	};
 
 	$: calcolaSlotIniziali(targets);
-
-
 
 	$: calcolaCompletamentiECapienze = (candidatureFinanziateNonPositive, targets, te) => {
 		const result = [['# Progetti', 'Completamento attuale', 'Capienza slot']];
@@ -722,24 +710,20 @@
 			<div class="it-page-section my-5" id="candidature">
 				<h5>Candidature finanziate: {formatNumber(candidatureFinanziate.length)}</h5>
 				<h6>Ripartizione degli avanzamenti progettuali per tipologia ente</h6>
-				{#if tipologieEnti.length>1}
-				<div class="row my-1 d-flex align-items-center">
-					<div class="col-12 col-lg-12">
-						<p><small>Tutti gli enti</small></p>
-						<Columnchart
-							id="ripartizioneCandidature-ALL"
-							values={calcolaRipartizioneCandidature(
-								candidatureFinanziate
-							)}
-							series={calcolaColoriRipartizioniCandidature(
-								candidatureFinanziate
-							)}
-							legendPosition="top"
-							stacked={'percent'}
-							h="150"
-						/>
+				{#if tipologieEnti.length > 1}
+					<div class="row my-1 d-flex align-items-center">
+						<div class="col-12 col-lg-12">
+							<p><small>Tutti gli enti</small></p>
+							<Columnchart
+								id="ripartizioneCandidature-ALL"
+								values={calcolaRipartizioneCandidature(candidatureFinanziate)}
+								series={calcolaColoriRipartizioniCandidature(candidatureFinanziate)}
+								legendPosition="top"
+								stacked={'percent'}
+								h="150"
+							/>
+						</div>
 					</div>
-				</div>
 				{/if}
 				<div class="row my-1 d-flex align-items-center">
 					{#each tipologieEnti as te}

@@ -1,6 +1,6 @@
 <script>
 	import Scorecard from '$lib/c/scorecard.svelte';
-	import { formatNumber } from '$lib/js/shared.js';
+	import { formatNumber, setscroll } from '$lib/js/shared.js';
 	import moment from 'moment/min/moment-with-locales';
 	import { onMount } from 'svelte';
 	moment.locale('it');
@@ -8,15 +8,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	export let data;
 	let serviziPerTipologiaEnte = Object.values(
@@ -255,37 +246,36 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-6 my-4">
-                        {#each serviziMediPerTipologia as smpt,index}
-                        <div>
-							<div class="form-group">
-								<label for="m_{smpt.tipologia}" class="input-number-label active"
-									>Numero di servizi medi per tipologia {smpt.tipologia}</label
-								>
-								<div class="input-group input-number">
-									<input
-										type="number"
-										class="form-control"
-										data-bs-input
-										id="m_{smpt.tipologia}"
-										name="m_{smpt.tipologia}"
-										bind:value={serviziMediPerTipologia[index].valore}
-										min="1"
-										max="100"
-										step="1"
-									/>
-									<span class="input-group-text align-buttons flex-column">
-										<button class="input-number-add">
-											<span class="visually-hidden">Aumenta del 1%</span>
-										</button>
-										<button class="input-number-sub">
-											<span class="visually-hidden">Diminuisci del 1%</span>
-										</button>
-									</span>
+						{#each serviziMediPerTipologia as smpt, index}
+							<div>
+								<div class="form-group">
+									<label for="m_{smpt.tipologia}" class="input-number-label active"
+										>Numero di servizi medi per tipologia {smpt.tipologia}</label
+									>
+									<div class="input-group input-number">
+										<input
+											type="number"
+											class="form-control"
+											data-bs-input
+											id="m_{smpt.tipologia}"
+											name="m_{smpt.tipologia}"
+											bind:value={serviziMediPerTipologia[index].valore}
+											min="1"
+											max="100"
+											step="1"
+										/>
+										<span class="input-group-text align-buttons flex-column">
+											<button class="input-number-add">
+												<span class="visually-hidden">Aumenta del 1%</span>
+											</button>
+											<button class="input-number-sub">
+												<span class="visually-hidden">Diminuisci del 1%</span>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
-                        {/each}
-                        
+						{/each}
 					</div>
 				</div>
 			</div>

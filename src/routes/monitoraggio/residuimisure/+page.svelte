@@ -3,25 +3,16 @@
 	import * as d3 from 'd3';
 	import katex from 'katex';
 	export let data;
-	console.log(data);
 	import { onMount } from 'svelte';
 	import TangledTree from './TangledTree.svelte';
 	import ResiduiViz from './ResiduiViz.svelte';
 	import Scorecard from '$lib/c/scorecard.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 	import Viz from '$lib/c/Viz.svelte';
 
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container">
@@ -250,22 +241,23 @@
 																)} }"]
 
                                 imp_pot_rin [shape=record, tooltip=" ", style="rounded,filled" fontcolor="black" fontsize="9" fillcolor="#dddddd",  label="{ Potenziali rinunce | ${euro(
-                                    data.infomisure.find((i) => i.misura === d.misura).importi
-                                        .potenziali_rinunce
-                                )} }"]
+																	data.infomisure.find((i) => i.misura === d.misura).importi
+																		.potenziali_rinunce
+																)} }"]
 
                                 imp_pot_rev [shape=record, tooltip=" ", style="rounded,filled"  fontcolor="black" fontsize="9" fillcolor="#dddddd",  label="{ Potenziali revoche | ${euro(
-                                    data.infomisure.find((i) => i.misura === d.misura).importi
-                                        .potenziali_revoche
-                                )} }"]
+																	data.infomisure.find((i) => i.misura === d.misura).importi
+																		.potenziali_revoche
+																)} }"]
                                 
                                 imp_pot_disp [shape=record, tooltip=" ", style="rounded,filled" fontcolor="black" fontsize="9" fillcolor="#dddddd",  label="{ Importo potenziale disponibile | ${euro(
-                                    data.infomisure.find((i) => i.misura === d.misura).importi
-                                        .potenziali_revoche+
-                                        data.infomisure.find((i) => i.misura === d.misura).importi
-                                        .potenziali_rinunce+
-                                        data.infomisure.find((i) => i.misura === d.misura).importi.residuo
-                                )} }"]
+																	data.infomisure.find((i) => i.misura === d.misura).importi
+																		.potenziali_revoche +
+																		data.infomisure.find((i) => i.misura === d.misura).importi
+																			.potenziali_rinunce +
+																		data.infomisure.find((i) => i.misura === d.misura).importi
+																			.residuo
+																)} }"]
                                 
                                 inv_tot -> inv_centr
                                 inv_tot -> inv_terr

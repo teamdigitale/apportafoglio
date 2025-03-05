@@ -1,12 +1,9 @@
 <script>
 	import Pagination from '$lib/c/pagination.svelte';
-	import { areaManager, euro } from '$lib/js/shared.js';
-
+	import { areaManager, euro, setscroll } from '$lib/js/shared.js';
 	import Gauge from '$lib/c/charts/gauge.svelte';
 
 	export let data;
-
-
 
 	import { onMount } from 'svelte';
 	import Cite from '$lib/c/cite.svelte';
@@ -14,15 +11,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let regioniOptions = ['Tutte le regioni'].concat(
 		Object.values(
@@ -421,14 +409,9 @@
 				<h4>Contrattualizzazione</h4>
 				<div class="row">
 					{#each data.misure.filter( (x) => (filterMisure === misureOptions[0] ? true : x.Name === filterMisure) ) as m}
-						{#if candidature.filter((x) =>
-							filterAcm === 'All'
-								? true
-								: filterAcm === 'undefined'
-									? x.outfunds__Applying_Organization__r.Account_Manager__c === null
-									: x.outfunds__Applying_Organization__r.Account_Manager__c ===
-										filterAcm
-						).filter((x) => x.Misura__c === m.Name).length > 0}
+						{#if candidature
+							.filter( (x) => (filterAcm === 'All' ? true : filterAcm === 'undefined' ? x.outfunds__Applying_Organization__r.Account_Manager__c === null : x.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm) )
+							.filter((x) => x.Misura__c === m.Name).length > 0}
 							<div class="col-12 col-lg-4 my-4">
 								<p>{m.Name}</p>
 								<Gauge
@@ -480,14 +463,9 @@
 				<h4>Completamento attività</h4>
 				<div class="row">
 					{#each data.misure.filter( (x) => (filterMisure === misureOptions[0] ? true : x.Name === filterMisure) ) as m}
-						{#if candidature.filter((x) =>
-							filterAcm === 'All'
-								? true
-								: filterAcm === 'undefined'
-									? x.outfunds__Applying_Organization__r.Account_Manager__c === null
-									: x.outfunds__Applying_Organization__r.Account_Manager__c ===
-										filterAcm
-						).filter((x) => x.Misura__c === m.Name).length > 0}
+						{#if candidature
+							.filter( (x) => (filterAcm === 'All' ? true : filterAcm === 'undefined' ? x.outfunds__Applying_Organization__r.Account_Manager__c === null : x.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm) )
+							.filter((x) => x.Misura__c === m.Name).length > 0}
 							<div class="col-12 col-lg-4 my-4">
 								<p>{m.Name}</p>
 								<Gauge

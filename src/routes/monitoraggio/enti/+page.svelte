@@ -1,10 +1,9 @@
 <script>
 	// @ts-nocheck
-
 	import { onMount } from 'svelte';
 	import Cite from '$lib/c/cite.svelte';
 	import Italymap from '$lib/c/map/italymap.svelte';
-	import { euro, formatNumber, percentuale } from '$lib/js/shared.js';
+	import { euro, formatNumber, percentuale, setscroll } from '$lib/js/shared.js';
 	import Columnchart from './columnchart.svelte';
 	import Scorecard from '$lib/c/scorecard.svelte';
 	import People from '$lib/c/people/people.svelte';
@@ -13,15 +12,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let soloAttivi = true;
 	let soloBeneficiari = true;
@@ -57,37 +47,33 @@
 				.filter((p) =>
 					selectedRegions.length === 0 ? true : selectedRegions.indexOf(p.Territorio) > -1
 				)
-				.filter((p) =>
-					p.Sesso === s
-				)
+				.filter((p) => p.Sesso === s)
 				.reduce((a, b) => {
 					a[b.Fascia] = a[b.Fascia] || {
 						fascia: b.Fascia,
 						count: 0
 					};
-					a[b.Fascia].count = a[b.Fascia].count+Number(b.Value);
+					a[b.Fascia].count = a[b.Fascia].count + Number(b.Value);
 					return a;
 				}, Object.create(null))
 		);
-	}
+	};
 
 	$: woman_popolazionePerFasciaLabels = popolazionePerFascia('femmine').map(function (c) {
-			return c.fascia;
-		});
+		return c.fascia;
+	});
 
-		$: woman_popolazionePerFasciaValues = popolazionePerFascia('femmine').map(function (c) {
-			return c.count;
-		})
+	$: woman_popolazionePerFasciaValues = popolazionePerFascia('femmine').map(function (c) {
+		return c.count;
+	});
 
-		$: man_popolazionePerFasciaLabels = popolazionePerFascia('maschi').map(function (c) {
-			return c.fascia;
-		});
+	$: man_popolazionePerFasciaLabels = popolazionePerFascia('maschi').map(function (c) {
+		return c.fascia;
+	});
 
-		$: man_popolazionePerFasciaValues = popolazionePerFascia('maschi').map(function (c) {
-			return c.count;
-		})
-
-
+	$: man_popolazionePerFasciaValues = popolazionePerFascia('maschi').map(function (c) {
+		return c.count;
+	});
 
 	$: numerocandidature = data.candidature
 		.filter((e) => (selectedRegions.length === 0 ? true : selectedRegions.indexOf(e.regione) > -1))
@@ -108,7 +94,6 @@
 		});
 
 	$: finanziatoProCapite = euro(totalefinanziato / popolazione);
-
 
 	$: totaleliquidatonetto = data.candidature
 		.filter((e) => (selectedRegions.length === 0 ? true : selectedRegions.indexOf(e.regione) > -1))
@@ -379,7 +364,6 @@
 				<div class="row">
 					<div class="col-12 col-lg-6">
 						<People
-						
 							id="finpercittadini"
 							manlabels={man_popolazionePerFasciaLabels}
 							manvalues={man_popolazionePerFasciaValues}
@@ -391,7 +375,7 @@
 						<h5>Popolazione</h5>
 						<h6>{formatNumber(popolazione)}</h6>
 						<h5>Finanziamento medio pro-capite</h5>
-						<h6>{euro(totalefinanziato/popolazione)}</h6>
+						<h6>{euro(totalefinanziato / popolazione)}</h6>
 						<h5>Numero medio di servizi pro-capite</h5>
 						<h6>n.d.</h6>
 					</div>
