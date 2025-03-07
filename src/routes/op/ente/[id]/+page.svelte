@@ -29,8 +29,27 @@
 	);
 	let filterPiattaforma = piattaformaOptions[0];
 
+	let mostraSoppressi = false;
+
+	const ordineStati = [
+		'Attivo',
+		'Attesa Conferma Master',
+		'In Registrazione',
+		'Invitato',
+		'Revocato'
+	];
+
 	const node = [];
 	const relations = [];
+
+	$: referenti = data.referenti
+		.sort((a, b) => {
+			if (a.Profilo__c === b.Profilo__c) {
+				return ordineStati.indexOf(a.Stato__c) - ordineStati.indexOf(b.Stato__c);
+			}
+			return a.Profilo__c === 'Super admin' ? -1 : 1;
+		})
+		.filter((ref) => (mostraSoppressi ? true : ref.Stato__c === 'Attivo'));
 
 	// TODO: replace the replaceAll('"', '') with a better solution
 	data.relazioni.destinazioni.forEach((r) => {
@@ -309,12 +328,29 @@
 				</div>
 			{/if}
 			<div class="it-page-section my-5" id="referenti">
-				<h4>Referenti attivi</h4>
 				<div class="row fullheight">
-					<Referentecard
+					<div class="col-12 col-lg-3">
+						<h4>Referenti attivi</h4>
+					</div>
+					{#if data.referenti.length != referenti.length || mostraSoppressi}
+						<div class="col-12 col-lg-3 toggles">
+							<label class="active" for="filterSoppresso"
+								>Mostra non attivi
+
+								<input type="checkbox" id="filterSoppresso" bind:checked={mostraSoppressi} />
+								<span class="lever"></span>
+							</label>
+						</div>
+					{/if}
+				</div>
+				<div class="row fullheight">
+					<!-- <Referentecard
 						referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]}
 					/>
-					{#each data.referenti.filter((r) => r.Profilo__c !== null && r.Stato__c === 'Attivo') as referente}
+					{#each data.referenti.filter((r) => r.Stato__c === 'Attivo') as referente}
+						<Referentecard {referente} />
+					{/each} -->
+					{#each referenti as referente}
 						<Referentecard {referente} />
 					{/each}
 				</div>

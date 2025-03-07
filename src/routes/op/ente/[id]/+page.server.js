@@ -22,7 +22,7 @@ export async function load({ locals, params }) {
             (SELECT Motivazione_variazione__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200),
             (SELECT Motivazione_variazione__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200)
             from Account where Id = '` + idente + `'`, MAX_FETCH);
-        const qreferenti = promiseQuery(conn, `select Id, LastName, FirstName, MiddleName, Name, MobilePhone, Email, LastActivityDate, FiscalCode__c, Profilo__c, Stato__c from contact where accountid  = '` + idente + `'`, MAX_FETCH);
+        const qreferenti = promiseQuery(conn, `select Id, LastName, FirstName, MiddleName, Name, MobilePhone, Email, LastActivityDate, FiscalCode__c, Profilo__c, Stato__c from contact where Stato__c != '' and Profilo__c != '' and accountid  = '` + idente + `'`, MAX_FETCH);
         const qcandidature = promiseQuery(conn, `select Id, outfunds__FundingProgram__r.Pacchetto__c, outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name, outfunds__Awarded_Amount__c, Awarded_Amount_Padre_1__c, Awarded_Amount_Padre_2__c, Codice_CUP__c, outfunds__Status__c, Stato_Progetto__c,  Data_Finanziamento__c, Data_Ricezione_CUP__c, Data_invio_candidatura__c, Data_conclusione__c, Data_avanzamento_in_Liquidato__c, Data_Contrattualizzazione__c, Data_avanzamento_step_5__c, Data_completamento_attivit__c,  Data_avanzamento_in_Liquidazione__c, Data_Revoca_Decretata__c, Data_Rinuncia__c,  Data_asseverazione_tecnica__c, Data_comunicazione_revoca__c, Data_decreto_rinuncia__c, Data_ultimo_esito_controlli_formali__c, Data_ultimo_esito_asseverazione_tecnica__c   from outfunds__Funding_Request__c where Data_invio_candidatura__c!=null and outfunds__Applying_Organization__r.Id = '` + idente + `'`, MAX_FETCH);
         const qscadenze = promiseQuery(conn, `select 
         outfunds__Funding_Request__r.Id, 
@@ -55,6 +55,9 @@ export async function load({ locals, params }) {
                 e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name + ' - ' + e.outfunds__Funding_Request__r.outfunds__FundingProgram__r.Pacchetto__c;
             }
         });
+
+        console.log(values[0][0]);
+
 
         const misure = await promiseQuery(conn, `select count(Avviso__r.outfunds__Parent_Funding_Program__r.Id),Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c  from Dettaglio_Cronoprogramma__c where Cluster__r.Tipologia_Ente__c = '` + values[0][0].Tipologia_Ente__c + `' AND Avviso__r.outfunds__Parent_Funding_Program__r.Name != NULL group by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c order by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c`, MAX_FETCH);
 
