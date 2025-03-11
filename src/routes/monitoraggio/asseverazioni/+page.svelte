@@ -802,8 +802,4 @@
 </div>
 
 <style>
-	.modal-dialog {
-		max-width: 70vw;
-		width: 70vw;
-	}
 </style>

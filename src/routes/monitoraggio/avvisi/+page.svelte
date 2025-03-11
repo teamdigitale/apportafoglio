@@ -201,7 +201,6 @@
 												)
 											]
 										]}
-										label=""
 									/>
 								</div>
 								<div class="p-2 bd-highlight">

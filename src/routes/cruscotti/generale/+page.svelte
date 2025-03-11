@@ -451,7 +451,6 @@
 											)
 										]
 									]}
-									label={m.Name}
 								/>
 							</div>
 						{/if}
@@ -509,7 +508,6 @@
 											)
 										]
 									]}
-									label={m.Name}
 								/>
 							</div>
 						{/if}

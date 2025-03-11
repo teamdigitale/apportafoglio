@@ -1,8 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	export let id = '-s';
-	export let pvalue = 0;
-	export let label = '%';
 	export let values;
 
 	onMount(async () => {

@@ -4,10 +4,6 @@
 	export let data;
 	import * as d3 from 'd3';
 
-	console.log(data);
-
-	// @ts-nocheck
-
 	import Columnchart from './columnchart.svelte';
 	import Columnchartdetail from './columnchartdetail.svelte';
 
@@ -105,8 +101,7 @@
 		stati.forEach((s) => {
 			headrow.push(s);
 			headrow.push({ role: 'annotation' });
-			headrow.push({type: 'string', role: 'tooltip'});
-			
+			headrow.push({ type: 'string', role: 'tooltip' });
 		});
 		result.push(headrow);
 		//result.push(['AcM'].concat(stati.map(x => [x,{ role: 'annotation' }])));
@@ -116,23 +111,49 @@
 			let tot = 0;
 
 			stati.forEach((s) => {
-				tot = tot+(filtered[s] ? d3.sum(filtered[s].filter(x => x.acm ===acm), (d) => d.numero) : 0);
+				tot =
+					tot +
+					(filtered[s]
+						? d3.sum(
+								filtered[s].filter((x) => x.acm === acm),
+								(d) => d.numero
+							)
+						: 0);
 			});
-
 
 			stati.forEach((s) => {
-				row.push(filtered[s] ? d3.sum(filtered[s].filter(x => x.acm ===acm), (d) => d.numero) : 0);
+				row.push(
+					filtered[s]
+						? d3.sum(
+								filtered[s].filter((x) => x.acm === acm),
+								(d) => d.numero
+							)
+						: 0
+				);
 				let perc = 0;
-				if(filtered[s]){
-					perc = d3.sum(filtered[s].filter(x => x.acm ===acm), (d) => d.numero)/tot;
+				if (filtered[s]) {
+					perc =
+						d3.sum(
+							filtered[s].filter((x) => x.acm === acm),
+							(d) => d.numero
+						) / tot;
 				}
-				row.push((data.selectedArea!=='ALL'&&perc>0.1)?percentualeintera(perc):'');
-				row.push(s+'\n'+d3.sum(filtered[s].filter(x => x.acm ===acm), (d) => d.numero)+' ('+percentualeintera(perc)+')');
+				row.push(data.selectedArea !== 'ALL' && perc > 0.1 ? percentualeintera(perc) : '');
+				row.push(
+					s +
+						'\n' +
+						d3.sum(
+							filtered[s].filter((x) => x.acm === acm),
+							(d) => d.numero
+						) +
+						' (' +
+						percentualeintera(perc) +
+						')'
+				);
 			});
-			
+
 			result.push(row);
 		});
-		console.log(result);
 		return result;
 	};
 
@@ -443,11 +464,11 @@
 								series={calcolaStatiColors()}
 								legendPosition=""
 								stacked={'absolute'}
-								h={datatoshowdettaglio.length*40}
+								h={datatoshowdettaglio.length * 40}
 							/>
 						</div>
 					</div>
-					
+
 					<div class="my-4">
 						<div class="table-responsive">
 							<table class="table table-striped table-hover table-sm">
@@ -455,54 +476,87 @@
 									<tr>
 										<th scope="col" class="text-start"><small>AcM</small></th>
 										{#each stati as s, i}
-										<th scope="col" class="text-center"><small>{s}</small></th>
+											<th scope="col" class="text-center"><small>{s}</small></th>
 										{/each}
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									{#each datatoshowdettaglio as d,i}
-									{#if i>0}
-									<tr>
-										<td><small>{d[0]}</small></td>
-										<td class="text-center align-middle"><small>{d[1]}</small></td>
-										<td class="text-center align-middle"><small>{d[4]}</small></td>
-										<td class="text-center align-middle"><small>{d[7]}</small></td>
-										<td class="text-center align-middle"><small>{d[10]}</small></td>
-										<td class="text-center align-middle"><small>{d[13]}</small></td>
-										<td class="text-center align-middle"><small>{d[16]}</small></td>
-										<td class="text-center align-middle"><small>{d[19]}</small></td>
-										<td class="text-center align-middle"><small>{d[22]}</small></td>
-										<td class="text-center align-middle"><small><strong>{d[1]+d[4]+d[7]+d[10]+d[13]+d[16]+d[19]+d[22]}</strong></small></td>
-									</tr>
-									{/if}
+									{#each datatoshowdettaglio as d, i}
+										{#if i > 0}
+											<tr>
+												<td><small>{d[0]}</small></td>
+												<td class="text-center align-middle"><small>{d[1]}</small></td>
+												<td class="text-center align-middle"><small>{d[4]}</small></td>
+												<td class="text-center align-middle"><small>{d[7]}</small></td>
+												<td class="text-center align-middle"><small>{d[10]}</small></td>
+												<td class="text-center align-middle"><small>{d[13]}</small></td>
+												<td class="text-center align-middle"><small>{d[16]}</small></td>
+												<td class="text-center align-middle"><small>{d[19]}</small></td>
+												<td class="text-center align-middle"><small>{d[22]}</small></td>
+												<td class="text-center align-middle"
+													><small
+														><strong
+															>{d[1] + d[4] + d[7] + d[10] + d[13] + d[16] + d[19] + d[22]}</strong
+														></small
+													></td
+												>
+											</tr>
+										{/if}
 									{/each}
 									<tr>
 										<td></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[1])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[4])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[7])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[10])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[13])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[16])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[19])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{d3.sum(datatoshowdettaglio,d => d[22])}</strong></small></td>
-										<td class="text-center align-middle"><small><strong>{
-										d3.sum(datatoshowdettaglio,d => d[1])
-										+d3.sum(datatoshowdettaglio,d => d[4])
-										+d3.sum(datatoshowdettaglio,d => d[7])
-										+d3.sum(datatoshowdettaglio,d => d[10])
-										+d3.sum(datatoshowdettaglio,d => d[13])
-										+d3.sum(datatoshowdettaglio,d => d[16])
-										+d3.sum(datatoshowdettaglio,d => d[19])
-										+d3.sum(datatoshowdettaglio,d => d[22])
-										}</strong></small></td>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[1])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[4])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[7])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[10])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[13])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[16])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[19])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small><strong>{d3.sum(datatoshowdettaglio, (d) => d[22])}</strong></small
+											></td
+										>
+										<td class="text-center align-middle"
+											><small
+												><strong
+													>{d3.sum(datatoshowdettaglio, (d) => d[1]) +
+														d3.sum(datatoshowdettaglio, (d) => d[4]) +
+														d3.sum(datatoshowdettaglio, (d) => d[7]) +
+														d3.sum(datatoshowdettaglio, (d) => d[10]) +
+														d3.sum(datatoshowdettaglio, (d) => d[13]) +
+														d3.sum(datatoshowdettaglio, (d) => d[16]) +
+														d3.sum(datatoshowdettaglio, (d) => d[19]) +
+														d3.sum(datatoshowdettaglio, (d) => d[22])}</strong
+												></small
+											></td
+										>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					
 				</div>
 			{:else}
 				<div class="it-page-section my-5" id="riepilogo">
@@ -527,5 +581,7 @@
 </div>
 
 <style>
-	table *{ font-size: 0.75rem;}
+	table * {
+		font-size: 0.75rem;
+	}
 </style>

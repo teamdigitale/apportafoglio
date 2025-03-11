@@ -1172,7 +1172,6 @@
 						titleColor="#3e8ed0"
 						values={datiTotaleDettaglioFinanziate}
 						direction="horizontal"
-						colors={['#3e8ed0', '#296fa8', '#296fa8', '#f14668', '#cc0f35', '#48c78e', '#257953']}
 					></Barchart>
 				</div>
 			</div>
@@ -1202,7 +1201,6 @@
 						titleColor="#f14668"
 						values={datiTotaleDettaglioRinunciateRevocate}
 						direction="horizontal"
-						colors={['#f14668', '#cc0f35', '#f14668', '#cc0f35']}
 					></Barchart>
 				</div>
 			</div>

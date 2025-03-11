@@ -22,19 +22,24 @@
 				id="contr-{target.id}"
 				values={[
 					['Label', 'Value'],
-					['', Math.round((Math.round((totale / entiInPlatea) * 100) / target.valore_obiettivo) * 100)]
+					[
+						'',
+						Math.round((Math.round((totale / entiInPlatea) * 100) / target.valore_obiettivo) * 100)
+					]
 				]}
-				label={target.misura}
 			/>
 		</div>
 		<div class="col-12 col-lg-9">
-		<div>
-			<p>Data di scadenza: <strong>{moment(target.data, 'YYYY-MM-DD').format('DD/MM/YYYY')}</strong></p>
-			<p>Valore obiettivo: <strong>{formatNumber(target.valore_obiettivo)}%</strong></p>
-			<p>Platea: <strong>{formatNumber(entiInPlatea)}</strong></p>
-			<p>Valore assoluto alla data: <strong>{formatNumber(totale)}</strong></p>
-			<p>Valore % alla data: <strong>{Math.round((totale / entiInPlatea) * 100)}%</strong></p>
-		</div>
+			<div>
+				<p>
+					Data di scadenza: <strong>{moment(target.data, 'YYYY-MM-DD').format('DD/MM/YYYY')}</strong
+					>
+				</p>
+				<p>Valore obiettivo: <strong>{formatNumber(target.valore_obiettivo)}%</strong></p>
+				<p>Platea: <strong>{formatNumber(entiInPlatea)}</strong></p>
+				<p>Valore assoluto alla data: <strong>{formatNumber(totale)}</strong></p>
+				<p>Valore % alla data: <strong>{Math.round((totale / entiInPlatea) * 100)}%</strong></p>
+			</div>
 		</div>
 	</div>
 </div>

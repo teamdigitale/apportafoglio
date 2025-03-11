@@ -22,15 +22,17 @@
 					['Label', 'Value'],
 					['', Math.round((totale / target.valore_obiettivo) * 100)]
 				]}
-				label={target.misura}
 			/>
 		</div>
 		<div class="col-12 col-lg-9">
-		<div>
-			<p>Data di scadenza: <strong>{moment(target.data, 'YYYY-MM-DD').format('DD/MM/YYYY')}</strong></p>
-			<p>Valore obiettivo: <strong>{formatNumber(target.valore_obiettivo)}</strong></p>
-			<p>Valore alla data: <strong>{formatNumber(totale)}</strong></p>
-		</div>
+			<div>
+				<p>
+					Data di scadenza: <strong>{moment(target.data, 'YYYY-MM-DD').format('DD/MM/YYYY')}</strong
+					>
+				</p>
+				<p>Valore obiettivo: <strong>{formatNumber(target.valore_obiettivo)}</strong></p>
+				<p>Valore alla data: <strong>{formatNumber(totale)}</strong></p>
+			</div>
 		</div>
 	</div>
 </div>

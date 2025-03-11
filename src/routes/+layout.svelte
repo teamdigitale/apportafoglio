@@ -8,12 +8,6 @@
 
 	$: utentestandard = data.utentestandard;
 	$: utenteasseveratore = data.utenteasseveratore;
-
-	function getRandomArbitrary(min, max) {
-		min = Math.ceil(min);
-		max = Math.floor(max);
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
 </script>
 
 <div class="it-header-wrapper">
@@ -47,8 +41,8 @@
 								<!--
                   <div class="link-list-wrapper collapse" id="menu1a">
                     <ul class="link-list">
-                      <li><a class="dropdown-item list-item" href="#">Link 1</a></li>
-                      <li><a class="list-item active" href="#" aria-current="page">Link 2 (Attivo)</a></li>
+                      <li><a class="dropdown-item list-item" >Link 1</a></li>
+                      <li><a class="list-item active"  aria-current="page">Link 2 (Attivo)</a></li>
                     </ul>
                   </div>
                   -->
@@ -166,7 +160,6 @@
 											<li class="nav-item dropdown">
 												<a
 													class="nav-link dropdown-toggle"
-													href="#"
 													role="button"
 													data-bs-toggle="dropdown"
 													aria-expanded="false"
@@ -237,7 +230,6 @@
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
-														href="#"
 														role="button"
 														data-bs-toggle="dropdown"
 														aria-expanded="false"
@@ -276,7 +268,6 @@
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
-														href="#"
 														role="button"
 														data-bs-toggle="dropdown"
 														aria-expanded="false"
@@ -295,9 +286,10 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
-																
 																<li>
-																	<a class="dropdown-item list-item" href="/campagne/appio24/comuni/none"
+																	<a
+																		class="dropdown-item list-item"
+																		href="/campagne/appio24/comuni/none"
 																		><span>Avviso App IO Comuni</span></a
 																	>
 																</li>
@@ -314,7 +306,6 @@
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
-														href="#"
 														role="button"
 														data-bs-toggle="dropdown"
 														aria-expanded="false"
@@ -340,22 +331,23 @@
 																</li>
 
 																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/monitoraggio/residuimisure"
+																	<a
+																		class="dropdown-item list-item"
+																		href="/monitoraggio/residuimisure"
 																		><span>residui misure</span></a
 																	>
 																</li>
 
 																<li data-sveltekit-preload-data="off">
-																	{#if  checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') }
-																	<a
-																		class="dropdown-item list-item"
-																		href="/monitoraggio/progettioa"><span>progetti</span></a
-																	>
+																	{#if checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant')}
+																		<a
+																			class="dropdown-item list-item"
+																			href="/monitoraggio/progettioa"><span>progetti</span></a
+																		>
 																	{:else}
-																	<a
-																		class="dropdown-item list-item"
-																		href="/monitoraggio/progetti"><span>progetti</span></a
-																	>
+																		<a class="dropdown-item list-item" href="/monitoraggio/progetti"
+																			><span>progetti</span></a
+																		>
 																	{/if}
 																</li>
 
@@ -397,18 +389,11 @@
 										{/if}
 
 										{#if loggedstandard}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio')
-											 || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') 
-											 || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali')
-											 || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') 
-											 || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') 
-											 || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager') 
-											 )}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Account Manager') || checkAbilitazione(data.utentestandard.idsf, 'Technical Implementation Manager'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
-														href="#"
 														role="button"
 														data-bs-toggle="dropdown"
 														aria-expanded="false"
@@ -439,13 +424,12 @@
 											{/if}
 										{/if}
 
-										{#if false &&(loggedstandard || loggedasseveratore)}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'monitor'))}
+										{#if false && (loggedstandard || loggedasseveratore)}
+											{#if data.utentestandard && checkAbilitazione(data.utentestandard.idsf, 'monitor')}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
 														class="nav-link dropdown-toggle"
-														href="#"
 														role="button"
 														data-bs-toggle="dropdown"
 														aria-expanded="false"
@@ -471,7 +455,6 @@
 																		>
 																	</li>
 																{/if}
-																
 															</ul>
 														</div>
 													</div>
@@ -593,14 +576,7 @@
 		</div>
 	</div>
 
-	<a
-		href="#"
-		aria-hidden="true"
-		tabindex="-1"
-		data-bs-toggle="backtotop"
-		class="back-to-top"
-		id="btt"
-	>
+	<a aria-hidden="true" tabindex="-1" data-bs-toggle="backtotop" class="back-to-top" id="btt">
 		<svg class="icon icon-light"><use href="/svg/sprites.svg#it-arrow-up"></use></svg>
 	</a>
 </footer>
