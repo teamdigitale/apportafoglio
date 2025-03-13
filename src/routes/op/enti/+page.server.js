@@ -2,7 +2,7 @@ import { promiseQuery } from '$lib';
 import { redirect } from '@sveltejs/kit';
 import jsforce from 'jsforce';
 
-const MAX_FETCH = 1000000;
+const MAX_FETCH = 100000;
 
 export async function load({ locals }) {
     const connstandard = locals.user.connectionStandard;
