@@ -430,9 +430,6 @@
 	table.smalltable {
 		font-size: 0.8rem;
 	}
-	.ftw * {
-		font-family: 'Titillium-Web' !important;
-	}
 	.smallfont p {
 		font-size: 0.9rem;
 	}

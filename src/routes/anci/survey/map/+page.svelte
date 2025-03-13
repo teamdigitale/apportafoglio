@@ -18,7 +18,6 @@
 
 	export let data;
 
-
 	let showinfo = false;
 
 	const toggleinfo = () => {
@@ -56,7 +55,15 @@
 	$: completati = tutteLeRisposte.filter((x) => x.surveyanci.completato);
 
 	$: risposte = tutteLeRisposte
-	.filter((x) => view==='Completato'?x.surveyanci.completato : view==='Mai aperto'?!x.surveyanci.aperto:view==='In compilazione'?(x.surveyanci.aperto&&!x.surveyanci.completato):true)
+		.filter((x) =>
+			view === 'Completato'
+				? x.surveyanci.completato
+				: view === 'Mai aperto'
+					? !x.surveyanci.aperto
+					: view === 'In compilazione'
+						? x.surveyanci.aperto && !x.surveyanci.completato
+						: true
+		)
 		.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
 		.filter((x) =>
 			nomeComune === ''
@@ -145,24 +152,22 @@
 	let expandedInsights = false;
 	let insightsWidth;
 
-
 	const statoRisp = (r) => {
-		if(r.surveyanci.aperto && !r.surveyanci.completato){
-			return "In compilazione";
-		}else if (r.surveyanci.completato){
-			return "Completato";
-		}else{
-			return "Mai aperto";
+		if (r.surveyanci.aperto && !r.surveyanci.completato) {
+			return 'In compilazione';
+		} else if (r.surveyanci.completato) {
+			return 'Completato';
+		} else {
+			return 'Mai aperto';
 		}
-	}
+	};
 
-	const orderRisp = ["Completato","In compilazione", "Mai aperto"];
+	const orderRisp = ['Completato', 'In compilazione', 'Mai aperto'];
 
 	let stato = 'Tutti';
 
-	let viewOptions = ["Completato","In compilazione","Mai aperto"];
+	let viewOptions = ['Completato', 'In compilazione', 'Mai aperto'];
 	let view = viewOptions[0];
-
 </script>
 
 <div class="container my-4">
@@ -216,20 +221,22 @@
 					<div class="row align-middle" bind:clientWidth={insightsWidth}>
 						<div class="col-12 col-lg-{expandedInsights ? '6' : '12'} align-middle">
 							<ProportionalBar
-								values={d3.flatRollup(
-									tutteLeRisposte
-										.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
-										.filter((x) =>
-											nomeComune === ''
-												? true
-												: x.nome
-														.replaceAll('Comune di', '')
-														.toUpperCase()
-														.indexOf(nomeComune.toUpperCase()) > -1
-										),
-									(D) => D.length,
-									(d) => d.statocomune
-								).sort((a,b) => orderRisp.indexOf(a[0])-orderRisp.indexOf(b[0]))}
+								values={d3
+									.flatRollup(
+										tutteLeRisposte
+											.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+											.filter((x) =>
+												nomeComune === ''
+													? true
+													: x.nome
+															.replaceAll('Comune di', '')
+															.toUpperCase()
+															.indexOf(nomeComune.toUpperCase()) > -1
+											),
+										(D) => D.length,
+										(d) => d.statocomune
+									)
+									.sort((a, b) => orderRisp.indexOf(a[0]) - orderRisp.indexOf(b[0]))}
 								colors={[
 									['Mai aperto', '#cc334d'],
 									['In compilazione', '#0066cc'],
@@ -256,13 +263,12 @@
 													.indexOf(nomeComune.toUpperCase()) > -1
 									)}
 								boxWidth={insightsWidth}
-
 							/>
 						</div>
 					</div>
 					<h5 class="my-4">Filtri</h5>
 					<hr class="my-4" />
-	
+
 					<div>
 						<div class="select-wrapper my-2">
 							<label for="regione">Regione</label>
@@ -312,7 +318,7 @@
 		-->
 				</div>
 			</div>
-			
+
 			<div
 				class="col-12 col-lg-6"
 				bind:clientWidth={mapsize}
@@ -320,8 +326,13 @@
 				transition:fade
 			>
 				<div class="sticky-top">
-					<p><small>Ultimo aggiornamento dati: {moment(data.lastUpdate).calendar()
-						.toLocaleLowerCase()}</small></p>
+					<p>
+						<small
+							>Ultimo aggiornamento dati: {moment(data.lastUpdate)
+								.calendar()
+								.toLocaleLowerCase()}</small
+						>
+					</p>
 					<Mappaquestionario
 						regioni={georeg}
 						mapwidth={mapsize}
@@ -329,12 +340,10 @@
 						{risposte}
 						{risposteEvidenziate}
 						{view}
-						com = {data.com}
+						com={data.com}
 					/>
 					<hr />
-					<div class="row">
-						
-					</div>
+					<div class="row"></div>
 					<div class="row">
 						<div class="col-12 col-lg-6">
 							<div class="select-wrapper my-4">
@@ -348,22 +357,28 @@
 							</div>
 						</div>
 					</div>
-					<Tabellarisposte risposte={tutteLeRisposte.filter(x => stato==='Tutti'?true: statoRisp(x)===stato).filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
-						.filter((x) =>
-							nomeComune === ''
-								? true
-								: x.nome
-										.replaceAll('Comune di', '')
-										.toUpperCase()
-										.indexOf(nomeComune.toUpperCase()) > -1
-						).sort((a,b) => {return ('' + a.nome).localeCompare(b.nome);})} />
-						
+					<Tabellarisposte
+						risposte={tutteLeRisposte
+							.filter((x) => (stato === 'Tutti' ? true : statoRisp(x) === stato))
+							.filter((x) => (regione === regioni[0] ? true : x.pa2026.regione === regione))
+							.filter((x) =>
+								nomeComune === ''
+									? true
+									: x.nome
+											.replaceAll('Comune di', '')
+											.toUpperCase()
+											.indexOf(nomeComune.toUpperCase()) > -1
+							)
+							.sort((a, b) => {
+								return ('' + a.nome).localeCompare(b.nome);
+							})}
+					/>
+
 					<a href="/anci/survey/downloadrisposte" target="_blank">
 						<svg class="icon icon-sm icon-success"
 							><use href="/svg/sprites.svg#it-file-csv"></use></svg
 						><span>Scarica il quadro generale in csv</span>
 					</a>
-
 				</div>
 			</div>
 		{/if}
@@ -372,7 +387,7 @@
 				<div transition:fade>
 					<h5 class="my-4">Opzioni di visualizzazione</h5>
 					<hr />
-					
+
 					<div>
 						<div class="select-wrapper my-2">
 							<label for="regione">Stato</label>
@@ -484,7 +499,7 @@
 		<div class="col-12 col-lg-12">
 			<div class="alert alert-primary" role="alert">
 				<p class="text-end">
-					<a class="btn" href="#" role="button" on:click={toggleinfo}>
+					<a class="btn" href="/" role="button" on:click={toggleinfo}>
 						<svg class="icon primary icon-primary"
 							><use href="/svg/sprites.svg#it-close-circle"></use></svg
 						>
@@ -601,7 +616,7 @@
 					</li>
 				</ul>
 				<p class="text-end">
-					<a class="btn" href="#" role="button" on:click={toggleinfo}>
+					<a class="btn" href="/" role="button" on:click={toggleinfo}>
 						<svg class="icon primary icon-primary"
 							><use href="/svg/sprites.svg#it-close-circle"></use></svg
 						>
@@ -644,20 +659,11 @@
 		font-family: 'Titillium Web';
 	}
 
-	.callout ul {
-		font-size: 1rem;
-		font-family: 'Titillium Web';
-	}
-
 	.callout svg {
 		font-size: 0.9rem;
 	}
 
 	.callout svg {
 		width: 100%;
-	}
-
-	.cliccabile {
-		cursor: pointer;
 	}
 </style>
