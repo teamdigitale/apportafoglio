@@ -6,37 +6,14 @@
 
 	const MAXVIEW = 200;
 
-	let soloattivi = true;
-
 	let tipologiaEnteOptions = ['Tutte le tipologie'].concat(
-		Object.values(
-			data.enti.reduce((a, { Tipologia_Ente__c }) => {
-				a[Tipologia_Ente__c] = a[Tipologia_Ente__c] || {
-					Tipologia_Ente__c,
-					count: 0
-				};
-				a[Tipologia_Ente__c].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.Tipologia_Ente__c)
-			.sort()
+		[...new Set(data.enti.map((x) => x.Tipologia_Ente__c))].sort((a, b) => a.localeCompare(b))
 	);
+
 	let filterTipologiaEnte = 'Tutte le tipologie';
 
 	let regioneOptions = ['Tutte le regioni'].concat(
-		Object.values(
-			data.enti.reduce((a, { Regione__c }) => {
-				a[Regione__c] = a[Regione__c] || {
-					Regione__c,
-					count: 0
-				};
-				a[Regione__c].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.Regione__c)
-			.sort()
+		[...new Set(data.enti.map((x) => x.Regione__c))].sort((a, b) => a.localeCompare(b))
 	);
 	let filterRegione = 'Tutte le regioni';
 
@@ -49,7 +26,6 @@
 		.concat(
 			Object.values(
 				data.enti.reduce((a, b) => {
-					//let idacm = b.Account_Manager__c ? b.Account_Manager__c : 'undefined';
 					if (b.Account_Manager__c) {
 						a[b.Account_Manager__c] = a[b.Account_Manager__c] || {
 							Id: b.Account_Manager__c,
@@ -58,11 +34,7 @@
 					}
 					return a;
 				}, Object.create(null))
-			)
-				//.map((x) => x.Account_Manager__c).filter(x => nomeUtente(x)!=='Standard')
-				.sort((a, b) => {
-					return a.Name - b.Name;
-				})
+			).sort((a, b) => a.Name.localeCompare(b.Name))
 		)
 		.concat([
 			{
@@ -72,25 +44,11 @@
 		]);
 	let filterAcm = acmOptions[0].Id;
 
-	let portafoglioOptions = ['Tutti i portafogli'].concat(
-		Object.values(
-			data.enti.reduce((a, { portafoglio }) => {
-				a[portafoglio] = a[portafoglio] || {
-					portafoglio,
-					count: 0
-				};
-				a[portafoglio].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.portafoglio)
-			.sort()
-	);
-	let filterPortafoglio = 'Tutti i portafogli';
-
 	let filterNominativoEnte = '';
 
-	let filterSoppresso = false;
+	let statoOptions = ['Tutti gli stati', 'Attivo', 'Soppresso', 'In Soppressione'];
+
+	let filterSoppresso = 'Tutti gli stati';
 
 	$: ff = data.enti
 		.filter((x) =>
@@ -111,10 +69,10 @@
 				? true
 				: x.Name.toLowerCase().includes(filterNominativoEnte.toLowerCase())
 		)
-		.filter((x) => (!soloattivi ? true : x.Active__c == 1))
-		.filter((x) => (!filterSoppresso ? true : x.Stato_giuridico__c === 'Soppresso'));
-
-	$: filteredEnti = ff.slice(0, MAXVIEW);
+		.filter((x) =>
+			filterSoppresso == 'Tutti gli stati' ? true : x.Stato_giuridico__c === filterSoppresso
+		)
+		.slice(0, MAXVIEW);
 </script>
 
 <div class="container my-4">
@@ -133,18 +91,6 @@
 	{/if}
 
 	<div class="row">
-		<!--
-		<div class="col-12 col-lg-3 my-4">
-			<div class="select-wrapper">
-				<label for="filterPortafoglio">Portafoglio</label>
-				<select id="filterPortafoglio" name="filterPortafoglio" bind:value={filterPortafoglio}>
-					{#each portafoglioOptions as a}
-						<option value={a}>{a}</option>
-					{/each}
-				</select>
-			</div>
-		</div>
-		-->
 		{#if areaManager(data.utentestandard.idsf)}
 			<div class="col-12 col-lg-3 my-4">
 				<div class="select-wrapper">
@@ -157,7 +103,7 @@
 				</div>
 			</div>
 		{/if}
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-2 my-4">
 			<div class="select-wrapper">
 				<label for="filterTipologiaEnte">Tipologia</label>
 				<select
@@ -171,7 +117,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-2 my-4">
 			<div class="select-wrapper">
 				<label for="filterRegione">Regione</label>
 				<select id="filterRegione" name="filterRegione" bind:value={filterRegione}>
@@ -181,7 +127,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4">
+		<div class="col-12 col-lg-2 my-4">
 			<div class="form-group">
 				<label class="active" for="filterNominativoEnte">Nome dell'Ente</label>
 				<input
@@ -194,20 +140,20 @@
 				/>
 			</div>
 		</div>
-		<div class="col-12 col-lg-3 my-4 form-check">
-			<div class="toggles">
-				<label class="active" for="filterSoppresso"
-					>Soppresso
-
-					<input type="checkbox" id="filterSoppresso" bind:checked={filterSoppresso} />
-					<span class="lever"></span>
-				</label>
+		<div class="col-12 col-lg-2 my-4">
+			<div class="select-wrapper">
+				<label class="active" for="filterSoppresso">Stato</label>
+				<select id="filterSoppresso" bind:value={filterSoppresso}>
+					{#each statoOptions as option}
+						<option value={option}>{option}</option>
+					{/each}
+				</select>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		{#each filteredEnti as ente}
+		{#each ff as ente}
 			<div class="col-12 col-lg-6 my-4">
 				<Entecard {ente} />
 			</div>
