@@ -90,9 +90,32 @@
 		}
 	});
 
+	const getColor = (statoGiudico) => {
+		let colorBg, colorText;
+		switch (statoGiudico) {
+			case 'Attivo':
+				colorBg = '0066cc';
+				colorText = 'white';
+				break;
+			case 'Soppresso':
+				colorBg = 'ffe6bf';
+				colorText = 'black';
+				break;
+			case 'In Soppressione':
+				colorBg = 'ffe6bf';
+				colorText = 'black';
+				break;
+			default:
+				colorBg = '0066cc';
+				colorText = 'white';
+				break;
+		}
+		return [colorBg, colorText];
+	};
+
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
-		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${data.ente.Stato_giuridico__c === 'Soppresso' ? 'black' : 'white'}" fillcolor="#${data.ente.Stato_giuridico__c === 'Soppresso' ? 'ffe6bf' : '0066cc'} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
+		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${getColor(data.ente.Stato_giuridico__c)[1]}" fillcolor="#${getColor(data.ente.Stato_giuridico__c)[0]} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
 		${node.join(' ')}
 		${relations.join(' ')}
 };`;
@@ -304,13 +327,6 @@
 								</li>
 							</ul>
 						</div>
-						<!-- 
-                        <small>
-                            Asseveratore Cloud: include multimisura e 1.2<br/>
-                            Asseveratore Web: include la misura 1.4.1<br/>
-                            Asseveratore automatiche: tutte le altre misure<br/>
-                        </small>
-                        -->
 					</div>
 				</div>
 			</div>
@@ -344,12 +360,6 @@
 					{/if}
 				</div>
 				<div class="row fullheight">
-					<!-- <Referentecard
-						referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]}
-					/>
-					{#each data.referenti.filter((r) => r.Stato__c === 'Attivo') as referente}
-						<Referentecard {referente} />
-					{/each} -->
 					{#each referenti as referente}
 						<Referentecard {referente} />
 					{/each}

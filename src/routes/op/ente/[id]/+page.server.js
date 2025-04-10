@@ -56,8 +56,6 @@ export async function load({ locals, params }) {
             }
         });
 
-        console.log(values[0][0]);
-
 
         const misure = await promiseQuery(conn, `select count(Avviso__r.outfunds__Parent_Funding_Program__r.Id),Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c  from Dettaglio_Cronoprogramma__c where Cluster__r.Tipologia_Ente__c = '` + values[0][0].Tipologia_Ente__c + `' AND Avviso__r.outfunds__Parent_Funding_Program__r.Name != NULL group by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c order by Avviso__r.outfunds__Parent_Funding_Program__r.Name,Avviso__r.Pacchetto__c`, MAX_FETCH);
 
@@ -72,7 +70,7 @@ export async function load({ locals, params }) {
         };
 
         if (values[0][0].Registri_eventi_enti__r?.records?.length > 0) {
-            const relazioniDestinazioni = await promiseQuery(conn, `select Id, Codice_amministrativo__c, (SELECT Motivazione_variazione__c, Ente_correlato__r.Codice_amministrativo__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
+            const relazioniDestinazioni = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_correlato__r.Codice_amministrativo__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
             const valuesRelazioni = await Promise.all([relazioniDestinazioni]);
             relazioni.destinazioni = values[0][0].Registri_eventi_enti__r.records.map(e => {
                 if (e.Ente_destinazione__r.Id && e.Ente_destinazione__r.Name) {
@@ -81,13 +79,13 @@ export async function load({ locals, params }) {
                         origini = rel.Registri_eventi_enti1__r?.records?.map(origine => { return { ...origine.Ente_correlato__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []
 
                     )
-                    return { ...e.Ente_destinazione__r, Motivazione: e.Motivazione_variazione__c, origini, Codice_amministrativo__c: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_destinazione__r.Id).Codice_amministrativo__c }
+                    return { ...e.Ente_destinazione__r, Motivazione: e.Motivazione_variazione__c, origini, Stato: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_destinazione__r.Id).Stato_giuridico__c, Codice_amministrativo__c: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_destinazione__r.Id).Codice_amministrativo__c }
                 }
             })
 
         }
         if (values[0][0].Registri_eventi_enti1__r?.records?.length > 0) {
-            const relazioniOrigini = await promiseQuery(conn, `select Id, Codice_amministrativo__c, (SELECT Motivazione_variazione__c, Ente_destinazione__r.Codice_amministrativo__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__r?.Id).join("','") + `')`, MAX_FETCH);
+            const relazioniOrigini = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_destinazione__r.Codice_amministrativo__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__r?.Id).join("','") + `')`, MAX_FETCH);
             const valuesRelazioni = await Promise.all([relazioniOrigini]);
             relazioni.origini = values[0][0].Registri_eventi_enti1__r.records.map(e => {
                 if (e.Ente_correlato__r.Id && e.Ente_correlato__r.Name) {
@@ -96,7 +94,7 @@ export async function load({ locals, params }) {
                         destinazioni = rel.Registri_eventi_enti__r?.records?.map(origine => { return { ...origine.Ente_destinazione__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []
 
                     )
-                    return { ...e.Ente_correlato__r, Motivazione: e.Motivazione_variazione__c, destinazioni, Codice_amministrativo__c: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_correlato__r.Id).Codice_amministrativo__c }
+                    return { ...e.Ente_correlato__r, Motivazione: e.Motivazione_variazione__c, destinazioni, Stato: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_correlato__r.Id).Stato_giuridico__c, Codice_amministrativo__c: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_correlato__r.Id).Codice_amministrativo__c }
                 }
             })
         }
