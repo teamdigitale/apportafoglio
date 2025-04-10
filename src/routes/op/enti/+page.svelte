@@ -71,8 +71,7 @@
 		)
 		.filter((x) =>
 			filterSoppresso == 'Tutti gli stati' ? true : x.Stato_giuridico__c === filterSoppresso
-		)
-		.slice(0, MAXVIEW);
+		);
 </script>
 
 <div class="container my-4">
@@ -153,7 +152,7 @@
 	</div>
 
 	<div class="row">
-		{#each ff as ente}
+		{#each ff.slice(0, MAXVIEW) as ente}
 			<div class="col-12 col-lg-6 my-4">
 				<Entecard {ente} />
 			</div>
