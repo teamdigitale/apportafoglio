@@ -101,7 +101,7 @@
 				colorBg = 'ffe6bf';
 				colorText = 'black';
 				break;
-			case 'In Soppressione':
+			case 'In soppressione':
 				colorBg = 'ffe6bf';
 				colorText = 'black';
 				break;

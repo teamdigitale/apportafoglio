@@ -46,7 +46,7 @@
 
 	let filterNominativoEnte = '';
 
-	let statoOptions = ['Tutti gli stati', 'Attivo', 'Soppresso', 'In Soppressione'];
+	let statoOptions = ['Tutti gli stati', 'Attivo', 'Soppresso', 'In soppressione'];
 
 	let filterSoppresso = 'Tutti gli stati';
 

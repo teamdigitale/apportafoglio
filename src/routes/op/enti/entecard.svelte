@@ -37,7 +37,7 @@
 							>{ente.Account_Manager__c ? ente.Account_Manager__r.Name : 'Non assegnato'}</span
 						>
 					</div>
-					{#if ['Soppresso', 'In Soppressione'].includes(ente.Stato_giuridico__c)}
+					{#if ['Soppresso', 'In soppressione'].includes(ente.Stato_giuridico__c)}
 						<div
 							class={`chip chip-simple ${ente.Stato_giuridico__c === 'Soppresso' ? 'complementary-2-bg-a1' : 'bg-danger'}`}
 							style="margin-right: 8px;"
