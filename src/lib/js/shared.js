@@ -220,7 +220,7 @@ export const operationAssistant = (idsf) => {
 }
 
 export const getAM = (area) => {
-    return u.users.find(x => x.area===area && x.roles.filter(r => r==="Area Manager").length===1);
+    return u.users.find(x => x.area === area && x.roles.filter(r => r === "Area Manager").length === 1);
 }
 
 export const viewall = (idsf) => {
@@ -230,10 +230,10 @@ export const viewall = (idsf) => {
 
             if (authuser.roles && (
                 authuser.roles.indexOf("Osservatorio") !== -1
-                ||authuser.roles.indexOf("Relazioni Istituzionali") !== -1
-                ||authuser.roles.indexOf("TO Executive") !== -1
-                ||authuser.roles.indexOf("Product Owner") !== -1
-                )) {
+                || authuser.roles.indexOf("Relazioni Istituzionali") !== -1
+                || authuser.roles.indexOf("TO Executive") !== -1
+                || authuser.roles.indexOf("Product Owner") !== -1
+            )) {
                 return true;
             }
         }
@@ -262,6 +262,15 @@ export const nomeUtente = (idsf) => {
     }
     return 'Non assegnato';
 }
+
+export const setscroll = async () => {
+    var navscrollElement = document.querySelector('.it-navscroll-wrapper');
+    var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
+    navscroll.setScrollPadding(function () {
+        var header = document.querySelector('.it-header-wrapper');
+        return header?.offsetHeight + 10;
+    });
+};
 
 export const dangerColor = '#cc334d';
 export const warningColor = '#995c00';

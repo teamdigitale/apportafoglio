@@ -1,27 +1,15 @@
 <script>
 	// @ts-nocheck
-
 	import Cite from '$lib/c/cite.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
 	import Referentecard from './referentecard.svelte';
 	import Candidature from './candidature.svelte';
+	import Viz from '$lib/c/Viz.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 	moment.locale('it');
 
 	export let data;
-
-	onMount(async () => {
-		await setscroll();
-	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let open = false;
 
@@ -40,6 +28,97 @@
 			.sort()
 	);
 	let filterPiattaforma = piattaformaOptions[0];
+
+	let mostraSoppressi = false;
+
+	const ordineStati = [
+		'Attivo',
+		'Attesa Conferma Master',
+		'In Registrazione',
+		'Invitato',
+		'Revocato'
+	];
+
+	const node = [];
+	const relations = [];
+
+	$: referenti = data.referenti
+		.sort((a, b) => {
+			if (a.Profilo__c === b.Profilo__c) {
+				return ordineStati.indexOf(a.Stato__c) - ordineStati.indexOf(b.Stato__c);
+			}
+			return a.Profilo__c === 'Super admin' ? -1 : 1;
+		})
+		.filter((ref) => (mostraSoppressi ? true : ref.Stato__c === 'Attivo'));
+
+	const getColor = (statoGiudico, original) => {
+		let colorBg, colorText;
+		switch (statoGiudico) {
+			case 'Attivo':
+				colorBg = original ? '0066cc' : 'ffffff';
+				colorText = original ? 'white' : 'black';
+				break;
+			case 'Soppresso':
+				colorBg = original ? 'ffe6bf' : 'dddddd';
+				colorText = 'black';
+				break;
+			case 'In soppressione':
+				colorBg = original ? 'ffe6bf' : '';
+				colorText = 'black';
+				break;
+			default:
+				colorBg = 'ffffff';
+				colorText = 'black';
+				break;
+		}
+		return [colorBg, colorText];
+	};
+
+	// TODO: replace the replaceAll('"', '') with a better solution
+	data.relazioni.destinazioni.forEach((r) => {
+		if (r && r.Id && r.Name) {
+			r.origini.forEach((originiRel) => {
+				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
+					node.push(
+						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
+					);
+					relations.push(
+						` "${originiRel.Id}" -> "${r.Id}" [label = "  ${originiRel.Motivazione}"]\n `
+					);
+				}
+			});
+			node.push(
+				`"${r.Id}" [shape=record, style="rounded, filled", fontsize="9" fontcolor="${getColor(r.Stato)[1]}" fillcolor="#${getColor(r.Stato)[0]}",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
+			);
+			relations.push(`"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n`);
+		}
+	});
+
+	data.relazioni.origini.forEach((r) => {
+		if (r && r.Id && r.Name) {
+			r.destinazioni.forEach((originiRel) => {
+				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
+					node.push(
+						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fontcolor="${getColor(originiRel.Stato)[1]}" fillcolor="#${getColor(originiRel.Stato)[0]}",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
+					);
+					relations.push(
+						` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`
+					);
+				}
+			});
+			node.push(
+				`"${r.Id}" [shape=record, style="rounded,filled", fontsize="9" fillcolor="#dddddd",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
+			);
+			relations.push(`"${r.Id}" ->  "${data.ente.Id}" [label = "  ${r.Motivazione}"]\n `);
+		}
+	});
+
+	let graph = `digraph {
+		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
+		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${getColor(data.ente.Stato_giuridico__c, true)[1]}" fillcolor="#${getColor(data.ente.Stato_giuridico__c, true)[0]} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
+		${node.join(' ')}
+		${relations.join(' ')}
+};`;
 </script>
 
 <div class="container my-4">
@@ -49,6 +128,12 @@
 		author="Roberto Gervaso"
 	/>
 </div>
+
+{#if ['Soppresso', 'In soppressione'].includes(data.ente.Stato_giuridico__c)}
+	<div class="alert alert-warning my-2" role="alert">
+		<strong>Attenzione!</strong> Questo ente è nello stato "{data.ente.Stato_giuridico__c}"
+	</div>
+{/if}
 
 <div class="container">
 	<div class="row">
@@ -102,10 +187,15 @@
 									></div>
 								</div>
 								<ul class="link-list">
-									<li class="nav-item">
+									<li class="nav-item active">
 										<a class="nav-link active" href="#ente">
 											<span>Ente </span>
 										</a>
+										{#if data.relazioni.destinazioni.length != 0 || data.relazioni.origini.length != 0 || data.ente.Stato_giuridico__c === 'Soppresso'}
+											<a class="nav-link active" href="#relazioni">
+												<span>Relazioni </span>
+											</a>
+										{/if}
 										<a class="nav-link active" href="#referenti">
 											<span>Referenti </span>
 										</a>
@@ -237,21 +327,40 @@
 								</li>
 							</ul>
 						</div>
-						<!-- 
-                        <small>
-                            Asseveratore Cloud: include multimisura e 1.2<br/>
-                            Asseveratore Web: include la misura 1.4.1<br/>
-                            Asseveratore automatiche: tutte le altre misure<br/>
-                        </small>
-                        -->
 					</div>
 				</div>
 			</div>
+
+			{#if data.relazioni.destinazioni.length != 0 || data.relazioni.origini.length != 0 || data.ente.Stato_giuridico__c === 'Soppresso'}
+				<div class="it-page-section my-5" id="relazioni">
+					<h4>Relazioni</h4>
+					<div class="container" style="justify-items: center;">
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<Viz graphdata={graph} id="prova" />
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
 			<div class="it-page-section my-5" id="referenti">
-				<h4>Referenti attivi</h4>
 				<div class="row fullheight">
-					<Referentecard referente={data.referenti.filter((r) => r.Profilo__c === 'Super admin')[0]} />
-					{#each data.referenti.filter((r) => r.Profilo__c !== null && r.Stato__c === 'Attivo') as referente}
+					<div class="col-12 col-lg-3">
+						<h4>Referenti attivi</h4>
+					</div>
+					{#if data.referenti.length != referenti.length || mostraSoppressi}
+						<div class="col-12 col-lg-3 toggles">
+							<label class="active" for="filterSoppresso"
+								>Mostra non attivi
+
+								<input type="checkbox" id="filterSoppresso" bind:checked={mostraSoppressi} />
+								<span class="lever"></span>
+							</label>
+						</div>
+					{/if}
+				</div>
+				<div class="row fullheight">
+					{#each referenti as referente}
 						<Referentecard {referente} />
 					{/each}
 				</div>

@@ -1,32 +1,19 @@
 <script>
-
-	import Cite from "$lib/c/cite.svelte";
-    export let data;
-    let selectedMisura = '';
+	import Cite from '$lib/c/cite.svelte';
+	import { setscroll } from '$lib/js/shared.js';
+	export let data;
+	let selectedMisura = '';
 
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
-
 </script>
 
 <div class="container my-4">
 	<h1>Economie misure</h1>
-	<Cite
-		text="Chi misura il suo stato non sarà mai mendico."
-		author="Giulio Cesare Croce"
-	/>
+	<Cite text="Chi misura il suo stato non sarà mai mendico." author="Giulio Cesare Croce" />
 </div>
 
 <div class="container">
@@ -103,20 +90,20 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-10 it-page-sections-container">
-            <div class="it-page-section my-5" id="misure">
-                <h4>Misura</h4>
-                <div class="col-12 col-lg-12 my-4">
-                    <div class="select-wrapper">
-                        <label for="filterMisura">Misure</label>
-                        <select id="filterMisura" name="filterMisura" bind:value={selectedMisura}>
-                            <option value="">Tutte le misure</option>
-                            {#each data.misure as m}
-                                <option value={m.Id}>{m.Name}</option>
-                            {/each}
-                        </select>
-                    </div>
-                </div>
-            </div>
+			<div class="it-page-section my-5" id="misure">
+				<h4>Misura</h4>
+				<div class="col-12 col-lg-12 my-4">
+					<div class="select-wrapper">
+						<label for="filterMisura">Misure</label>
+						<select id="filterMisura" name="filterMisura" bind:value={selectedMisura}>
+							<option value="">Tutte le misure</option>
+							{#each data.misure as m}
+								<option value={m.Id}>{m.Name}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+			</div>
 			<slot />
 		</div>
 	</div>

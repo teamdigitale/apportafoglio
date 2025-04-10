@@ -2,18 +2,13 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { formatDate, percentuale } from '$lib/js/shared.js';
+	import { formatDate, setscroll } from '$lib/js/shared.js';
 	import { dipendenze12, dipendenze141, dipendenzepagopa } from './dipendenze.js';
 	import { stringSimilarity } from 'string-similarity-js';
 	import { goto } from '$app/navigation';
-
-	$: snappioProvincia = [];
-	$: snappioRegione = [];
-	$: snappioNazionale = [];
-
-	const vai = (id) => {
-		goto('/campagne/appio24/comuni/' + id);
-	};
+	// $: snappioProvincia = [];
+	// $: snappioRegione = [];
+	// $: snappioNazionale = [];
 
 	let prefiltrocomune = '';
 
@@ -72,15 +67,6 @@
 	const count = (xs) => xs.reduce((a, x) => ((a[x] = (a[x] || 0) + 1), a), {});
 
 	const uniq = (xs) => [...new Set(xs)];
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let popover;
 
@@ -301,24 +287,28 @@
 
 	$: servizi =
 		selectedComune !== 'none'
-			? data.serviziACatalogo
-					.map((x) => ({
-						...x,
-						candidabile: candidabile(x),
-						fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
-						fattoriko: fattoriKo(
-							x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
-							x.Name,
-							x.Anagrafica_Servizi__r.Categoria__c
-						)
-					}))
-					.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
-					.filter((x) =>
-						mostraSoloNonAttivi ? x.candidabile.startsWith('SI - Già attivo') === false : true
+			? data.serviziACatalogo.map((x) => ({
+					...x,
+					candidabile: candidabile(x),
+					fattoriok: fattoriOk(x.Anagrafica_Servizi__r.Codice_Tassonomico__c),
+					fattoriko: fattoriKo(
+						x.Anagrafica_Servizi__r.Codice_Tassonomico__c,
+						x.Name,
+						x.Anagrafica_Servizi__r.Categoria__c
 					)
+				}))
 			: [];
 
-	$: catalogoPerCategoria = d3.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c);
+	$: serviziFiltrati = servizi
+		.filter((x) =>
+			filterCategoria === '' ? true : x.Anagrafica_Servizi__r.Categoria__c === filterCategoria
+		)
+		.filter((x) => (mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true))
+		.filter((x) =>
+			mostraSoloNonAttivi ? x.candidabile.startsWith('SI - Già attivo') === false : true
+		);
+
+	$: catalogoPerCategoria = d3.group(serviziFiltrati, (d) => d.Anagrafica_Servizi__r.Categoria__c);
 
 	$: selectedComune = data.selectedComune;
 
@@ -424,6 +414,7 @@
 				<nav
 					class="navbar it-navscroll-wrapper navbar-expand-lg it-bottom-navscroll it-right-side"
 					data-bs-navscroll
+					style="position: relative; z-index: 0;"
 				>
 					<button
 						class="custom-navbar-toggler"
@@ -534,15 +525,22 @@
 									<label for="filterCategoria">Categorie</label>
 									<select id="filterCategoria" name="filterCategoria" bind:value={filterCategoria}>
 										<option value="">Tutte</option>
-										{#each [...catalogoPerCategoria.keys()] as cat}
+										{#each [...d3
+												.group(servizi, (d) => d.Anagrafica_Servizi__r.Categoria__c)
+												.keys()] as cat}
 											<option value={cat}
 												>{cat}{selectedComune !== 'none'
 													? ' - ' +
-														servizi.filter(
-															(x) =>
-																x.candidabile.startsWith('SI') &&
-																x.Anagrafica_Servizi__r.Categoria__c === cat
-														).length
+														servizi
+															.filter((x) =>
+																mostraSoloCandidabili ? x.candidabile.startsWith('SI') : true
+															)
+															.filter((x) =>
+																mostraSoloNonAttivi
+																	? x.candidabile.startsWith('SI - Già attivo') === false
+																	: true
+															)
+															.filter((x) => x.Anagrafica_Servizi__r.Categoria__c === cat).length
 													: ''}</option
 											>
 										{/each}
@@ -659,10 +657,12 @@
 								id="selezioneComune"
 								title="Seleziona un Comune"
 								required
-								on:change={(e) => vai(e.target.value)}
+								on:change={(e) => goto('/campagne/appio24/comuni/' + e.target.value)}
 							>
 								<option value="none">Seleziona un comune</option>
-								{#each data.enti.filter( (x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase().replace('Comune di ', '').indexOf(prefiltrocomune.toUpperCase()) !== -1) ) as c}
+								{#each data.enti.filter((x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase()
+												.replace('Comune di ', '')
+												.indexOf(prefiltrocomune.toUpperCase()) !== -1)) as c}
 									{#if selectedComune === c.Id}
 										<option value={c.Id} selected>{c.Name}</option>
 									{:else}
@@ -957,13 +957,7 @@
 									aria-expanded="false"
 									aria-controls="collapsecatalogo"
 								>
-									Catalogo: sono disponibili ancora {servizi.filter(
-										(x) =>
-											x.candidabile.startsWith('SI') &&
-											(filterCategoria === ''
-												? true
-												: x.Anagrafica_Servizi__r.Categoria__c === filterCategoria)
-									).length} servizi
+									Catalogo: sono disponibili ancora {serviziFiltrati.length} servizi
 								</button>
 							</h2>
 							<div
@@ -980,13 +974,7 @@
 												<table class="table table-hover table-sm caption-top align-middle">
 													<caption
 														><strong
-															>Sono disponibili ancora {servizi.filter(
-																(x) =>
-																	x.candidabile.startsWith('SI') &&
-																	(filterCategoria === ''
-																		? true
-																		: x.Anagrafica_Servizi__r.Categoria__c === filterCategoria)
-															).length} servizi</strong
+															>Sono disponibili ancora {serviziFiltrati.length} servizi</strong
 														></caption
 													>
 													<thead>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Cite from '$lib/c/cite.svelte';
 	import Pagination from '$lib/c/pagination.svelte';
 	import Scorecard from '$lib/c/scorecard.svelte';
@@ -8,13 +8,13 @@
 
 	export let data;
 	let candidature = data.finanziate;
-	let cperpage;
-    let cp = 0;
-	let selectedRecord;
+	let cperpage: any;
+	let cp = 0;
+	let selectedRecord: any;
 
 	function calcolaMisureOptions() {
-		const res = [];
-		candidature.forEach((c) => {
+		const res: string[] = [];
+		candidature.forEach((c: any) => {
 			if (res.indexOf(c.avviso.misura) === -1) {
 				res.push(c.avviso.misura);
 			}
@@ -22,26 +22,10 @@
 		return res;
 	}
 
-    const dettagli = (c) => {
-        selectedRecord = c;
-    };
-
-    const close = () => {
-        selectedRecord = null;
-    };
-
 	let tipologiaEnteOptions = ['Tutte le tipologie di ente'].concat(
-		Object.values(
-			candidature.reduce((a, { tipologia_ente }) => {
-				a[tipologia_ente] = a[tipologia_ente] || {
-					tipologia_ente,
-					count: 0
-				};
-				a[tipologia_ente].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.tipologia_ente)
+		candidature
+			.map((c: any) => c.tipologia_ente)
+			.filter((v: any, i: any, a: any) => a.indexOf(v) === i)
 			.sort()
 	);
 	let filterTipologiaEnte = tipologiaEnteOptions[0];
@@ -50,70 +34,58 @@
 	let filterMisura = misureOptions[0];
 
 	let regioneOptions = ['Tutte le regioni'].concat(
-		Object.values(
-			candidature.reduce((a, { regione }) => {
-				a[regione] = a[regione] || {
-					regione,
-					count: 0
-				};
-				a[regione].count++;
-				return a;
-			}, Object.create(null))
-		)
-			.map((x) => x.regione)
+		candidature
+			.map((c: any) => c.regione)
+			.filter((v: any, i: any, a: any) => a.indexOf(v) === i)
 			.sort()
 	);
 	let filterRegione = regioneOptions[0];
 
-	let provinceOptions = ['Tutte le province'].concat(
-		Object.values(
-			candidature
-				.filter((c) => (filterRegione !== regioneOptions[0] ? c.regione === filterRegione : true))
-				.reduce((a, { provincia }) => {
-					a[provincia] = a[provincia] || {
-						provincia,
-						count: 0
-					};
-					a[provincia].count++;
-					return a;
-				}, Object.create(null))
-		)
-			.map((x) => x.provincia)
+	$: provinceOptions = ['Tutte le province'].concat(
+		candidature
+			.filter((c: any) => {
+				if (filterRegione === 'Tutte le regioni') return true;
+				else return c.regione === filterRegione;
+			})
+			.map((c: any) => c.provincia)
+			.filter((v: any, i: any, a: any) => a.indexOf(v) === i)
 			.sort()
 	);
-	let filterProvincia = provinceOptions[0];
+	$: filterProvincia = 'Tutte le province';
 
 	$: cc = candidature
-		.filter((c) =>
+		.filter((c: any) =>
 			filterTipologiaEnte !== tipologiaEnteOptions[0]
 				? c.tipologia_ente === filterTipologiaEnte
 				: true
 		)
-		.filter((c) => (filterMisura !== misureOptions[0] ? c.avviso.misura === filterMisura : true))
-		.filter((c) => (filterRegione !== regioneOptions[0] ? c.regione === filterRegione : true))
-		.filter((c) =>
+		.filter((c: any) =>
+			filterMisura !== misureOptions[0] ? c.avviso.misura === filterMisura : true
+		)
+		.filter((c: any) => (filterRegione !== regioneOptions[0] ? c.regione === filterRegione : true))
+		.filter((c: any) =>
 			filterProvincia !== provinceOptions[0] ? c.provincia === filterProvincia : true
 		);
 
-	$: fonditotali = cc.reduce(function (a, b) {
+	$: fonditotali = cc.reduce(function (a: any, b: any) {
 		return a + b.importo_finanziamento;
 	}, 0);
 
 	$: fondiAssegnati = cc
-		.filter((f) => f.stato_candidatura === 'A')
-		.reduce(function (a, b) {
+		.filter((f: any) => f.stato_candidatura === 'A')
+		.reduce(function (a: any, b: any) {
 			return a + b.importo_finanziamento;
 		}, 0);
 
 	$: fondiLiquidati = cc
-		.filter((f) => f.stato_candidatura === 'E')
-		.reduce(function (a, b) {
+		.filter((f: any) => f.stato_candidatura === 'E')
+		.reduce(function (a: any, b: any) {
 			return a + b.importo_finanziamento;
 		}, 0);
 
 	$: fondiRinunciati = cc
-		.filter((f) => f.stato_candidatura === 'R')
-		.reduce(function (a, b) {
+		.filter((f: any) => f.stato_candidatura === 'R')
+		.reduce(function (a: any, b: any) {
 			return a + b.importo_finanziamento;
 		}, 0);
 </script>
@@ -153,7 +125,12 @@
 		<div class="col-12 col-lg-3 my-4">
 			<div class="select-wrapper">
 				<label for="filterRegione">Regioni</label>
-				<select id="filterRegione" name="filterRegione" bind:value={filterRegione}>
+				<select
+					id="filterRegione"
+					name="filterRegione"
+					bind:value={filterRegione}
+					on:change={() => (filterProvincia = 'Tutte le province')}
+				>
 					{#each regioneOptions as r}
 						<option value={r}>{r}</option>
 					{/each}
@@ -173,7 +150,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fonditotali)}
 				text="Valore candidature"
@@ -181,7 +158,7 @@
 				textcolor="white"
 			/>
 		</div>
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiAssegnati)}
 				text="Fondi assegnati"
@@ -189,7 +166,7 @@
 				textcolor="white"
 			/>
 		</div>
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiLiquidati)}
 				text="Fondi liquidati"
@@ -197,7 +174,6 @@
 				textcolor="white"
 			/>
 		</div>
-		<!--
 		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiRinunciati)}
@@ -206,13 +182,12 @@
 				textcolor="white"
 			/>
 		</div>
-		-->
 	</div>
 </div>
 {#if selectedRecord}
 	<div class="container my-4" transition:fade>
-        <Recorddetail bind:record={selectedRecord} />
-		<button type="button" class="btn btn-primary go-back" on:click={close}
+		<Recorddetail bind:record={selectedRecord} />
+		<button type="button" class="btn btn-primary go-back" on:click={() => (selectedRecord = null)}
 			><svg class="icon icon-sm icon-white me-2"
 				><use href="/svg/sprites.svg#it-arrow-left"></use></svg
 			>Torna indietro</button
@@ -240,7 +215,7 @@
 						{#each cperpage as c}
 							<tr>
 								<td>
-									<button class="btn btn-s btn-icon"  on:click={dettagli(c)}>
+									<button class="btn btn-s btn-icon" on:click={() => (selectedRecord = c)}>
 										<span class="rounded-icon">
 											<svg class="icon icon-primary"
 												><use href="/svg/sprites.svg#it-zoom-in"></use></svg
@@ -255,11 +230,13 @@
 								<td><small>{c.provincia}</small></td>
 								<td><small>{c.avviso.misura}</small></td>
 								<td
-									><small>{c.stato_candidatura === 'A'
-										? 'ASSEGNATO'
-										: c.stato_candidatura === 'E'
-											? 'EROGATO'
-											: 'RINUNCIATO'}</small></td
+									><small
+										>{c.stato_candidatura === 'A'
+											? 'ASSEGNATO'
+											: c.stato_candidatura === 'E'
+												? 'EROGATO'
+												: 'RINUNCIATO'}</small
+									></td
 								>
 
 								<td><small>{euro(c.importo_finanziamento)}</small></td>
@@ -269,7 +246,9 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<th colspan="8"><Pagination rows={cc} bind:cp={cp} perPage={10} bind:trimmedRows={cperpage} /></th>
+						<th colspan="8"
+							><Pagination rows={cc} bind:cp perPage={10} bind:trimmedRows={cperpage} /></th
+						>
 					</tr>
 				</tfoot>
 			</table>

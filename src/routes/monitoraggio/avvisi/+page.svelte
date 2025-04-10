@@ -1,6 +1,6 @@
 <script>
 	import Cite from '$lib/c/cite.svelte';
-	import { euro } from '$lib/js/shared';
+	import { euro, setscroll } from '$lib/js/shared';
 	import Columnchart from './columnchart.svelte';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
@@ -12,15 +12,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let filteredMisure = data.misure;
 	/*
@@ -52,15 +43,12 @@
 	};
 
 	const calcolaImpegnate = (a) => {
-		return (a.risorse.get('ACCETTATA')
-			? a.risorse.get('ACCETTATA')
-			: 0) + (a.risorse.get('AMMESSA')
-				? a.risorse.get('AMMESSA')
-				: 0) + (a.risorse.get('AMMESSA CON RISERVA')
-					? a.risorse.get('AMMESSA CON RISERVA')
-					: 0) + (a.risorse.get('IN VERIFICA')
-						? a.risorse.get('IN VERIFICA')
-						: 0);
+		return (
+			(a.risorse.get('ACCETTATA') ? a.risorse.get('ACCETTATA') : 0) +
+			(a.risorse.get('AMMESSA') ? a.risorse.get('AMMESSA') : 0) +
+			(a.risorse.get('AMMESSA CON RISERVA') ? a.risorse.get('AMMESSA CON RISERVA') : 0) +
+			(a.risorse.get('IN VERIFICA') ? a.risorse.get('IN VERIFICA') : 0)
+		);
 	};
 
 	const calcolaFinanziate = (a) => {
@@ -97,9 +85,9 @@
 		row.push(finanziate);
 		row.push(rinunciate);
 		row.push(revocate);
-		if(valoreAvviso - impegnate - finanziate - rinunciate - revocate>0){
+		if (valoreAvviso - impegnate - finanziate - rinunciate - revocate > 0) {
 			row.push(valoreAvviso - impegnate - finanziate - rinunciate - revocate);
-		}else{
+		} else {
 			row.push(0);
 		}
 		result.push(row);
@@ -213,7 +201,6 @@
 												)
 											]
 										]}
-										label=""
 									/>
 								</div>
 								<div class="p-2 bd-highlight">
@@ -364,9 +351,10 @@
 																					>
 																				</div>
 																			</div>
-																			{:else}
+																		{:else}
 																			<div class="p-2 bd-highlight">
-																				<div class="text-danger"
+																				<div
+																					class="text-danger"
 																					style="width:100% ; margin-bottom:0.5rem; padding-left:0.5rem; background: linear-gradient(
 																		to right,
 																		{statiColors[4]},

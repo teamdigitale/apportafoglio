@@ -3,7 +3,7 @@
 	import Barchart from '$lib/c/charts/barchart.svelte';
 	import Cite from '$lib/c/cite.svelte';
 	import Scorecard from '$lib/c/scorecard.svelte';
-	import { euro, percentuale } from '$lib/js/shared.js';
+	import { euro, percentuale, setscroll } from '$lib/js/shared.js';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
 	moment.locale('it');
@@ -970,8 +970,6 @@
 			percentuale(valorerevocate / tot)
 		]);
 
-		
-
 		return res;
 	};
 
@@ -980,15 +978,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">
@@ -1183,7 +1172,6 @@
 						titleColor="#3e8ed0"
 						values={datiTotaleDettaglioFinanziate}
 						direction="horizontal"
-						colors={['#3e8ed0', '#296fa8', '#296fa8', '#f14668', '#cc0f35', '#48c78e', '#257953']}
 					></Barchart>
 				</div>
 			</div>
@@ -1213,7 +1201,6 @@
 						titleColor="#f14668"
 						values={datiTotaleDettaglioRinunciateRevocate}
 						direction="horizontal"
-						colors={['#f14668', '#cc0f35', '#f14668', '#cc0f35']}
 					></Barchart>
 				</div>
 			</div>

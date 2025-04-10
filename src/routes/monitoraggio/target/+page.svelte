@@ -1,25 +1,14 @@
 <script>
 	import Cite from '$lib/c/cite.svelte';
-
 	export let data;
-
-
 	import { onMount } from 'svelte';
 	import Target1_2 from './target1_2.svelte';
 	import Target1_4_1 from './target1_4_1.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">
@@ -109,7 +98,6 @@
 		<div class="col-12 col-lg-10 it-page-sections-container">
 			<div class="it-page-section my-5" id="riepilogo">
 				<h4>Monitoraggio dei target</h4>
-				
 			</div>
 			<div class="it-page-section my-5" id="target1_2">
 				<h5>Target 1.2</h5>
@@ -140,16 +128,19 @@
 					<Target1_4_1
 						target={data.t.targets.filter((t) => t.id === 'targetM1C1_140')[0]}
 						values={data.targetM1C1_140}
-						platea={data.platee.filter(p => p.tipologia_ente==='Comuni' ||p.tipologia_ente==='Scuole')}
+						platea={data.platee.filter(
+							(p) => p.tipologia_ente === 'Comuni' || p.tipologia_ente === 'Scuole'
+						)}
 					/>
 					<Target1_4_1
 						target={data.t.targets.filter((t) => t.id === 'targetM1C1_148')[0]}
 						values={data.targetM1C1_148}
-						platea={data.platee.filter(p => p.tipologia_ente==='Comuni' ||p.tipologia_ente==='Scuole')}
+						platea={data.platee.filter(
+							(p) => p.tipologia_ente === 'Comuni' || p.tipologia_ente === 'Scuole'
+						)}
 					/>
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </div>

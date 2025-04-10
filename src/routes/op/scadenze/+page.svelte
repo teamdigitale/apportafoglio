@@ -2,13 +2,10 @@
 	// @ts-nocheck
 
 	import Scorecard from '$lib/c/scorecard.svelte';
-
 	import Cite from '$lib/c/cite.svelte';
-	import { areaManager, euro } from '$lib/js/shared';
-
+	import { areaManager, euro, setscroll } from '$lib/js/shared';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
-
 	import Pagination from '$lib/c/pagination.svelte';
 	import Richiestavariazionecard from './richiestavariazionecard.svelte';
 	moment.locale('it');
@@ -61,15 +58,17 @@
 		]);
 	let filterAcm = acmOptions[0].Id;
 
-	$: contrattualizzazioni = data.scadenze.filter((x) =>
+	$: contrattualizzazioni = data.scadenze
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
-					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
-					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
-		).filter(
-		(f) => f.RecordType.Name === 'Contrattualizzazione Fornitore'
-	);
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						filterAcm
+		)
+		.filter((f) => f.RecordType.Name === 'Contrattualizzazione Fornitore');
 
 	$: contrattualizzazioni7 = contrattualizzazioni.filter((s) =>
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isBefore(moment().add(7, 'days'))
@@ -85,13 +84,17 @@
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isAfter(moment().add(30, 'days'))
 	);
 
-	$: completamenti = data.scadenze.filter((x) =>
+	$: completamenti = data.scadenze
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
-					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
-					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
-		).filter((f) => f.RecordType.Name === 'Completamento Attività');
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						filterAcm
+		)
+		.filter((f) => f.RecordType.Name === 'Completamento Attività');
 
 	$: completamenti7 = completamenti.filter((s) =>
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isBefore(moment().add(7, 'days'))
@@ -107,48 +110,51 @@
 		moment(s.outfunds__Due_Date__c, 'YYYY-MM-DD').isAfter(moment().add(30, 'days'))
 	);
 
-	$: richiestedivariazione = data.scadenze.filter((x) =>
+	$: richiestedivariazione = data.scadenze
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
-					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
-					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
-		).filter((s) => {
-		return s.rv.length > 0;
-	});
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						filterAcm
+		)
+		.filter((s) => {
+			return s.rv.length > 0;
+		});
 
-	$: richiestedivariazione90 = data.scadenze.filter((x) =>
+	$: richiestedivariazione90 = data.scadenze
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
-					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
-					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
-		).filter((s) => {
-		return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) >= 90;
-	});
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						filterAcm
+		)
+		.filter((s) => {
+			return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) >= 90;
+		});
 
-	$: richiestedivariazioneno90 = data.scadenze.filter((x) =>
+	$: richiestedivariazioneno90 = data.scadenze
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
-					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === null
-					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c === filterAcm
-		).filter((s) => {
-		return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) < 90;
-	});
+					? x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						null
+					: x.outfunds__Funding_Request__r.outfunds__Applying_Organization__r.Account_Manager__c ===
+						filterAcm
+		)
+		.filter((s) => {
+			return s.rv.length > 0 && Number(s.rv[0].Giorni_richiesti__c) < 90;
+		});
 
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">

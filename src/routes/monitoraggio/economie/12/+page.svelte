@@ -377,7 +377,7 @@
 	<h4>Quadro economico</h4>
 	<p>
 		Gli importi minimi e massimi sono calcolati sulla base dell'<a
-			href="#"
+			id="potenziali_modaleListino"
 			data-bs-toggle="modal"
 			data-bs-target="#modaleListino">attuale listino</a
 		>.
@@ -548,7 +548,7 @@
 		<div class="col-12 col-lg-3">
 			<div data-bs-toggle="sticky" data-bs-stackable="true" class="bg-white border-start px-2">
 				<h4>Impatti sul target</h4>
-				
+
 				<p
 					class={candidatureAttive + candidatureStimate > target[1].valore
 						? 'text-success'

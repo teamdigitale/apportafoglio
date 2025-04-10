@@ -2,7 +2,7 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
-	import { formatDate, percentuale } from '$lib/js/shared.js';
+	import { formatDate, percentuale, setscroll } from '$lib/js/shared.js';
 	import { dipendenze12, dipendenze141, dipendenzepagopa } from './dipendenze.js';
 	import { stringSimilarity } from 'string-similarity-js';
 	import { goto } from '$app/navigation';
@@ -72,15 +72,6 @@
 	const count = (xs) => xs.reduce((a, x) => ((a[x] = (a[x] || 0) + 1), a), {});
 
 	const uniq = (xs) => [...new Set(xs)];
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 
 	let popover;
 
@@ -275,7 +266,7 @@
 		data.serviziAttivi
 			.filter((x) => x.Ente__c === selectedAsl)
 			.forEach((sa) => {
-				if (sa.Codice_Catalogo_Attribuito__c&&sa.Codice_Catalogo_Attribuito__c.endsWith('000')) {
+				if (sa.Codice_Catalogo_Attribuito__c && sa.Codice_Catalogo_Attribuito__c.endsWith('000')) {
 					if (
 						stringSimilarity(n, sa.Descrizione_Servizio__c) >= 0.39 &&
 						stringSimilar(n, sa.Descrizione_Servizio__c) >= 0.39 &&
@@ -663,7 +654,9 @@
 								on:change={(e) => vai(e.target.value)}
 							>
 								<option value="none">Seleziona un comune</option>
-								{#each data.enti.filter( (x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase().replace('Comune di ', '').indexOf(prefiltrocomune.toUpperCase()) !== -1) ) as c}
+								{#each data.enti.filter((x) => (prefiltrocomune === '' ? true : x.Name.toUpperCase()
+												.replace('Comune di ', '')
+												.indexOf(prefiltrocomune.toUpperCase()) !== -1)) as c}
 									{#if selectedAsl === c.Id}
 										<option value={c.Id} selected>{c.Name}</option>
 									{:else}

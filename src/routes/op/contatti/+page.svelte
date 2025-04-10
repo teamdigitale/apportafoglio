@@ -2,8 +2,7 @@
 	// @ts-nocheck
 
 	import Cite from '$lib/c/cite.svelte';
-	import { areaManager, euro } from '$lib/js/shared';
-
+	import { areaManager, euro, setscroll } from '$lib/js/shared';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
 	import Stackedbar from '$lib/c/charts/stackedbar.svelte';
@@ -53,18 +52,16 @@
 	$: dates = getDatesBetween(rangeMin, rangeMax);
 
 	$: filteredContatti = data.contatti
-	.filter((x) =>
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
 					? x.CreatedById === null
 					: x.CreatedById === filterAcm
 		)
-	.filter(function (c) {
-		return moment(c.CreatedDate).isAfter(moment(rangeMin));
-	});
-
-	
+		.filter(function (c) {
+			return moment(c.CreatedDate).isAfter(moment(rangeMin));
+		});
 
 	$: cdataforchart = (fc) => {
 		cp = 0;
@@ -73,8 +70,7 @@
 		dates.forEach((d) => {
 			result.push([
 				moment(d).format('DD/MM/YYYY'),
-				fc
-				.filter(
+				fc.filter(
 					(c) =>
 						moment(c.CreatedDate).startOf('day').toDate().getDate() ===
 						moment(d).startOf('day').toDate().getDate()
@@ -117,7 +113,7 @@
 	let filterAcm = acmOptions[0].Id;
 
 	$: topten = data.contatti
-	.filter((x) =>
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
@@ -136,7 +132,7 @@
 		.filter((x, index) => index < 10);
 
 	$: worstten = data.contatti
-	.filter((x) =>
+		.filter((x) =>
 			filterAcm === 'All'
 				? true
 				: filterAcm === 'undefined'
@@ -174,15 +170,6 @@
 		await setscroll();
 		cdataforchart(filteredContatti);
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">
@@ -308,7 +295,11 @@
 				</div>
 				<div class="row">
 					<div class="col-12 col-lg-12 my-4">
-						<Stackedbar values={cdataforchart(filteredContatti)} id="contatti" direction="vertical" />
+						<Stackedbar
+							values={cdataforchart(filteredContatti)}
+							id="contatti"
+							direction="vertical"
+						/>
 					</div>
 				</div>
 				<div class="row">

@@ -3,9 +3,9 @@
 	import Columnchart from '$lib/c/charts/columnchart.svelte';
 	import Cite from '$lib/c/cite.svelte';
 	import Modal from '$lib/c/modal.svelte';
+	import { setscroll } from '$lib/js/shared.js';
 
 	export let data;
-
 
 	let compressed = true;
 
@@ -16,16 +16,6 @@
 		await setscroll();
 	});
 
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
-
-	
 	let chartmodals = [];
 
 	let showModal = false;
@@ -102,42 +92,41 @@
 			result[0].push(e.tipologiaente);
 		});
 		datesRange.forEach((e, i) => {
-			let row = [e.getFullYear()+'/'+(e.getMonth()+1)].concat(Array(vv.length).fill(0));
+			let row = [e.getFullYear() + '/' + (e.getMonth() + 1)].concat(Array(vv.length).fill(0));
 			result.push(row);
-			vv.forEach((vals,j) => {
-				
+			vv.forEach((vals, j) => {
 				let item = vals.andamentotecnicipositivi.filter(
 					(r) => r.anno === e.getFullYear() && r.mese === e.getMonth() + 1
 				);
 
 				if (item.length === 0) {
-					result[i + 1][j+1]=0;
+					result[i + 1][j + 1] = 0;
 				} else {
-					result[i + 1][j+1]=item[0].tecnicipositivi;
+					result[i + 1][j + 1] = item[0].tecnicipositivi;
 				}
 			});
 		});
 		return result;
 	}
 
-	function calcolaNumeroMedioPerMese(misura){
+	function calcolaNumeroMedioPerMese(misura) {
 		let vv = data.data.filter((d) => d.misura === misura);
 		let somma = 0;
 		let numeroMesi = 0;
 		datesRange.forEach((e, i) => {
 			let esiste = false;
-			vv.forEach((vals,j) => {
+			vv.forEach((vals, j) => {
 				let item = vals.andamentotecnicipositivi.filter(
 					(r) => r.anno === e.getFullYear() && r.mese === e.getMonth() + 1
 				);
-				if(item.length!==0){
-					esiste=true;
-					somma = somma+item[0].tecnicipositivi;
+				if (item.length !== 0) {
+					esiste = true;
+					somma = somma + item[0].tecnicipositivi;
 				}
 			});
-			if(esiste)numeroMesi++;
+			if (esiste) numeroMesi++;
 		});
-		return [Math.round(somma/numeroMesi),somma,numeroMesi];
+		return [Math.round(somma / numeroMesi), somma, numeroMesi];
 	}
 </script>
 
@@ -780,15 +769,21 @@
 			</div>
 			<div class="it-page-section my-5" id="distribuzioneneltempotecnici">
 				<h5>Distribuzione nel tempo dei task positivi</h5>
-				<p>Per ogni misura viene riportata la distribuzione mensile dei <strong>Task Tecnici con esito positivo</strong>, il totale e la media per mese</p>
+				<p>
+					Per ogni misura viene riportata la distribuzione mensile dei <strong
+						>Task Tecnici con esito positivo</strong
+					>, il totale e la media per mese
+				</p>
 				{#each misure as m}
 					{#if sortedData
 						.filter((sd) => sd.misura === m)
 						.reduce((a, c) => a + c.tecnicipositivi + c.tecnicinegativi, 0) != 0}
-						<hr/>
+						<hr />
 						<h6>{m}</h6>
-						<p>Totali: <strong>{calcolaNumeroMedioPerMese(m)[1]}</strong><br/>
-							Numero medio per mese: <strong>{calcolaNumeroMedioPerMese(m)[0]}</strong></p>
+						<p>
+							Totali: <strong>{calcolaNumeroMedioPerMese(m)[1]}</strong><br />
+							Numero medio per mese: <strong>{calcolaNumeroMedioPerMese(m)[0]}</strong>
+						</p>
 						<p>
 							<Columnchartandamenti
 								id="chart-{m}"
@@ -807,8 +802,4 @@
 </div>
 
 <style>
-	.modal-dialog {
-		max-width: 70vw;
-		width: 70vw;
-	}
 </style>

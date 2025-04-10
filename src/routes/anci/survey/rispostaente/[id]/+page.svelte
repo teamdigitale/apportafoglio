@@ -1,12 +1,9 @@
 <script>
 	// @ts-nocheck
-
 	import * as d3 from 'd3';
 	import * as Plot from '@observablehq/plot';
-
 	import Cite from '$lib/c/cite.svelte';
-
-	import { euro, formatDate, formatNumber, percentuale } from '$lib/js/shared.js';
+	import { euro, formatDate, formatNumber, percentuale, setscroll } from '$lib/js/shared.js';
 	import { onMount } from 'svelte';
 	import moment from 'moment/min/moment-with-locales';
 	import Utente from './utente.svelte';
@@ -27,17 +24,6 @@
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
-
-
 </script>
 
 <div class="container">
@@ -94,11 +80,11 @@
 								{#if data.risposta}
 									<ul class="link-list">
 										<li class="nav-item">
-											{#each d3.flatGroup(data.risposta.surveyanci.sezioni) as sezione,i}
-											{#if i!==0}
-												<a class="nav-link active" href="#heading{sezione.codice}">
-													<span>{sezione.codice}. {sezione.nome}</span>
-												</a>
+											{#each d3.flatGroup(data.risposta.surveyanci.sezioni) as sezione, i}
+												{#if i !== 0}
+													<a class="nav-link active" href="#heading{sezione.codice}">
+														<span>{sezione.codice}. {sezione.nome}</span>
+													</a>
 												{/if}
 											{/each}
 										</li>
@@ -118,7 +104,7 @@
 				<div class="alert alert-primary" role="alert">
 					Dati aggiornati a: <b
 						>{moment(data.risposta.surveyanci.data_invio, 'YYYY-MM-DD HH:mm:ss')
-						.add(2, 'hours')
+							.add(2, 'hours')
 							.calendar()
 							.toLocaleLowerCase()}</b
 					><a class="read-more" href="/op/ente/{data.risposta.pa2026.id}" target="_blank">
@@ -127,11 +113,11 @@
 					</a>
 				</div>
 				<hr />
-				{#each data.risposta.surveyanci.sezioni as s,i}
-				{#if i!==0}
-					<h5 id="heading{s.codice}">{s.codice}. {s.nome}</h5>
+				{#each data.risposta.surveyanci.sezioni as s, i}
+					{#if i !== 0}
+						<h5 id="heading{s.codice}">{s.codice}. {s.nome}</h5>
 					{/if}
-					
+
 					{#if s.codice === '2'}
 						<div class="row">
 							<div class="col-12 col-lg-8">
@@ -151,7 +137,9 @@
 								<div>
 									<Candidature
 										candidature={data.risposta.pa2026.candidature.filter(
-											(x) => x.misura === '1.2 Abilitazione e facilitazione migrazione al Cloud'&& x.data_invio!==null
+											(x) =>
+												x.misura === '1.2 Abilitazione e facilitazione migrazione al Cloud' &&
+												x.data_invio !== null
 										)}
 										title="Candidature 1.2"
 									/>
@@ -181,31 +169,35 @@
 							</div>
 							<div class="col-12 col-lg-4">
 								<div>
-									<Servizi
-										servizi={data.risposta.pa2026.servizi}
-										title="Servizi dell'ente"
+									<Servizi servizi={data.risposta.pa2026.servizi} title="Servizi dell'ente" />
+								</div>
+								<div>
+									<Candidature
+										candidature={data.risposta.pa2026.candidature.filter(
+											(x) =>
+												x.misura === '1.3.1 Piattaforma Digitale Nazionale Dati' &&
+												x.data_invio !== null
+										)}
+										title="Candidature 1.3.1"
 									/>
 								</div>
 								<div>
 									<Candidature
 										candidature={data.risposta.pa2026.candidature.filter(
-											(x) => x.misura === '1.3.1 Piattaforma Digitale Nazionale Dati'&& x.data_invio!==null
-										)}
-										title="Candidature 1.3.1"
-									/>
-								</div>
-                                <div>
-									<Candidature
-										candidature={data.risposta.pa2026.candidature.filter(
-											(x) => x.misura === '1.4.3 Adozione PagoPA e AppIO' && x.pacchetto==='PagoPA'&& x.data_invio!==null
+											(x) =>
+												x.misura === '1.4.3 Adozione PagoPA e AppIO' &&
+												x.pacchetto === 'PagoPA' &&
+												x.data_invio !== null
 										)}
 										title="Candidature 1.4.3 pagoPA"
 									/>
 								</div>
-                                <div>
+								<div>
 									<Candidature
 										candidature={data.risposta.pa2026.candidature.filter(
-											(x) => x.misura === '1.4.1 Esperienza del cittadino nei servizi pubblici' && x.data_invio!==null
+											(x) =>
+												x.misura === '1.4.1 Esperienza del cittadino nei servizi pubblici' &&
+												x.data_invio !== null
 										)}
 										title="Candidature 1.4.1"
 									/>
@@ -213,11 +205,10 @@
 								<div>
 									<Insights {s} />
 								</div>
-                                 
 							</div>
 						</div>
 					{/if}
-                    {#if s.codice === '6'}
+					{#if s.codice === '6'}
 						<div class="row">
 							<div class="col-12 col-lg-8">
 								<Attieprocedimenti {s} tipo={data.risposta.surveyanci.tipo} />
@@ -229,7 +220,7 @@
 							</div>
 						</div>
 					{/if}
-                    {#if s.codice === '7'}
+					{#if s.codice === '7'}
 						<div class="row">
 							<div class="col-12 col-lg-8">
 								<Governance {s} tipo={data.risposta.surveyanci.tipo} />

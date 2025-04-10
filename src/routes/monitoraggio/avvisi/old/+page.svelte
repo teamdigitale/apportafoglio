@@ -3,9 +3,9 @@
 	import Barchart from '$lib/c/charts/barchart.svelte';
 	import Cite from '$lib/c/cite.svelte';
 	import Scorecard from '$lib/c/scorecard.svelte';
-	import { euro, percentuale } from '$lib/js/shared.js';
+	import { euro, setscroll } from '$lib/js/shared.js';
 	import { onMount } from 'svelte';
-    import moment from 'moment/min/moment-with-locales';
+	import moment from 'moment/min/moment-with-locales';
 	moment.locale('it');
 
 	export let data;
@@ -23,62 +23,61 @@
 				a.outfunds__Parent_Funding_Program__r.Id === selectedMisura
 	);
 
-    $: calcolaBeneficiari = () => {
-        const res = [];
-        filteredAvvisi.forEach(a => {
-            a.beneficiari.forEach(b => {
-                if(res.indexOf(b.beneficiario)===-1){
-                    res.push(b.beneficiario);
-                }
-            });
-        });
-        return res;
-    }
+	$: calcolaBeneficiari = () => {
+		const res = [];
+		filteredAvvisi.forEach((a) => {
+			a.beneficiari.forEach((b) => {
+				if (res.indexOf(b.beneficiario) === -1) {
+					res.push(b.beneficiario);
+				}
+			});
+		});
+		return res;
+	};
 
-    
+	$: beneficiariOptions = ['Tutti i beneficiari'].concat(calcolaBeneficiari());
 
-    $: beneficiariOptions = ["Tutti i beneficiari"].concat(calcolaBeneficiari());
+	let selectedBeneficiario = 'Tutti i beneficiari';
 
-    let selectedBeneficiario = "Tutti i beneficiari";
+	$: calcolaPlatea = () => {
+		const res = [];
+		if (selectedBeneficiario !== beneficiariOptions[0]) {
+			let sumok = 0;
+			filteredAvvisiTimeLine.reverse().forEach((a, index) => {
+				if (index === 0) {
+					res.push({
+						id: a.Id,
+						platea: a.beneficiari.filter((b) => b.beneficiario === selectedBeneficiario)[0]
+							.platea_generale
+					});
+					sumok =
+						sumok + a.beneficiari.filter((b) => b.beneficiario === selectedBeneficiario)[0].ok;
+				} else {
+					res.push({
+						id: a.Id,
+						platea:
+							a.beneficiari.filter((b) => b.beneficiario === selectedBeneficiario)[0]
+								.platea_generale - sumok
+					});
+					sumok =
+						sumok + a.beneficiari.filter((b) => b.beneficiario === selectedBeneficiario)[0].ok;
+				}
+			});
+		}
+		return res;
+	};
 
-    
+	$: platea = calcolaPlatea();
 
-    $: calcolaPlatea = () => {
-        const res = [];
-        if(selectedBeneficiario!==beneficiariOptions[0]){
-            let sumok = 0;
-            filteredAvvisiTimeLine.reverse().forEach((a,index) => {
-                if(index===0){
-                    res.push({id: a.Id,platea:a.beneficiari.filter(b => b.beneficiario===selectedBeneficiario)[0].platea_generale});
-                    sumok = sumok+a.beneficiari.filter(b => b.beneficiario===selectedBeneficiario)[0].ok;
-                }else{
-                    res.push({id: a.Id,platea:a.beneficiari.filter(b => b.beneficiario===selectedBeneficiario)[0].platea_generale-sumok});
-                    sumok = sumok+a.beneficiari.filter(b => b.beneficiario===selectedBeneficiario)[0].ok;
-                }
-            });
-        }
-        return res;
-    }
+	$: filteredAvvisiTimeLine = filteredAvvisi.filter((a) =>
+		selectedBeneficiario === beneficiariOptions[0]
+			? true
+			: a.beneficiari.filter((b) => b.beneficiario === selectedBeneficiario).length > 0
+	);
 
-    $: platea = calcolaPlatea();
-
-    $: filteredAvvisiTimeLine = filteredAvvisi.filter(
-        a => selectedBeneficiario=== beneficiariOptions[0]?true:a.beneficiari.filter(b => b.beneficiario===selectedBeneficiario).length>0
-    );
-
-	
 	onMount(async () => {
 		await setscroll();
 	});
-
-	const setscroll = async () => {
-		var navscrollElement = document.querySelector('.it-navscroll-wrapper');
-		var navscroll = bootstrap.NavScroll.getOrCreateInstance(navscrollElement);
-		navscroll.setScrollPadding(function () {
-			var header = document.querySelector('.it-header-wrapper');
-			return header.offsetHeight + 10;
-		});
-	};
 </script>
 
 <div class="container my-4">
@@ -154,7 +153,6 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-10 it-page-sections-container">
-			
 			<div class="it-page-section my-5" id="storiaavvisi">
 				<h4>Storico degli avvisi</h4>
 				<div class="col-12 col-lg-12 my-4">
@@ -167,79 +165,89 @@
 							{/each}
 						</select>
 					</div>
+				</div>
+				<div class="col-12 col-lg-12 my-4">
+					<div class="select-wrapper">
+						<label for="selectedBeneficiario">Beneficiari</label>
+						<select
+							id="selectedBeneficiario"
+							name="selectedBeneficiario"
+							bind:value={selectedBeneficiario}
+						>
+							{#each beneficiariOptions as b}
+								<option value={b}>{b}</option>
+							{/each}
+						</select>
 					</div>
-                <div class="col-12 col-lg-12 my-4">
-                    <div class="select-wrapper">
-                        <label for="selectedBeneficiario">Beneficiari</label>
-                        <select id="selectedBeneficiario" name="selectedBeneficiario" bind:value={selectedBeneficiario}>
-                            {#each beneficiariOptions as b}
-                                <option value={b}>{b}</option>
-                            {/each}
-                        </select>
-                    </div>
-                </div>
+				</div>
 
+				{#if true || selectedMisura !== ''}
+					<div class="it-timeline-wrapper">
+						<div class="row">
+							{#each filteredAvvisiTimeLine as avviso}
+								<div class="col-12">
+									<div class="timeline-element">
+										<div
+											class="it-pin-wrapper {avviso.outfunds__Status__c === 'PUBBLICATO'
+												? 'it-now'
+												: 'it-evidence'}"
+										>
+											<div class="pin-icon">
+												<svg class="icon"><use href="/svg/sprites.svg#it-horn"></use></svg>
+											</div>
+											<div class="pin-text">
+												<span
+													>{moment(avviso.outfunds__Start_Date__c, 'YYYY-MM-DD').format('MMM YYYY')}
+													- {moment(avviso.outfunds__End_Date__c, 'YYYY-MM-DD').format(
+														'MMM YYYY'
+													)}</span
+												>
+											</div>
+										</div>
+										<div class="card-wrapper">
+											<div class="card">
+												<div class="card-body">
+													<h5 class="card-title">{avviso.Name}</h5>
 
-                {#if true||selectedMisura !== ""}
-				<div class="it-timeline-wrapper">
-					<div class="row">
-                        {#each filteredAvvisiTimeLine as avviso}
-						<div class="col-12">
-							<div class="timeline-element">
-								<div
-									class="it-pin-wrapper {avviso.outfunds__Status__c === 'PUBBLICATO'
-										? 'it-now'
-										: 'it-evidence'}"
-								>
-									<div class="pin-icon">
-										<svg class="icon"><use href="/svg/sprites.svg#it-horn"></use></svg>
-									</div>
-									<div class="pin-text"><span>{moment(avviso.outfunds__Start_Date__c,"YYYY-MM-DD").format("MMM YYYY")} - {moment(avviso.outfunds__End_Date__c,"YYYY-MM-DD").format("MMM YYYY")}</span></div>
-								</div>
-								<div class="card-wrapper">
-									<div class="card">
-										<div class="card-body">
-											
-                                            <h5 class="card-title">{avviso.Name}</h5>
-											
-                                            <div>
-                                                {#each avviso.beneficiari as b}
-                                                <div class="chip chip-simple">
-                                                    <span class="chip-label">{b.beneficiario}</span>
-                                                  </div>                                                    
-                                                {/each}
-
-                                            </div>
-											<div>Dotazione finanziaria: <strong>{euro(
-                                                avviso.Misura_Padre_1__c
-                                                    ? avviso.Total_Program_Amount_Padre_1__c
-                                                    : avviso.Misura_Padre_2__c
-                                                        ? avviso.Total_Program_Amount_Padre_2__c
-                                                        : avviso.outfunds__Total_Program_Amount__c
-                                            )}</strong></div>
-                                            <div>
-                                                {#each avviso.beneficiari as b}
-                                                <hr/>
-                                                Beneficiario: <strong>{b.beneficiario}</strong><br/>
-                                                {#if selectedBeneficiario!=="Tutti i beneficiari"}
-                                                Platea: <strong>{platea.filter(p => p.id === avviso.Id)[0].platea}</strong><br/>
-                                                {/if}
-                                                Candidature OK: <strong>{b.ok}</strong><br/>
-                                                
-                                                {/each}
-                                                
-                                            </div>
-
-
+													<div>
+														{#each avviso.beneficiari as b}
+															<div class="chip chip-simple">
+																<span class="chip-label">{b.beneficiario}</span>
+															</div>
+														{/each}
+													</div>
+													<div>
+														Dotazione finanziaria: <strong
+															>{euro(
+																avviso.Misura_Padre_1__c
+																	? avviso.Total_Program_Amount_Padre_1__c
+																	: avviso.Misura_Padre_2__c
+																		? avviso.Total_Program_Amount_Padre_2__c
+																		: avviso.outfunds__Total_Program_Amount__c
+															)}</strong
+														>
+													</div>
+													<div>
+														{#each avviso.beneficiari as b}
+															<hr />
+															Beneficiario:<strong>{b.beneficiario}</strong><br />
+															{#if selectedBeneficiario !== 'Tutti i beneficiari'}
+																Platea: <strong
+																	>{platea.filter((p) => p.id === avviso.Id)[0].platea}</strong
+																><br />
+															{/if}
+															Candidature OK: <strong>{b.ok}</strong><br />
+														{/each}
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							{/each}
 						</div>
-                        {/each}
 					</div>
-				</div>
-                {/if}
+				{/if}
 			</div>
 		</div>
 	</div>
