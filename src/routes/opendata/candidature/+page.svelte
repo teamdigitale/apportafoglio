@@ -150,7 +150,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fonditotali)}
 				text="Valore candidature"
@@ -158,7 +158,7 @@
 				textcolor="white"
 			/>
 		</div>
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiAssegnati)}
 				text="Fondi assegnati"
@@ -166,7 +166,7 @@
 				textcolor="white"
 			/>
 		</div>
-		<div class="col-12 col-lg-4 my-4">
+		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiLiquidati)}
 				text="Fondi liquidati"
@@ -174,7 +174,6 @@
 				textcolor="white"
 			/>
 		</div>
-		<!--
 		<div class="col-12 col-lg-3 my-4">
 			<Scorecard
 				title={euro(fondiRinunciati)}
@@ -183,7 +182,6 @@
 				textcolor="white"
 			/>
 		</div>
-		-->
 	</div>
 </div>
 {#if selectedRecord}
