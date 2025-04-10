@@ -129,9 +129,9 @@
 	/>
 </div>
 
-{#if data.ente.Stato_giuridico__c === 'Soppresso'}
+{#if ['Soppresso', 'In soppressione'].includes(data.ente.Stato_giuridico__c)}
 	<div class="alert alert-warning my-2" role="alert">
-		<strong>Attenzione!</strong> Questo ente è stato soppresso.
+		<strong>Attenzione!</strong> Questo ente è nello stato "{data.ente.Stato_giuridico__c}"
 	</div>
 {/if}
 
