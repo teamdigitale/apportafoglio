@@ -51,9 +51,32 @@
 		})
 		.filter((ref) => (mostraSoppressi ? true : ref.Stato__c === 'Attivo'));
 
+	const getColor = (statoGiudico, original) => {
+		let colorBg, colorText;
+		switch (statoGiudico) {
+			case 'Attivo':
+				colorBg = original ? '0066cc' : 'ffffff';
+				colorText = original ? 'white' : 'black';
+				break;
+			case 'Soppresso':
+				colorBg = original ? 'ffe6bf' : 'dddddd';
+				colorText = 'black';
+				break;
+			case 'In soppressione':
+				colorBg = original ? 'ffe6bf' : '';
+				colorText = 'black';
+				break;
+			default:
+				colorBg = 'ffffff';
+				colorText = 'black';
+				break;
+		}
+		return [colorBg, colorText];
+	};
+
 	// TODO: replace the replaceAll('"', '') with a better solution
 	data.relazioni.destinazioni.forEach((r) => {
-		if (r.Id && r.Name) {
+		if (r && r.Id && r.Name) {
 			r.origini.forEach((originiRel) => {
 				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
 					node.push(
@@ -65,18 +88,18 @@
 				}
 			});
 			node.push(
-				`"${r.Id}" [shape=record, style="rounded", fontsize="9",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
+				`"${r.Id}" [shape=record, style="rounded, filled", fontsize="9" fontcolor="${getColor(r.Stato)[1]}" fillcolor="#${getColor(r.Stato)[0]}",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
 			);
 			relations.push(`"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n`);
 		}
 	});
 
 	data.relazioni.origini.forEach((r) => {
-		if (r.Id && r.Name) {
+		if (r && r.Id && r.Name) {
 			r.destinazioni.forEach((originiRel) => {
 				if (originiRel.Id && originiRel.Name && originiRel.Id !== data.ente.Id) {
 					node.push(
-						`"${originiRel.Id}" [shape=record, style="rounded", fontsize="9",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
+						`"${originiRel.Id}" [shape=record, style="rounded, filled", fontsize="9" fontcolor="${getColor(originiRel.Stato)[1]}" fillcolor="#${getColor(originiRel.Stato)[0]}",  label="{${originiRel.Name.replaceAll('"', '')} | ${originiRel.Codice_amministrativo__c}}"]\n`
 					);
 					relations.push(
 						` "${r.Id}" -> "${originiRel.Id}"  [label = "  ${originiRel.Motivazione}"]\n`
@@ -90,32 +113,9 @@
 		}
 	});
 
-	const getColor = (statoGiudico) => {
-		let colorBg, colorText;
-		switch (statoGiudico) {
-			case 'Attivo':
-				colorBg = '0066cc';
-				colorText = 'white';
-				break;
-			case 'Soppresso':
-				colorBg = 'ffe6bf';
-				colorText = 'black';
-				break;
-			case 'In soppressione':
-				colorBg = 'ffe6bf';
-				colorText = 'black';
-				break;
-			default:
-				colorBg = '0066cc';
-				colorText = 'white';
-				break;
-		}
-		return [colorBg, colorText];
-	};
-
 	let graph = `digraph {
 		node [style=rounded shape=rect fontname="Titillium Web" fontsize=9]
-		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${getColor(data.ente.Stato_giuridico__c)[1]}" fillcolor="#${getColor(data.ente.Stato_giuridico__c)[0]} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
+		"${data.ente.Id}" [shape=record, style="rounded,filled", fontsize="9"  fontcolor="${getColor(data.ente.Stato_giuridico__c, true)[1]}" fillcolor="#${getColor(data.ente.Stato_giuridico__c, true)[0]} ",  label="{ ${data.ente.Name.replaceAll('"', '')} | ${data.ente.Codice_amministrativo__c}}"]\n
 		${node.join(' ')}
 		${relations.join(' ')}
 };`;

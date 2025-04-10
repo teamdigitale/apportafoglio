@@ -73,7 +73,7 @@ export async function load({ locals, params }) {
             const relazioniDestinazioni = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_correlato__r.Codice_amministrativo__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
             const valuesRelazioni = await Promise.all([relazioniDestinazioni]);
             relazioni.destinazioni = values[0][0].Registri_eventi_enti__r.records.map(e => {
-                if (e.Ente_destinazione__r.Id && e.Ente_destinazione__r.Name) {
+                if (e.Ente_destinazione__r && e.Ente_destinazione__r.Id && e.Ente_destinazione__r.Name) {
                     let origini = []
                     valuesRelazioni[0].filter((rel) => rel.Id === e.Ente_destinazione__r.Id).map(rel =>
                         origini = rel.Registri_eventi_enti1__r?.records?.map(origine => { return { ...origine.Ente_correlato__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []
@@ -88,7 +88,7 @@ export async function load({ locals, params }) {
             const relazioniOrigini = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_destinazione__r.Codice_amministrativo__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti1__r.records.map(e => e.Ente_correlato__r?.Id).join("','") + `')`, MAX_FETCH);
             const valuesRelazioni = await Promise.all([relazioniOrigini]);
             relazioni.origini = values[0][0].Registri_eventi_enti1__r.records.map(e => {
-                if (e.Ente_correlato__r.Id && e.Ente_correlato__r.Name) {
+                if (e.Ente_correlato__r && e.Ente_correlato__r.Id && e.Ente_correlato__r.Name) {
                     let destinazioni = []
                     valuesRelazioni[0].filter((rel) => rel.Id === e.Ente_correlato__r.Id).map(rel =>
                         destinazioni = rel.Registri_eventi_enti__r?.records?.map(origine => { return { ...origine.Ente_destinazione__r, Motivazione: origine.Motivazione_variazione__c } }) ?? []

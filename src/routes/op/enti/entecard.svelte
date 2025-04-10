@@ -39,7 +39,7 @@
 					</div>
 					{#if ['Soppresso', 'In soppressione'].includes(ente.Stato_giuridico__c)}
 						<div
-							class={`chip chip-simple ${ente.Stato_giuridico__c === 'Soppresso' ? 'complementary-2-bg-a1' : 'bg-danger'}`}
+							class={`chip chip-simple ${ente.Stato_giuridico__c === 'Soppresso' ? 'complementary-2-bg-a3' : 'complementary-1-bg-a3'}`}
 							style="margin-right: 8px;"
 						>
 							<svg class="icon icon-xs"><use href="/svg/sprites.svg#it-warning-circle"></use></svg>
