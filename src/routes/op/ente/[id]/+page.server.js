@@ -19,7 +19,7 @@ export async function load({ locals, params }) {
             accessToken: connection
         });
         const qente = promiseQuery(conn, `select Id, Name, codice_amministrativo__c, Website, PEC__c, Phone, ShippingStreet, Stato_giuridico__c, Area_geografica__c, Regione__c, ShippingState, ShippingCity, Tipologia_Ente__c, Account_Manager__r.Name, Tech_Implementation_User__r.Name, Account_Manager__r.Id, Tech_Implementation_User__r.Id,Account_Manager__r.FullPhotoUrl, Tech_Implementation_User__r.FullPhotoUrl,Asseveratore_1_2_Multimisura_1_1__r.Name, Asseveratore_1_2_Multimisura_1_1__r.FullPhotoUrl, Asseveratore_1_4_1__r.Name, Asseveratore_1_4_1__r.FullPhotoUrl, Asseveratore_misure_automatiche__r.Name, Asseveratore_misure_automatiche__r.FullPhotoUrl,
-            (SELECT Motivazione_variazione__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id FROM Account.Registri_eventi_enti__r LIMIT 200),
+            (SELECT Motivazione_variazione__c, Ente_destinazione__r.Name, Ente_destinazione__r.Id, Codice_meccanografico_ente_correlato__c FROM Account.Registri_eventi_enti__r LIMIT 200),
             (SELECT Motivazione_variazione__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200)
             from Account where Id = '` + idente + `'`, MAX_FETCH);
         const qreferenti = promiseQuery(conn, `select Id, LastName, FirstName, MiddleName, Name, MobilePhone, Email, LastActivityDate, FiscalCode__c, Profilo__c, Stato__c from contact where Stato__c != '' and Profilo__c != '' and accountid  = '` + idente + `'`, MAX_FETCH);
@@ -70,7 +70,7 @@ export async function load({ locals, params }) {
         };
 
         if (values[0][0].Registri_eventi_enti__r?.records?.length > 0) {
-            const relazioniDestinazioni = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_correlato__r.Codice_amministrativo__c, Ente_correlato__r.Name, Ente_correlato__r.Id FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
+            const relazioniDestinazioni = await promiseQuery(conn, `select Id, Codice_amministrativo__c, Stato_giuridico__c, (SELECT Motivazione_variazione__c, Ente_correlato__r.Codice_amministrativo__c, Ente_correlato__r.Name, Ente_correlato__r.Id, Codice_meccanografico_ente_correlato__c FROM Account.Registri_eventi_enti1__r LIMIT 200) from Account WHERE Id in ('` + values[0][0].Registri_eventi_enti__r.records.map(e => e.Ente_destinazione__r?.Id).join("','") + "')", MAX_FETCH);
             const valuesRelazioni = await Promise.all([relazioniDestinazioni]);
             relazioni.destinazioni = values[0][0].Registri_eventi_enti__r.records.map(e => {
                 if (e.Ente_destinazione__r && e.Ente_destinazione__r.Id && e.Ente_destinazione__r.Name) {
@@ -80,7 +80,8 @@ export async function load({ locals, params }) {
 
                     )
                     return { ...e.Ente_destinazione__r, Motivazione: e.Motivazione_variazione__c, origini, Stato: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_destinazione__r.Id).Stato_giuridico__c, Codice_amministrativo__c: valuesRelazioni[0].find((rel) => rel.Id === e.Ente_destinazione__r.Id).Codice_amministrativo__c }
-                }
+                } else
+                    return { Motivazione: e.Motivazione_variazione__c, Meccanografico: e.Codice_meccanografico_ente_correlato__c }
             })
 
         }
