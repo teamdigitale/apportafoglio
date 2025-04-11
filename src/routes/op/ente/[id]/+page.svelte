@@ -91,6 +91,13 @@
 				`"${r.Id}" [shape=record, style="rounded, filled", fontsize="9" fontcolor="${getColor(r.Stato)[1]}" fillcolor="#${getColor(r.Stato)[0]}",  label="{${r.Name.replaceAll('"', '')} | ${r.Codice_amministrativo__c}}"]\n `
 			);
 			relations.push(`"${data.ente.Id}" ->  "${r.Id}" [label = "  ${r.Motivazione}"]\n`);
+		} else {
+			node.push(
+				`"${r.Meccanografico}" [shape=record, style="rounded, filled", fontsize="9" fillcolor="#dddddd",  label="{Scuola non ancora riconciliata | ${r.Meccanografico}}"]\n `
+			);
+			relations.push(
+				`"${data.ente.Id}" ->  "${r.Meccanografico}" [label = "  ${r.Motivazione}"]\n`
+			);
 		}
 	});
 
