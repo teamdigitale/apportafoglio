@@ -301,7 +301,7 @@
 										{/if}
 
 										{#if loggedstandard}
-											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali'))}
+											{#if data.utentestandard && (checkAbilitazione(data.utentestandard.idsf, 'Osservatorio') || checkAbilitazione(data.utentestandard.idsf, 'TO Executive') || checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant') || checkAbilitazione(data.utentestandard.idsf, 'Relazioni Istituzionali') || checkAbilitazione(data.utentestandard.idsf, 'Product Owner'))}
 												<!-- monitoraggio -->
 												<li class="nav-item dropdown">
 													<a
