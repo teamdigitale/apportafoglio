@@ -24,9 +24,9 @@ const loadData = async (locals, misura, pacchetto,area,regione,te) => {
             accessToken: connstandard
         });
 
-        const pmisure = promiseQuery(conn, `select Id, Name, outfunds__Start_Date__c,outfunds__End_Date__c,  outfunds__Status__c, outfunds__Total_Program_Amount__c from outfunds__Funding_Program__c where IsDeleted =false and outfunds__Parent_Funding_Program__c = '' and outfunds__Total_Program_Amount__c != null order by Name`, MAX_FETCH);
+        const pmisure = promiseQuery(conn, `select Id, Name, outfunds__Start_Date__c,outfunds__End_Date__c,  outfunds__Status__c, outfunds__Total_Program_Amount__c from outfunds__Funding_Program__c where IsDeleted =false and outfunds__Parent_Funding_Program__c = '' and outfunds__Total_Program_Amount__c != null  and Name != '2.2.3 Digitalizzazione delle procedure (SUAP e SUE)' order by Name`, MAX_FETCH);
 
-        let condition = " and outfunds__Applying_Organization__r.Stato_giuridico__c = 'Attivo' and outfunds__Applying_Organization__r.Name!='Account Marketing Cloud 1' and outfunds__Applying_Organization__r.Name!='ACCOUNTSCATOLA'  and outfunds__Applying_Organization__r.Name!='XXDTD_C2' and outfunds__Applying_Organization__r.Name!='XXDTD_C' and outfunds__Applying_Organization__r.Name!='YYACN_R' ";
+        let condition = " and outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name != '2.2.3 Digitalizzazione delle procedure (SUAP e SUE)' and outfunds__Applying_Organization__r.Stato_giuridico__c = 'Attivo' and outfunds__Applying_Organization__r.Name!='Account Marketing Cloud 1' and outfunds__Applying_Organization__r.Name!='ACCOUNTSCATOLA'  and outfunds__Applying_Organization__r.Name!='XXDTD_C2' and outfunds__Applying_Organization__r.Name!='XXDTD_C' and outfunds__Applying_Organization__r.Name!='YYACN_R' ";
         if (misura !== null) {
             if(misura==='1.1 Infrastrutture digitali'){
                 condition = condition + " and (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = '1.1 Infrastrutture digitali' or (outfunds__FundingProgram__r.outfunds__Parent_Funding_Program__r.Name = '1.1 e 1.2 Multimisura' and hasServizi11__c =true)) ";
