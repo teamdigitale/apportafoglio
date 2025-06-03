@@ -564,7 +564,7 @@
 						<div class="alert alert-warning" role="alert">
 							<h6>Data di ammissibilità per i servizi</h6>
 							<p>
-								In relazione all'ammissibilità del finanziamento, si vedienzia che le attività di cui al finanziamento richiesto con il progetto devono/dovranno essere avviate a decorrere dal <b>4 aprile 2022</b>
+								In relazione all'ammissibilità del finanziamento, si evidenzia che le attività di cui al finanziamento richiesto con il progetto devono/dovranno essere avviate a decorrere dal <b>4 aprile 2022</b>
 							</p>
 
 						</div>
