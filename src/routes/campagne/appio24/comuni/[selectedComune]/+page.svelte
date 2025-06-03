@@ -351,7 +351,7 @@
 	};
 
 	const servizioAttivatoNeiTermini = (d) => {
-		const dataMinima = new Date(2021, 3, 1);
+		const dataMinima = new Date(2022, 3, 4);
 		if (dateAfter(dataMinima, d)) return false;
 		else return true;
 	};
@@ -379,7 +379,7 @@
 					return 'SI - Già attivo';
 				}
 			} else {
-				return 'NO - Servizio attivo avviato prima del 1 aprile 2021';
+				return 'NO - Servizio attivo avviato prima del 4 aprile 2022';
 			}
 		}
 		if (sa.length > 1) {
@@ -555,12 +555,19 @@
 		<div class="col-12 col-lg-9 it-page-sections-container">
 			<h4>
 				<span><img class="icon icon" src="/svg/logo-io-app-2021.svg" alt="logo app io" /></span>
-				<span>Campagna adesione avviso Misura 1.4.3 "Adozione app IO" Comuni - maggio 2024</span>
+				<span>Campagna adesione Avviso Misura 1.4.3 "Adozione app IO" Comuni - maggio 2025</span>
 			</h4>
 
 			<div class="it-page-section my-5" id="informativaavviso">
 				<div class="row">
 					<div class="col-12 col-lg-12">
+						<div class="alert alert-warning" role="alert">
+							<h6>Data di ammissibilità per i servizi</h6>
+							<p>
+								In relazione all'ammissibilità del finanziamento, si vedienzia che le attività di cui al finanziamento richiesto con il progetto devono/dovranno essere avviate a decorrere dal <b>4 aprile 2022</b>
+							</p>
+
+						</div>
 						<div class="alert alert-primary" role="alert">
 							<h6>Ammissibilità</h6>
 							<p>
@@ -574,9 +581,7 @@
 									Comuni.<br />Il singolo Ente locale, come sopra individuato, può presentare,
 									<b>a valere sul presente Avviso, una sola domanda di partecipazione</b>.<br />Le
 									eventuali proposte di Soggetti Attuatori già ammessi al finanziamento a valere
-									sull’Avviso Misura 1.4.3 "Adozione appIO"- Comuni (aprile2022) e/o sull’Avviso
-									Misura 1.4.3 "Adozione appIO" - Comuni (settembre 2022) e/o sull’Avviso Misura
-									1.4.3 "Adozione appIO" - Comuni (novembre 2023) sono ammissibili ai fini del
+									sugli avvisi App IO precedenti sono ammissibili ai fini del
 									presente Avviso
 									<b
 										>esclusivamente per la migrazione e l’attivazione di ulteriori servizi rispetto
@@ -1033,7 +1038,7 @@
 																					<svg class="icon icon-xs icon-primary align-middle">
 																						<use href="/svg/sprites.svg#it-bookmark"></use>
 																					</svg><span>{s.candidabile}</span>
-																				{:else if s.candidabile === 'NO - Servizio attivo avviato prima del 1 aprile 2021'}
+																				{:else if s.candidabile === 'NO - Servizio attivo avviato prima del 4 aprile 2022'}
 																					<svg class="icon icon-xs icon-danger align-middle">
 																						<use href="/svg/sprites.svg#it-ban"></use>
 																					</svg><span class="text-danger mx-2"
