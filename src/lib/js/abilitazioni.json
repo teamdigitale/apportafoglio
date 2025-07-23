@@ -33,7 +33,8 @@
             "roles": [
                 "Technical Implementation Manager"
             ],
-            "name": "GIOVANNI GUGLIELMOTTO"
+            "name": "GIOVANNI GUGLIELMOTTO",
+            "area": "NORD_OVEST"
         },
         {
             "id": "0057Q0000070ppNQAQ",
@@ -94,9 +95,10 @@
         {
             "id": "0057Q00000729p7QAA",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "PASQUALE MASTRANGELO"
+            "name": "PASQUALE MASTRANGELO",
+            "area": "SUD_EST"
         },
         {
             "id": "0057Q00000729pCQAQ",
@@ -115,9 +117,10 @@
         {
             "id": "0057Q00000729qPQAQ",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "GIANLUCA BARILE"
+            "name": "GIANLUCA BARILE",
+            "area": "SUD_EST"
         },
         {
             "id": "0057Q00000729qUQAQ",
@@ -185,9 +188,10 @@
         {
             "id": "0057Q0000072GKFQA2",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "UGO CALONI"
+            "name": "UGO CALONI",
+            "area": "LOMBARDIA"
         },
         {
             "id": "0057Q0000072GKKQA2",
@@ -234,16 +238,18 @@
         {
             "id": "0057Q0000072HA2QAM",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "SALVATORE LO VERSO"
+            "name": "SALVATORE LO VERSO",
+            "area": "SUD_OVEST"
         },
         {
             "id": "0057Q0000072LDoQAM",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "RAFFAELE MALFER"
+            "name": "RAFFAELE MALFER",
+            "area": "NORD_EST"
         },
         {
             "id": "0057Q0000072NVgQAM",
@@ -269,16 +275,18 @@
         {
             "id": "0057Q0000072NW0QAM",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "ROBERTO DINELLI"
+            "name": "ROBERTO DINELLI",
+            "area": "CENTRO"
         },
         {
             "id": "0057Q0000072NW6QAM",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "ROBERTO MOZZILLO"
+            "name": "ROBERTO MOZZILLO",
+            "area": "NORD_EST"
         },
         {
             "id": "0057Q0000072NWjQAM",
@@ -325,9 +333,10 @@
         {
             "id": "0057Q0000072Yr5QAE",
             "roles": [
-                "Technical Implementation Manager"
+                "Technical Implementation Manager","Operation Assistant"
             ],
-            "name": "CLAUDIO BONAFINI"
+            "name": "CLAUDIO BONAFINI",
+            "area": "LOMBARDIA"
         },
         {
             "id": "0057Q0000072YrAQAU",
