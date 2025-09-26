@@ -2,6 +2,9 @@
 	"name": "dtdpa2026",
 	"version": "1.0.0",
 	"private": true,
+		"engines": {
+    	"node": "v20.19.3"
+	},
 	"scripts": {
 		"dev": "npx cross-env NODE_OPTIONS=--max-old-space-size=8192 vite dev",
 		"build": "cross-env NODE_OPTIONS=--max_old_space_size=8192 vite build",
