@@ -413,7 +413,7 @@
 														<div class="link-list-wrapper">
 															<ul class="link-list">
 																<li data-sveltekit-preload-data="off">
-																	<a class="dropdown-item list-item" href="/anci/survey/map"
+																	<a class="dropdown-item list-item" href="/mcd"
 																		><span>mappa dei comuni digitali</span></a
 																	>
 																</li>
