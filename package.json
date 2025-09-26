@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"private": true,
 	"engines": {
-    	"node": "20.0"
+    	"node": "v20.19.3"
 	},
 	"scripts": {
 		"dev": "npx cross-env NODE_OPTIONS=--max-old-space-size=8192 vite dev",
