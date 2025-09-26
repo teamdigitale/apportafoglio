@@ -2,7 +2,7 @@
 	"name": "dtdpa2026",
 	"version": "1.0.0",
 	"private": true,
-		"engines": {
+	"engines": {
     	"node": "v20.19.3"
 	},
 	"scripts": {
