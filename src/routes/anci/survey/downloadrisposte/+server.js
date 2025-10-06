@@ -32,7 +32,7 @@ export async function GET({ params, locals }) {
             const values = await all;
             let entiStandard = values[0];
 
-            const risposte_res = await fetch('https://rollingwords.it/dist/quest/survey_anci_short.json', {
+            const risposte_res = await fetch('https://rollingwords.it/dist/quest/stato_avanzamento_questionari.csv', {
                 method: 'GET',
                 credentials: 'same-origin',
                 redirect: 'follow',
@@ -44,8 +44,10 @@ export async function GET({ params, locals }) {
                 timeout: 100000
             });
 
-            let risposte = await risposte_res.json();
+            let risposte = await risposte_res.text();
 
+
+            /*
         
 
             const d = risposte.data.filter(a => entiStandard.filter(e => e.Id === a.pa2026.id).length > 0).map(x =>
@@ -62,14 +64,16 @@ export async function GET({ params, locals }) {
                 data_invio_risposta: x.surveyanci.data_invio,
             })
             );
+            
 
             const file = d3.dsvFormat(";").format(d);
+            */
             //d3.csvFormat(d);
 
 
 
             return new Response(
-                file,
+                risposte,
                 {
                     status: 200,
                     headers: {
