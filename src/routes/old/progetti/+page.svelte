@@ -226,7 +226,7 @@
 								</div>
 								<div class="text-center">
 									<a
-										href="/monitoraggio/progetti?misura={misura}&pacchetto={pacchetto}&area={selectedArea}&regione={selectedRegion}&te={tipologiaEnte}"
+										href="/old/progetti?misura={misura}&pacchetto={pacchetto}&area={selectedArea}&regione={selectedRegion}&te={tipologiaEnte}"
 									>
 										<small class="text-primary"
 											>Aggiorna
