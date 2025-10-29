@@ -324,12 +324,14 @@
 													>
 														<div class="link-list-wrapper">
 															<ul class="link-list">
+																<!--
 																<li data-sveltekit-preload-data="off">
 																	<a class="dropdown-item list-item" href="/monitoraggio/risorse"
 																		><span>board risorse</span></a
 																	>
 																</li>
-
+																-->
+																<!--
 																<li data-sveltekit-preload-data="off">
 																	<a
 																		class="dropdown-item list-item"
@@ -337,7 +339,8 @@
 																		><span>residui misure</span></a
 																	>
 																</li>
-
+																-->
+																<!--
 																<li data-sveltekit-preload-data="off">
 																	{#if checkAbilitazione(data.utentestandard.idsf, 'Area Manager') || checkAbilitazione(data.utentestandard.idsf, 'Operation Assistant')}
 																		<a
@@ -350,7 +353,7 @@
 																		>
 																	{/if}
 																</li>
-
+-->
 																<!--
 																	<li data-sveltekit-preload-data="off">
 																		<a class="dropdown-item list-item" href="/monitoraggio/enti"
@@ -358,13 +361,14 @@
 																		>
 																	</li>
 																	-->
-
+																<!--
 																<li data-sveltekit-preload-data="off">
 																	<a
 																		class="dropdown-item list-item"
 																		href="/monitoraggio/asseverazioni"><span>asseverazioni</span></a
 																	>
 																</li>
+																-->
 
 																<!--
 																	<li data-sveltekit-preload-data="off">
